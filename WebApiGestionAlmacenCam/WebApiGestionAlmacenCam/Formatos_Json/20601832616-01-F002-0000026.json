@@ -1,0 +1,653 @@
+{
+  "_D": "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2",
+  "_S": "urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2",
+  "_B": "urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2",
+  "_E": "urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2",
+  "Invoice": [
+    {
+      "UBLVersionID": [
+        {
+          "IdentifierContent": "2.1"
+        }
+      ],
+      "CustomizationID": [
+        {
+          "IdentifierContent": "2.0"
+        }
+      ],
+      "ID": [
+        {
+          "IdentifierContent": "F002-0000026"
+        }
+      ],
+      "IssueDate": [
+        {
+          "DateContent": "2019-04-05"
+        }
+      ],
+      "IssueTime": [
+        {
+          "DateTimeContent": "15:39:44"
+        }
+      ],
+      "InvoiceTypeCode": [
+        {
+          "CodeContent": "01",
+          "CodeListNameText": "Tipo de Documento",
+          "CodeListSchemeUniformResourceIdentifier": "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo51",
+          "CodeListIdentifier": "0101",
+          "CodeNameText": "Tipo de Operacion",
+          "CodeListUniformResourceIdentifier": "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo01",
+          "CodeListAgencyNameText": "PE:SUNAT"
+        }
+      ],
+      "Note": [
+        {
+          "TextContent": "SESENTA Y SIETE CON 50/100  SOLES",
+          "LanguageLocaleIdentifier": "1000"
+        }
+      ],
+      "DocumentCurrencyCode": [
+        {
+          "CodeContent": "PEN",
+          "CodeListIdentifier": "ISO 4217 Alpha",
+          "CodeListNameText": "Currency",
+          "CodeListAgencyNameText": "United Nations Economic Commission for Europe"
+        }
+      ],
+      "LineCountNumeric": [
+        {
+          "NumericContent": 2
+        }
+      ],
+      "Signature": [
+        {
+          "ID": [
+            {
+              "IdentifierContent": "IDSignature"
+            }
+          ],
+          "SignatoryParty": [
+            {
+              "PartyIdentification": [
+                {
+                  "ID": [
+                    {
+                      "IdentifierContent": "20601832616"
+                    }
+                  ]
+                }
+              ],
+              "PartyName": [
+                {
+                  "Name": [
+                    {
+                      "TextContent": "CORPORACION BELCEN S.A.C. - BELCEN S.A.C. "
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "DigitalSignatureAttachment": [
+            {
+              "ExternalReference": [
+                {
+                  "URI": [
+                    {
+                      "TextContent": "IDSignature"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "AccountingSupplierParty": [
+        {
+          "Party": [
+            {
+              "PartyIdentification": [
+                {
+                  "ID": [
+                    {
+                      "IdentifierContent": "20601832616",
+                      "IdentificationSchemeIdentifier": "6",
+                      "IdentificationSchemeNameText": "Documento de Identidad",
+                      "IdentificationSchemeAgencyNameText": "PE:SUNAT",
+                      "IdentificationSchemeUniformResourceIdentifier": "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06"
+                    }
+                  ]
+                }
+              ],
+              "PartyName": [
+                {
+                  "Name": [
+                    {}
+                  ]
+                }
+              ],
+              "PartyLegalEntity": [
+                {
+                  "RegistrationName": [
+                    {
+                      "TextContent": "CORPORACION BELCEN S.A.C. - BELCEN S.A.C. "
+                    }
+                  ],
+                  "RegistrationAddress": [
+                    {
+                      "ID": [
+                        {
+                          "IdentifierContent": "150111",
+                          "IdentificationSchemeAgencyNameText": "PE:INEI",
+                          "IdentificationSchemeNameText": "Ubigeos"
+                        }
+                      ],
+                      "AddressTypeCode": [
+                        {
+                          "CodeContent": "0004",
+                          "CodeListAgencyNameText": "PE:SUNAT",
+                          "CodeListNameText": "Establecimientos anexos"
+                        }
+                      ],
+                      "CityName": [
+                        {
+                          "TextContent": "lima"
+                        }
+                      ],
+                      "CountrySubentity": [
+                        {
+                          "TextContent": "LIMA"
+                        }
+                      ],
+                      "District": [
+                        {
+                          "TextContent": "Santa Anita"
+                        }
+                      ],
+                      "AddressLine": [
+                        {
+                          "Line": [
+                            {
+                              "TextContent": "AV. LA CULTURA NRO. 701 INT. 111 MERCADO PRODUCTORES SANTA ANITA (PJ. SEÑOR DE LOS MILAGROS/INT. 109-111)"
+                            }
+                          ]
+                        }
+                      ],
+                      "Country": [
+                        {
+                          "IdentificationCode": [
+                            {
+                              "CodeContent": "PE",
+                              "CodeListIdentifier": "ISO 3166-1",
+                              "CodeListAgencyNameText": "United Nations Economic Commission for Europe",
+                              "CodeListNameText": "Country"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "AccountingCustomerParty": [
+        {
+          "Party": [
+            {
+              "PartyIdentification": [
+                {
+                  "ID": [
+                    {
+                      "IdentifierContent": "00000000",
+                      "IdentificationSchemeIdentifier": "6",
+                      "IdentificationSchemeNameText": "Documento de Identidad",
+                      "IdentificationSchemeAgencyNameText": "PE:SUNAT",
+                      "IdentificationSchemeUniformResourceIdentifier": "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06"
+                    }
+                  ]
+                }
+              ],
+              "PartyName": [
+                {
+                  "Name": [
+                    {
+                      "TextContent": "MAOLI PERU E.I.R.L."
+                    }
+                  ]
+                }
+              ],
+              "PartyLegalEntity": [
+                {
+                  "RegistrationName": [
+                    {
+                      "TextContent": "MAOLI PERU E.I.R.L."
+                    }
+                  ],
+                  "RegistrationAddress": [
+                    {
+                      "ID": [
+                        {
+                          "IdentifierContent": "140124",
+                          "IdentificationSchemeAgencyNameText": "PE:INEI",
+                          "IdentificationSchemeNameText": "Ubigeos"
+                        }
+                      ],
+                      "CityName": [
+                        {
+                          "TextContent": "LIMA"
+                        }
+                      ],
+                      "CountrySubentity": [
+                        {
+                          "TextContent": "LIMA"
+                        }
+                      ],
+                      "District": [
+                        {
+                          "TextContent": "Lurigancho"
+                        }
+                      ],
+                      "AddressLine": [
+                        {
+                          "Line": [
+                            {
+                              "TextContent": "PARCELA 2 -EDIF 1 NRO. S/N DPTO. 703 FND. HUARANGAL DE HUAMPANI LIMA - LIMA - LURIGANCHO"
+                            }
+                          ]
+                        }
+                      ],
+                      "Country": [
+                        {
+                          "IdentificationCode": [
+                            {
+                              "CodeContent": "PE",
+                              "CodeListIdentifier": "ISO 3166-1",
+                              "CodeListAgencyNameText": "United Nations Economic Commission for Europe",
+                              "CodeListNameText": "Country"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "Contact": [
+                {
+                  "ElectronicMail": [
+                    {
+                      "TextContent": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "TaxTotal": [
+        {
+          "TaxAmount": [
+            {
+              "AmountContent": "10.30",
+              "AmountCurrencyIdentifier": "PEN"
+            }
+          ],
+          "TaxSubtotal": [
+            {
+              "TaxableAmount": [
+                {
+                  "AmountContent": "57.00",
+                  "AmountCurrencyIdentifier": "PEN"
+                }
+              ],
+              "TaxAmount": [
+                {
+                  "AmountContent": "10.30",
+                  "AmountCurrencyIdentifier": "PEN"
+                }
+              ],
+              "TaxCategory": [
+                {
+                  "TaxScheme": [
+                    {
+                      "ID": [
+                        {
+                          "IdentifierContent": "1000",
+                          "IdentificationSchemeNameText": "Codigo de tributos",
+                          "IdentificationSchemeUniformResourceIdentifier": "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo05",
+                          "IdentificationSchemeAgencyNameText": "PE:SUNAT"
+                        }
+                      ],
+                      "Name": [
+                        {
+                          "TextContent": "IGV"
+                        }
+                      ],
+                      "TaxTypeCode": [
+                        {
+                          "CodeContent": "VAT"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "LegalMonetaryTotal": [
+        {
+          "LineExtensionAmount": [
+            {
+              "AmountContent": "57.20",
+              "AmountCurrencyIdentifier": "PEN"
+            }
+          ],
+          "TaxInclusiveAmount": [
+            {
+              "AmountContent": "67.50",
+              "AmountCurrencyIdentifier": "PEN"
+            }
+          ],
+          "PayableAmount": [
+            {
+              "AmountContent": "67.50",
+              "AmountCurrencyIdentifier": "PEN"
+            }
+          ]
+        }
+      ],
+      "InvoiceLine": [
+        {
+          "ID": [
+            {
+              "IdentifierContent": 1
+            }
+          ],
+          "Note": [
+            {
+              "TextContent": "CJS"
+            }
+          ],
+          "InvoicedQuantity": [
+            {
+              "QuantityContent": "0.500000",
+              "QuantityUnitCode": "BX",
+              "QuantityUnitCodeListIdentifier": "UN/ECE rec 20",
+              "QuantityUnitCodeListAgencyNameText": "United Nations Economic Commission for Europe"
+            }
+          ],
+          "LineExtensionAmount": [
+            {
+              "AmountContent": "31.78",
+              "AmountCurrencyIdentifier": "PEN"
+            }
+          ],
+          "PricingReference": [
+            {
+              "AlternativeConditionPrice": [
+                {
+                  "PriceAmount": [
+                    {
+                      "AmountContent": "37.50",
+                      "AmountCurrencyIdentifier": "PEN"
+                    }
+                  ],
+                  "PriceTypeCode": [
+                    {
+                      "CodeContent": "01",
+                      "CodeListNameText": "SUNAT:Indicador de Tipo de Precio",
+                      "CodeListAgencyNameText": "PE:SUNAT",
+                      "CodeListUniformResourceIdentifier": "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo16"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "TaxTotal": [
+            {
+              "TaxAmount": [
+                {
+                  "AmountContent": "5.72",
+                  "AmountCurrencyIdentifier": "PEN"
+                }
+              ],
+              "TaxSubtotal": [
+                {
+                  "TaxableAmount": [
+                    {
+                      "AmountContent": "31.78",
+                      "AmountCurrencyIdentifier": "PEN"
+                    }
+                  ],
+                  "TaxAmount": [
+                    {
+                      "AmountContent": "5.72",
+                      "AmountCurrencyIdentifier": "PEN"
+                    }
+                  ],
+                  "TaxCategory": [
+                    {
+                      "Percent": [
+                        {
+                          "NumericContent": 18
+                        }
+                      ],
+                      "TaxExemptionReasonCode": [
+                        {
+                          "CodeContent": "10",
+                          "CodeListAgencyNameText": "PE:SUNAT",
+                          "CodeListNameText": "Afectacion del IGV",
+                          "CodeListUniformResourceIdentifier": "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo07"
+                        }
+                      ],
+                      "TaxScheme": [
+                        {
+                          "ID": [
+                            {
+                              "IdentifierContent": "1000",
+                              "IdentificationSchemeNameText": "Codigo de tributos",
+                              "IdentificationSchemeUniformResourceIdentifier": "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo05",
+                              "IdentificationSchemeAgencyNameText": "PE:SUNAT"
+                            }
+                          ],
+                          "Name": [
+                            {
+                              "TextContent": "IGV"
+                            }
+                          ],
+                          "TaxTypeCode": [
+                            {
+                              "CodeContent": "VAT"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "Item": [
+            {
+              "Description": [
+                {
+                  "TextContent": "ENTERO DE ANCHOVETA EN SALSA DE TOMATE OVAL X 425 GR X 24 UND - BELINI"
+                }
+              ],
+              "SellersItemIdentification": [
+                {
+                  "ID": [
+                    {
+                      "IdentifierContent": "0019"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "Price": [
+            {
+              "PriceAmount": [
+                {
+                  "AmountContent": "63.56",
+                  "AmountCurrencyIdentifier": "PEN"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ID": [
+            {
+              "IdentifierContent": 2
+            }
+          ],
+          "Note": [
+            {
+              "TextContent": "CJS"
+            }
+          ],
+          "InvoicedQuantity": [
+            {
+              "QuantityContent": "1.000000",
+              "QuantityUnitCode": "BX",
+              "QuantityUnitCodeListIdentifier": "UN/ECE rec 20",
+              "QuantityUnitCodeListAgencyNameText": "United Nations Economic Commission for Europe"
+            }
+          ],
+          "LineExtensionAmount": [
+            {
+              "AmountContent": "25.42",
+              "AmountCurrencyIdentifier": "PEN"
+            }
+          ],
+          "PricingReference": [
+            {
+              "AlternativeConditionPrice": [
+                {
+                  "PriceAmount": [
+                    {
+                      "AmountContent": "30.00",
+                      "AmountCurrencyIdentifier": "PEN"
+                    }
+                  ],
+                  "PriceTypeCode": [
+                    {
+                      "CodeContent": "01",
+                      "CodeListNameText": "SUNAT:Indicador de Tipo de Precio",
+                      "CodeListAgencyNameText": "PE:SUNAT",
+                      "CodeListUniformResourceIdentifier": "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo16"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "TaxTotal": [
+            {
+              "TaxAmount": [
+                {
+                  "AmountContent": "4.58",
+                  "AmountCurrencyIdentifier": "PEN"
+                }
+              ],
+              "TaxSubtotal": [
+                {
+                  "TaxableAmount": [
+                    {
+                      "AmountContent": "25.42",
+                      "AmountCurrencyIdentifier": "PEN"
+                    }
+                  ],
+                  "TaxAmount": [
+                    {
+                      "AmountContent": "4.58",
+                      "AmountCurrencyIdentifier": "PEN"
+                    }
+                  ],
+                  "TaxCategory": [
+                    {
+                      "Percent": [
+                        {
+                          "NumericContent": 18
+                        }
+                      ],
+                      "TaxExemptionReasonCode": [
+                        {
+                          "CodeContent": "10",
+                          "CodeListAgencyNameText": "PE:SUNAT",
+                          "CodeListNameText": "Afectacion del IGV",
+                          "CodeListUniformResourceIdentifier": "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo07"
+                        }
+                      ],
+                      "TaxScheme": [
+                        {
+                          "ID": [
+                            {
+                              "IdentifierContent": "1000",
+                              "IdentificationSchemeNameText": "Codigo de tributos",
+                              "IdentificationSchemeUniformResourceIdentifier": "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo05",
+                              "IdentificationSchemeAgencyNameText": "PE:SUNAT"
+                            }
+                          ],
+                          "Name": [
+                            {
+                              "TextContent": "IGV"
+                            }
+                          ],
+                          "TaxTypeCode": [
+                            {
+                              "CodeContent": "VAT"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "Item": [
+            {
+              "Description": [
+                {
+                  "TextContent": "JABON BLANCO X 250 GR X 40 UND - BELTRAN"
+                }
+              ],
+              "SellersItemIdentification": [
+                {
+                  "ID": [
+                    {
+                      "IdentifierContent": "0114"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "Price": [
+            {
+              "PriceAmount": [
+                {
+                  "AmountContent": "25.42",
+                  "AmountCurrencyIdentifier": "PEN"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

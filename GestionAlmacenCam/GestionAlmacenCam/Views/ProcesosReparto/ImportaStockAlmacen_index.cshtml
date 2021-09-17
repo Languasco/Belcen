@@ -1,0 +1,159 @@
+﻿
+
+<style>
+    .panel-body {
+        padding: 5px !important;
+    }
+
+    .control-label {
+        /*font-size: 11px !important;*/
+        color: #2b89e0;
+        font-family: Tahoma;
+    }
+
+    .form-control {
+        /*font-size: 11px;*/
+        height: 30px;
+    }
+
+    .contentCombo .select2-container {
+        margin-left: 0px;
+        margin-top: -10px;
+        width: 98% !important;
+    }
+
+    .ModalBorderSombra .modal-content {
+        box-shadow: inset 0px 0px 7px rgba(0,0,0,.5), 1px 1px 5px #fff;
+    }
+
+    .contenedorGrupo legend {
+        font-size: 12px !important;
+        font-family: GillSans, Calibri, Trebuchet, sans-serif;
+        color: #2c5ca9;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+
+    .contenedorGrupo fieldset {
+        padding-left: 20px;
+        padding-right: 20px;
+        border: 1px solid #2c4d6d;
+        padding-bottom: 10px;
+        border-radius: 4px;
+    }
+
+    .ContentFilters .select2-container .select2-choice, label {
+        font-size: 13px;
+    }
+
+    .input-group-btn .btn {
+        padding: 8px 12px;
+        height: 30px;
+    }
+
+    .jq-toast-wrap.top-right {
+        top: 20px;
+        right: 40px;
+        width: 300px;
+    }
+
+    .pagination > li > a, .pagination > li > span {
+        padding: 1px !important;
+        color: #337ab7 !important;
+    }
+
+
+    .btn.active span.glyphicon {
+        opacity: 1;
+    }
+
+    .card {
+        /* Add shadows to create the "card" effect */
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+    }
+
+        /* On mouse-over, add a deeper shadow */
+        .card:hover {
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+        }
+
+    #upload_button {
+        display: inline-block;
+    }
+
+        #upload_button input[type=file] {
+            display: none;
+        }
+</style>
+
+
+<div ng-init="initAll(); ">
+
+    <br />
+    <br />
+    <section id="ubicacion">
+        <div class="panel-body ContentFilters contentCombo">
+            <div class="container card" style="background-color: #2b4c6c;padding-bottom: 0px; padding-top: 0px;color: #fff;">
+
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col-md-6">
+                        <label> Almacén : </label>
+                        <div style="margin-top: 10px;">
+                            <select class="selectFiltros" id="cbo_local" ng-model="Objeto_ParametroFiltro.id_almacen">
+                                <option value="0">[ ----  SELECCIONE  --- ]</option>
+                                <option ng-repeat="item in Lista_Almacen" value="{{item.id_Almacen}}">{{item.descripcion_Almacen}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                         
+                    </div>
+                </div>
+
+                <hr style="margin-bottom:-5px" />
+
+                <div class="row">
+                    <form class="form-inline" style="padding: 5px;text-align: center;">
+                        <br />
+                        <div class="form-group">
+                            <div id="upload_button">
+                                <label>
+                                    <input type="file" ng-model="file" class="form-control" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" on-file-change="onFilesSelected">
+                                    <span class="btn btn-danger">Seleccionar Archivos</span>
+                                </label>
+                                <b id="txt_archivo" style="font-size: 12px; letter-spacing: normal; font-family: tahoma; color:white;"> {{NameArchivo}}</b>
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-left: 10px;">
+                            <button id="btnSubir" class="btn btn-success" ng-click="uploadFile()"  ><span class="glyphicon glyphicon-open"></span> Subir</button>
+                            <button class="btn btn-warning" onclick="window.location.reload(true)"><span class="glyphicon glyphicon-plus"></span> Nuevo</button>
+                            <button class="btn btn-info" ng-click="downloadFormat()" style=" margin-top: 0px;  margin-bottom: 0px;"><span class="glyphicon glyphicon-plus"></span> Formato</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="cabeceras" style="margin-bottom: -30px;">
+        <div class="panel-body ContentFilters contentCombo">
+            <div class="form-inline ">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div style="text-align:center">
+                            <div class="cssload-speeding-wheel" ng-if="loaderfiltros"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div style="padding-left: 45%;" ng-if="showLoaderSave">
+        <p class="loader">
+        </p>
+    </div>
+
+</div>
+
+

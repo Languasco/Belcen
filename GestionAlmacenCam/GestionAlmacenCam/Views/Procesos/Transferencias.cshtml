@@ -1,0 +1,511 @@
+﻿
+
+<style>
+    #listMenu span, a {
+        text-align: left !important;
+    }
+
+    .contentRegistro fieldset legend {
+        text-align: left !important;
+    }
+
+    .jq-toast-wrap {
+        width: 300px !important;
+    }
+
+    .floating-labels label {
+        top: -6px;
+    }
+
+    .contentRegistro .select2-container {
+        margin-left: 0px;
+        margin-top: 2px;
+    }
+
+    #btn-material {
+        font-size: 1.2rem;
+        outline: 0;
+        border: none;
+        border-radius: 2px;
+        display: inline-block;
+        height: 36px;
+        line-height: 36px;
+        padding: 0 2rem;
+        text-transform: uppercase;
+        vertical-align: middle;
+        -webkit-tap-highlight-color: transparent;
+        text-decoration: none;
+        color: #fff;
+        background-color: #2b4c6c;
+        text-align: center;
+        letter-spacing: .5px;
+        -webkit-transition: .2s ease-out;
+        transition: .2s ease-out;
+        cursor: pointer;
+        -webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+    }
+
+    #btn-save {
+        font-size: 1.2rem;
+        outline: 0;
+        border: none;
+        border-radius: 2px;
+        border: 1px solid #2c5ca9;
+        display: inline-block;
+        height: 36px;
+        line-height: 36px;
+        padding: 0 2rem;
+        text-transform: uppercase;
+        vertical-align: middle;
+        -webkit-tap-highlight-color: transparent;
+        text-decoration: none;
+        color: #fff;
+        background: #2c5ca9;
+        text-align: center;
+        letter-spacing: .5px;
+        -webkit-transition: .2s ease-out;
+        transition: .2s ease-out;
+        cursor: pointer;
+        -webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+    }
+
+    #btn-close {
+        font-size: 1.2rem;
+        outline: 0;
+        border: none;
+        border-radius: 2px;
+        background: #f75b36;
+        border: 1px solid #f75b36;
+        display: inline-block;
+        height: 36px;
+        line-height: 36px;
+        padding: 0 2rem;
+        text-transform: uppercase;
+        vertical-align: middle;
+        -webkit-tap-highlight-color: transparent;
+        text-decoration: none;
+        color: #fff;
+        text-align: center;
+        letter-spacing: .5px;
+        -webkit-transition: .2s ease-out;
+        transition: .2s ease-out;
+        cursor: pointer;
+        -webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+    }
+
+    .contentCombo .select2-container {
+        margin-left: 0px;
+        margin-top: -20px;
+        /*width: 120% !important;*/
+    }
+
+    .ContentFilters .table {
+        display: table;
+    }
+</style>
+
+<div class="container-fluid" ng-init="initAll();">
+
+
+    <div class="panel-body ContentFilters contentCombo">
+        <div class="well" style="background-color: #2b4c6c;padding-bottom: 0px; padding-top: 0px;color: #fff;    width: 100%;">
+            <div class="row">
+                <div class="col-sm-12 text-center ">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="col-md-12" style="text-align:center;">LOCAL</label>
+                            <div class="col-md-12" style="margin-top: 7px;">
+                                <select class="selectFiltros" id="selectLocales" ng-model="objFilter.idLocal" data-width="35%" ng-change="changeSelect('locales',objFilter.idLocal)" data-style=" btn-default">
+                                    <option value="0">[ ----  TODOS  --- ]</option>
+                                    <option ng-repeat="item in listLocales" value="{{item.id_Local}}">{{item.nombre_Local}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="col-md-12" style="text-align:center;">ALMACEN</label>
+                            <div class="col-md-12" style="margin-top: 7px;">
+                                <select class="selectFiltros" id="selectAlmacen" data-width="35%" ng-model="objFilter.idAlmacen" data-style="btn-default">
+                                    <option value="0">[ ----  TODOS  --- ]</option>
+                                    <option ng-repeat="item in listAlmacenes" value="{{item.id_Almacen}}">{{item.descripcion_Almacen}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+
+                        <div class="form-group">
+                            <label class="col-md-12">Estado</label>
+                            <div class="col-md-12" style="margin-top: 7px;">
+                                <select class="selectFiltros" id="selectEstado" data-style="btn-default" ng-model="objFilter.idEstado">
+                                    <option value="0">[ ----  TODOS  --- ]</option>
+                                    <option ng-repeat="item in listEstado" value="{{item.id_Estado}}">{{item.descripcion_estado}}</option>
+                                </select>
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+                    <div class="row col-sm-6">
+                        <div class="form-group" style="margin-top: 15px">
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-addon">Buscar</span>
+                                <input id="inputSearch" type="text" placeholder="Busqueda General . . " style="width: 120%;" class="form-control btn-block inputSearch" autocomplete="off" @*onkeyup="this.value=this.value.toUpperCase();"*@>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row contentRegistro" style="margin-bottom:10px; ">
+                    <div class="col-lg-6 " style="margin-left: -68px; margin-top: -25px;">
+                        <fieldset>
+                            <legend style="color:white;">Rango de Fechas</legend>
+
+                            <div class="row Mtop-15 " style="margin-bottom:-25px;">
+
+                                <div class="form-group col-sm-6">
+                                    <input type="text" class="form-control datepicker" ng-model="objFilter.fechaini" id="txtFechaRemisión" placeholder="Fecha - mm/dd/yyyy">
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <input type="text" class="form-control datepicker" ng-model="objFilter.fechafin" id="txtFechaRemisión" placeholder="Fecha - mm/dd/yyyy">
+
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="col-sm-6 " style="margin-bottom: 15px;margin-top: -3px;">
+
+                        <div class="btn-group">
+                            <button id="btn-material" style="background-color: #357c55;" class="btn btn-outline btn-primary btn-sm m-l-10" ng-click="getTransferencias();">
+                                <i class="glyphicon glyphicon-refresh"></i>Actualizar
+                            </button>
+                            <button id="btn-material" style="background-color: #357c55;" class="btn btn-outline btn-primary btn-sm m-l-10" ng-click="fucntionClickOptions(1);">
+                                <i class="glyphicon glyphicon-plus"></i>Agregar Nuevo
+                            </button>
+                            <button id="btn-material" style="background-color: #357c55;" class="btn btn-outline btn-primary btn-sm m-l-10" ng-click=" ExportarToExcel();">
+                                <i class="glyphicon glyphicon-save"></i>Exportar
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+    <div class="panel-body ContentFilters">
+
+        <div class="cssload-speeding-wheel" ng-if="loaderProd"></div>
+        <div class="row" ng-if="ok">
+            <form class="floating-labels ">
+                <div class="col-sm-8 ">
+                    <div class="form-group m-b-40 ">
+                        <input type="text" class="form-control" id="input1" required><span class="highlight"></span> <span class="bar"></span>
+                        <label for="input1">Busqueda General</label>
+                        <small>Ingrese un texto para realizar la busqueda por cualquier columna</small>
+                        <span class="glyphicon glyphicon-search form-control-feedback t-0"></span>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!--  LISTA DE PRODUCTOS -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="white-box"> 
+                    <table id="tblProductos" class="table m-b-0 toggle-arrow-tiny table-bordered table-hover" data-page-size="10">
+                        <thead>
+                            <tr>
+                                <th data-toggle="true">#</th>
+                                <th data-toggle="true">Cod Inter. </th> 
+                                <th data-hide=""> Fecha Emisión</th>
+                                <th data-hide=""> Local Origen</th>
+                                <th data-hide=""> Almacen Origen</th>
+                                <th data-hide=""> Local Destino</th>
+                                <th data-hide=""> Almacen Destino</th>
+                                <th data-hide=""> NRO TRANSACCION </th>
+                                <th data-toggle="true">Estado </th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in listTransferencias" style="{{item.estado == 26 | iif : 'background-color: rgb(230, 115, 115) !important;color:#fff;font-weight: 600;'}}">
+                                <td>{{$index + 1}}</td>
+                                <td>{{item.Id_AlmTranCab}}</td>
+                                <td>{{item.fechaEmision_TranferenciaCab}}</td>
+                                <td>{{item.nombre_Local_Origen}}</td>
+                                <td>{{item.nombre_Almacen_Origen}}</td>
+                                <td>{{item.nombre_Local_Destino}}</td>
+                                <td>{{item.nombre_Almacen_Destino}}</td>
+                                <td>{{item.nro_transaccion}}</td>
+                                <td><span class="label label-table label-{{item.colorEstado}}">{{item.desEstado}}</span></td>
+                                <td style="text-align:center">
+                                    <button type="button" class="btn btn-primary btn-circle " ng-click="fucntionClickOptions(2,item);" data-toggle="tooltip" title="EDITAR">
+                                        <i class=" ti-pencil-alt"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-circle " style="background-color:black" ng-click="Get_impresion_transferencias(item);" data-toggle="tooltip" title="Imprimir">
+                                        <i class="ti-printer" style="color:white"></i>
+                                    </button>
+
+                                    <button type="button" class="btn btn-warning btn-circle" ng-click="anularProducto(item);" style="background-color: #ff6849; border-color: #ff6849;" title="ANULAR"><i class="fa fa-trash"></i> </button>
+                                    <button type="button" class="btn btn-success btn-circle" ng-click="getDataToPdf(item);" data-toggle="tooltip" title="AUDITAR"><i class="ti-cloud-down"></i> </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="text-right">
+                        <ul class="pagination pagination-split m-t-30"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LISTA DE OPCIONES DE GUIAS-->
+        <div class="contentOptions" ng-if="ok">
+            <div class="">
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-xs-12">
+                        <div class="row">
+                            <div class="col-lg-2 col-sm-4 col-xs-6" ng-repeat="item in listOptionsMenu" ng-click="fucntionClickOptions(item.eventClick);">
+                                <div class="white-box">
+                                    <h3 class="box-title">{{item.nombre}}</h3>
+                                    <ul class="list-inline two-part">
+                                        <li><i class="{{item.icon}}"></i></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                @*<!--  MODALES -->
+                    <!-- MODAL AGREGAR PRODUCTOS-->
+                    <div class="modal fade bs-example-modal-lg" id="ModalProducto" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="imgModal" ng-click="openFile();">
+                                        <img class="thumb-lg img-circle" src="{{imgProducto}}" />
+                                    </div>
+                                    <label class="import-file" style="display:none;">
+                                        <input type="file" id="inputFileOpen" multiple onchange="angular.element(this).scope().imageUpload(event)">
+                                    </label>
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h4 class="modal-title" id="myLargeModalLabel">{{titleModal}}</h4>
+                                </div>
+                                <div class="modal-body">
+
+                                    <div class="loaderModal" ng-if="loaderSave"></div>
+                                    <div class="cssload-speeding-wheel " ng-if="!showBodyModal"></div>
+                                    <div class="contentRegistro floating-labels form-inline {{disabledContent}}" ng-show="showBodyModal">
+                                        <!-- SEGUNDA LINEA-->
+                                        <div>
+                                            <div class="form-group col-sm-2">
+                                                <input type="text" class="form-control" id="codigointerno" required ng-model="objProductos.codigo1_Producto"><span class="highlight"></span> <span class="bar"></span>
+                                                <label for="codigointerno">Codigo Interno</label> <span class="help-block"></span>
+                                            </div>
+                                            <div class="form-group col-sm-2">
+                                                <input type="text" class="form-control" id="codigobarra" required ng-model="objProductos.CodigoBarra_Producto"><span class="highlight"></span> <span class="bar"></span>
+                                                <label for="codigobarra">Codigo de Barra</label> <span class="help-block"></span>
+                                            </div>
+                                            <div class="form-group has-warning col-sm-2 disabledContent">
+                                                <input type="text" class="form-control" id="idautomatico" required ng-model="objProductos.id_Producto"><span class="highlight"></span> <span class="bar"></span>
+                                                <label for="idautomatico">ID Automatico.</label> <span class="help-block"></span>
+                                            </div>
+                                            <div class="form-group col-sm-6">
+                                                <p>&nbsp;</p>
+                                            </div>
+                                        </div>
+                                        <!-- SEGUNDA LINEA-->
+                                        <div class="form-group col-sm-3">
+                                            <input type="text" class="form-control" id="nombrepro" required ng-model="objProductos.nombre_Producto"><span class="highlight"></span> <span class="bar"></span>
+                                            <label for="nombrepro">Nombre de producto</label> <span class="help-block"></span>
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            <input type="text" class="form-control" id="despro" required ng-model="objProductos.descripcion_Producto"><span class="highlight"></span> <span class="bar"></span>
+                                            <label for="despro">Descripción Amplia</label> <span class="help-block"></span>
+                                        </div>
+                                        <div class="form-group col-sm-3">
+                                            <input type="text" class="form-control" id="abrepro" required ng-model="objProductos.abreviatura_Producto"><span class="highlight"></span> <span class="bar"></span>
+                                            <label for="abrepro">Abreviatura</label> <span class="help-block"></span>
+                                        </div>
+                                        <!-- TERCERA LINEA-->
+                                        <div class="row ">
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label class="col-md-12">Unidad de Medida  </label>
+                                                    <div class="col-md-12">
+                                                        <select class="selectModal" data-width="35%" data-style="btn-default" ng-model="objProductos.id_unidadMedida">
+                                                            <option value="0">- Seleccionar -</option>
+                                                            <option ng-repeat="item in listUm" value="{{item.id_unidadMedida}}">{{item.nombre_UnidadMedida}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label class="col-md-12">Categoria</label>
+                                                    <div class="col-md-12">
+                                                        <select class="selectModal" ng-model="objProductos.id_categoriaProducto" ng-change="changeSelect('categoria',objProductos.id_categoriaProducto)" data-width="35%" data-style="btn-default">
+                                                            <option value="0">- Seleccionar - </option>
+                                                            <option ng-repeat="item in listCategoria" value="{{item.id_categoriaProducto}}">{{item.nombre_Categoria}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label class="col-md-12">Linea </label>
+                                                    <div class="col-md-12">
+                                                        <select class="selectModal" id="selectLinea" ng-model="objProductos.id_lineaProducto" ng-change="changeSelect('linea',objProductos.id_lineaProducto)" data-width="35%" data-style="btn-default">
+                                                            <option value="0">- Seleccionar - </option>
+                                                            <option ng-repeat="item in listProductoLinea" value="{{item.id_lineaProducto}}">{{item.nombre_linea}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label class="col-md-12">Sub Linea</label>
+                                                    <select class="selectModal" id="selectSubLinea" ng-model="objProductos.id_subLineaProducto" data-width="35%" data-style="btn-default">
+                                                        <option value="0">- Seleccionar - </option>
+                                                        <option ng-repeat="item in listProductoSubLinea" value="{{item.id_subLineaProducto}}">{{item.nombre_SubLinea}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- CUARTA LINEA-->
+                                        <div class="row ">
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label class="col-md-12">Marca</label>
+                                                    <div class="col-md-12">
+                                                        <select class="selectModal" ng-model="objProductos.id_marcaProducto" ng-change="changeSelect('marca',objProductos.id_marcaProducto)" data-width="35%" data-style="btn-default">
+                                                            <option value="0">- Seleccionar - </option>
+                                                            <option ng-repeat="item in listProductoMarca" value="{{item.id_marcaProducto}}">{{item.nombre_marcaproducto}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label class="col-md-12">Modelo</label>
+                                                    <div class="col-md-12">
+                                                        <select class="selectModal" id="selectModelo" ng-model="objProductos.id_modeloProducto" data-width="35%" data-style="btn-default">
+                                                            <option value="0">- Seleccionar - </option>
+                                                            <option ng-repeat="item in listProductoModelo" value="{{item.id_modeloProducto}}">{{item.nombre_modeloProducto}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3 inputLeftSelect">
+                                                <div class="form-group ">
+                                                    <input type="text" class="form-control" id="stockmin" required ng-model="objProductos.stockminimo_Producto"><span class="highlight"></span> <span class="bar"></span>
+                                                    <label for="stockmin">Stock Minimo</label> <span class="help-block"></span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <!-- QUINTA LINEA-->
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <fieldset>
+                                                    <legend>Conversión en el Almacen</legend>
+                                                    <div class="row Mtop-20 ">
+                                                        <div class="col-sm-12">
+                                                            <div class="form-group">
+                                                                <label class="col-md-12">Unidad de Medida</label>
+                                                                <div class="col-md-12">
+                                                                    <select class="selectModal" data-width="35%" ng-model="objProductos.id_UnidadMedidaAlm" data-style="btn-default">
+                                                                        <option value="0">- Todos - </option>
+                                                                        <option ng-repeat="item in listUm" value="{{item.id_unidadMedida}}">{{item.nombre_UnidadMedida}}</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row Mtop10">
+                                                        <div class="form-group col-sm-6">
+                                                            <input type="text" class="form-control" id="facmul" required ng-model="objProductos.factorMultiplicacion_Alm"><span class="highlight"></span> <span class="bar"></span>
+                                                            <label for="facmul">Factor Multiplicacion</label> <span class="help-block"></span>
+                                                        </div>
+                                                        <div class="form-group col-sm-6">
+                                                            <input type="text" class="form-control" id="facdiv" required ng-model="objProductos.factorDivisor_Alm"><span class="highlight"></span> <span class="bar"></span>
+                                                            <label for="facdiv">Factor Divisor</label> <span class="help-block"></span>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <fieldset>
+                                                    <legend>Conversión en las Ventas</legend>
+                                                    <div class="row Mtop-20 ">
+                                                        <div class="col-sm-12">
+                                                            <div class="form-group">
+                                                                <label class="col-md-12">Unidad de Medida</label>
+                                                                <div class="col-md-12">
+                                                                    <select class="selectModal" data-width="35%" ng-model="objProductos.id_UnidadMedidaVta" data-style="btn-default">
+                                                                        <option value="0">- Todos - </option>
+                                                                        <option ng-repeat="item in listUm" value="{{item.id_unidadMedida}}">{{item.nombre_UnidadMedida}}</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row Mtop10">
+                                                        <div class="form-group col-sm-6">
+                                                            <input type="text" class="form-control" id="facmul" required ng-model="objProductos.factorMultiplicacion_Vta"><span class="highlight"></span> <span class="bar"></span>
+                                                            <label for="facmul">Factor Multiplicacion</label> <span class="help-block"></span>
+                                                        </div>
+                                                        <div class="form-group col-sm-6">
+                                                            <input type="text" class="form-control" id="facdiv" required ng-model="objProductos.factorDivisor_Vta"><span class="highlight"></span> <span class="bar"></span>
+                                                            <label for="facdiv">Factor Divisor</label> <span class="help-block"></span>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                        </div>
+                                        <!-- SEXA LINAE -->
+                                        <div>
+                                            <div class="row ">
+                                                <div class="col-sm-6">
+                                                    <fieldset>
+                                                        <legend>Estado</legend>
+                                                        <div class="row Mtop-20">
+                                                            <div class="col-sm-6 ">
+                                                                <div class="form-group">
+                                                                    <div class="checkbox checkbox-success">
+                                                                        <input id="checkbox1" type="checkbox" ng-model="objEstados.activo" ng-change="changeStatus(objEstados.activo);">
+                                                                        <label for="checkbox1" class="estadoModal" style="color : {{objEstados.colorText}}">{{objEstados.text}}</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer ">
+                                    <button type="button" class="btn btn-info" ng-click="newProducto();">Nuevo</button>
+                                    <button type="button" class="btn btn-default " data-dismiss="modal">Cerrar</button>
+                                    <button type="button" class="btn btn-primary {{disabledContent}}" ng-click="saveProducto();">Guardar</button>
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                    </div>*@
+            </div>
+        </div>
+    </div>
+</div>

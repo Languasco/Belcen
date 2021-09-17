@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6c008920a43b4ab48a59ab3e3a77e5ef" Name="Diagram1" ZoomLevel="61" >
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Alm_Almacen" Width="1.5" PointX="8.25" PointY="45.125" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Alm_DetalleVentas" Width="1.5" PointX="0.75" PointY="3.375" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Alm_Movimientos" Width="1.5" PointX="8.25" PointY="34.625" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Alm_ProductoCategoria" Width="3.25" PointX="0.75" PointY="12.75" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Alm_ProductoLinea" Width="1.75" PointX="3" PointY="12.75" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Alm_ProductoMarca" Width="1.5" PointX="5.25" PointY="8.25" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Alm_ProductoModeloMarca" Width="2.75" PointX="3.25" PointY="17.5" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Alm_ProductoSubLinea" Width="2.5" PointX="5.25" PointY="12.625" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Alm_Transferencia_Cab" Width="1.5" PointX="9.75" PointY="3.625" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Alm_UnidadMedida" Width="1.5" PointX="5.25" PointY="20.5" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.Tbl_Cargo" Width="1.5" PointX="4.75" PointY="3.375" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.Tbl_Clientes_Fotos" Width="1.5" PointX="0.75" PointY="7.375" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.Tbl_Clientes_Programados" Width="1.5" PointX="0.75" PointY="17.375" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Com_Canales_Negocio" Width="1.5" PointX="6" PointY="38" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Com_Cliente" Width="1.5" PointX="8.25" PointY="38.125" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Com_Cliente_Credito" Width="1.5" PointX="0.75" PointY="10.375" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Com_CondicionFacturacion" Width="1.5" PointX="11.75" PointY="9.375" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.Tbl_Com_Facturas_Cab" Width="2.625" PointX="14.75" PointY="13.375" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Com_FormaPago" Width="1.5" PointX="16.75" PointY="3.375" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Com_Giros_Negocio" Width="1.5" PointX="6" PointY="41.25" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Com_Pedidos_Cab" Width="1.5" PointX="10.5" PointY="44.375" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.Tbl_Com_Pedidos_Det" Width="1.5" PointX="9.75" PointY="19.625" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Com_PuntoVenta" Width="1.5" PointX="8.25" PointY="31.125" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Com_TipoDocumento" Width="1.5" PointX="16.75" PointY="6.375" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.Tbl_Cuadrilla_Personal" Width="1.5" PointX="16.75" PointY="9.375" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.Tbl_Cuadrillas" Width="1.5" PointX="11.25" PointY="31.125" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Definicion_Opciones" Width="1.5" PointX="11.25" PointY="67.25" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.Tbl_Distritos" Width="1.5" PointX="16.75" PointY="12.375" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Empresas" Width="1.5" PointX="6" PointY="48" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.TBL_EstadoCelular" Width="1.5" PointX="16.75" PointY="15.375" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Estados" Width="1.5" PointX="16.75" PointY="18.375" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.Tbl_Fac_Facturas_Cab" Width="2.375" PointX="7" PointY="0.625" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.Tbl_Fac_Facturas_Det" Width="1.5" PointX="9.75" PointY="12.25" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.Tbl_Fac_FormaPago" Width="1.5" PointX="18.75" PointY="3.375" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Fac_ListaPrecios" Width="1.5" PointX="18.75" PointY="6.375" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.Tbl_Fac_PuntosVenta" Width="1.5" PointX="18.75" PointY="10.375" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.Tbl_Fac_PuntosVenta_Series" Width="1.5" PointX="18.75" PointY="14.375" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_fac_tipo_NC_ND_electronico" Width="1.5" PointX="13.75" PointY="21.375" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_GiroNegocio" Width="1.5" PointX="18.75" PointY="18.375" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.Tbl_GrupoTabla_Cab" Width="1.5" PointX="18.75" PointY="21.375" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.Tbl_GrupoTabla_Det" Width="1.5" PointX="0.75" PointY="22.375" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Locales" Width="1.5" PointX="6" PointY="44.625" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.TBL_MATERIALES_STOCK_AYUDA" Width="1.5" PointX="15.75" PointY="22.375" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Moneda" Width="1.5" PointX="8.25" PointY="27.875" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_MotivosAnulacion" Width="1.5" PointX="20.75" PointY="3.375" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.TBL_Operarios_RegistroGPS" Width="1.5" PointX="20.75" PointY="6.375" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.TBL_Parametros" Width="1.5" PointX="20.75" PointY="9.375" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Personal" Width="1.5" PointX="11.25" PointY="51.75" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_serie_local" Width="1.5" PointX="20.75" PointY="12.375" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_TipoCambio" Width="1.5" PointX="20.75" PointY="15.375" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.Tbl_TipoDocumentos" Width="1.5" PointX="11.25" PointY="57.25" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Ubigeos" Width="1.5" PointX="20.75" PointY="23.375" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Usuarios" Width="1.5" PointX="11.25" PointY="61.125" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Vehiculo" Width="1.5" PointX="2.75" PointY="24.375" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_vendedor" Width="1.5" PointX="4.75" PointY="24.375" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Web_Aceesos" Width="1.5" PointX="13.5" PointY="62.25" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.Versiones" Width="1.5" PointX="6.75" PointY="24.375" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.Tbl_Com_Facturas_Det" Width="2.5" PointX="17.75" PointY="24.375" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_numero_correlativo" Width="1.5" PointX="22.75" PointY="11.375" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Perfil" Width="1.5" PointX="22.75" PointY="15.375" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Ubigeo" Width="1.5" PointX="13.75" PointY="25.375" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Usuarios_Almacen" Width="1.5" PointX="13.5" PointY="46.75" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Usuarios_Locales" Width="1.5" PointX="13.5" PointY="54.5" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK__tbl_Usuar__id_Al__636EBA21" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_tbl_Alm_Almacen_tbl_Empresas" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_tbl_Alm_Almacen_tbl_Locales" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_tbl_Com_Pedidos_Cab_tbl_Alm_Almacen" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_tbl_Alm_ProductoLinea_tbl_Alm_ProductoCategoria" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_tbl_Alm_ProductoSubLinea_tbl_Alm_ProductoCategoria" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_tbl_Alm_ProductoSubLinea_tbl_Alm_ProductoLinea" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_tbl_Alm_ProductoModeloMarca_tbl_Alm_ProductoMarca" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_tbl_Com_Cliente_tbl_Com_Canales_Negocio" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_tbl_Com_Cliente_tbl_Com_Giros_Negocio" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_tbl_Com_Pedidos_Cab_tbl_Com_Cliente" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_tbl_Com_Pedidos_Cab_tbl_Empresas" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_tbl_Web_Aceesos_tbl_Definicion_Opciones" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK__tbl_Usuar__id_Lo__60924D76" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK__tbl_Usuar__id_Us__5F9E293D" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK__tbl_Usuar__id_Us__627A95E8" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_tbl_Web_Aceesos_tbl_Usuarios" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Alm_Producto" Width="2.125" PointX="23.5" PointY="18.25" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_tbl_Alm_Producto_tbl_Alm_ProductoCategoria" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_tbl_Alm_Producto_tbl_Alm_ProductoLinea" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_tbl_Alm_Producto_tbl_Alm_ProductoMarca" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_tbl_Alm_Producto_tbl_Alm_ProductoModeloMarca" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_tbl_Alm_Producto_tbl_Alm_ProductoSubLinea" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_tbl_Alm_Producto_tbl_Alm_UnidadMedida" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_Tbl_Com_Pedidos_Det_tbl_Alm_Producto" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_Tbl_Fac_Facturas_Det_Tbl_Alm_Productos" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.Tbl_Clientes" Width="1.5" PointX="25.375" PointY="0.75" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Promocion_Productos" Width="4" PointX="25.375" PointY="12.75" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Promocion_Productos_Configuracion" Width="4" PointX="26.375" PointY="17.75" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Anexos" Width="1.5" PointX="26.375" PointY="21.75" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Zonas_Venta" Width="1.5" PointX="26.375" PointY="26.75" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Transportista" Width="1.5" PointX="27.375" PointY="0.75" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Promocion_Canasta" Width="1.5" PointX="12.375" PointY="0.75" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Promocion_Canasta_Det" Width="1.5" PointX="9.375" PointY="23.75" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Alm_Proveedor" Width="1.5" PointX="20.375" PointY="26.75" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.Tbl_Fac_Facturas_Compras_det" Width="1.5" PointX="29.375" PointY="29.25" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_Tbl_Fac_Facturas_Compras_det_tbl_Alm_Producto" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_Tbl_Fac_Facturas_Compras_det_tbl_Alm_Producto1" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.Tbl_Com_Facturas_Cancelacion_Cab" Width="1.5" PointX="27.375" PointY="5.75" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Ruta_Venta" Width="1.5" PointX="0.75" PointY="28.75" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.Tbl_Fac_Pedidos_Cab" Width="1.5" PointX="16.5" PointY="37" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_Tbl_Fac_Pedidos_Cab_Tbl_Alm_Almacen" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_Tbl_Fac_Pedidos_Cab_tbl_Com_PuntoVenta" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_Tbl_Fac_Pedidos_Cab_Tbl_Cuadrillas" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_Tbl_Fac_Facturas_Det_Tbl_Fac_Facturas_Cab" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_Tbl_Fac_Pedidos_Cab_Tbl_Moneda" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_Tbl_Fac_Pedidos_Cab_Tbl_Personal" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_Tbl_Fac_Pedidos_Cab_Tbl_TipoDocumentos" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Alm_Guias_Det" Width="1.5" PointX="29.375" PointY="35.375" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_tbl_Alm_Guias_Det_tbl_Alm_Producto" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_tbl_Alm_Guias_Det_tbl_Alm_Producto1" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Alm_Guias_Cab" Width="1.5" PointX="19.5" PointY="45.625" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_tbl_Alm_Guias_Cab_tbl_Alm_Almacen" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_tbl_Alm_Guias_Cab_tbl_Alm_Movimientos" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_tbl_Alm_Guias_Cab_tbl_Com_PuntoVenta" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_tbl_Alm_Guias_Cab_tbl_Empresas" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_tbl_Alm_Guias_Cab_tbl_Moneda" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_tbl_Alm_Guias_Det_tbl_Alm_Guias_Cab" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.Tbl_Bancos" Width="1.5" PointX="10.375" PointY="27.75" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_ArqueoCaja_Cab" Width="1.5" PointX="3.375" PointY="28.75" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_ArqueoCaja_Cobranza" Width="1.5" PointX="5.375" PointY="28.75" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_ArqueoCaja_Devolucion" Width="1.5" PointX="28.375" PointY="21.75" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_ArqueoCaja_Moneda" Width="1.5" PointX="29.375" PointY="6.75" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_ArqueoCaja_Ventas" Width="1.5" PointX="15.375" PointY="29.75" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_BilleteMoneda" Width="1.5" PointX="17.375" PointY="29.75" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.Tbl_Fac_Pedidos_Det" Width="1.5" PointX="26.375" PointY="31.75" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_Tbl_Fac_Pedidos_Det_Tbl_Alm_Productos" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_ArqueoCaja_Depositos" Width="1.5" PointX="12.375" PointY="4.75" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_ArqueoCaja_PagoProveedor" Width="1.5" PointX="30.375" PointY="11.75" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_ArqueoCaja_Egresos" Width="1.5" PointX="29.375" PointY="0.75" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.Tbl_Fac_Facturas_Compras_cab" Width="1.5" PointX="19.5" PointY="33.25" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_Tbl_Fac_Facturas_Compras_cab_tbl_Alm_Almacen" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_Tbl_Fac_Facturas_Compras_cab_tbl_Alm_Movimientos" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_Tbl_Fac_Facturas_Compras_cab_tbl_Com_Cliente" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_Tbl_Fac_Facturas_Compras_cab_tbl_Com_PuntoVenta" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_Tbl_Fac_Facturas_Compras_cab_tbl_Empresas" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_Tbl_Fac_Facturas_Compras_cab_tbl_Moneda" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_Tbl_Fac_Facturas_Compras_det_Tbl_Fac_Facturas_Compras_cab" />
+        <EntityTypeShape EntityType="CAM_GestionAlmacenModel.tbl_Alm_Transferencia_Det" Width="1.5" PointX="12" PointY="13.375" />
+        <AssociationConnector Association="CAM_GestionAlmacenModel.FK_tbl_Alm_Transferencia_Det_tbl_Alm_Transferencia_Cab" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

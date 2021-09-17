@@ -1,0 +1,141 @@
+﻿
+
+<style>
+    .contentCombo .select2-container {
+        margin-left: 0px;
+        margin-top: -10px;
+        width: 98% !important;
+    }
+</style>
+
+<div class=" container" ng-init="initAll();">
+    <div class="panel-body ContentFilters contentCombo">
+
+
+        <div class="well" style="background-color:#dfe4ea;padding-bottom:0px;padding-top:0px">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="cbo_vendedor">Vendedor</label> <span class="help-block"></span>
+                            <select class="selectFiltros" id="cbo_vendedor" ng-model="Objeto_ParametroFiltro.vendedor">
+                                <option value="0">[ ----  SELECCIONE  --- ]</option>
+                                <option ng-repeat="item in Lista_Vendedor" value="{{item.id_personal}}">{{item.apellidos_personal}} {{item.nombres_personal}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6" style=" margin-bottom: 2px;">
+                            <label class="col-lg-12 control-label" style="text-align :left">Fecha de Cancelación</label>
+        
+                            <div class="input-group col-sm-6">                      
+                                <span class="input-group-addon"><i class="icon-calender"></i></span>
+                                <input ng-model="Objeto_ParametroFiltro.fecha_ini" id="dtp_fechaIni" type="text" class="form-control datepicker" placeholder="dia/mes/año">
+                            </div>
+                       </div>
+
+                    </div>
+
+                    <div class="row" style=" margin-bottom: 5px;">
+                        <div class="col-sm-6" style=" margin-top: 1px;">
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-addon">Buscar</span>
+                                <input id="inputSearch" type="text" placeholder="Busqueda General . . " style="width:100%" class="form-control btn-block inputSearch" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row" style="margin-top:1px;">
+                                <div class="col-md-6">
+                                    <button class="btn btn-block btn-success" ng-click="GenerarReporte();"><span class="glyphicon glyphicon-refresh"></span> Actualizar</button>
+                                </div>
+                                @*<div class="col-md-6">
+                                    <button class="btn btn-block btn-success" ng-click="GenerarCierreVentas();"><span class="glyphicon glyphicon-search"></span> Cierra de Ventas</button>
+                                </div>*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-inline ">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div style="text-align:center">
+                                    <div class="cssload-speeding-wheel" ng-if="loaderSave"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="white-box">
+
+                    <table id="tablaCancelacionVendedor" class="table m-b-0 toggle-arrow-tiny" data-page-size="10">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th style="text-align :left ">
+                                    <div class="checkbox clip-check check-danger checkbox-inline" style=" margin-left: 0px;">
+                                        <input type="checkbox" id="checkboxAll" value="1" ng-model="checkedAll" ng-click="checkedAll_CancelacionDocumentos(checkedAll)">
+                                        <label for="checkboxAll" style="color:red"> Todos</label>
+                                    </div>
+                                    </th>
+                            </tr>
+                            <tr>
+                                <th>#</th>
+                                <th>CLIENTE</th>
+                                <th>FECHA DOC.</th>
+                                <th>NRO. DOC</th>
+                                <th>TOTAL</th>
+                                <th>CUENTA</th>
+                                <th>PAGO</th>
+                                <th>DEUDA TOTAL</th>
+                                <th>CONFORM.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in Lista_CancelacionVendedor">
+                                <td>{{$index+1}}</td>
+                                <td>{{item.nombres_Cliente}}  </td>
+                                <td>{{item.fecha_doc}}</td>
+                                <td>{{item.nro_documento}}</td>
+                                <td style="text-align :right">{{item.total}}</td>
+                                <td style="text-align :right">{{item.cuenta}}</td>
+                                <td style="text-align :right">{{item.pago}}</td>
+                                <td style="text-align :right">{{item.deuda}}</td>
+                                <td style="text-align :left ">
+                                    <div class="checkbox clip-check check-primary checkbox-inline">
+                                        <input type="checkbox" id="checkbox{{$index}}" value="true" ng-model="item.checkeado" ng-disabled={{item.disabled}}>
+                                        <label for="checkbox{{$index}}">
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="text-right">
+                        <ul class="pagination pagination-split m-t-30"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr />
+        <div class="row" style=" margin-bottom: 5px;">
+            <div class="col-md-12">
+                <div class="row" style="margin-top:1px; text-align :center">
+                    <div class="col-md-12">
+                        <button class="btn btn-sm btn-danger" ng-click="ActualizarDocumento();"><span class="glyphicon glyphicon-usd"></span>  Actualizar Pagos</button>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

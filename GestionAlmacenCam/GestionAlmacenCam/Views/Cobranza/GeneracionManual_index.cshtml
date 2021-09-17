@@ -1,0 +1,496 @@
+﻿
+<style>
+    .container-s {
+        display: flex;
+        width: 80%;
+    }
+
+    table {
+        display: block;
+        overflow: scroll;
+    }
+
+
+    #listMenu span, a {
+        text-align: left !important;
+    }
+
+    .contentRegistro fieldset legend {
+        text-align: left !important;
+    }
+
+    .jq-toast-wrap {
+        width: 300px !important;
+    }
+
+    .floating-labels label {
+        top: -6px;
+    }
+
+    .contentRegistro .select2-container {
+        margin-left: 0px;
+        margin-top: 2px;
+    }
+
+    #paddin-lef {
+        padding-left: 40px !important;
+    }
+
+    .contentCombo .select2-container {
+        margin-left: 0px;
+        margin-top: 0px;
+        width: 95% !important;
+    }
+
+    .contentRegistro label {
+        font-size: 11px;
+        font-family: tahoma;
+        color: #2c5ca9;
+        font-weight: 600;
+    }
+
+    .contentRegistro {
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .ModalBorderSombra .modal-content {
+        box-shadow: inset 0px 0px 7px rgba(0,0,0,.5), 1px 1px 5px #fff;
+    }
+
+
+
+    .resaltado {
+        color: #ff94a7 !important;
+    }
+
+    .text-right {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    .shadow {
+        /*box-shadow: 0px 0px 2px 0px;*/
+        
+    }
+
+    .shadow:hover {
+        box-shadow: 0px 0px 4px 0px;
+    }
+
+    .card-search {
+        margin-bottom: 7px;
+        cursor: pointer;
+    }
+    .content-search {
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+    .font-p1 {
+        font-size: 15px;
+        cursor: pointer;
+    }
+    .font-p2 {
+        font-size: 13px;
+        cursor: pointer;
+    }
+
+</style>
+
+
+
+
+<div class="container" ng-init="initAll(); ">
+
+    <br />
+    <section id="ubicacion">
+        <div class="panel-body ContentFilters contentCombo">
+
+            <div class="container card" style="background-color: #2b4c6c; padding-bottom: 0px; padding-top: 0px;color: #fff;">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-4 col-md-4 ">
+                        <label for="cbo_local">Anexo</label> <span class="help-block"></span>
+                        <select class="selectFiltros" id="cbo_anexo" ng-model="parametros_filtro.idAnexo">
+                            <option value="0">[ ----  SELECCIONE  --- ]</option>
+                            <option ng-repeat="item in lista_anexos" value="{{item.id}}">{{item.descripcion}}</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-12  col-sm-4 col-md-4 ">
+                        <label for="cbo_almacen">Zona Venta</label> <span class="help-block"></span>
+                        <select class="selectFiltros" id="cbo_zonaVenta" ng-model="parametros_filtro.idZonaVentas">
+                            <option value="0">[ ----  SELECCIONE  --- ]</option>
+                            <option ng-repeat="item in lista_zonaVentas" value="{{item.id}}">{{item.descripcion}}</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-12 col-sm-4 col-md-4 ">
+                        <label for="cbo_vendedor">Vendedor</label> <span class="help-block"></span>
+                        <select class="selectFiltros" id="cbo_vendedor" ng-model="parametros_filtro.idVendedor">
+                            <option value="0">[ ----  SELECCIONE  --- ]</option>
+                            <option ng-repeat="item in lista_vendedor" value="{{item.id}}">{{item.descripcion}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 5px;">
+                    <div class="col-xs-12 col-sm-4 col-md-4">
+                        <label for="cbo_almacen">Rango de Fechas</label>
+                        <div class="input-group col-md-12">
+                            <input ng-model="parametros_filtro.fechaIni" id="dtp_fechaIni" type="text" class="form-control datepicker" placeholder="dia/mes/año">
+                            <span class="input-group-addon bg-primary" style="color:white">al</span>
+                            <input ng-model="parametros_filtro.fechaFin" id="dtp_fechaFin" type="text" class="form-control datepicker" placeholder="dia/mes/año">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-4 col-md-4 ">
+                        <br />
+                        <button id="btn-material" class="btn btn-primary btn-sm m-l-10" ng-click="getCobranzaManual();">
+                            <i class="glyphicon glyphicon-search"></i> Buscar
+                        </button>
+                        <button id="btn-material" class="btn btn-outline btn-primary btn-sm m-l-10" ng-click="Open_New_Modal();">
+                            <i class="glyphicon glyphicon-plus"></i> Nuevo
+                        </button>
+                    </div>
+                </div>
+                <br />
+                <a id="id_link" href="" download style="display:none">link</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="cabeceras" style="margin-bottom: -30px;">
+        <div class="panel-body ContentFilters contentCombo">
+            <div class="form-inline ">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div style="text-align:center">
+                            <div class="cssload-speeding-wheel" ng-if="loaderfiltro"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div style="padding-left: 45%;" ng-if="showLoaderSave">
+        <p class="loader">
+        </p>
+    </div>
+
+    <div class="panel-body ContentFilters">
+        <div class="form-inline ">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div style="text-align:center">
+                        <div class="cssload-speeding-wheel" ng-if="loader"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="white-box">
+                    <table id="tbl_cobranzaManual" class="table m-b-0 toggle-arrow-tiny table-hover table-bordered" data-page-size="10">
+                        <thead>
+                            <tr>
+                                <th data-toggle="true">Item</th>
+                                <th data-toggle="true">Zona de Venta</th>
+                                <th data-toggle="true">Vendedor</th>
+                                <th>Fecha de Emisión</th>
+                                <th>Tipo Doc.</th>
+                                <th>Serie</th>
+                                <th>Numero</th>
+                                <th>Tipo Factura</th>
+                                <th>Doc. Identidad Cliente</th>
+                                <th>Nombre Cliente/Razon Social</th>
+                                <th>Condición de Pago</th>
+                                <th>Total Factura</th>
+                                <th>Saldo Pendiente</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in lista_cobranza">
+                                <td>{{$index + 1}}</td>
+                                <td>{{item.zonaVenta}}</td>
+                                <td>{{item.vendedor}}</td>
+                                <td>{{item.fechaEmision_Factura_Cab}}</td>
+                                <td>{{item.tipo_doc}}</td>
+                                <td>{{item.nro_Serie}}</td>
+                                <td>{{item.Numero_Documento}}</td>
+                                <td>{{item.total_pagado}}</td>
+                                <td>{{item.doc_cliente}}</td>
+                                <td>{{item.nombres_Cliente}}</td>
+                                <td>{{item.condicion_pago}}</td>
+                                <td>{{item.total_factura}}</td>
+                                <td>{{item.saldo_pendiente}}</td>
+                                <td>{{item.estado == 0 | iif : "Anulado" : "Activado"}}</td>
+                                <td>
+                                    <button type="button" class="btn btn-primary btn-circle " ng-click="Open_Update_Modal(item);" data-toggle="tooltip" title="EDITAR"><i class=" ti-pencil-alt"></i></button>
+                                    @*<button type="button" class="btn btn-success btn-circle" ng-click="getAuditoria(item)"><i class="fa fa-cog"></i> </button>*@
+                                    @*<button type="button" class="btn btn-warning btn-circle" ng-click="getAnular(item);" style="background-color: #ff6849; border-color: #ff6849;" title="ANULAR"><i class="fa fa-trash"></i> </button>*@
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="text-right">
+                        <ul class="pagination pagination-split m-t-30"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="modalMantenimiento" class="modal fade bd-example-modal-lg " tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style=" width: 90%;">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #2b4c6c ">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myLargeModalLabel" style="color:white !important">{{Flag_modoEdicion ? 'Actualizar': 'Registrar'}} {{titleModal}}</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="loaderModal" ng-if="loaderSave"></div>
+
+                <div class="contentRegistro contentCombo floating-labels form-inline">
+                    <div class="row" style="margin-bottom: 20px; margin-top: 20px;">
+                        <div class="col-md-4">
+                            <label for="m_anexo" style=" margin-top: -11px; text-align:center" class="col-sm-2 control-label">Anexo</label>
+                            <select class="selectFiltros" id="m_anexo" ng-model="objeto_parametros.id_Anexo">
+                                <option value="0">[ ----  SELECCIONE  --- ]</option>
+                                <option ng-repeat="item in lista_anexos" value="{{item.id}}">{{item.descripcion}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="m_zonaVenta" style=" margin-top: -11px; text-align:center" class="control-label">Zona Ventas</label>
+                            <select class="selectFiltros" id="m_zonaVenta" ng-model="objeto_parametros.id_ZonaVta" ng-change="getAlmacenes(objeto_parametros.id_ZonaVta);">
+                                <option value="0">[ ----  SELECCIONE  --- ]</option>
+                                <option ng-repeat="item in lista_zonaVentas" value="{{item.id}}">{{item.descripcion}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="m_almacen" style=" margin-top: -11px; text-align:center" class="col-sm-2 control-label">Almacen</label>
+                            <select class="selectFiltros" id="m_almacen" ng-model="objeto_parametros.id_Almacen">
+                                <option value="0">[ ----  SELECCIONE  --- ]</option>
+                                <option ng-repeat="item in lista_almacenes" value="{{item.id}}">{{item.descripcion}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row contenedorGrupo panel-body ContentFilters contentCombo contentRegistro">
+                    <div class="col-sm-6">
+                        <fieldset>
+                            <legend>Datos</legend>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <form class="form-horizontal" role="form">
+                                        <div class="loaderModal" ng-if="loader_modal"></div>
+                                        <div class="form-group" style="margin-top: -10px;">
+                                            <div class="col-xs-12 col-sm-4 col-md-6 col-lg-4 ">
+                                                <label for="ejemplo" class="col-sm-4  control-label">Cliente</label>
+                                                <div class="col-sm-8">
+                                                    <div class="input-group">
+                                                        <input type="text" id="txt_cod_cliente" class="form-control" ng-enter="Buscar_Cliente();" style="background-color: beige" ng-model="objeto_parametros.doc_cliente" placeholder="Nro. Doc">
+                                                        <div class="input-group-btn">
+                                                            <button class="btn btn-primary" ng-click="Open_New_Modal_AyudaCliente();"><span class="glyphicon glyphicon-zoom-in"></span></button>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-8 col-md-6 col-lg-8  ">
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <button href="#" class="btn btn-success" ng-click="AbrirModal_Mant_Clientes();"><span class="glyphicon glyphicon-list-alt"></span> </button>
+                                                    </span>
+                                                    <input type="text" class="form-control" ng-model="objeto_parametros.nombres_Cliente" disabled placeholder="Datos del cliente">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-sm-9">
+                                                <label for="m_vendedor" style="margin-top: -11px;" class="col-sm-3 control-label">Vendedor</label>
+                                                <div class="col-sm-9">
+                                                    <select class="selectFiltros" id="m_vendedor" ng-model="objeto_parametros.id_PersonalVendedor">
+                                                        <option value="0">[ ----  SELECCIONE  --- ]</option>
+                                                        <option ng-repeat="item in lista_vendedor" value="{{item.id}}">{{item.descripcion}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-9">
+                                                <label for="m_puntoVenta" style="margin-top: -11px;" class="col-sm-3 control-label">Punto de Venta</label>
+                                                <div class="col-sm-9">
+                                                    <select class="selectFiltros" id="m_puntoVenta" ng-model="objeto_parametros.id_PuntoVenta">
+                                                        <option value="0">[ ----  SELECCIONE  --- ]</option>
+                                                        <option ng-repeat="item in lista_puntoVenta" value="{{item.id}}">{{item.descripcion}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style=" margin-bottom: 1px;">
+                                            <div class="col-sm-12">
+                                                <label for="m_condicion" style="margin-top: -11px;" class="col-sm-3 control-label">Condicion de Facturacion</label>
+                                                <div class="col-sm-9">
+                                                    <select class="selectFiltros" id="m_condicion" ng-model="objeto_parametros.id_FormaPago">
+                                                        <option value="0">[ ----  SELECCIONE  --- ]</option>
+                                                        <option ng-repeat="item in Lista_CondicionFact" value="{{item.id_detalleTabla}}">{{item.descripcion_grupoTabla}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <fieldset>
+                            <legend>.</legend>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+                                    <label for="m_tipoDoc" class="control-label">Tipo de Documento</label> <span class="help-block"></span>
+                                    <select class="selectFiltros" id="m_tipoDoc" ng-model="objeto_parametros.id_TipoDocumento" ng-change="change_tipoDoc();Change_TipoDoc_Numeracion();">
+                                        <option value="0">[ -SELECCIONE- ]</option>
+                                        <option ng-repeat="item in Lista_TipoDoc" value="{{item.id_TipoDocumento}}">{{item.Descripcion_TipoDocumento}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 selected-element animate-show-hide" ng-show="objeto_parametros.id_TipoDocumento == 3">
+                                    <label for="cbo_TipoDoc" class="control-label">Transporte</label> <span class="help-block"></span>
+                                    <div class="input-group col-xs-12 col-sm-12">
+                                        <input id="chk_transporrte" type="checkbox" ng-model="checkboxModel.value2" ng-true-value="'1'" ng-false-value="'0'" ng-change="change_transporte(checkboxModel.value2);">
+                                    </div>
+                                </div>
+
+                                <div class=" col-xs-12 col-sm-12 col-md-6 col-lg-4">
+                                    <label for="cbo_TipoDoc" class="control-label">Nro Docum.</label> <span class="help-block"></span>
+                                    <div class="row" style="margin-top: -10px;">
+                                        <div class="col-md-4">
+                                            <input ng-model="objeto_parametros.nro_Serie" id="dtp_serie" type="text" class="form-control" ng-disabled="Flag_modoEdicion ? true: false" placeholder="Serie" style="margin-right: 10px; background-color: beige;">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input ng-model="objeto_parametros.numero" id="dtp_numero" type="text" class="form-control" ng-disabled="Flag_modoEdicion ? true: false" style="background-color: beige;" placeholder="Nro. Doc">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12  col-sm-12 col-md-6 col-lg-4">
+                                    <label class="col-sm-12 control-label" style="text-align :left">Fecha Doc.</label>
+                                    <div class="input-group col-xs-12 col-sm-12">
+                                        <span class="input-group-addon"><i class="icon-calender"></i></span>
+                                        <input ng-model="objeto_parametros.fechaEmision_Factura_Cab" ng-enter="enterFocus(1,'txt_observaciones')" id="dtp_doc" type="text" class="form-control datepicker ng-pristine ng-untouched ng-valid" placeholder="dia/mes/año">
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <form class="form-horizontal" role="form">
+                                        @*<div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label for="m_vehiculo" style="margin-top: -11px;" class="col-sm-4 control-label">Unidad Vehicular</label>
+                                                <div class="col-sm-8">
+                                                    <select class="selectFiltros" id="m_vehiculo">
+                                                        <option value="0">[ -SELECCIONE- ]</option>
+                                                        <option ng-repeat="item in Lista_Vehiculo" value="{{item.id_vehiculo}}">{{item.vehiculo_Placa}}  : {{item.marca_Vehiculo}} </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>*@
+                                        <div class="form-group">
+                                            <div class="col-sm-12" style=" margin-bottom: -13px;">
+
+                                                <div class="selected-element animate-show-hide" ng-show="objeto_parametros.id_TipoDocumento != 1">
+                                                    <label for="txt_observaciones" style="margin-top: -11px;" class=" col-xs-12 col-sm-4 col-md-3  control-label">Observaciones</label>
+                                                    <div class="col-xs-12 col-sm-8 col-md-9">
+                                                        <input type="text" class="form-control" ng-enter="enterFocus(1,'btnGuardarCab')" ng-model="objeto_parametros.observaciones_Factura_Cab" style="margin-top: -12px;" placeholder="Observaciones / Comentarios">
+                                                    </div>
+                                                </div>
+                                                <div class="selected-element animate-show-hide" ng-show="objeto_parametros.id_TipoDocumento == 1">
+                                                    <label for="txt_observaciones" style="margin-top: -11px;" class=" col-xs-12 col-sm-4 col-md-3  control-label">Observaciones</label>
+                                                    <div class="col-xs-12 col-sm-8 col-md-9">
+                                                        <input type="text" class="form-control" ng-enter="enterFocus(1,'btnGuardarCab')" ng-model="objeto_parametros.observaciones_Factura_Cab" style="margin-top: -12px;" placeholder="Observaciones / Comentarios /Nro Guia de remision(opcional)">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="contentRegistro contentCombo floating-labels form-inline">
+                    <div>
+                        <div class="row ">
+                            <div class="col-sm-6">
+                                <fieldset>
+                                    <legend>Estado</legend>
+                                    <div class="row " style=" margin-top: -10px;">
+                                        <div class="col-sm-6 ">
+                                            <div class="form-group">
+                                                <div class="checkbox checkbox-success">
+                                                    <input id="checkbox1" type="checkbox" disabled ng-model="objEstados.activo" ng-change="changeStatus(objEstados.activo);">
+                                                    <label for="checkbox1" class="estadoModal" style="color : {{objEstados.colorText}}">{{objEstados.text}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer ">
+                <a class="btn btn-primary" ng-click="GuardarRegistro();"> <span class="glyphicon glyphicon-floppy-disk"></span> {{Flag_modoEdicion ? 'Actualizar': 'Agregar'}}</a>
+                <a class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-sign"></span> Cerrar</a>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<div id="modalAyuda_Cliente" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="loaderModal" ng-if="loaderSearch"></div>
+            <div class="row" style="margin: 10px;">
+                <div class="col-sm-12">
+                    <input type="text" id="searchStr" data-ng-model="searchStr" class="form-control" autocomplete="off" placeholder="Buscar cliente">
+                </div>
+            </div>
+            <div class="content-search" ng-repeat="item in Lista_Busqueda_Cliente" ng-click="Agregar_Cliente(item);" style="background-color: white;">
+                <div class="col-sm-12 shadow card-search">
+                    <div class="font-p1">
+                        <label class="font-p1"><strong>{{item.nombres_Cliente}}</strong></label>
+                    </div>
+                    <div class="row" style="margin-top: -10px">
+                        <div class="col-sm-4">
+                            <label class="font-p2">Nro. Doc: <strong>{{item.nroDoc_Cliente}}</strong></label>
+                        </div>
+                        <div ng-if="item.direccion_referencia != null || item.direccion_referencia != ''" class="col-sm-8">
+                            <label class="font-p2">Dirección: <strong>{{item.direccion_referencia}}</strong></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer ">
+                <a class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-sign"></span> Cerrar</a>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

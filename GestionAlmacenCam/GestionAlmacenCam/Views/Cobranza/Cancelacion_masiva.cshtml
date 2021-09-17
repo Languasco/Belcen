@@ -1,0 +1,695 @@
+﻿<style>
+    label {
+        font-size: 11px;
+        font-family: tahoma;
+        color: #2c5ca9;
+        font-weight: 600;
+    }
+
+    .contentCombo .select2-container {
+        margin-left: 0px;
+        margin-top: 0px;
+        width: 95% !important;
+    }
+
+    .select2-results .select2-result-label {
+        font-size: 11px !important;
+    }
+
+    #form_detalle {
+        height: 385px;
+    }
+
+    #tbl_detalle {
+        width: 95% !important;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #00c292;
+    }
+
+    .contenedorGrupo legend {
+        font-size: 12px !important;
+        font-family: GillSans, Calibri, Trebuchet, sans-serif;
+        color: #2c5ca9;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+
+    .contenedorGrupo fieldset {
+        padding-left: 20px;
+        padding-right: 20px;
+        border: 1px solid #2c4d6d;
+        padding-bottom: 10px;
+        border-radius: 4px;
+    }
+
+    .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+        padding: 7px 7px;
+    }
+
+   .jq-toast-wrap {
+        width: 350px;
+    }
+
+    /*tr:nth-child(even) {
+        background-color: #DFFFDE
+    }*/
+ 
+    .table tbody td {
+        color: #275420;
+        border-left: 1px solid #C6FFC2;
+        font-size: 11px;
+        border-bottom: 1px solid #E1EEF4;
+        font-weight: normal;
+    }
+
+    .sweet-alert p {
+        line-height: 30px;
+        font-size: 13px;
+        font-family: monospace;
+        color: red;
+    }
+
+    .btn-success, .btn-success.disabled {
+        background: rgb(54, 117, 45);
+        border: rgb(54, 117, 45);
+    }
+ 
+    tr:hover {
+        background-color: #ffff99;
+    }
+
+  .Cancelacion_masiva_stilos {
+        background-color: #36752D;
+        color: white;
+        text-align: center
+    } 
+
+    .Cancelacion_tabla_stilos tbody tr {
+        /*font-family: 'Montserrat', sans-serif;*/
+        font-size: 9px;
+    }
+ 
+    .Cancelacion_masiva_stilos_input {
+        margin-top: -5px;
+        margin-bottom: -10px;
+        height: 25px;
+        text-align: right;
+        color: red;
+        background-color: beige;
+        font-family: tahoma;
+        font-size: 13px;
+    }
+
+    .Cancelacion_centrar_stilos {
+        text-align: center !important
+    }
+    .Cancelacion_formatear_stilos {
+        text-align: right;
+        font-size: 13px;
+    }
+    .Cancelacion_medioPago_stilos {
+        background-color: #16a085;
+        cursor: pointer
+    }
+
+    /* input file */
+    .botonFile {
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+        width: 98%;
+    }
+
+        .botonFile .btn {
+            border: 2px solid gray;
+            color: gray;
+            background-color: white;
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: bold;
+            width: 100%;
+        }
+
+    /* Fin de input file */
+
+
+    .sweet-alert p {
+        color: #2c5ca9 !important;
+        font-size: 13px !important;
+        font-family: tahoma !important;
+        text-align: center !important;
+        font-weight: 600 !important;
+    }
+
+    .contentRegistro {
+        margin: 0 auto;
+        width: 100%;
+    }
+ 
+
+</style>
+<script type="text/javascript">
+    function filterFloat(evt, input) {
+        // Backspace = 8, Enter = 13, ‘0′ = 48, ‘9′ = 57, ‘.’ = 46, ‘-’ = 43
+        var key = window.Event ? evt.which : evt.keyCode;
+        var chark = String.fromCharCode(key);
+        var tempValue = input.value + chark;
+        if (key >= 48 && key <= 57) {
+            if (filter(tempValue) === false) {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            if (key == 8 || key == 13 || key == 0) {
+                return true;
+            } else if (key == 46) {
+                if (filter(tempValue) === false) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } else {
+                return false;
+            }
+        }
+    }
+    function filter(__val__) {
+        var preg = /^([0-9]+\.?[0-9]{0,3})$/;
+        if (preg.test(__val__) === true) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+</script>
+
+
+<div class="container-fluid  " ng-init="initAll();">
+
+    <div class="  ContentFilters contentCombo " style="background-color:white; padding: 5px; margin-top: 5px;">
+        <div class="row">
+            <div class="col-sm-6 col-md-3">
+                <label for="cbo_local">Zona Venta</label>
+                <br />
+                <select class="selectFiltros" id="cbo_local" ng-model="Objeto_ParametroFiltro.id_local" ng-change="change_Local_vendedor(Objeto_ParametroFiltro.id_local); change_Local_transportista(Objeto_ParametroFiltro.id_local); change_zona_anexo(Objeto_ParametroFiltro.id_local)">
+                    <option value="0">[ ----  SELECCIONE  --- ]</option>
+                    <option ng-repeat="item in Lista_Local" value="{{item.id}}">{{item.descripcion}}</option>
+                </select>
+            </div>
+
+            <div class="col-sm-6 col-md-3">
+                <label for="cbo_anexo" class="control-label"> Anexo </label>  <br />
+                <select class="selectFiltros" id="cbo_anexo" style="width:95%;" data-style="btn-default" ng-model="Objeto_ParametroFiltro.id_Anexos">
+                    <option value="0">[ ----  SELECCIONE  --- ]</option>
+                    <option ng-repeat="item in lista_anexos" value="{{item.id}}">{{item.descripcion}}</option>
+                </select>
+            </div>
+            <div class="col-sm-6 col-md-6">
+                <div class="form-group" style="    margin-bottom: 0px;">
+                    <label class="control-label" style="text-align :left">Rango de Fechas</label>
+                    <br>
+                    <div class="input-group">
+                        <input ng-model="Objeto_ParametroFiltro.fechaIni" id="dtp_fechaIni" type="text" class="form-control input-sm   datepicker" placeholder="dia/mes/año">
+                        <span class="input-group-addon bg-primary" style="color:white">al</span>
+                        <input ng-model="Objeto_ParametroFiltro.fechaFin" id="dtp_fechaFin" type="text" class="form-control input-sm   datepicker" placeholder="dia/mes/año">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6 col-md-3">
+                <label for="cbo_vendedor" style="font-size: 11px;font-family: tahoma;   font-weight: 600;">Vendedor</label>   <br />
+                <select class="selectFiltros" id="cbo_vendedor" ng-model="Objeto_ParametroFiltro.vendedor" ng-change="change_vendedor(Objeto_ParametroFiltro.vendedor)">
+                    <option value="0">[ ----  TODOS  --- ]</option>
+                    <option ng-repeat="item in Lista_Vendedor" value="{{item.id}}">{{item.descripcion}}  </option>
+                </select>
+            </div>
+            <div class="col-sm-6 col-md-3">
+                <label for="cboTransportista" style="font-size: 11px;font-family:Tahoma;  font-weight: 600;" class="control-label"> Transportista </label>   <br />
+                <select class="selectFiltros" id="cboTransportista" ng-model="Objeto_ParametroFiltro.id_transportista">
+                    <option value="0">[ ----  SELECCIONE  --- ]</option>
+                    <option ng-repeat="item in Lista_Transportista " value="{{item.id}}">{{item.descripcion}}</option>
+                </select>
+            </div>
+
+            <div class="col-sm-6 col-md-3">
+                <label for="cboTipoDoc" class="control-label"> Tipo Documento </label> <br />
+                <select class="selectFiltros" id="cboTipoDoc" ng-model="Objeto_ParametroFiltro.id_tipoDoc">
+                    <option value="0">[ ----  TODOS  --- ]</option>
+                    <option ng-repeat="item in lista_documentos " value="{{item.id}}">{{item.descripcion}}</option>
+                </select>
+            </div>
+
+            <div class="col-sm-6 col-md-3">
+                <div class="form-group" style="margin-top: 22px; margin-bottom: 0px;">
+                    <button class="btn btn-primary" style="font-family: tahoma; font-size: 13px;" ng-click="actualizar_informacion();"><span class="glyphicon glyphicon-refresh"></span> Actualizar</button>
+                </div>
+            </div>
+        </div>
+
+        <a id="id_link" href="" download style="display:none">link</a>
+
+
+    </div>
+
+    <div class="  ContentFilters contentCombo " style="background-color:#f5f5dc; padding: 5px; margin-top: 5px;">
+        <div class="row">
+            <div class="col-sm-6 col-md-3">
+                <div class="radio">
+                    <input id="radio1_Opt1" type="radio" ng-model="Objeto_ParametroFiltro.tipoResponsable" value="1" checked ng-change="changeTipoResponsable()">
+                    <label for="radio1_Opt1" style="font-size: 11px;font-family: tahoma; color: green;  font-weight: 600;">Responsable Cobranza Vendedor</label>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-3">
+                <div class="radio">
+                    <input type="radio" id="radio1_Opt2" ng-model="Objeto_ParametroFiltro.tipoResponsable" value="2" ng-change="changeTipoResponsable()">
+                    <label for="radio1_Opt2" style="font-size: 11px;font-family: tahoma; color: red;  font-weight: 600;">Responsable Cobranza Transportista</label>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-3" ng-if="Objeto_ParametroFiltro.tipoResponsable == 1">
+                <label for="cbo_vendedor_cobranza" style="font-size: 11px;font-family: tahoma; color: green;  font-weight: 600;">Vendedor</label>   <br />
+                <select class="selectFiltros" id="cbo_vendedor_cobranza" ng-model="Objeto_ParametroFiltro.vendedor_cobranza">
+                    <option value="0">[ ----  SELECCIONE  --- ]</option>
+                    <option ng-repeat="item in Lista_Vendedor" value="{{item.id}}">{{item.descripcion}}  </option>
+                </select>
+            </div>
+            <div class="col-sm-6 col-md-3" ng-if="Objeto_ParametroFiltro.tipoResponsable == 2">
+                <label for="cboTransportista_cobranza" style="font-size: 11px;font-family: tahoma; color: red;  font-weight: 600;" class="control-label"> Transportista </label>   <br />
+                <select class="selectFiltros" id="cboTransportista_cobranza" ng-model="Objeto_ParametroFiltro.id_transportista_cobranza">
+                    <option value="0">[ ----  SELECCIONE  --- ]</option>
+                    <option ng-repeat="item in Lista_Transportista " value="{{item.id}}">{{item.descripcion}}</option>
+                </select>
+            </div>
+
+            <div class="col-sm-6 col-md-3">
+                <label class="control-label" style="text-align :left">Fecha Pago:</label>
+                <input ng-model="Objeto_ParametroFiltro.fecha_cancelacion" style="width:100px;" ng-enter="enterFocus(1,'txt_observaciones')" id="dtp_doc" type="text" class="form-control input-sm datepicker " placeholder="dia/mes/año"> 
+            </div>
+
+        </div>
+    </div>
+ 
+
+        <div class="form-inline ">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div style="text-align:center">
+                        <div class="loaderModal" ng-if="loaderfiltros"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="form_detalle" style="display:none">
+            <table id="tbl_detalle" class="table Cancelacion_tabla_stilos">
+                <thead>
+                    <tr style="font-family: sans-serif; font-size: 10px;">
+                        <th class="Cancelacion_masiva_stilos">#</th>
+                        <th class="Cancelacion_masiva_stilos">TIPO_DOC</th>
+                        <th class="Cancelacion_masiva_stilos">NRO_DOC</th>
+
+                        <th class="Cancelacion_masiva_stilos">TOTAL_CANCELADO</th>
+                        <th class="Cancelacion_masiva_stilos">TOT_RETENCION</th>
+                        <th class="Cancelacion_masiva_stilos">TOT_DETRACCION</th>
+
+                        <th class="Cancelacion_masiva_stilos">SALDO_PENDIENTE</th>
+                        <th class="Cancelacion_masiva_stilos">CANCELAR</th>
+                        <th class="Cancelacion_masiva_stilos">IMPORTE_PAGAR</th>
+
+                        <th class="Cancelacion_masiva_stilos">NUEVO_SALDO</th>
+
+                        <th class="Cancelacion_masiva_stilos">CONDICIÓN_PAGO</th>
+                        <th class="Cancelacion_masiva_stilos">MODO_PAGO</th>
+                        <th class="Cancelacion_masiva_stilos">CLIENTE</th>
+
+                    </tr>
+                    <tr style="font-family: sans-serif; font-size: 10px;">
+                        <th></th>
+                        <th colspan="2">
+                            <input type="text" class="form-control" id="buscar" style="margin-top: -4px;margin-bottom: -4px; height:25px; color: black;  background-color: beige;font-family: tahoma;font-size: 13px;" placeholder="Buscar">
+                        </th>
+                        <th></th>
+                        <th>
+
+                        </th>
+                        <th></th>
+                        <th></th>
+                        <th>
+                            <div class="checkbox clip-check check-danger checkbox-inline" style="margin-left: 10px;">
+                                <input type="checkbox" id="checkboxAll" title="Todos" value="1" ng-model="checkedAll" ng-click="marcarTodos(checkedAll)">
+                                <label for="checkboxAll">
+                                    Todos
+                                </label>
+                            </div>
+                        </th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in listadetalle_documentos">
+                        <td> {{$index+1}} </td>
+                        <td style="width:80px; cursor:pointer" title="Click para ver Detalles de Pago" ng-click="abrir_modal_detallePagos(item)"> {{item.tipo_doc}} </td>
+                        <td title="Click para ver Detalles de Pago"> <div style="width:80px; cursor:pointer" ng-click="abrir_modal_detallePagos(item)">  {{item.nro_doc}} </div></td>
+
+                        <td title="Click para ver Detalles de Pago" style="text-align:right; cursor:pointer" ng-click="abrir_modal_detallePagos(item)" > {{item.totalCancelado}} </td>
+                        <td style="text-align:right"> {{item.totalRetencion}} </td>
+                        <td style="text-align:right"> {{item.totalDetraccion}} </td>
+
+                        <td style="text-align:right"> {{item.saldo_pendiente}} </td>
+                        <td>
+                            <div style=" text-align:left; margin-top: -7px;margin-left: 10px;">
+                                <input type="checkbox" id="chk_{{$index}}" value="true" ng-model="item.cancelar" ng-click="leyendas()">
+                            </div>
+                        </td>
+                        <td class="Cancelacion_centrar_stilos">
+                            <div class="Cancelacion_centrar_stilos">
+                                <input type="text" class="form-control Cancelacion_masiva_stilos_input" id="id_{{$index}}" onkeypress="return filterFloat(event,this);" ng-keypress="KeyDown_saldo($event,item,$index)" ng-change="Calculo_Saldo(item,$index);" maxlength="15" ng-model="item.importe_pagar" placeholder="Pagar">
+                            </div>
+                        </td>
+                        <td class="Cancelacion_formatear_stilos"> <b> {{formatearCeldas(item.saldo_pendiente  - item.importe_pagar) }} </b> </td>
+                        <td style="text-align:right"> {{item.CondicionPago}} </td>
+                        <td class="Cancelacion_centrar_stilos">
+                            <span ng-if=" 'EFECTIVO' == item.FormaPago" style="font-size: 10px;color: white; cursor:pointer" class="label label-success" title="Definir medio de pago" ng-click="AbrirModal_Pagos(item);"> EFECTIVO</span>
+                            <span ng-if=" 'DEPOSITO' == item.FormaPago" style="font-size: 10px;color: black;cursor:pointer" class="label label-warning" title="Definir medio de pago" ng-click="AbrirModal_Pagos(item);"> DEPOSITO</span>
+                        </td>
+                        <td>
+                            <div style="width: 300px">
+                                {{item.cliente}}
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <hr />
+
+        <div class=" ContentFilters">
+
+            <div class="row" style="background-color:white">
+                <form class="form-inline">
+                    <div class="col-xs-12 col-sm-12 col-md-7" style="margin-top: 10px;">
+                        <div class="form-group">
+                            <label for="email">Monto Facturado:</label>
+                            <input ng-model="MontoFacturado" readonly class="text-right" style="font-weight: 800; width: 110px" />
+                            <label for="email">Total de Pagos:</label>
+                            <input ng-model="TotalPagos" readonly class="text-right" style="font-weight: 800; color: green ; width: 110px" />
+                            <label for="email">Saldo:</label>
+                            <input ng-model="Saldo" readonly class="text-right" style="font-weight: 800; color: red ;  width: 110px" />
+                        </div>
+                    </div>
+                </form>
+                <div class="col-xs-12 col-sm-12 col-md-5  ">
+                    <form class="form-inline ">
+                        <div class="form-group">
+                            <label class="control-label" style="text-align :left"> Nro Recibo:</label>
+                            <div class="input-group" style="padding: 5px;">
+                                <input type="text" class="form-control input-sm " id="txt_recibo" maxlength="50" style="width: 150px;" ng-model="Objeto_ParametroFiltro.nroRecibo">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <br />
+
+
+            <div class="row" style="background-color:beige">
+                <form class="form-inline">
+                    <div class="col-xs-12 col-sm-12 col-md-6" style="margin-top: 10px;">
+                        <div class="form-group">
+                            <label for="email">Total Documentos:</label>
+                            <b> {{Total_documentos}}</b>
+                            <label for="email">Total de Pagar:</label>
+                            <b> {{Total_marcados}}</b>
+                            <label for="email">Total de Pendientes:</label>
+                            <b> {{Total_pendientes}}</b>
+                        </div>
+                    </div>
+                </form>
+                <div class="col-xs-12 col-sm-12 col-md-6">
+                    <form class="form-inline">
+                        <button class="btn btn-success" id="btn_cancelar" ng-click="generar_cancelacion_masiva();"><span class="glyphicon glyphicon-floppy-saved"></span> Generar Cancelación</button>
+                        <button id="btn-material" class="btn btn-warning btn-sm m-l-5" ng-click="reporteCierreVentas();"><i class="glyphicon glyphicon-print"></i> Imprimir  </button>
+                        @*<button class="btn btn-danger btn-sm m-l-5" id="btn_descartar" ng-click="generar_rechazo_cancelacion_masiva();" disabled><span class="glyphicon glyphicon-remove"></span> Descartar Cancelación</button>*@
+                    </form>
+
+                </div>
+            </div>
+
+
+        </div>
+
+        <div id="modalPagos" class="modal fade bd-example-modal-lg ModalBorderSombra" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog" style=" width: 50%;">
+                <div class="modal-content  ContentFilters contentCombo">
+                    <div class="modal-header" style=" background-color:darkred;">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="myLargeModalLabel" style="color:white !important; font-size: 15px;"> Depósito</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="loaderModal" ng-if="loader_modal_ayuda"></div>
+
+
+                        <div class="row contenedorGrupo">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-8">
+                                <fieldset>
+                                    <legend>Forma de Pago</legend>
+                                    <div class="row">
+                                        <div class="col-sm-2"></div>
+                                        <div class="col-sm-8" style="text-align:center">
+                                            <div style="margin-top: -20px;">
+                                                <label class="radio-inline"><input id="rb_efectivo" ng-click="change_habilitarDeposito(1);" type="radio" name="optradio" checked>Efectivo</label>
+                                                <label class="radio-inline"><input id="rb_deposito" ng-click="change_habilitarDeposito(2);" type="radio" name="optradio">Depósito</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2"></div>
+                                    </div>
+
+                                </fieldset>
+                            </div>
+                            <div class="col-sm-2"></div>
+                        </div>
+
+                        <br />
+                        <div class="row   {{disabledDeposito}} ">
+                            <div class="row" style="margin-top: -15px;">
+                                <div class="col-sm-2"></div>
+                                <div class="col-sm-8">
+                                    <label for="cbo_banco" class="control-label">Banco</label> <span class="help-block"></span>
+                                    <select class="selectFiltros" id="cbo_banco" ng-model="objeto_parametros_pagos.id_banco">
+                                        <option value="0">[ -SELECCIONE- ]</option>
+                                        <option ng-repeat="item in Lista_Bancos" value="{{item.id_detalleTabla}}">{{item.descripcion_grupoTabla}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-2"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-2"></div>
+                                <div class="col-sm-8">
+                                    <label class="control-label" style="text-align :left">Fecha Operación.</label>
+                                    <div class="input-group col-xs-12 col-sm-12">
+                                        <span class="input-group-addon"><i class="icon-calender"></i></span>
+                                        <input ng-model="objeto_parametros_pagos.fechaOperacion" id="dtp_FechaOper" type="text" class="form-control datepicker ng-pristine ng-untouched ng-valid" placeholder="dia/mes/año">
+                                    </div>
+                                </div>
+                                <div class="col-sm-2"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-2"></div>
+                                <div class="col-sm-8">
+                                    <label for="txt_nroOperacion" class="control-label">Nro de Operacion.</label> <span class="help-block"></span>
+                                    <input type="text" class="form-control" id="txt_nroOperacion" maxlength="50" ng-model="objeto_parametros_pagos.nroOperacion" style="margin-top: -12px;">
+                                </div>
+                                <div class="col-sm-2"></div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-2"></div>
+                                <div class="col-sm-8">
+                                    <label for="inputFileOpen" class="control-label"> {{titleFile}} </label>
+                                    <div class="botonFile">
+                                        <input type="file" id="inputFileOpen" class="form-control-file btn" accept=".jpg, .jpeg, .png" onchange="angular.element(this).scope().changeImagen(event)" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-2"></div>
+                            </div>
+
+                            <div class="row" ng-if="showFileName">
+                                <div class="col-sm-2"></div>
+                                <div class="col-sm-8 text-center">
+                                    <label class="control-label">  Archivo Cargado : </label><br />
+                                    <label class="control-label" style="font-size: 15px;color: red; cursor:pointer"> {{objeto_parametros_pagos.nameFile}}</label>
+                                </div>
+                                <div class="col-sm-2"></div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="modal-footer " style=" background-color: darkred;">
+                        <a class="btn btn-default" ng-click="GuardarDeposito();"><span class="glyphicon glyphicon-floppy-saved"></span> Guardar</a>
+                        <a class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-sign"></span> Cerrar</a>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+
+        <div id="modalDetallePagos" class="modal fade bd-example-modal-lg ModalBorderSombra  " tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: #162737; color:white    ">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="myLargeModalLabel" style=" color:white !important "> DETALLE DE PAGO </h4>
+                    </div>
+                    <div class="modal-body ">
+                        <div class="loaderModal" ng-if="loaderSave"></div>
+
+                        <div class="contentRegistro contentCombo ContentFilters ">
+                            <fieldset>
+                                <legend>Detalle de Pago </legend>
+                                <div class="row" style="margin-top: -10px;">
+                                    <div class="col-md-6">
+                                        <label class="control-label"> Nombre Cliente     </label> <span class="help-block"></span>
+                                        <input type="text" class="form-control form-control input-sm " readonly ng-model="objPago_Global.cliente" style="margin-top: -12px;text-align:left; font-size: 11px;">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="control-label">Condicion Pago</label> <span class="help-block"></span>
+                                        <input type="text" class="form-control form-control input-sm " readonly ng-model="objPago_Global.CondicionPago" style="margin-top: -12px;text-align:left; font-size: 11px;">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label class="control-label"> Nro Documento</label> <span class="help-block"></span>
+                                        <input type="text" class="form-control form-control input-sm " readonly ng-model="objPago_Global.nro_doc" style="margin-top: -12px;text-align:left; font-size: 11px;">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="control-label"> Fecha Documento</label> <span class="help-block"></span>
+                                        <input type="text" class="form-control form-control input-sm " readonly ng-model="objPago_Global.fechaDoc" style="margin-top: -12px;text-align:left; font-size: 11px;">
+                                    </div>
+                                </div>
+
+
+                                <hr style="margin-bottom: 5px; margin-top: 5px;" />
+                                <div class="white-box">
+                                    <table id="tablaPagos" class="table m-b-0 toggle-arrow-tiny" data-page-size="10">
+                                        <thead style="background:rgba(17, 96, 142, 0.18)">
+                                            <tr>
+                                                <th> Fecha Pago</th>
+                                                <th> Importe Pagar</th>
+                                                <th> Condicion Pago</th>
+                                                <th> Archivo </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="item in detallePagos">
+                                                <td>{{item.fechaPago}}</td>
+                                                <td class="text-right">{{item.importePagar}}</td>
+                                                <td class="text-center">{{item.condicionPago}}</td>
+                                                <td>
+                                                    <span class="label label-primary" ng-if="item.url" style="cursor:pointer" ng-click="descargar_detallePagosVoucher(item)"> Descargar </span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td class="text-center" style="font-weight: 700;">Total Pagado</td>
+                                                <td class="text-right" style="font-weight: 900;"> {{TotalDetallePagos}}</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                    <div class="text-right">
+                                        <ul class="pagination pagination-split m-t-30"></ul>
+                                    </div>
+                                </div>
+
+                            </fieldset>
+                            <hr />
+                            <fieldset>
+                                <legend style="text-align: left;">  Otros Documentos <button class="btn btn-sm btn-success" ng-click="mostrarOcultar();"><span class="	glyphicon glyphicon-resize-small"></span> {{labelOtrosDoc}} </button>   </legend>
+
+                                <div class="white-box"  id="formOtrosDoc">
+                                    <table id="tabla_OtrosPagos" class="table m-b-0 toggle-arrow-tiny" data-page-size="10">
+                                        <thead style="background:rgba(17, 96, 142, 0.18)">
+                                            <tr>
+                                                <th> Fecha</th>
+                                                <th> Importe</th>
+                                                <th> Tipo Documento</th>
+                                                <th> Archivo</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="item in detalle_otrosPagos">
+                                                <td>{{item.fechaPago}}</td>
+                                                <td class="text-right">{{item.importePagar}}</td>
+                                                <td class="text-center">{{item.tipoDocumento}}</td>
+                                                <td>
+                                                    <span class="label label-primary" ng-if="item.url" style="cursor:pointer" ng-click="descargar_detallePagosVoucher(item)"> Descargar </span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td class="text-center" style="font-weight: 700;">Total</td>
+                                                <td class="text-right" style="font-weight: 900;"> {{TotalDetalleOtrosPagos}}</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                    <div class="text-right">
+                                        <ul class="pagination pagination-split m-t-30"></ul>
+                                    </div>
+                                </div>
+
+                            </fieldset>
+
+                        </div>
+                    </div>
+
+                    <div style="padding: 10px">
+                        <div class="row " style="background-color:white">
+                            <form class="form-inline">
+                                <div class="col-xs-12 col-sm-12 col-md-12" style="margin-top: 10px;">
+                                    <div class="form-group">
+                                        <label for="email">Total General Pagos:</label>
+                                        <input ng-model="TOT_GENERAL" readonly class="text-right" style="font-weight: 800; width: 110px" />
+                                        <label for="email">Total Factura:</label>
+                                        <input ng-model="TOT_FACTURA" readonly class="text-right" style="font-weight: 800; color: green ; width: 110px" />
+                                        <label for="email">Saldo Pendiente:</label>
+                                        <input ng-model="TOT_SALDO" readonly class="text-right" style="font-weight: 800; color: red ;  width: 110px" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer ">
+                        <a class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-sign"></span> Cerrar</a>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+
+
+
+    </div>
+
+
+

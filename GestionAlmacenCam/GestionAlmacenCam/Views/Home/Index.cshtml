@@ -1,0 +1,645 @@
+﻿@{
+    Layout = null;
+    ViewBag.Title = "Gestión Comercial - Belcen";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>@ViewBag.Title</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/png" sizes="16x16" href="../plugins/images/favicon.png">
+    <!-- FOOTABLES-->
+    <link href="~/Plugins/fooTables/css/footable.core.css" rel="stylesheet" />
+    <!-- Bootstrap Core CSS -->
+    <link href="~/Plugins/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <!-- Menu CSS -->
+    <link href="~/Plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css" rel="stylesheet" />
+    <!-- toast CSS -->
+    <link href="~/Plugins/bower_components/toast-master/css/jquery.toast.css" rel="stylesheet" />
+    <!-- morris CSS -->
+    <!-- animation CSS -->
+    <!-- CBO SEARCH CSS-->
+    <link href="~/Plugins/bower_components/select2-search/css/select2.css" rel="stylesheet" />
+
+    <link href="~/Plugins/css/animate.css" rel="stylesheet" />
+    <link href="~/Plugins/bower_components/sweetalert/sweetalert.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link href="~/Plugins/css/style.css" rel="stylesheet" />
+    <!-- color CSS -->
+    <link href="~/Plugins/css/colors/blue.css" rel="stylesheet" />
+    <link href="~/Scripts/Style/MyStyle.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/Plugins/bower_components/switchery/dist/switchery.min.css" rel="stylesheet" />
+    <link href="~/Plugins/lightbox/css/lightbox.min.css" rel="stylesheet" />
+    <link href="~/Scripts/Style/container.css" rel="stylesheet" />
+</head>
+
+
+<body ng-app="appGestion" ng-controller="ctrlIndex">
+
+    @*<script src="http://192.168.0.6:3000/socket.io/socket.io.js"></script>*@
+
+    <div class="jumbotron">
+        <!-- Preloader -->
+        <div class="preloader">
+            <div class="cssload-speeding-wheel"></div>
+        </div>
+        <div id="wrapper">
+            <!-- Navigation -->
+            <nav class="navbar navbar-default navbar-static-top m-b-0" id="HeaderPage" style="display:none;">
+                <div class="navbar-header" style=" background-color: #025025d4 !important;">
+
+
+                    <a class="navbar-toggle hidden-sm hidden-md hidden-lg " href="javascript:void(0)" data-toggle="collapse" data-target=".navbar-collapse"><i class="ti-menu"></i></a>
+                    <div class="top-left-part" style="padding-top:15px;">
+                        <a class="logo">
+                            <span class="hidden-xs">
+                                <img style="    width: 100%; height: 61px;margin-top: -15px;" src="~/Plugins/images/LOGO1.jpg" alt=" home" />
+                            </span>
+                        </a>
+                    </div>
+                    <ul class="nav navbar-top-links navbar-left hidden-xs">
+                        <li><a href="javascript:void(0)" class="open-close hidden-xs waves-effect waves-light"><i class="icon-arrow-left-circle ti-menu"></i></a></li>
+                        <li style="display:none;">
+                            <form role="search" class="app-search hidden-xs">
+                                <input type="text" placeholder="Busqueda General . . " class="form-control">
+                                <a href="#"><i class="fa fa-search"></i></a>
+                            </form>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-top-links navbar-left hidden-xs">
+                        <li class="dropdown" style="left:20%;">
+                            <a class="dropdown-toggle profile-pic" data-toggle="dropdown" style="font-size: 23px;">
+                                <b class="hidden-xs" id="txtTitlePage"></b>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-top-links navbar-right pull-right">
+
+                        <li class="dropdown" ng-if="ok">
+                            <a class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown">
+                                <i class="icon-envelope"></i>
+                                <div class="notify"><span class="heartbit"></span><span class="point"></span></div>
+                            </a>
+                            <ul class="dropdown-menu mailbox animated bounceInDown">
+                                <li>
+                                    <div class="drop-title">You have 4 new messages</div>
+                                </li>
+                                <li>
+                                    <div class="message-center">
+                                        <a href="#">
+                                            <div class="user-img"> <img src="../plugins/images/users/pawandeep.jpg" alt="user" class="img-circle"> <span class="profile-status online pull-right"></span> </div>
+                                            <div class="mail-contnet">
+                                                <h5>Pavan kumar</h5>
+                                                <span class="mail-desc">Just see the my admin!</span> <span class="time">9:30 AM</span>
+                                            </div>
+                                        </a>
+                                        <a href="#">
+                                            <div class="user-img"> <img src="../plugins/images/users/sonu.jpg" alt="user" class="img-circle"> <span class="profile-status busy pull-right"></span> </div>
+                                            <div class="mail-contnet">
+                                                <h5>Sonu Nigam</h5>
+                                                <span class="mail-desc">I've sung a song! See you at</span> <span class="time">9:10 AM</span>
+                                            </div>
+                                        </a>
+                                        <a href="#">
+                                            <div class="user-img"> <img src="../plugins/images/users/arijit.jpg" alt="user" class="img-circle"> <span class="profile-status away pull-right"></span> </div>
+                                            <div class="mail-contnet">
+                                                <h5>Arijit Sinh</h5>
+                                                <span class="mail-desc">I am a singer!</span> <span class="time">9:08 AM</span>
+                                            </div>
+                                        </a>
+                                        <a href="#">
+                                            <div class="user-img"> <img src="../plugins/images/users/pawandeep.jpg" alt="user" class="img-circle"> <span class="profile-status offline pull-right"></span> </div>
+                                            <div class="mail-contnet">
+                                                <h5>Pavan kumar</h5>
+                                                <span class="mail-desc">Just see the my admin!</span> <span class="time">9:02 AM</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a class="text-center" href="javascript:void(0);"> <strong>See all notifications</strong> <i class="fa fa-angle-right"></i> </a>
+                                </li>
+                            </ul>
+                            <!-- /.dropdown-messages -->
+                        </li>
+
+                        <!-- /.dropdown -->
+                        <li class="dropdown" ng-if="ok">
+                            <a class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown">
+                                <i class="icon-note"></i>
+                                <div class="notify"><span class="heartbit"></span><span class="point"></span></div>
+                            </a>
+                            <ul class="dropdown-menu dropdown-tasks animated slideInUp">
+                                <li>
+                                    <a href="#">
+                                        <div>
+                                            <p> <strong>Task 1</strong> <span class="pull-right text-muted">40% Complete</span> </p>
+                                            <div class="progress progress-striped active">
+                                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%"> <span class="sr-only">40% Complete (success)</span> </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="#">
+                                        <div>
+                                            <p> <strong>Task 2</strong> <span class="pull-right text-muted">20% Complete</span> </p>
+                                            <div class="progress progress-striped active">
+                                                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%"> <span class="sr-only">20% Complete</span> </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="#">
+                                        <div>
+                                            <p> <strong>Task 3</strong> <span class="pull-right text-muted">60% Complete</span> </p>
+                                            <div class="progress progress-striped active">
+                                                <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%"> <span class="sr-only">60% Complete (warning)</span> </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="#">
+                                        <div>
+                                            <p> <strong>Task 4</strong> <span class="pull-right text-muted">80% Complete</span> </p>
+                                            <div class="progress progress-striped active">
+                                                <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%"> <span class="sr-only">80% Complete (danger)</span> </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a class="text-center" href="#"> <strong>See All Tasks</strong> <i class="fa fa-angle-right"></i> </a>
+                                </li>
+                            </ul>
+                            <!-- /.dropdown-tasks -->
+                        </li>
+
+                        <!-- /.dropdown -->
+                        <li class="dropdown">
+                            <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#Home">
+                                <img src="~/Content/img/home-icon.png" alt="user-img" width="36" class="img-circle"><b class="hidden-xs" id="txtNameUser"></b>
+                                <div class="cssload-speeding-wheel" style="position: absolute; top: 30px; left: 120%;" ng-if="showLoader"></div>
+                            </a>
+                            <!--<ul class="dropdown-menu dropdown-user animated flipInY">
+                            <li><a href="#"><i class="ti-user"></i> My Profile</a></li>
+                            <li><a href="#"><i class="ti-wallet"></i> My Balance</a></li>
+                            <li><a href="#"><i class="ti-email"></i> Inbox</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#"><i class="ti-settings"></i> Account Setting</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#"><i class="fa fa-power-off"></i> Logout</a></li>
+                        </ul>-->
+                            <!-- /.dropdown-user -->
+                        </li>
+                        <!-- .Megamenu -->
+                        <li class="mega-dropdown">
+                            <a class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" ng-click="closeSession();"><span class="hidden-xs">Cerrar Sesión</span></a>
+                            @*<ul class="dropdown-menu mega-dropdown-menu animated bounceInDown">
+                                <li class="col-sm-3">
+                                    <ul>
+                                        <li class="dropdown-header">Forms Elements</li>
+                                        <li><a href="form-basic.html">Basic Forms</a></li>
+                                        <li><a href="form-layout.html">Form Layout</a></li>
+                                        <li><a href="form-advanced.html">Form Addons</a></li>
+                                        <li><a href="form-material-elements.html">Form Material</a></li>
+                                        <li><a href="form-float-input.html">Form Float Input</a></li>
+                                        <li><a href="form-upload.html">File Upload</a></li>
+                                        <li><a href="form-mask.html">Form Mask</a></li>
+                                        <li><a href="form-img-cropper.html">Image Cropping</a></li>
+                                        <li><a href="form-validation.html">Form Validation</a></li>
+                                    </ul>
+                                </li>
+                                <li class="col-sm-3">
+                                    <ul>
+                                        <li class="dropdown-header">Advance Forms</li>
+                                        <li><a href="form-dropzone.html">File Dropzone</a></li>
+                                        <li><a href="form-pickers.html">Form-pickers</a></li>
+                                        <li><a href="form-wizard.html">Form-wizards</a></li>
+                                        <li><a href="form-typehead.html">Typehead</a></li>
+                                        <li><a href="form-xeditable.html">X-editable</a></li>
+                                        <li><a href="form-summernote.html">Summernote</a></li>
+                                        <li><a href="form-bootstrap-wysihtml5.html">Bootstrap wysihtml5</a></li>
+                                        <li><a href="form-tinymce-wysihtml5.html">Tinymce wysihtml5</a></li>
+                                    </ul>
+                                </li>
+                                <li class="col-sm-3">
+                                    <ul>
+                                        <li class="dropdown-header">Table Example</li>
+                                        <li><a href="basic-table.html">Basic Tables</a></li>
+                                        <li><a href="table-layouts.html">Table Layouts</a></li>
+                                        <li><a href="data-table.html">Data Table</a></li>
+                                        <li><a href="bootstrap-tables.html">Bootstrap Tables</a></li>
+                                        <li><a href="responsive-tables.html">Responsive Tables</a></li>
+                                        <li><a href="editable-tables.html">Editable Tables</a></li>
+                                        <li><a href="foo-tables.html">FooTables</a></li>
+                                        <li><a href="jsgrid.html">JsGrid Tables</a></li>
+                                    </ul>
+                                </li>
+                                <li class="col-sm-3">
+                                    <ul>
+                                        <li class="dropdown-header">Charts</li>
+                                        <li> <a href="flot.html">Flot Charts</a> </li>
+                                        <li><a href="morris-chart.html">Morris Chart</a></li>
+                                        <li><a href="chart-js.html">Chart-js</a></li>
+                                        <li><a href="peity-chart.html">Peity Charts</a></li>
+                                        <li><a href="knob-chart.html">Knob Charts</a></li>
+                                        <li><a href="sparkline-chart.html">Sparkline charts</a></li>
+                                        <li><a href="extra-charts.html">Extra Charts</a></li>
+                                    </ul>
+                                </li>
+                                <li class="col-sm-12 m-t-40 demo-box">
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <div class="white-box text-center bg-purple"><a href="http://wrappixel.com/demos/admin-templates/pixeladmin/inverse/index.html" target="_blank" class="text-white"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i><br />Demo 1</a></div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <div class="white-box text-center bg-success"><a href="http://wrappixel.com/demos/admin-templates/pixeladmin/main/index.html" target="_blank" class="text-white"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i><br />Demo 2</a></div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <div class="white-box text-center bg-info"><a href="https://wrappixel.com/demos/admin-templates/pixeladmin/dark/index.html" target="_blank" class="text-white"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i><br />Demo 3</a></div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <div class="white-box text-center bg-inverse"><a href="index-2.html" target="_blank" class="text-white"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i><br />Demo 4</a></div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <div class="white-box text-center bg-warning"><a href="https://wrappixel.com/demos/admin-templates/pixeladmin/inverse-rtl/index.html" target="_blank" class="text-white"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i><br />Demo 5</a></div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <div class="white-box text-center bg-danger"><a href="http://wrappixel.com/templates/pixeladmin/" target="_blank" class="text-white"><i class="linea-icon linea-ecommerce fa-fw" data-icon="d"></i><br />Buy Now</a></div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>*@
+                        </li>
+                        <!-- /.Megamenu -->
+                        <li class="right-side-toggle"> <a class="waves-effect waves-light"><i class="ti-settings"></i></a></li>
+                        <!-- /.dropdown -->
+                    </ul>
+                </div>
+                <!-- /.navbar-header -->
+                <!-- /.navbar-top-links -->
+                <!-- /.navbar-static-side -->
+            </nav>
+            <!-- Left navbar-header -->
+            <div class="navbar-default sidebar" role="navigation" id="listMenu">
+                <div class="sidebar-nav navbar-collapse slimscrollsidebar">
+                    <ul class="nav" id="side-menu">
+
+                        <li ng-repeat="item in listPermission | orderBy : 'orden'" class="ng-scope">
+                            <a class="waves-effect ng-binding"><i class="linea-icon linea-basic fa-fw"></i>{{item.page_principal}} <span class="hide-menu"><span class="fa arrow"></span></span></a>
+                            <ul class="nav nav-second-level collapse">
+                                <li ng-repeat="itemm in item.listWeb | orderBy : 'orden'"><a href="{{itemm.url_page}}" style="text-align:left">{{itemm.nombre_page}}</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Left navbar-header end -->
+            <div id="page-wrapper">
+                <div class="">
+                    <div class="" id="contentMenu" style="display:none;">
+                        <br /><br />
+                        <div class="container menuDsige" id="contentMenu">
+                            <div class="row">
+                                <div class="gallery_product col-lg-3 col-md-3 col-sm-4 col-xs-6 btnMenu" id="menuAdmin" ng-click="changeView(1);">
+                                    <div class="card-block">
+                                        <h4 class="card-title">ADMINISTRACIÓN DE USUARIO</h4>
+                                    </div>
+                                    <div class="imgDsige">
+                                        <a class="ng-binding"><img src="~/Content/img/report1.png" class="img-responsive"></a>
+                                    </div>
+                                </div>
+                                <div class="gallery_product col-lg-3 col-md-3 col-sm-4 col-xs-6 btnMenu" id="menuAlmacen" ng-click="changeView(2);">
+                                    <div class="card-block">
+                                        <h4 class="card-title">ALMACEN</h4>
+                                    </div>
+                                    <div class="imgDsige">
+                                        <a class="ng-binding"><img src="~/Content/img/report4.png" class="img-responsive"></a>
+                                    </div>
+                                </div>
+                                <div class="gallery_product col-lg-3 col-md-3 col-sm-4 col-xs-6 btnMenu" id="menuAlmacen" ng-click="changeView(3);">
+                                    <div class="card-block">
+                                        <h4 class="card-title">FACTURACIÓN</h4>
+                                    </div>
+                                    <div class="imgDsige">
+                                        <a class="ng-binding"><img src="~/Content/img/report5.png" class="img-responsive"></a>
+                                    </div>
+                                </div>
+                                <div class="gallery_product col-lg-3 col-md-3 col-sm-4 col-xs-6 btnMenu" id="menuAdmin" ng-click="changeView(75);">
+                                    <div class="card-block">
+                                        <h4 class="card-title">REPARTO</h4>
+                                    </div>
+                                    <div class="imgDsige">
+                                        <a class="ng-binding"><img src="~/Content/img/reparto.png" class="img-responsive"></a>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div ng-view>
+
+                    </div>
+                </div>
+                <!-- /.container-fluid -->
+                <footer class="footer text-center"> </footer>
+            </div>
+            <!-- /#page-wrapper -->
+        </div>
+        <!-- /#wrapper -->
+        <!-- jQuery -->
+        <script src="~/Plugins/bower_components/jquery/dist/jquery.min.js"></script>
+        <!-- Bootstrap Core JavaScript -->
+        <script src="~/Plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="~/Plugins/bower_components/bootstrap-treeview-master/dist/bootstrap-treeview.min.js"></script>
+
+        <script src="~/Plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+        <!-- Menu Plugin JavaScript -->
+        <script src="~/Plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js"></script>
+        <!--slimscroll JavaScript -->
+        <script src="~/Plugins/js/jquery.slimscroll.js"></script>
+        <!--Wave Effects -->
+        <script src="~/Plugins/js/waves.js"></script>
+        <script src="~/Plugins/bower_components/sweetalert/sweetalert.min.js"></script>
+        <script src="~/Plugins/bower_components/sweetalert/jquery.sweet-alert.custom.js"></script>
+        <!--Counter js -->
+        <script src="~/Plugins/bower_components/waypoints/lib/jquery.waypoints.js"></script>
+        <script src="~/Plugins/bower_components/counterup/jquery.counterup.min.js"></script>
+
+        <!--Morris JavaScript -->
+
+        <script src="~/Plugins/bower_components/raphael/raphael-min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="~/Plugins/js/custom.min.js"></script>
+        <script src="~/Plugins/js/mask.js"></script>
+
+
+        <!-- Sparkline chart JavaScript -->
+        <script src="~/Plugins/bower_components/jquery-sparkline/jquery.sparkline.min.js"></script>
+        <script src="~/Plugins/bower_components/jquery-sparkline/jquery.charts-sparkline.js"></script>
+        <script src="~/Plugins/bower_components/toast-master/js/jquery.toast.js"></script>
+        <script src="~/Plugins/bower_components/switchery/dist/switchery.min.js"></script>
+
+        <!-- CBO SEARCH IMPORTACIÓN-->
+        <script src="~/Plugins/bower_components/select2-search/js/select2.min.js"></script>
+        <!-- FOOTABLES-->
+        <script src="~/Plugins/fooTables/js/footable.all.min.js"></script>
+        <script src="http://kuwaitpolitics.org/FooTable/js/footable.paginate.js"></script>
+        <!-- IMPORTAMOS TODO LO QUE ES ANGULAR Y DEPENDENCIAS PARA EL ROUTE-->
+        <script src="~/Scripts/Angular/angular.js"></script>
+
+        <script src="~/Scripts/Angular/angular-route.js"></script>
+        <!-- FIN DE IMPROTACIÓN ANGULAR-->
+        <!-- IMPORTAMOS EL APP.JS , ARCHIVO JS PRINCIPAL-->
+        <script src="~/App/app.js"></script>
+        <!-- - - - - - - -  -->
+        <!-- Para generara PDF-->
+        @*<script src="~/Plugins/jsPDF/jspdf.js"></script>*@
+        <script src="~/Plugins/jsPDF/jspdf.min.js"></script>
+        <script src="~/Plugins/jsPDF/pdfFromHTML.js"></script>
+        <script src="~/Plugins/jsPDF/jspdf.plugin.autotable.js"></script>
+
+        @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>*@
+
+        <!-- Para visor de Fotos-->
+        <script src="~/Plugins/lightbox/js/lightbox.min.js"></script>
+        <script src="~/Plugins/jsPDF/jspdf.plugin.text-align.js"></script>
+        <script src="~/Plugins/fooTables/js/tableHeadFixer.js"></script>
+        <script src="~/Plugins/angular-uploader/angular-file-upload.js"></script>
+
+
+        <script async defer
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCODMQ6da1HjWKn_nMqSl9oD8RooAyCKzA&libraries=geometry&sensor=false"></script>
+
+
+        <!-- CONTROLADORES ANGULAR -->
+        <script src="~/App/Controlladores/loginController.js"></script>
+        <script src="~/Plugins/angular-base64/angular-base64.min.js"></script>
+        <script src="~/App/Controlladores/Almacen/Mantenimientos/Producto/productosController.js"></script>
+
+        <script src="~/App/Controlladores/Almacen/Procesos/IngresoGuiasController.js"></script>
+        <script src="~/App/Controlladores/Almacen/Procesos/IngresoGuiasOrdenCompraController.js"></script>
+        <script src="~/App/Controlladores/Administracion/SeguridadDeSistema/accesosController.js"></script>
+        <script src="~/App/Controlladores/Almacen/Procesos/transferenciasController.js"></script>
+        <script src="~/App/Controlladores/Almacen/Procesos/IngresoTransferenciasCompraController.js"></script>
+        <script src="~/App/Controlladores/Almacen/Mantenimientos/Almacen/AlmacenesController.js"></script>
+        <script src="~/App/Controlladores/Almacen/Mantenimientos/Cliente/ClienteController.js"></script>
+        <script src="~/App/Controlladores/Almacen/Mantenimientos/Personal/PersonalController.js"></script>
+        <script src="~/App/Controlladores/Almacen/Procesos/AprobacionTransferenciasController.js"></script>
+        <script src="~/App/Controlladores/Almacen/Mantenimientos/Proveedor/ProveedorController.js"></script>
+        <script src="~/App/Controlladores/Almacen/Mantenimientos/ProductoCategoria/productocategoriaController.js"></script>
+        <script src="~/App/Controlladores/Almacen/Mantenimientos/ProductoLinea/productolineaController.js"></script>
+        <script src="~/App/Controlladores/Almacen/Mantenimientos/ProductoMarca/productomarcaController.js"></script>
+        <script src="~/App/Controlladores/Almacen/Mantenimientos/ProductoMarcaModelo/productomarcamodeloController.js"></script>
+        <script src="~/App/Controlladores/Almacen/Mantenimientos/ProductoSubLinea/ProductoSubLineaController.js"></script>
+        <script src="~/App/Controlladores/Almacen/Mantenimientos/UnidadMedida/UnidadController.js"></script>
+        <script src="~/App/Controlladores/Facturacion/Procesos/ListaPrecios/ListaPreciosController.js"></script>
+        <script src="~/App/Controlladores/Facturacion/Procesos/DocumentoVenta/DocumentoVentaController.js"></script>
+        <script src="~/App/Controlladores/Facturacion/Reportes/PagosVendedor/PagoVendedorController.js"></script>
+
+        <script src="~/App/Controlladores/Almacen/Mantenimientos/Canal/CanalesNegocioController.js"></script>
+        <script src="~/App/Controlladores/Almacen/Mantenimientos/GiroNegocio/GirosNegocioController.js"></script>
+        <script src="~/App/Controlladores/Almacen/Mantenimientos/PuntoVenta/PuntoVentaController.js"></script>
+        <script src="~/App/Controlladores/Almacen/Mantenimientos/TipoDocumento/TipoDocController.js"></script>
+        <script src="~/App/Controlladores/Almacen/Mantenimientos/Transportista/TransportistaController.js"></script>
+        <script src="~/App/Controlladores/Almacen/Mantenimientos/Vehiculo/VehiculosController.js"></script>
+        <script src="~/App/Controlladores/Almacen/Mantenimientos/Locales/LocalesController.js"></script>
+        <script src="~/App/Controlladores/Almacen/Mantenimientos/Vendedor/VendedorController.js"></script>
+        <script src="~/App/Controlladores/Almacen/Mantenimientos/Cargo/CargoController.js"></script>
+        <script src="~/App/Controlladores/Almacen/Mantenimientos/FormaPago/FormaPagoController.js"></script>
+        <script src="~/App/Controlladores/Almacen/Mantenimientos/GrupoDet/GrupoDetController.js"></script>
+
+        <script src="~/App/Controlladores/Almacen/Reportes/Stock/StockController.js"></script>
+        <script src="~/App/Controlladores/Facturacion/Procesos/CancelacionDocVendedor/CancelacionDocVendedorController.js"></script>
+
+        <script src="~/App/Controlladores/Facturacion/Procesos/Documentos_Masivos/Documentos_MasivosController.js"></script>
+        <script src="~/App/Controlladores/Almacen/Reportes/Kardex/KardexAlmacenController.js"></script>
+        <script src="~/App/Controlladores/Administracion/UsuarioLocal/UsuarioLocalController.js"></script>
+        <script src="~/App/Controlladores/Administracion/UsuarioAlmacen/UsuarioAlmacenController.js"></script>
+        <script src="~/App/Controlladores/Facturacion/Procesos/Pedidos/PedidosController.js"></script>
+        <script src="~/App/Controlladores/Almacen/Mantenimientos/Cliente/Cliente_IIController.js"></script>
+        <script src="~/App/Controlladores/Facturacion/Procesos/Pedidos/Pedidos_DirectoController.js"></script>
+        <script src="~/App/Controlladores/Facturacion/Procesos/NotaCreditoDebito/NotaCreditoDebitoController.js"></script>
+        <script src="~/App/Controlladores/Facturacion/Reportes/RegistroVentas/RegistroVentasController.js"></script>
+        <script src="~/App/Controlladores/Facturacion/Reportes/ResumenVentas/ResumenVentasController.js"></script>
+        <script src="~/App/Controlladores/Facturacion/Procesos/Pedidos/PedidosAprobacionController.js"></script>
+        <script src="~/App/Controlladores/Cobranzas/AnularDocumentosController.js"></script>
+        <script src="~/App/Controlladores/Cobranzas/CobranzaManualController.js"></script>
+        <script src="~/App/Controlladores/Cobranzas/CobranzaReporteController.js"></script>
+        <script src="~/App/Controlladores/Cobranzas/CancelacionMasivaController.js"></script>
+        <script src="~/App/Controlladores/Facturacion/Procesos/Reenvio_Documentos/Reenvio_DocumentosController.js"></script>
+        <script src="~/App/Controlladores/Facturacion/Procesos/Pedidos/CancelacionMasivaDocumentosController.js"></script>
+        <script src="~/App/Controlladores/Cobranzas/cancelacion_x_documentoController.js"></script>
+        <script src="~/App/Controlladores/Reparto/Procesos/EntregaPedido/EntregaPedidoController.js"></script>
+        <script src="~/App/Controlladores/Reparto/Procesos/ExportarPedido/ExportarPedidoController.js"></script>
+        <script src="~/App/Controlladores/Reparto/Procesos/ImportarPedido/ImportarPedidoController.js"></script>
+        <script src="~/App/Controlladores/Reparto/Procesos/AprobarDevolucion/AprobarDevolucionController.js"></script>
+        <script src="~/App/Controlladores/Reparto/Reportes/ReporteCoberturaController.js"></script>
+        <script src="~/App/Controlladores/Reparto/Reportes/ReporteKpiController.js"></script>
+        <script src="~/App/Controlladores/Reparto/Mantenimientos/ImportarStockAlmacen/ImportarStockAlmacenController.js"></script>
+        <script src="~/App/Controlladores/Reparto/Mantenimientos/HabilitarUsuario/HabilitarUsuarioController.js"></script>
+        <script src="~/App/Controlladores/Reparto/Mantenimientos/ImportarPrecio/ImportarPrecioController.js"></script>
+        <script src="~/App/Controlladores/Reparto/Reportes/ReporteStockController.js"></script>
+        <script src="~/App/Controlladores/Facturacion/Procesos/Promociones/PromocionesController.js"></script>
+        <script src="~/App/Controlladores/Facturacion/Procesos/RevisionPedido/RevisionPedidoController.js"></script>
+        <script src="~/App/Controlladores/Facturacion/Procesos/Consolidado/ConsolidadoController.js"></script>
+        <script src="~/App/Controlladores/Facturacion/Procesos/Reimpresion/ReimpresionController.js"></script>
+        <script src="~/App/Controlladores/Facturacion/Procesos/Documentos_Manuales/DocumentosManualesController.js"></script>
+        <script src="~/App/Controlladores/Almacen/Procesos/IngresoFacturasController.js"></script>
+        <script src="~/App/Controlladores/Administracion/Usuario/UsuarioController.js"></script>
+        <script src="~/App/Controlladores/Facturacion/Procesos/ArqueoCaja/ArqueoCajaController.js"></script>
+        <script src="~/App/Controlladores/Almacen/Reportes/Transacciones/TransaccionesController.js"></script>
+
+        <!-- Mantenimiento controladores-->
+        <script src="~/App/Controlladores/Mantenimiento/AnexosController.js"></script>
+        <script src="~/App/Controlladores/Mantenimiento/RutasVentasController.js"></script>
+        <script src="~/App/Controlladores/Mantenimiento/UsuariosController.js"></script>
+        <script src="~/App/Controlladores/Mantenimiento/ZonasVentasController.js"></script>
+        <script src="~/App/Controlladores/Mantenimiento/BancosController.js"></script>
+        <script src="~/App/Controlladores/Facturacion/Procesos/EnvioSunatNotaCreditoDebito/envioSunatNotasCreditoDebitoController.js"></script>
+        <script src="~/App/Controlladores/Almacen/Procesos/transferenciasNewController.js"></script>
+        <script src="~/App/Controlladores/Facturacion/Procesos/Pedidos/Pedidos_IIController.js"></script>
+        <script src="~/App/Controlladores/Facturacion/Reportes/ReportesContables/ReporteContableController.js"></script>
+        <script src="~/App/Controlladores/Facturacion/Procesos/AnularNumero/anularNumeroController.js"></script>
+        <script src="~/App/Controlladores/Cobranzas/Reportes/estadoDocumentoController.js"></script>
+
+        <!-- FIN DE CONTROLADORES -->
+        <!-- SERVICIOS ANGULAR-->
+        <script src="~/App/Servicios/loginServices.js"></script>
+        <script src="~/App/Servicios/auxiliarServices.js"></script>
+
+        <script src="~/App/Servicios/Almacen/Mantenimientos/ProductoCategoria/productoCategoriaServices.js"></script>
+        <script src="~/App/Servicios/Almacen/Mantenimientos/ProductoLinea/productoLineaServices.js"></script>
+        <script src="~/App/Servicios/Almacen/Mantenimientos/ProductoMarca/productoMarcaServices.js"></script>
+        <script src="~/App/Servicios/Almacen/Mantenimientos/ProductoModelo/productoModeloServices.js"></script>
+        <script src="~/App/Servicios/Almacen/Mantenimientos/Productos/productosServices.js"></script>
+        <script src="~/App/Servicios/Almacen/Mantenimientos/ProductoSubLinea/productoSubLineaServices.js"></script>
+        <script src="~/App/Servicios/Almacen/Mantenimientos/UnidadMedida/umServices.js"></script>
+        <script src="~/App/Servicios/Almacen/Mantenimientos/Almacen/AlmacenServices.js"></script>
+        <script src="~/App/Servicios/Almacen/Mantenimientos/Locales/LocalesServices.js"></script>
+        <script src="~/App/Servicios/Almacen/Procesos/IngresoGuiasServices.js"></script>
+        <script src="~/App/Servicios/Almacen/Mantenimientos/Proveedor/ProveedorServices.js"></script>
+        <script src="~/App/Servicios/Administracion/SeguridadDeSistema/AccesosServices.js"></script>
+        <script src="~/App/Servicios/Almacen/Mantenimientos/Moneda/MonedaServices.js"></script>
+        <script src="~/App/Servicios/Almacen/Procesos/StockAlmacenServices.js"></script>
+
+        <script src="~/App/Servicios/Almacen/Mantenimientos/Empresa/EmpresaServices.js"></script>
+        <script src="~/App/Servicios/Almacen/Mantenimientos/Auditar/AuditarServices.js"></script>
+        <script src="~/App/Servicios/Almacen/Mantenimientos/Cliente/ClienteServices.js"></script>
+        <script src="~/App/Servicios/Almacen/Mantenimientos/Canal/CanalServices.js"></script>
+        <script src="~/App/Servicios/Almacen/Mantenimientos/Giro/GiroServices.js"></script>
+        <script src="~/App/Servicios/Almacen/Mantenimientos/Ubigeo/UbigeoServices.js"></script>
+        <script src="~/App/Servicios/Almacen/Mantenimientos/Personal/PersonalServices.js"></script>
+        <script src="~/App/Servicios/Almacen/Mantenimientos/Cargo/CargoServices.js"></script>
+        <script src="~/App/Servicios/Almacen/Mantenimientos/Perfil/PerfilServices.js"></script>
+        <script src="~/App/Servicios/Almacen/Procesos/IngresoTransferenciasServices.js"></script>
+        <script src="~/App/Servicios/Almacen/Mantenimientos/Vehiculo/VehiculoServices.js"></script>
+        <script src="~/App/Servicios/Almacen/Mantenimientos/Transportista/TransportistaServices.js"></script>
+
+        <script src="~/App/Servicios/Almacen/Mantenimientos/ProductoCategoria/productoCategoriaServices.js"></script>
+        <script src="~/App/Servicios/Almacen/Mantenimientos/ProductoLinea/productoLineaServices.js"></script>
+        <script src="~/App/Servicios/Almacen/Mantenimientos/ProductoMarca/productoMarcaServices.js"></script>
+        <script src="~/App/Servicios/Almacen/Mantenimientos/ProductoModelo/productoModeloServices.js"></script>
+        <script src="~/App/Servicios/Almacen/Mantenimientos/ProductoSubLinea/productoSubLineaServices.js"></script>
+        <script src="~/App/Servicios/Almacen/Mantenimientos/UnidadMedida/umServices.js"></script>
+
+        <script src="~/App/Servicios/Facturacion/Procesos/ListaPrecios/ListaPrecioServices.js"></script>
+        <script src="~/App/Servicios/Facturacion/Procesos/DocumentoVenta/DocumentoVentaServices.js"></script>
+        <script src="~/App/Servicios/Almacen/Mantenimientos/Estados/EstadosServices.js"></script>
+        <script src="~/App/Servicios/Almacen/Mantenimientos/PuntoVenta/PuntoVentaServices.js"></script>
+        <script src="~/App/Servicios/Almacen/Mantenimientos/TipoDocumento/TipoDocumentoServices.js"></script>
+        <script src="~/App/Servicios/Facturacion/Reportes/PagosVendedor/PagosVendedorServices.js"></script>
+
+
+        <script src="~/App/Servicios/Almacen/Mantenimientos/Vendedor/VendedorServices.js"></script>
+        <script src="~/App/Servicios/Almacen/Mantenimientos/FormaPago/FormapagoServices.js"></script>
+        <script src="~/App/Servicios/Almacen/Mantenimientos/GrupoCab/GrupoCabServices.js"></script>
+        <script src="~/App/Servicios/Almacen/Mantenimientos/GrupoDet/GrupoDetServices.js"></script>
+
+        <script src="~/App/Servicios/Almacen/Reportes/Stock/StockServices.js"></script>
+        <script src="~/App/Servicios/Facturacion/Procesos/CancelacionDocVendedor/CancelacionDocVendedorServices.js"></script>
+        <script src="~/App/Servicios/Facturacion/Procesos/Documentos_Masivos/Documentos_MasivosServices.js"></script>
+        <script src="~/App/Servicios/Administracion/UsuarioLocal/UsuarioLocalServices.js"></script>
+        <script src="~/App/Servicios/Administracion/UsuarioAlmacen/UsuarioAlmacenServices.js"></script>
+        <script src="~/App/Servicios/Facturacion/Procesos/Pedidos/PedidosServices.js"></script>
+        <script src="~/App/Servicios/Almacen/Mantenimientos/CondicionFacturacion/CondicionFacturacionServices.js"></script>
+        <script src="~/App/Servicios/Almacen/Mantenimientos/Cliente/Cliente_IIServices.js"></script>
+        <script src="~/App/Servicios/Facturacion/Procesos/NotaCreditoDebito/NotaCreditoDebitoServices.js"></script>
+        <script src="~/App/Servicios/Facturacion/Reportes/RegistroVentas/RegistroVentasServices.js"></script>
+        <script src="~/App/Servicios/Facturacion/Reportes/ResumenVentas/ResumenVentasServices.js"></script>
+
+        <script src="~/App/Servicios/Cobranzas/CobranzaManualServices.js"></script>
+        <script src="~/App/Servicios/Cobranzas/CobranzaReporteServices.js"></script>
+        <script src="~/App/Servicios/Cobranzas/CancelacionMasivaServices.js"></script>
+        <script src="~/App/Servicios/Facturacion/Procesos/Reenvio_Documentos/Reenvio_DocumentosServices.js"></script>
+        <script src="~/App/Servicios/Cobranzas/cancelacion_x_documentoServices.js"></script>
+        <script src="~/App/Servicios/Reparto/Procesos/EntregaPedido/EntregaPedidoServices.js"></script>
+        <script src="~/App/Servicios/Reparto/Procesos/ExportarPedido/ExportarServices.js"></script>
+        <script src="~/App/Servicios/Reparto/Procesos/ImportarPedido/ImportarServices.js"></script>
+        <script src="~/App/Servicios/Reparto/Procesos/AprobarDevolucion/AprobarDevolucionServices.js"></script>
+        <script src="~/App/Servicios/Reparto/Reportes/ReporteCoberturaServices.js"></script>
+        <script src="~/App/Servicios/Reparto/Mantenimientos/ImportarStockAlmacen/ImportarStockAlmacenServices.js"></script>
+        <script src="~/App/Servicios/Reparto/Mantenimientos/HabilitarUsuario/HabilitarUsuarioServices.js"></script>
+        <script src="~/App/Servicios/Reparto/Mantenimientos/ImportarPrecio/ImportarPrecioServices.js"></script>
+        <script src="~/App/Servicios/Facturacion/Procesos/Promociones/PromocionesServices.js"></script>
+        <script src="~/App/Servicios/Facturacion/Procesos/RevisionPedido/RevisionPedidoServices.js"></script>
+        <script src="~/App/Servicios/Facturacion/Procesos/Consolidado/ConsolidadoServices.js"></script>
+        <script src="~/App/Servicios/Facturacion/Procesos/Reimpresion/ReimpresionServices.js"></script>
+        <script src="~/App/Servicios/Facturacion/Procesos/Documentos_Manuales/DocumentosManualesServices.js"></script>
+        <script src="~/App/Servicios/Almacen/Procesos/IngresoFacturasServices.js"></script>
+        <script src="~/App/Servicios/Administracion/Usuario/UsuarioServices.js"></script>
+        <script src="~/App/Servicios/Facturacion/Procesos/ArqueoCaja/ArqueoCajaServices.js"></script>
+        <script src="~/App/Servicios/Almacen/Reportes/Transacciones/TransaccionesServices.js"></script>
+
+
+        <!--Mantenimiento servicios-->
+        <script src="~/App/Servicios/Mantenimiento/AnexosServices.js"></script>
+        <script src="~/App/Servicios/Mantenimiento/UsuariosServices.js"></script>
+        <script src="~/App/Servicios/Mantenimiento/ZonasVentasServices.js"></script>
+        <script src="~/App/Servicios/Mantenimiento/RutasVentasServices.js"></script>
+        <script src="~/App/Servicios/Mantenimiento/BancosServices.js"></script>
+        <script src="~/App/Servicios/Almacen/Procesos/transferenciasNewServices.js"></script>
+        <script src="~/App/Servicios/Facturacion/Reportes/ReportesContables/ReporteContableServices.js"></script>
+
+
+        <!-- FIN DE SERVICIOS ANGULAR -->
+        <!--<script type="text/javascript">
+        $(document).ready(function () {
+            $.toast({
+                heading: 'Welcome to Pixel admin',
+                text: 'Use the predefined ones, or specify a custom position object.',
+                position: 'top-right',
+                loaderBg: '#ff6849',
+                icon: 'info',
+                hideAfter: 3500,
+                stack: 6
+            })
+        });
+    </script>-->
+        <!--Style Switcher -->
+        <script src="~/Plugins/bower_components/styleswitcher/jQuery.style.switcher.js"></script>
+
+
+
+    </div>
+</body>
+
+</html>

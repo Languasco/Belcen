@@ -1,0 +1,167 @@
+﻿
+
+<style>
+        #listMenu span, a {
+        text-align: left !important;
+    }
+
+    .contentRegistro fieldset legend {
+        text-align: left !important;
+    }
+
+    .jq-toast-wrap {
+        width: 300px !important;
+    }
+
+    .floating-labels label {
+        top: -6px;
+    }
+
+    .contentRegistro .select2-container {
+        margin-left: 0px;
+        margin-top: 2px;
+    }
+
+    #paddin-lef {
+        padding-left: 40px !important;
+    }
+
+    #btn-material{
+    font-size: 1.2rem;outline: 0;border: none;border-radius: 2px;display: inline-block;height: 36px;line-height: 36px;padding: 0 2rem;text-transform: uppercase;vertical-align: middle;-webkit-tap-highlight-color: transparent;text-decoration: none;color: #fff;background-color: #2b4c6c;text-align: center;letter-spacing: .5px;-webkit-transition: .2s ease-out;transition: .2s ease-out;cursor: pointer;-webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+    }
+    #btn-save{
+    font-size: 1.2rem;outline: 0;border: none;border-radius: 2px; border: 1px solid #2c5ca9;display: inline-block;height: 36px;line-height: 36px;padding: 0 2rem;text-transform: uppercase;vertical-align: middle;-webkit-tap-highlight-color: transparent;text-decoration: none;color: #fff;background: #2c5ca9;text-align: center;letter-spacing: .5px;-webkit-transition: .2s ease-out;transition: .2s ease-out;cursor: pointer;-webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+    }
+    #btn-close{
+    font-size: 1.2rem;outline: 0;border: none;border-radius: 2px;background: #f75b36;border: 1px solid #f75b36;display: inline-block;height: 36px;line-height: 36px;padding: 0 2rem;text-transform: uppercase;vertical-align: middle;-webkit-tap-highlight-color: transparent;text-decoration: none;color: #fff;text-align: center;letter-spacing: .5px;-webkit-transition: .2s ease-out;transition: .2s ease-out;cursor: pointer;-webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+    }
+    .contentCombo .select2-container {
+        margin-left: 0px;
+        margin-top: -20px;
+        width: 95% !important;
+    }
+       .ContentFilters .table {
+        display: table;
+    }
+</style>
+
+<div class=" container" ng-init="initAll();">
+    <div class="form-inline ">
+        <div class="row">
+            <div class="col-sm-12">
+                <div style="text-align:center">
+                    <div class="cssload-speeding-wheel" ng-if="loader"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body ContentFilters contentCombo">
+
+        <div class="panel-body ContentFilters contentCombo" style=" margin-bottom: -35px;">
+            <div class="well" style="background-color: #2b4c6c;padding-bottom: 0px; padding-top: 0px;color: #fff;    width: 100%;">
+                <div class="row">
+                    <div class="col-sm-12 text-center ">
+                        
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label for="cboCanales" class="control-label"> Canal de Negocio </label> <span class="help-block"></span>
+                                <select class="selectFiltros" id="cboCanales" ng-model="Objeto_Parametro.id_CanalNegocio">
+                                    <option value="0">[ ----  SELECCIONE  --- ]</option>
+                                    <option ng-repeat="item in ListaCanalesNegocio " value="{{item.id_CanalNegocio}}">{{item.Nombre_CanalNegocio}}</option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label for="cbo_categoria">Categoría</label> <span class="help-block"></span>
+                                <select class="selectFiltros" id="cbo_categoria" ng-model="Objeto_Parametro.categoria">
+                                    <option value="0">[ ----  Seleccione  --- ]</option>
+                                    <option ng-repeat="item in List_Categoria" value="{{item.id_categoriaProducto}}">{{item.nombre_Categoria}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group" style="margin-top: 15px">
+                                    <div class="input-group input-group-sm">
+                                        <span class="input-group-addon">Buscar</span>
+                                        <input id="inputSearch" type="text" placeholder="Busqueda General . . " style="width: 120%;" class="form-control btn-block inputSearch" autocomplete="off" @*onkeyup="this.value=this.value.toUpperCase();"*@>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-12 " style="margin-bottom: 15px;margin-top: -16px;">
+
+                        <div class="btn-group">
+                            <button id="btn-material" style="background-color: #357c55;" class="btn btn-outline btn-primary btn-sm m-l-10" ng-click="Lista_Precio();">
+                                <i class="glyphicon glyphicon-refresh"></i>Actualizar
+                            </button>
+                            <button id="btn-material" style="background-color: #357c55;" class="btn btn-outline btn-primary btn-sm m-l-10" ng-click="LisProductoNuevos();">
+                                <i class="glyphicon glyphicon-plus"></i>Verificar Materiales Nuevos
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="white-box">
+
+                    <table id="tablaListaPrecio" class="table m-b-0 toggle-arrow-tiny" data-page-size="10">
+                        <thead style="background:rgba(17, 96, 142, 0.18)">
+                            <tr>
+                                <th>Item</th>
+                                <th>Categoría</th>
+                                <th>Código</th>
+                                <th>Descripción</th>
+                                <th>Marca</th>
+                                @*<th>Precio de Venta</th>
+        <th>Aplica Descuento</th>
+        <th>% Descuento</th>*@
+                                <th>Rango</th>
+                                <th>Precio Menor</th>
+                                <th>Precio Mayor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in List_Precio">
+                                <td><div>{{$index + 1}}</div></td>
+                                <td>{{item.categoria}}</td>
+                                <td>{{item.codigo}}</td>
+                                <td>{{item.descripcion}}</td>
+                                <td>{{item.marca}}</td>
+                                                        @*<td ng-click="showInput($index)">
+                                    <input type="text" class="inputPrecioventa" ng-enter="hideInput($index,item);" id="input{{$index}}" style="display:none" ng-model="item.precioventa" />
+                                    <label class="labelPrecioventa" id="label{{$index}}">{{item.precioventa}}</label>
+                                </td>
+                                <td ng-click="showInputAD($index)">
+                                    <select class="inputaplicadescuento" ng-enter="hideInputAD($index,item);" id="apldescuento{{$index}}" style="display:none" ng-model="item.aplicadescuento">
+                                        <option value="SI">SI</option>
+                                        <option value="NO">NO</option>
+                                    </select>
+                                    <label class="labelaplicadescuento" id="labelAD{{$index}}">{{item.aplicadescuento}}</label>
+                                </td>
+                                <td ng-click="showInputPD($index)">
+                                    <input type="text" class="inputporcentagedescuento" ng-enter="hideInputPD($index,item);" id="porcdescuento{{$index}}" style="display:none" ng-model="item.porcentajedescuento" />
+                                    <label class="labelporcentajedescuento" id="labelPD{{$index}}">{{item.porcentajedescuento}}</label>
+                                </td>*@
+                                <td>{{item.rango_listaPrecios}}</td>
+                                <td>{{item.precioMenor_listaPrecios}}</td>
+                                <td>{{item.precioMayor_listaPrecios}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="text-right">
+                        <ul class="pagination pagination-split m-t-30"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+ 

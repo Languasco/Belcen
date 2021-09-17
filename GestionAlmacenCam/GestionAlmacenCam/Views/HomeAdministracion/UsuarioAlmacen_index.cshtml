@@ -1,0 +1,127 @@
+﻿
+
+
+
+
+<style>
+    #listMenu span, a {
+        text-align: left !important;
+    }
+
+    .contentRegistro fieldset legend {
+        text-align: left !important;
+    }
+
+    .jq-toast-wrap {
+        width: 300px !important;
+    }
+
+    .floating-labels label {
+        top: -6px;
+    }
+
+    .contentRegistro .select2-container {
+        margin-left: 0px;
+        margin-top: 2px;
+    }
+</style>
+
+<div class=" container" ng-init="initAll();">
+    <div class="panel-body ContentFilters">
+        <div class="well" style="background-color:#dfe4ea;padding-bottom:0px;padding-top:0px">
+            <div class="row">
+                <div class="col-sm-12">
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div style="text-align:center">
+                                <div class="cssload-speeding-wheel" ng-if="loader"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <div class="col-sm-12" style=" margin-top: 5px;">
+                                    <div class="input-group input-group-sm">
+                                        <span class="input-group-addon">Buscar</span>
+                                        <input id="inputSearch_user" type="text" placeholder="Busqueda Usuarios . . " style="width:95%" class="form-control btn-block inputSearch" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+                            <hr style="margin-top: 5px; margin-bottom: 5px;" />
+                            <div class="white-box">
+                                <table id="tbl_usuarios" class="table m-b-0 toggle-arrow-tiny" data-page-size="10">
+                                    <thead>
+                                        <tr>
+                                            <th data-toggle="true">EST.</th>
+                                            <th data-toggle="true">USUARIO</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in Lista_Usuarios">
+                                            <td>
+                                                <label class="checkbox-inline" style="margin-top: -27px;"><input type="checkbox" value="" ng-model="item.checkeado" ng-change="Change_usuario_Almacen(item.checkeado, item.id_Usuario);"></label>
+                                            </td>
+                                            <td>{{item.apellidos_usuario}} {{item.nombres_usuario}} </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="text-right">
+                                    <ul class="pagination pagination-split m-t-30"></ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <div class="col-sm-12" style=" margin-top: 5px;">
+                                    <div class="input-group input-group-sm">
+                                        <span class="input-group-addon">Buscar</span>
+                                        <input id="inputSearch_almacen" type="text" placeholder="Busqueda Almacenes . . " style="width:95%" class="form-control btn-block inputSearch" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+                            <hr style="margin-top: 5px; margin-bottom: 5px;" />
+                            <div class="white-box">
+                                <table id="tbl_almacen" class="table m-b-0 toggle-arrow-tiny" data-page-size="10">
+                                    <thead>
+                                        <tr>
+                                            <th data-toggle="true">EST.</th>
+                                            <th data-toggle="true">ALMACENES</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="row in Lista_Almacenes">
+                                            <td>
+                                                <label class="checkbox-inline" style="margin-top: -27px;"><input type="checkbox" value="" ng-model="row.checkeado"></label>
+                                            </td>
+                                            <td>{{row.descripcion_Almacen}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="text-right">
+                                    <ul class="pagination pagination-split m-t-30"></ul>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-sm-12" style="text-align: center;margin-bottom: -10px;margin-top: -13px;">
+                                    <button class="btn btn-xs btn-success" ng-click="guardar_informacion();"><span class="glyphicon glyphicon-floppy-disk"></span> Guardar</button>
+                                </div>
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

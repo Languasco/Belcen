@@ -1,0 +1,1465 @@
+﻿
+
+<style>
+    #listMenu span, a {
+        text-align: left !important;
+    }
+
+    .contentRegistro fieldset legend {
+        text-align: left !important;
+    }
+
+    .jq-toast-wrap {
+        width: 300px !important;
+    }
+
+    .floating-labels label {
+        top: -6px;
+    }
+
+    .contentRegistro .select2-container {
+        margin-left: 0px;
+        margin-top: 2px;
+    }
+
+    #paddin-lef {
+        padding-left: 40px !important;
+    }
+
+    .contentCombo .select2-container {
+        margin-left: 0px;
+        /*margin-top: -20px;*/
+        width: 95% !important;
+    }
+
+    .ContentFilters .table {
+        display: table;
+    }
+
+    .contentRegistro label {
+        font-size: 11px;
+        font-family: tahoma;
+        color: #2c4d6d;
+        font-weight: 600;
+    }
+
+    .contentRegistro {
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .ModalBorderSombra .modal-content {
+        box-shadow: inset 0px 0px 7px rgba(0,0,0,.5), 1px 1px 5px #fff;
+    }
+
+
+
+    .resaltado {
+        color: #ff94a7 !important;
+    }
+
+    .text-right {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    @@media (min-width: 1200px) {
+        .modal-xlg {
+            width: 95%;
+        }
+    }
+
+    @@media (min-width: 768px) {
+        .modal-xlg {
+            width: 95%;
+        }
+    }
+
+    .form-horizontal .form-group {
+        margin-bottom: 3px;
+    }
+
+    .flex-container {
+        display: flex;
+        /* flex-direction: column;    establece la posicion de los elementos como columna o fila  */
+        /* flex-wrap: wrap; la posicion lo estable una deacuerdo al espacion y nueva fila */
+        /* flex-flow: row wrap; une ambas propiedades anteriores */
+        /* justify-content: center;  se alinean al centro */
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: aqua;
+        padding: 10px;
+    }
+
+    .flex-container-item {
+        width: 100px;
+        margin: 10px;
+        text-align: center;
+        line-height: 75px;
+        font-size: 30px;
+        border: 2px solid red
+    }
+
+    .form-group {
+        margin-bottom: 3px;
+    }
+
+    .montosFichaMonedas {
+        display: flex;
+        flex-direction: row-reverse;
+        align-content: end;
+    }
+
+    .tableArqueo {
+        width: 100%;
+        max-height: 300px;
+    }
+
+    .modal-header {
+        background-color: #025025d4;
+    }
+
+    .modal-footer {
+        background-color: #025025d4;
+    }
+
+    .botonFile {
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+        width: 98%;
+    }
+
+    .botonFile .btn {
+        border: 2px solid gray;
+        color: gray;
+        background-color: white;
+        padding: 8px 20px;
+        border-radius: 8px;
+        font-size: 10px;
+        font-weight: bold;
+    }
+
+    .tabsMenuArqueo {
+      font-size: 13px;
+      text-align: center;
+      border: 0.5px solid #999;
+    }
+
+    .tableFixHead {
+        overflow-y: auto;
+        max-height: 400px;
+    }
+
+    .tableFixHead thead th {
+        position: sticky;
+        top: 0;
+    }
+
+    .ContentFilters table thead th {
+        color: white;
+        background-color: #008efa;
+    }
+
+</style>
+
+<script type="text/javascript">
+
+    function isNumberKey(evt) {
+        var charCode = evt.which ? evt.which : event.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        return true;
+    }
+
+
+    function filterFloat(evt, input) {
+        // Backspace = 8, Enter = 13, ‘0′ = 48, ‘9′ = 57, ‘.’ = 46, ‘-’ = 43
+        var key = window.Event ? evt.which : evt.keyCode;
+        var chark = String.fromCharCode(key);
+        var tempValue = input.value + chark;
+        if (key >= 48 && key <= 57) {
+            if (filter(tempValue) === false) {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            if (key == 8 || key == 13 || key == 0) {
+                return true;
+            } else if (key == 46) {
+                if (filter(tempValue) === false) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } else {
+                return false;
+            }
+        }
+    }
+    function filter(__val__) {
+        var preg = /^([0-9]+\.?[0-9]{0,3})$/;
+        if (preg.test(__val__) === true) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+</script>
+
+
+<div class=" container" ng-init="initAll();">
+
+
+    <div class="panel-body  contentRegistro contentCombo ContentFilters ">
+
+
+        <div class="loaderModal" ng-if="loaderSaveD"></div>
+        <div class="loaderModal" ng-if="loaderCD" ></div>
+        <a id="id_link" href="" download style="display:none">link</a>
+
+
+        <div class="white-box">
+            <div class="row contenedorGrupo">
+                <ul class="nav nav-pills">
+                    <li ng-class="{ active: isSet(1) }">
+                        <a href="" ng-click="setTab(1)" class="tabsMenuArqueo"> LISTA DE ARQUEOS</a>
+                    </li>
+                    <li ng-class="{ active: isSet(2) }">
+                        <a href="" ng-click="setTab(2)" class="tabsMenuArqueo {{disabledCabecera}}">DATOS GENERALES</a>
+                    </li>
+                    <li ng-class="{ active: isSet(3) }" ng-show="id_ArqueoCaja_Global >0">
+                        <a href="" ng-click="setTab(3)" class="tabsMenuArqueo"> MONEDAS </a>
+                    </li>
+                    <li ng-class="{ active: isSet(4) }">
+                        <a href="" ng-click="setTab(4)" ng-show="id_ArqueoCaja_Global >0" class="tabsMenuArqueo"> VENTAS </a>
+                    </li>
+                    <li ng-class="{ active: isSet(5) }">
+                        <a href="" ng-click="setTab(5)" ng-show="id_ArqueoCaja_Global >0" class="tabsMenuArqueo"> DEPÓSITOS </a>
+                    </li>
+                    <li ng-class="{ active: isSet(6) }">
+                        <a href="" ng-click="setTab(6)" ng-show="id_ArqueoCaja_Global >0" class="tabsMenuArqueo"> PAGO AL PROVEEDOR </a>
+                    </li>
+                    <li ng-class="{ active: isSet(7) }">
+                        <a href="" ng-click="setTab(7)" ng-show="id_ArqueoCaja_Global >0" class="tabsMenuArqueo"> EGRESOS </a>
+                    </li>
+                    <li ng-class="{ active: isSet(8) }">
+                        <a href="" ng-click="setTab(8)" ng-show="id_ArqueoCaja_Global >0" class="tabsMenuArqueo"> COBRANZAS </a>
+                    </li>
+                    <li ng-class="{ active: isSet(9) }">
+                        <a href="" ng-click="setTab(9)" ng-show="id_ArqueoCaja_Global >0" class="tabsMenuArqueo"> DEVOLUCIONES </a>
+                    </li>
+
+                </ul>
+                @*---------- LISTADO DE ARQUEOS --------------*@
+                <div ng-show="isSet(1)">
+                    <div class="row" style="margin-top: 5px;">
+                        <div class="col-md-12">
+                            <fieldset>
+                                <legend>Filtros</legend>
+                                <div class="row">
+                                    <div class="col-sm-4  col-md-4   ">
+                                        <label for="cboEstado" class="control-label"> Anexo </label>
+                                        <select class="selectFiltros" id="cbo_anexoFiltro" style="width:95%;" data-style="btn-default" ng-model="Objeto_Parametro_filtro.id_Anexo" ng-change="listados_changeAnexoZonasFiltro(Objeto_Parametro_filtro.id_Anexo)">
+                                            <option value="0">[ ----  SELECCIONE  --- ]</option>
+                                            <option ng-repeat="item in lista_anexos" value="{{item.id}}">{{item.descripcion}}</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-sm-4  col-md-4">
+                                        <label for="cbo_zonasFiltro" class="control-label"> Zona de Venta </label>
+                                        <select class="selectFiltros" id="cbo_zonasFiltro" ng-model="Objeto_Parametro_filtro.id_ZonaVta">
+                                            <option value="0">[ ----  SELECCIONE  --- ]</option>
+                                            <option ng-repeat="item in Lista_zonasFiltro" value="{{item.id}}">  {{item.descripcion}} </option>
+                                        </select>
+                                    </div>
+
+                                    <div class=" col-sm-4  col-md-4">
+                                        <label for="cbo_centroCostoFiltro" class="control-label"> Centro de Costo </label>
+                                        <select class="selectFiltros" id="cbo_centroCostoFiltro" data-style="btn-default" ng-model="Objeto_Parametro_filtro.id_CC">
+                                            <option value="0">[ ----  SELECCIONE  --- ]</option>
+                                            <option ng-repeat="item in Lista_centroCostoFiltro" value="{{item.id}}">  {{item.descripcion}} </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="col-xs-8 col-sm-4 col-sm-4  col-md-4 ">
+                                        <div class="form-group" style="    margin-bottom: 0px;">
+                                            <label class="control-label" style="text-align :left">Rango de Fechas</label>
+                                            <br>
+                                            <div class="input-group">
+                                                <input ng-model="Objeto_Parametro_filtro.fechaIni" id="dtp_fechaIni" type="text" class="form-control input-sm   datepicker" placeholder="dia/mes/año">
+                                                <span class="input-group-addon bg-primary" style="color:white">al</span>
+                                                <input ng-model="Objeto_Parametro_filtro.fechaFin" id="dtp_fechaFin" type="text" class="form-control input-sm   datepicker" placeholder="dia/mes/año">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-8 col-sm-4 col-sm-4  col-md-4 ">
+                                        <label class="control-label"> Estado</label>
+                                        <select class="selectFiltros" id="cbo_estadoFiltro" data-style="btn-default" ng-model="Objeto_Parametro_filtro.id_estado">
+                                            <option value="0">[ ----  SELECCIONE  --- ]</option>
+                                            <option ng-repeat="item in lista_estados" value="{{item.id}}">  {{item.descripcion}} </option>
+                                        </select>
+                                    </div>
+
+
+                                    <div class="col-xs-12  col-sm-12 col-md-4 ">
+                                        <br />
+                                        <div style=" text-align: center ">
+                                            <button id="btn-material" class="btn btn-danger btn-sm m-l-10" ng-click="mostrandoInformacion_arqueosCaja();"> <i class="glyphicon glyphicon-refresh"></i> Mostrar </button>
+                                            <button id="btn-material" class="btn btn-warning btn-sm  " ng-click="nuevoArqueoCaja();"> <i class="glyphicon glyphicon-plus"></i> Nuevo  </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <hr />
+
+                                <div class="tableFixHead">
+                                    <table id="tablaArqueoCab" class="table m-b-0 toggle-arrow-tiny table-bordered table-hover" data-page-size="10">
+                                        <thead>
+                                            <tr>
+                                                <th> NRO LIQUIDACION</th>
+                                                <th> FECHA </th>
+                                                <th> CENTRO DE COSTO </th>
+                                                <th> ZONA DE VENTA</th>
+                                                <th> ANEXOS  </th>
+                                                <th> ESTADO  </th>
+                                                <th> ACCIONES  </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="item in lista_arqueosCab">
+                                                <td>{{item.nroLiquidacion}}</td>
+                                                <td>{{item.fecha}}</td>
+                                                <td>{{item.centroCosto}}</td>
+                                                <td>{{item.zonaVenta}}</td>
+                                                <td>{{item.anexos}}</td>
+                                                <td>{{item.descripcionEstado}}</td>
+                                                <td class="text-center">
+                                                    <button type="button" class="btn btn-primary btn-circle " ng-click="EdicionRegistros_arqueoCajaCab(item);" data-toggle="tooltip" title="EDITAR"><i class=" ti-pencil-alt"></i></button>
+                                                    <button type="button" ng-if="item.idEstado == 38" class="btn btn-warning btn-circle" ng-click="anular_arqueoCaja(item);" style="background-color: #ff6849; border-color: #ff6849;" title="Anular"><i class="fa fa-close"></i> </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+
+                            </fieldset>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+                @*---------- Generar Arqueo Caja --------------*@
+                <div ng-show="isSet(2)">
+                    <div class="row" style="margin-top: 5px;">
+                        <div class="col-md-12">
+                            <fieldset>
+                                <legend>Datos Generales</legend>
+                                <div class="row {{disabledContent}} ">
+                                    <div class="col-sm-4  col-md-4   ">
+                                        <label for="cbo_anexo" class="control-label"> Anexo </label>
+                                        <select class="selectFiltros" id="cbo_anexo" style="width:95%;" data-style="btn-default" ng-model="Objeto_Parametro_arqueoCaja.id_Anexo" ng-change="listados_changeAnexoZonas(Objeto_Parametro_arqueoCaja.id_Anexo,'0','0')">
+                                            <option value="0">[ ----  SELECCIONE  --- ]</option>
+                                            <option ng-repeat="item in lista_anexos" value="{{item.id}}">{{item.descripcion}}</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-sm-4  col-md-4">
+                                        <label for="cbo_zonas" class="control-label"> Zona de Venta </label>
+                                        <select class="selectFiltros" id="cbo_zonas" ng-model="Objeto_Parametro_arqueoCaja.id_ZonaVta">
+                                            <option value="0">[ ----  SELECCIONE  --- ]</option>
+                                            <option ng-repeat="item in Lista_zonas" value="{{item.id}}">  {{item.descripcion}} </option>
+                                        </select>
+                                    </div>
+
+                                    <div class=" col-sm-4  col-md-4">
+                                        <label for="cbo_centroCosto" class="control-label"> Centro de Costo </label>
+                                        <select class="selectFiltros" id="cbo_centroCosto" data-style="btn-default" ng-model="Objeto_Parametro_arqueoCaja.id_CC">
+                                            <option value="0">[ ----  SELECCIONE  --- ]</option>
+                                            <option ng-repeat="item in Lista_centroCosto" value="{{item.id}}">  {{item.descripcion}} </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row {{disabledContent}} ">
+                                    <div class="col-xs-8 col-sm-4 col-sm-4  col-md-2 ">
+                                        <label class="control-label"> Fecha Arqueo</label>
+                                        <input id="dtpFechaArqueo" ng-model="Objeto_Parametro_arqueoCaja.fechaArqueoCaja" type="text" class="form-control datepicker input-sm" placeholder="dia/mes/año">
+                                    </div>
+                                    <div class="col-xs-6 col-sm-4 col-md-2 ">
+                                        <label class="control-label"> Nro Arqueo</label>
+                                        <input type="text" ng-model="Objeto_Parametro_arqueoCaja.nroArqueoCaja" disabled class="form-control input-sm" style="background-color: beige;  " placeholder="">
+                                    </div>
+                                    <div class="col-xs-6  col-sm-4 col-md-2 ">
+                                        <label class="control-label"> Id Interno</label>
+                                        <input type="text" ng-model="Objeto_Parametro_arqueoCaja.id_ArqueoCaja" disabled class="form-control input-sm" style="background-color: beige" placeholder="">
+                                    </div>
+                                    <div class="col-xs-12  col-sm-12 col-md-2 ">
+                                        <div style=" text-align: center; margin-top: 20px; margin-bottom: -20px;">
+                                            <div class="cssload-speeding-wheel" ng-if="loader"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row m-t-10">
+                                    <div class="col-md-2 "> </div>
+                                    <div class="col-md-8 ">
+                                        <div class="form-group">
+                                            <label for="cbo_rinde" class="col-sm-3 col-lg-2  control-label " style="text-align: right;"> Rinde</label>
+                                            <div class="col-sm-9 col-lg-10">
+                                                <select class="selectFiltros" id="cbo_rinde" data-style="btn-default" ng-model="Objeto_Parametro_arqueoCaja.id_Personal_Rinde">
+                                                    <option value="0">[ ----  SELECCIONE  --- ]</option>
+                                                    <option ng-repeat="item in lista_rinde" value="{{item.id}}">  {{item.descripcion}} </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 "></div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-2 "> </div>
+                                    <div class="col-md-8 ">
+                                        <div class="form-group">
+                                            <label for="cbo_responsable" class="col-sm-3 col-lg-2  control-label" style="text-align: right;"> Responsable </label>
+                                            <div class="col-sm-9 col-lg-10">
+                                                <select class="selectFiltros" id="cbo_responsable" data-style="btn-default" ng-model="Objeto_Parametro_arqueoCaja.id_Personal_Responsable">
+                                                    <option value="0">[ ----  SELECCIONE  --- ]</option>
+                                                    <option ng-repeat="item in lista_responsable" value="{{item.id}}">  {{item.descripcion}} </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 "></div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-2 "> </div>
+                                    <div class="col-md-8 ">
+                                        <div class="form-group">
+                                            <label for="cbo_supervisor" class="col-sm-3 col-lg-2  control-label" style="text-align: right;"> Supervisor </label>
+                                            <div class="col-sm-9 col-lg-10">
+
+                                                <select class="selectFiltros" id="cbo_supervisor" data-style="btn-default" ng-model="Objeto_Parametro_arqueoCaja.id_Personal_Supervisor">
+                                                    <option value="0">[ ----  SELECCIONE  --- ]</option>
+                                                    <option ng-repeat="item in lista_supervisor" value="{{item.id}}">  {{item.descripcion}} </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 "></div>
+                                </div>
+
+                                <div class="row  ">
+                                    <div class="col-sm-4  col-md-4 ">
+                                        <label class="control-label"> Fecha Saldo Inicial</label>
+                                        <input id="dtpFechaSaldoIni" ng-model="Objeto_Parametro_arqueoCaja.fechaSaldoInicial" type="text" class="form-control datepicker input-sm" style="background-color: beige" placeholder="dia/mes/año">
+                                    </div>
+                                    <div class="col-sm-4  col-md-4 ">
+                                        <label class="control-label"> Importe </label>
+                                        <input type="text" ng-model="Objeto_Parametro_arqueoCaja.importeSaldoInicial" onkeypress="return isNumberKey(event)" class="form-control input-sm" style="background-color: beige" placeholder="">
+                                    </div>
+                                    <div class="col-sm-4  col-md-4 text-center">
+                                        <br />
+                                        @*<button id="btn-material" class="btn btn-warning btn-sm m-l-10" ng-click="mostrandoInformacion_ingresoFacturas();">
+                                            <i class="glyphicon glyphicon-refresh"></i> Traer Saldos
+                                        </button>*@
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+
+                    <hr />
+                    <div class="row" style="margin-top: 5px;">
+                        <div class="col-md-12 text-center">
+                            <button id="btn-material" class="btn btn-outline btn-success btn-sm m-l-10" ng-click="saveUpdate_arqueoCaja();"> <i class="glyphicon glyphicon-save"></i> Guardar Arqueo  </button>
+                            <button id="btn-material" class="btn btn-outline btn-danger btn-sm m-l-10" ng-show="id_ArqueoCaja_Global >0 " ng-click="cerrar_arqueoCaja();"> <i class="glyphicon glyphicon-refresh"></i> Cerrar Caja  </button>
+                            <button id="btn-material" class="btn btn-outline btn-primary btn-sm m-l-10" ng-show="id_ArqueoCaja_Global >0 " ng-click="descargarExcel_arqueoCaja();"> <i class="glyphicon glyphicon-refresh"></i> Vista Previa </button>
+                        </div>
+                    </div>
+                </div>
+
+                @*---------- Monedas --------------*@
+                <div ng-show="isSet(3) && id_ArqueoCaja_Global >0  ">
+                    <div class="row" style="margin-top: 5px;">
+                        <div class="col-md-6">
+                            <fieldset>
+                                <legend> Reparto </legend>
+                                <div class="row" ng-if="lista_billeteReparto.length> 0">
+                                    <div class=" col-sm-12 col-md-12 ">
+                                        <h4>Billetes</h4>
+                                        <div class="tableArqueo">
+                                            <table id="tableBilleteReparto" class="table table-bordered table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th data-hide=""> Cantidad </th>
+                                                        <th data-hide=""> Billete </th>
+                                                        <th data-hide=""> Importe Total </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="item in lista_billeteReparto">
+                                                        <td>
+                                                            <input type="text" id="id_BR_{{$index}}" ng-model="item.cantidad" onkeypress="return isNumberKey(event)" ng-enter="calcularTotales_fila('R','B', item, $index);" class="form-control input-sm text-center " style="background-color: beige;color:darkred " placeholder="">
+                                                        </td>
+                                                        <td class="text-right">{{item.valor_BilleteMoneda}}</td>
+                                                        <td class="text-right">{{item.importe}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="montosFichaMonedas">
+                                    <div class="input-group input-group-sm ">
+                                        <label class="control-label"> Total Billetes </label>
+                                        <input type="text" ng-model="totalBR" readonly class="form-control input-sm text-right" style=" font-size: 15px !important; font-weight: 800;" placeholder="">
+                                    </div>
+                                </div>
+
+
+                                <div class="row" ng-if="lista_monedasReparto.length> 0">
+                                    <div class=" col-sm-12 col-md-12 ">
+                                        <h4>Monedas</h4>
+                                        <div class="tableArqueo">
+                                            <table id="tableMonedaReparto" class="table table-bordered table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th data-hide=""> Cantidad </th>
+                                                        <th data-hide=""> Monedas </th>
+                                                        <th data-hide=""> Importe Total </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="item in lista_monedasReparto">
+                                                        <td>
+                                                            <input type="text" id="id_MR_{{$index}}" ng-model="item.cantidad" onkeypress="return isNumberKey(event)" ng-enter="calcularTotales_fila('R','M', item, $index);" class="form-control input-sm text-center " style="background-color: beige;color:darkred " placeholder="">
+                                                        </td>
+                                                        <td class="text-right">{{item.valor_BilleteMoneda}}</td>
+                                                        <td class="text-right">{{item.importe}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="montosFichaMonedas">
+                                    <div class="input-group input-group-sm">
+                                        <label class="control-label"> Total Monedas</label>
+                                        <input type="text" ng-model="totalMR" readonly class="form-control input-sm text-right" style="font-size: 15px !important; font-weight: 800;" placeholder="">
+                                    </div>
+                                </div>
+
+                                <hr />
+                                <div class="montosFichaMonedas">
+                                    <div class="input-group input-group-sm">
+                                        <label class="control-label" style="color:red"> Total Reparto </label>
+                                        <input type="text" ng-model="totalReparto" readonly class="form-control input-sm text-right" style="background-color: beige;font-size: 15px !important; font-weight: 800;" placeholder="">
+                                    </div>
+                                </div>
+
+                            </fieldset>
+                        </div>
+                        <div class="col-md-6">
+                            <fieldset>
+                                <legend>Caja Chica </legend>
+                                <div class="row" ng-if="lista_billeteCaja.length> 0">
+                                    <div class=" col-sm-12 col-md-12 ">
+                                        <h4>Billetes</h4>
+                                        <div class="tableArqueo">
+                                            <table id="tableBilleteCaja" class="table table-bordered table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th data-hide=""> Cantidad </th>
+                                                        <th data-hide=""> Billete </th>
+                                                        <th data-hide=""> Importe Total </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="item in lista_billeteCaja">
+                                                        <td>
+                                                            <input type="text" id="id_BC_{{$index}}" ng-model="item.cantidad" onkeypress="return isNumberKey(event)" ng-enter="calcularTotales_fila('C','B', item, $index);" class="form-control input-sm text-center " style="background-color: beige;color:darkred " placeholder="">
+                                                        </td>
+                                                        <td class="text-right">{{item.valor_BilleteMoneda}}</td>
+                                                        <td class="text-right">{{item.importe}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="montosFichaMonedas">
+                                    <div class="input-group input-group-sm">
+                                        <label class="control-label"> Total Billetes</label>
+                                        <input type="text" ng-model="totalBC" readonly class="form-control input-sm text-right" style=" font-size: 15px !important; font-weight: 800;" placeholder="">
+                                    </div>
+                                </div>
+
+                                <div class="row" ng-if="lista_monedasCaja.length> 0">
+                                    <div class=" col-sm-12 col-md-12 ">
+                                        <h4>Monedas</h4>
+                                        <div class="tableArqueo">
+                                            <table id="tableMonedaCaja" class="table table-bordered table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th data-hide=""> Cantidad </th>
+                                                        <th data-hide=""> Monedas </th>
+                                                        <th data-hide=""> Importe Total </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="item in lista_monedasCaja">
+                                                        <td>
+                                                            <input type="text" id="id_MC_{{$index}}" ng-model="item.cantidad" onkeypress="return isNumberKey(event)" ng-enter="calcularTotales_fila('C','M', item, $index);" class="form-control input-sm text-center " style="background-color: beige;color:darkred " placeholder="">
+                                                        </td>
+                                                        <td class="text-right">{{item.valor_BilleteMoneda}}</td>
+                                                        <td class="text-right">{{item.importe}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="montosFichaMonedas">
+                                    <div class="input-group input-group-sm">
+                                        <label class="control-label"> Total Monedas</label>
+                                        <input type="text" ng-model="totalMC" readonly class="form-control input-sm text-right" style=" font-size: 15px !important; font-weight: 800;" placeholder="">
+                                    </div>
+                                </div>
+
+                                <hr />
+                                <div class="montosFichaMonedas">
+                                    <div class="input-group input-group-sm">
+                                        <label class="control-label" style="color:red"> Total Caja Chica </label>
+                                        <input type="text" ng-model="totalCajaChica" readonly class="form-control input-sm text-right" style="background-color: beige;font-size: 15px !important; font-weight: 800;" placeholder="">
+                                    </div>
+                                </div>
+
+                            </fieldset>
+                        </div>
+
+                    </div>
+                </div>
+
+                @*---------- Ventas  --------------*@
+                <div ng-show="isSet(4)">
+
+                    <fieldset>
+                        <legend>. </legend>
+
+                        <div class="row" style="margin-top: 5px;">
+                            <div class="col-md-12 text-center">
+                                <button id="btn-material" class="btn btn-danger btn-sm m-l-10" ng-click="mostrandoInformacion_ventas();"> <i class="glyphicon glyphicon-refresh"></i> Actualizar </button>
+                                <button id="btn-material" class="btn btn-success btn-sm m-l-10" ng-click="guardarInformacion_ventas();"> <i class="glyphicon glyphicon-floppy-saved"></i> Guardar Ventas  </button>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <h2 style="text-decoration: underline;">Facturas</h2>
+                                <div class="tableFixHead">
+                                    <table id="tablaFacturasVentas" class="table m-b-0 toggle-arrow-tiny table-bordered table-hover" data-page-size="10">
+                                        <thead>
+                                            <tr>
+                                                <th> Fecha</th>
+                                                <th> Tipo Doc.</th>
+                                                <th> Nro Doc.</th>
+                                                <th> Valor Venta</th>
+                                                <th> Impuesto IGV</th>
+                                                <th> Importe Total</th>
+
+                                                <th> Nro Ruc / DNI</th>
+                                                <th> Razon Social </th>
+                                                <th> Cod. Vendedor </th>
+                                                <th> Nombre Vendedor </th>
+                                                <th> Condicion Pago </th>
+                                                <th> Zona </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="item in facturasVentas">
+                                                <td>{{item.fecha}}</td>
+                                                <td>{{item.tipoDoc}}</td>
+                                                <td>{{item.nroDoc}}</td>
+                                                <td>{{item.valorVenta}}</td>
+                                                <td>{{item.impuestoIGV}}</td>
+                                                <td>{{item.importeTotal}}</td>
+
+                                                <td>{{item.nroRucDni}}</td>
+                                                <td>{{item.razonSocial}}</td>
+                                                <td>{{item.codVendedor}}</td>
+                                                <td>{{item.nombreVendedor}}</td>
+                                                <td>{{item.condicionPago}}</td>
+                                                <td>{{item.zona}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="montosFichaMonedas">
+                                    <div class="input-group input-group-sm">
+                                        <label class="control-label"> Total Facturas </label>
+                                        <input type="text" ng-model="totalVentaFactura" readonly class="form-control input-sm text-right" style=" font-size: 15px !important; font-weight: 800;" placeholder="">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-top: 5px;">
+                            <div class="col-md-12">
+                                <h2 style="text-decoration: underline;">Boletas</h2>
+                                <div class="tableFixHead">
+                                    <table id="tablaBoletasVentas" class="table m-b-0 toggle-arrow-tiny table-bordered table-hover" data-page-size="10">
+                                        <thead>
+                                            <tr>
+                                                <th> Fecha</th>
+                                                <th> Tipo Doc.</th>
+                                                <th> Nro Doc.</th>
+                                                <th> Valor Venta</th>
+                                                <th> Impuesto IGV</th>
+                                                <th> Importe Total</th>
+
+                                                <th> Nro Ruc / DNI</th>
+                                                <th> Razon Social </th>
+                                                <th> Cod. Vendedor </th>
+                                                <th> Nombre Vendedor </th>
+                                                <th> Condicion Pago </th>
+                                                <th> Zona </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="item in boletasVentas">
+                                                <td>{{item.fecha}}</td>
+                                                <td>{{item.tipoDoc}}</td>
+                                                <td>{{item.nroDoc}}</td>
+                                                <td>{{item.valorVenta}}</td>
+                                                <td>{{item.impuestoIGV}}</td>
+                                                <td>{{item.importeTotal}}</td>
+
+                                                <td>{{item.nroRucDni}}</td>
+                                                <td>{{item.razonSocial}}</td>
+                                                <td>{{item.codVendedor}}</td>
+                                                <td>{{item.nombreVendedor}}</td>
+                                                <td>{{item.condicionPago}}</td>
+                                                <td>{{item.zona}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="montosFichaMonedas">
+                                    <div class="input-group input-group-sm">
+                                        <label class="control-label"> Total Boletas </label>
+                                        <input type="text" ng-model="totalVentaBoleta" readonly class="form-control input-sm text-right" style=" font-size: 15px !important; font-weight: 800;" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <hr />
+                    <div class="row">
+                        <div class="col-xs-8 col-md-6">
+                            <div class="form-group">
+                                <label for="ejemplo_password_3" class="col-sm-3 col-lg-3  control-label" style="text-align: right;"> Total Venta  </label>
+                                <div class="col-sm-9 col-lg-9">
+                                    <input type="text" ng-model="totalVenta" readonly class="form-control input-sm text-right" style="background-color: beige;font-size: 15px !important; font-weight: 800;" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="ejemplo_password_3" class="col-sm-3 col-lg-3  control-label" style="text-align: right;"> Total Contado  </label>
+                                <div class="col-sm-9 col-lg-9">
+                                    <input type="text" ng-model="totalContado" readonly class="form-control input-sm text-right" style="background-color: beige;font-size: 15px !important; font-weight: 800;" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="ejemplo_password_3" class="col-sm-3 col-lg-3  control-label" style="text-align: right;"> Total Credito  </label>
+                                <div class="col-sm-9 col-lg-9">
+                                    <input type="text" ng-model="totalCredito" readonly class="form-control input-sm text-right" style="background-color: beige;font-size: 15px !important; font-weight: 800;" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                @*---------- Depositos  --------------*@
+                <div ng-show="isSet(5)">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <fieldset>
+                                <legend> Depósito a la Empresa </legend>
+                                <div class="row m-b-10" style="margin-top: -10px;">
+                                    <div class="col-md-4">
+                                        <button id="btn-material" class="btn btn-warning btn-sm  " ng-click="openModal_depositos();"> <i class="glyphicon glyphicon-plus"></i> Nuevo  </button>
+                                    </div>
+                                </div>
+                                <div class="tableFixHead">
+                                    <table id="tablaDepositos" class="table m-b-0 toggle-arrow-tiny table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th> Item</th>
+                                                <th> Fecha </th>
+                                                <th> Banco </th>
+                                                <th> Nro Operacion </th>
+                                                <th> Importe </th>
+
+                                                <th> Medio Pago </th>
+                                                <th> Observacion </th>
+                                                <th> File </th>
+                                                <th> Acciones </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="item in depositos">
+                                                <td>{{$index + 1}}</td>
+                                                <td>{{item.fecha_Deposito  | date:'dd/MM/yyyy' }}</td>
+                                                <td>{{item.descripcionBanco}}</td>
+                                                <td>{{item.nroOperario}}</td>
+                                                <td class="text-right">{{item.importe_Deposito}}</td>
+
+                                                <td>Deposito</td>
+                                                <td>{{item.observaciones}}</td>
+                                                <td>  <a href="" style="color:red" ng-click="descargarComprobanteDeposito(item)"> {{item.adjuntarArchivo}}  </a>  </td>
+                                                <td class="text-center">
+                                                    <button type="button" class="btn btn-primary btn-circle " ng-click="EdicionRegistros_depositos(item);" data-toggle="tooltip" title="EDITAR"><i class=" ti-pencil-alt"></i></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+
+                @*---------- Pago al Proveedor  --------------*@
+                <div ng-show="isSet(6)">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <fieldset>
+                                <legend> Pago al Proveedor </legend>
+                                <div class="row m-b-10" style="margin-top: -10px;">
+                                    <div class="col-md-4">
+                                        <button id="btn-material" class="btn btn-warning btn-sm  " ng-click="openModal_pagoProveedor();"> <i class="glyphicon glyphicon-plus"></i> Nuevo  </button>
+                                    </div>
+                                </div>
+
+                                <div class="tableFixHead">
+                                    <table id="tablaDepositos" class="table m-b-0 toggle-arrow-tiny table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th> Item</th>
+                                                <th> C. Costo Destino </th>
+                                                <th> Fecha </th>
+                                                <th> Banco </th>
+                                                <th> Nro Operacion </th>
+
+                                                <th> Importe </th>
+                                                <th> Medio Pago </th>
+                                                <th> Razon Social Proveedor </th>
+                                                <th> Observacion </th>
+                                                <th> Acciones </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="item in pagos">
+                                                <td>{{$index + 1}}</td>
+                                                <td>{{item.descripcionCentroCosto}}</td>
+                                                <td>{{item.fecha_Registro  | date:'dd/MM/yyyy' }}</td>
+                                                <td>{{item.descripcionBanco}}</td>
+                                                <td>{{item.nroOperario}}</td>
+
+                                                <td class="text-right">{{item.importe_Deposito}}</td>
+                                                <td>{{item.descripcionMedioPago}}</td>
+                                                <td>{{item.descripcionProveedor}}</td>
+                                                <td>{{item.observaciones}}</td>
+                                                <td class="text-center">
+                                                    <button type="button" class="btn btn-primary btn-circle " ng-click="EdicionRegistros_pagos(item);" data-toggle="tooltip" title="EDITAR"><i class=" ti-pencil-alt"></i></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+
+                @*---------- Egresos  --------------*@
+                <div ng-show="isSet(7)">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <fieldset>
+                                <legend> Deposito Egresos </legend>
+
+                                <div class="row m-b-10" style="margin-top: -10px;">
+                                    <div class="col-md-4">
+                                        <button id="btn-material" class="btn btn-warning btn-sm  " ng-click="openModal_egresos();"> <i class="glyphicon glyphicon-plus"></i> Nuevo  </button>
+                                    </div>
+                                </div>
+
+                                <div class="tableFixHead">
+                                    <table id="tablaEgresos" class="table m-b-0 toggle-arrow-tiny table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th> Tipo Egreso </th>
+                                                <th> Item</th>
+                                                <th> Fecha </th>
+                                                <th> Documento </th>
+                                                <th> Serie-Numero </th>
+
+                                                <th> Ruc </th>
+                                                <th> Proveedor </th>
+                                                <th> Importe </th>
+                                                <th> Descripcion </th>
+                                                <th> Documento </th>
+                                                <th> Acciones </th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="item in egresos">
+                                                <td>{{item.descripciontipoEgreso}}</td>
+                                                <td>{{$index + 1}}</td>
+                                                <td>{{item.fecha_Registro  | date:'dd/MM/yyyy' }}</td>
+                                                <td>{{item.tipoDocumento}}</td>
+                                                <td>{{item.serieDocumento}} -  {{item.numeroDocumento}} </td>
+
+
+                                                <td>{{item.rucProveedor}}</td>
+                                                <td>{{item.razonsocialProveedor}}</td>
+                                                <td class="text-right">{{item.importe_Egreso}}</td>
+
+                                                <td>{{item.descripcionEgreso}}</td>
+                                                <td>{{item.tipoDocumento2}}</td>
+                                                <td class="text-center">
+                                                    <button type="button" class="btn btn-primary btn-circle " ng-click="EdicionRegistros_egresos(item);" data-toggle="tooltip" title="EDITAR"><i class=" ti-pencil-alt"></i></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+
+                @*---------- Cobranzas  --------------*@
+                <div ng-show="isSet(8)">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <fieldset>
+                                <legend>. </legend>
+
+                                <div class="row" style="margin-top: 5px;">
+                                    <div class="col-md-12 text-center">
+                                        <button id="btn-material" class="btn btn-danger btn-sm m-l-10" ng-click="mostrandoInformacion_cobranzasDevoluciones();"> <i class="glyphicon glyphicon-refresh"></i> Actualizar </button>
+                                        <button id="btn-material" class="btn btn-success btn-sm m-l-10" ng-click="guardarInformacion_cobranzasDevoluciones();"> <i class="glyphicon glyphicon-floppy-saved"></i> Guardar  </button>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+
+                                        <h2 style="text-decoration: underline;">Cobranzas</h2>
+                                        <div class="tableFixHead">
+                                            <table id="tablaCobranzas" class="table m-b-0 toggle-arrow-tiny table-bordered table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th> Item   </th>
+                                                        <th> Fecha</th>
+                                                        <th> Documento </th>
+                                                        <th> Serie-Numero </th>
+                                                        <th> Importe </th>
+
+                                                        <th> Medio Pago </th>
+                                                        <th> Destino </th>
+                                                        <th> Observacion </th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="item in cobranzas">
+                                                        <td>{{$index + 1}}</td>
+                                                        <td>{{item.fecha}}</td>
+                                                        <td>{{item.documento}}</td>
+                                                        <td>{{item.serieNumero}}</td>
+                                                        <td class="text-right">{{item.importe}}</td>
+                                                        <td>{{item.medioPago}}</td>
+                                                        <td>{{item.destino}}</td>
+                                                        <td>{{item.observacion}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="montosFichaMonedas">
+                                            <div class="input-group input-group-sm">
+                                                <label class="control-label"> Total Cobranzas </label>
+                                                <input type="text" ng-model="totalCobranzas" readonly class="form-control input-sm text-right" style=" font-size: 15px !important; font-weight: 800;" placeholder="">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </fieldset>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                @*---------- Devoluciones  --------------*@
+                <div ng-show="isSet(9)">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <fieldset>
+                                <legend>. </legend>
+
+                                <div class="row" style="margin-top: 5px;">
+                                    <div class="col-md-12 text-center">
+                                        <button id="btn-material" class="btn btn-danger btn-sm m-l-10" ng-click="mostrandoInformacion_Devoluciones();"> <i class="glyphicon glyphicon-refresh"></i> Actualizar </button>
+                                        <button id="btn-material" class="btn btn-success btn-sm m-l-10" ng-click="guardarInformacion_Devoluciones();"> <i class="glyphicon glyphicon-floppy-saved"></i> Guardar  </button>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin-top: 5px;">
+                                    <div class="col-md-12">
+                                        <h2 style="text-decoration: underline;"> Devoluciones </h2>
+                                        <div class="tableFixHead">
+                                            <table id="tablaBoletasVentas" class="table m-b-0 toggle-arrow-tiny table-bordered table-hover" data-page-size="10">
+                                                <thead>
+                                                    <tr>
+                                                        <th> Item   </th>
+                                                        <th> Fecha</th>
+                                                        <th> Documento </th>
+                                                        <th> Serie-Numero </th>
+                                                        <th> Importe </th>
+
+                                                        <th> Motivo </th>
+                                                        <th> Vendedor </th>
+                                                        <th> Nro Nota Credito </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="item in devoluciones">
+                                                        <td>{{$index + 1}}</td>
+                                                        <td>{{item.fecha}}</td>
+                                                        <td>{{item.documento}}</td>
+                                                        <td>{{item.serieNumero}}</td>
+                                                        <td class="text-right">{{item.importe}}</td>
+
+                                                        <td>{{item.motivo}}</td>
+                                                        <td>{{item.vendedor}}</td>
+                                                        <td>{{item.nroNotaCredito}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="montosFichaMonedas">
+                                            <div class="input-group input-group-sm">
+                                                <label class="control-label"> Total Devoluciones </label>
+                                                <input type="text" ng-model="totalDevoluciones" readonly class="form-control input-sm text-right" style=" font-size: 15px !important; font-weight: 800;" placeholder="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div id="modalDeposito" class="modal fade bd-example-modal-lg ModalBorderSombra  " tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h2 class="modal-title" id="myLargeModalLabel" style="color:white !important"> Depósitos </h2>
+            </div>
+            <div class="modal-body   contentRegistro contentCombo ContentFilters ">
+                <div class="loaderModal" ng-if="loaderSaveD"></div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-sm-4 col-md-4 ">
+                        <label class="control-label"> Correlativo</label>
+                        <input type="text" readonly ng-model="Objeto_Parametro_deposito.id_ArqueoCaja_Deposito" class="form-control input-sm" style="background-color: beige;  " placeholder="">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-6 ">
+                        <label class="control-label"> Fecha </label>
+                        <input id="dtp_fechaDeposito" ng-model="Objeto_Parametro_deposito.fecha_Deposito" type="text" class="form-control datepicker input-sm" placeholder="dia/mes/año">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 ">
+                        <label class="control-label"> Banco </label>
+                        <select class="selectModal" id="cbo_banco" ng-model="Objeto_Parametro_deposito.id_Banco">
+                            <option value="0">[ -SELECCIONE- ]</option>
+                            <option ng-repeat="item in Lista_Bancos" value="{{item.id_detalleTabla}}">{{item.descripcion_grupoTabla}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-12 ">
+                        <label class="control-label"> Nro Operacion</label>
+                        <input type="text" ng-model="Objeto_Parametro_deposito.nroOperario" class="form-control input-sm" style="background-color: beige;  " placeholder="">
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-6 ">
+                        <div style=" text-align: center; margin-top: 20px; margin-bottom: -20px;">
+                            <div class="cssload-speeding-wheel" ng-if="loader"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 ">
+                        <label class="control-label"> Importe </label>
+                        <input type="text" onkeypress="return filterFloat(event,this);" ng-model="Objeto_Parametro_deposito.importe_Deposito" class="form-control input-sm" placeholder="">
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="txt_nroOperacion" class="control-label"> {{titleFile}}  </label>
+                        <div class="botonFile">
+                            <input type="file" id="inputFileOpen" class="form-control-file btn" formControlName="file" accept=".jpg, .jpeg, .png" onchange="angular.element(this).scope().changeImagen(event)" />
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row" ng-if="showFileName">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-8 text-center">
+                        <label class="control-label">  Archivo Cargado : </label><br />
+                        <label class="control-label" style="font-size: 15px;color: red; cursor:pointer"> {{Objeto_Parametro_deposito.adjuntarArchivo}}</label>
+                    </div>
+                    <div class="col-sm-2"></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 ">
+                        <label class="control-label"> Observaciones  </label>
+                        <input type="text" ng-model="Objeto_Parametro_deposito.observaciones" class="form-control input-sm" placeholder="">
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer ">
+                <button id="btn-material" class="btn btn-success btn-sm m-l-10" ng-click="guardarInformacion_depositos();"> <i class="glyphicon glyphicon-floppy-saved"></i> Guardar</button>
+                <a class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-sign"></span> Cerrar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalPagoProveedor" class="modal fade bd-example-modal-lg ModalBorderSombra  " tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h2 class="modal-title" id="myLargeModalLabel" style="color:white !important"> Pagos al Proveedor </h2>
+            </div>
+            <div class="modal-body contentRegistro contentCombo ContentFilters ">
+                <div class="loaderModal" ng-if="loaderSaveD"></div>
+
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 ">
+                        <label class="control-label"> Correlativo</label>
+                        <input type="text" ng-model="Objeto_Parametro_pagos.id_ArqueoCaja_Egresos" class="form-control input-sm" style="background-color: beige;  " placeholder="">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 ">
+                        <label class="control-label"> Fecha </label>
+                        <input id="dtp_fechaPago" ng-model="Objeto_Parametro_pagos.fecha_Registro" type="text" class="form-control datepicker input-sm" placeholder="dia/mes/año">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 ">
+                        <label class="control-label"> Anexo Destino </label>
+                        <select class="selectFiltros" id="cbo_anexoPago" style="width:95%;" data-style="btn-default" ng-model="Objeto_Parametro_pagos.id_Anexo_Destino" ng-change="listados_changeCentroCosto_anexosPagos(Objeto_Parametro_pagos.id_Anexo_Destino,0)">
+                            <option value="0">[ ----  SELECCIONE  --- ]</option>
+                            <option ng-repeat="item in lista_anexosModal" value="{{item.id}}">{{item.descripcion}}</option>
+                        </select>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 ">
+                        <label class="control-label"> Centro Costo Destino </label>
+                        <select class="selectFiltros" id="cbo_centroCostoPago" data-style="btn-default" ng-model="Objeto_Parametro_pagos.id_CC_Destino">
+                            <option value="0">[ ----  SELECCIONE  --- ]</option>
+                            <option ng-repeat="item in Lista_centroCostoModal" value="{{item.id}}">  {{item.descripcion}} </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row  ">
+                    <div class="col-md-12 ">
+                        <label class="control-label"> Medio Pago </label>    
+                        <select class="selectModal" id="cbo_medioPago" ng-model="Objeto_Parametro_pagos.id_MedioPago" ng-change="change_medioPago(Objeto_Parametro_pagos.id_MedioPago)">
+                            <option value="1"> EFECTIVO </option>
+                            <option value="2"> DEPOSITO </option>
+                            @*<option ng-repeat="item in Lista_CondicionFact" value="{{item.id_detalleTabla}}">{{item.descripcion_grupoTabla}}</option>*@
+                        </select>
+
+                    </div>
+                </div>
+
+                <div class="row" ng-show="showDeposit">
+                    <div class="col-md-12 ">
+                        <label class="control-label"> Banco </label>
+                        <select id="cbo_bancoPago" class="selectFiltros" data-style="btn-default" ng-model="Objeto_Parametro_pagos.id_Banco">
+                            <option value="0">[ -SELECCIONE- ]</option>
+                            <option ng-repeat="item in Lista_Bancos" value="{{item.id_detalleTabla}}">{{item.descripcion_grupoTabla}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row" ng-show="showDeposit" >
+                    <div class="col-xs-6 col-sm-6 col-md-6 ">
+                        <label class="control-label"> Nro Operacion</label>
+                        <input type="text" ng-model="Objeto_Parametro_pagos.nroOperario" class="form-control input-sm" style="background-color: beige;  " placeholder="">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 ">
+                        <label class="control-label"> Importe </label>
+                        <input type="text" onkeypress="return filterFloat(event,this);" ng-model="Objeto_Parametro_pagos.importe_Deposito" class="form-control input-sm"   placeholder="">
+                    </div>
+                </div>
+                <div class="row" ng-show="showDeposit">
+                    <div class="col-md-12">
+                        <label for="txt_nroOperacion" class="control-label"> {{titleFile}}  </label>
+                        <div class="botonFile">
+                            <input type="file" id="inputFileOpenPago" class="form-control-file btn" formControlName="file" accept=".jpg, .jpeg, .png" onchange="angular.element(this).scope().changeImagen(event)" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" ng-if="showFileName">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-8 text-center">
+                        <label class="control-label">  Archivo Cargado : </label><br />
+                        <label class="control-label" style="font-size: 15px;color: red; cursor:pointer"> {{Objeto_Parametro_pagos.adjuntarArchivo}}</label>
+                    </div>
+                    <div class="col-sm-2"></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 ">
+                        <label class="control-label"> Proveedor </label>
+                        <select id="cbo_proveedorPago" class="selectFiltros" data-style="btn-default" ng-model="Objeto_Parametro_pagos.idProveedor">
+                            <option value="0">[ ----  SELECCIONE  --- ]</option>
+                            <option ng-repeat="item in Lista_proveedorModal" value="{{item.id}}">{{item.descripcion}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 ">
+                        <label class="control-label"> Nro Doc Referencia</label>
+                        <input type="text" ng-model="Objeto_Parametro_pagos.documentoReferencia" class="form-control input-sm"  placeholder="">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 ">
+                        <label class="control-label"> Observaciones  </label>
+                        <input type="text" ng-model="Objeto_Parametro_pagos.observaciones" class="form-control input-sm" placeholder="">
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer ">
+                <button id="btn-material" class="btn btn-success btn-sm m-l-10" ng-click="guardarInformacion_pagosProveedor();"> <i class="glyphicon glyphicon-floppy-saved"></i> Guardar</button>
+                <a class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-sign"></span> Cerrar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="modalEgresos" class="modal fade bd-example-modal-lg ModalBorderSombra  " tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h2 class="modal-title" id="myLargeModalLabel" style="color:white !important"> Egresos </h2>
+            </div>
+            <div class="modal-body contentRegistro contentCombo ContentFilters ">
+                <div class="loaderModal" ng-if="loaderSaveD"></div>
+
+                <div class="row">
+                    <div class="col-xs-6 col-sm-3 col-md-3 ">
+                        <label class="control-label"> Correlativo</label>
+                        <input type="text" ng-model="Objeto_Parametro_egresos.id_ArqueoCaja_Egresos" class="form-control input-sm" style="background-color: beige;  " placeholder="">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 ">
+                        <label class="control-label"> Tipo Egreso </label>
+                        <select id="cbo_tipoEgreso" class="selectFiltros" data-style="btn-default" ng-model="Objeto_Parametro_egresos.id_TipoEgreso">
+                            <option value="0">[ ----  SELECCIONE  --- ]</option>
+                            <option ng-repeat="item in tiposEgresos" value="{{item.id}}">{{item.descripcion}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6 col-sm-3 col-md-3 ">
+                        <label class="control-label"> Fecha </label>
+                        <input id="dtp_fechaEgreso" ng-model="Objeto_Parametro_egresos.fecha_Registro" type="text" class="form-control datepicker input-sm" placeholder="dia/mes/año">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 ">
+                        <label class="control-label"> Anexo Destino </label>
+                        <select class="selectFiltros" id="cbo_anexoEgreso" style="width:95%;" data-style="btn-default" ng-model="Objeto_Parametro_egresos.id_Anexo_Destino" ng-change="listados_changeCentroCosto_anexosEgresos(Objeto_Parametro_egresos.id_Anexo_Destino,0)">
+                            <option value="0">[ ----  SELECCIONE  --- ]</option>
+                            <option ng-repeat="item in lista_anexosModal" value="{{item.id}}">{{item.descripcion}}</option>
+                        </select>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 ">
+                        <label class="control-label"> Centro Costo Destino </label>
+                        <select class="selectFiltros" id="cbo_centroCostoEgreso" data-style="btn-default" ng-model="Objeto_Parametro_egresos.id_CC_Destino">
+                            <option value="0">[ ----  SELECCIONE  --- ]</option>
+                            <option ng-repeat="item in Lista_centroCostoModal" value="{{item.id}}">  {{item.descripcion}} </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 ">
+                        <label class="control-label"> Tipo Documento </label>
+                        <select id="cbo_tipoDocumento"  class="selectFiltros" data-style="btn-default" ng-model="Objeto_Parametro_egresos.id_TipoDocumento">
+                            <option value="0">[ ----  SELECCIONE  --- ]</option>
+                            <option ng-repeat="item in tiposDocumentos" value="{{item.id}}">{{item.descripcion}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6 col-sm-3 col-md-3 ">
+                        <label class="control-label"> Serie Documento</label>
+                        <input type="text" ng-model="Objeto_Parametro_egresos.serieDocumento" maxlength="4" class="form-control input-sm" style="background-color: beige;  " placeholder="">
+                    </div>
+                    <div class="col-xs-6 col-sm-4 col-md-4 ">
+                        <label class="control-label"> Nro Documento</label>
+                        <input type="text" ng-model="Objeto_Parametro_egresos.numeroDocumento" maxlength="8" class="form-control input-sm" style="background-color: beige;  " placeholder="">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6 col-sm-3 col-md-3 ">
+                        <label class="control-label"> Nro Ruc</label>
+                        <input type="text" ng-model="Objeto_Parametro_egresos.rucProveedor" ng-enter="consultarRuc(Objeto_Parametro_egresos.rucProveedor)" class="form-control input-sm" style="background-color: beige;" placeholder="">
+                    </div>
+                    <div class="col-xs-6 col-sm-9 col-md-9 ">
+                        <label class="control-label"> Proveedor</label>
+                        <input type="text" readonly ng-model="Objeto_Parametro_egresos.razonsocialProveedor" class="form-control input-sm"   placeholder="">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6 col-sm-3 col-md-3 ">
+                        <label class="control-label"> Importe </label>
+                        <input type="text" onkeypress="return filterFloat(event,this);" ng-model="Objeto_Parametro_egresos.importe_Egreso" class="form-control input-sm" placeholder="">
+                    </div>
+                    <div class="col-xs-12  col-sm-9 col-md-9 ">
+                        <div style=" text-align: center; margin-top: 20px; margin-bottom: -20px;">
+                            <div class="cssload-speeding-wheel" ng-if="loader"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 ">
+                        <label class="control-label"> Descripcion del Gasto  </label>
+                        <input type="text" ng-model="Objeto_Parametro_egresos.descripcionEgreso" class="form-control input-sm" placeholder="">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 ">
+                        <label class="control-label"> Tipo Documento2 </label>
+                        <select id="cbo_tipoDocumento2" class="selectFiltros" data-style="btn-default" ng-model="Objeto_Parametro_egresos.id_TipoDocumento2">
+                            <option value="0">[ ----  SELECCIONE  --- ]</option>
+                            <option ng-repeat="item in tiposDocumentos" value="{{item.id}}">{{item.descripcion}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row" >
+                    <div class="col-md-12">
+                        <label for="txt_nroOperacion" class="control-label"> {{titleFile}}  </label>
+                        <div class="botonFile">
+                            <input type="file" id="inputFileOpenEgreso" class="form-control-file btn" formControlName="file" accept=".jpg, .jpeg, .png" onchange="angular.element(this).scope().changeImagen(event)" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" ng-if="showFileName">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-8 text-center">
+                        <label class="control-label">  Archivo Cargado : </label><br />
+                        <label class="control-label" style="font-size: 15px;color: red; cursor:pointer"> {{Objeto_Parametro_egresos.adjuntarArchivoEgreso}}</label>
+                    </div>
+                    <div class="col-sm-2"></div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-12 ">
+                        <label class="control-label"> Observaciones  </label>
+                        <input type="text" ng-model="Objeto_Parametro_egresos.observacionesEgreso" class="form-control input-sm" placeholder="">
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer ">
+                <button id="btn-material" class="btn btn-success btn-sm m-l-10" ng-click="guardarInformacion_egresos();"> <i class="glyphicon glyphicon-floppy-saved"></i> Guardar</button>
+                <a class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-sign"></span> Cerrar</a>
+            </div>
+        </div>
+    </div>
+</div>

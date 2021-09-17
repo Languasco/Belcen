@@ -1,0 +1,454 @@
+﻿<style>
+/*    .ContentFilters .table {
+        display: table;
+    }*/
+    .contentRegistro {
+        margin: 0 auto;
+        width: 100%;
+    }
+    .ContentFilters .table {
+        display: block;
+        overflow-x: auto;
+        overflow-y: auto;
+        white-space: nowrap;
+        max-height: 300px;
+    }
+ 
+</style>
+
+<div ng-init="initAll();" class="">
+    <div class="cssload-speeding-wheel" ng-if="loaderPage"></div>
+
+    <div class="contentRegistro  contentOrdenCompra floating-labels form-inline {{disabledContent}}" ng-show="!loaderPage">
+        <div class="LoaderCab" ng-if="loaderCab"></div>
+        <div class="LoaderDet" ng-if="loaderDet"></div>
+        <div class="row">
+            <div class="col-lg-12">
+                <fieldset>
+                    <legend>Datos Principales</legend>
+                    <div class="row Mtop-15">
+                        <div class="form-group col-sm-2 {{disabledGuia}}">
+                            <input type="text" class="form-control" maxlength="12" id="txtNroTrans" ng-enter="enterFocus(1,'txtObs');" required ng-model="objSaveTransferencia.Id_AlmTranCab"><span class="highlight"></span> <span class="bar"></span>
+                            <label for="txtNroTrans">Nro Interno </label> <span class="help-block"></span>
+                            <div class="cssload-speeding-wheel loaderEnter" ng-if="loaderValidacion"></div>
+                        </div>
+
+
+                        <div class="form-group col-sm-3">
+                            <input type="text" class="form-control" maxlength="12"  id="txtNroTransfer"   ng-enter="enterFocus(1,'txtObs');" required ng-model="objSaveTransferencia.nro_Transferencia"><span class="highlight"></span> <span class="bar"></span>
+                            <label for="txtNroTransfer">Nro de Transferencia</label> <span class="help-block"></span>
+                        </div>
+
+                        <div class="input-group col-sm-3 {{disabledButtons}}">
+                            <input type="text" class="form-control datepicker" id="txtFechaEmision" ng-enter="enterFocus(2,'selectLocalesEntrega');" ng-model="objSaveTransferencia.fechaEmision_TranferenciaCabAux" id="txtFechaRemisión" placeholder="Fecha - mm/dd/yyyy">
+                            <span class="input-group-addon"><i class="icon-calender"></i></span>
+                        </div>
+                        <div class="form-group col-sm-3 {{disabledButtons}}">
+                            <input type="text" class="form-control" id="txtObs" ng-enter="enterFocus(1,'txtFechaEmision')" required ng-model="objSaveTransferencia.obs_TranferenciaCab"><span class="highlight"></span> <span class="bar"></span>
+                            <label for="txtObs">Observación</label> <span class="help-block"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-9 myadmin-alert errorContent myadmin-alert-icon myadmin-alert-click alert-danger myadmin-alert-bottom alerttop2 " id="errorCab">
+                        <h4>Ocurrio un error !</h4>
+                        <i class="ti-alert"></i>{{textErrorCab}}
+                        <a href="#" class="closed">&times;</a>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-11 {{disabledCab}}">
+                <!-- PRIMERA LINEA-->
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <fieldset class="fieldEntrega">
+                            <legend>Datos de Entrega</legend>
+                            <div class="row Mtop-25">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-md-12">Local</label>
+                                        <div class="col-md-12">
+                                            <select class="filterLocales" id="selectLocalesEntrega" ng-model="objSaveTransferencia.origen_id_Local" data-width="35%" ng-change="changeSelect('localesEnt',objSaveTransferencia.origen_id_Local)" data-style=" btn-default">
+                                                <option value="0">- Seleccionar - </option>
+                                                <option ng-repeat="item in listLocales" value="{{item.id_Local}}">{{item.nombre_Local}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-md-12">Almacen </label>
+                                        <div class="col-md-12">
+                                            <select class="filterAlmacen" id="selectAlmacenEntrega" data-width="35%" ng-model="objSaveTransferencia.origen_id_Almacen" ng-change="changeSelect('almacenEnt')" data-style="btn-default">
+                                                <option value="0">- Seleccionar - </option>
+                                                <option ng-repeat="item in listAlmacenesEntrega" value="{{item.id_Almacen}}">{{item.descripcion_Almacen}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </fieldset>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <fieldset class="fieldRecepcion">
+                            <legend>Datos de Recepción</legend>
+                            <div class="row Mtop-25">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-md-12">Local</label>
+                                        <div class="col-md-12">
+                                            <select class="filterLocales" id="selectLocalesRecep" ng-model="objSaveTransferencia.destino_id_Local" data-width="35%" ng-change="changeSelect('localesRec',objSaveTransferencia.destino_id_Local)" data-style=" btn-default">
+                                                <option value="0">- Seleccionar - </option>
+                                                <option ng-repeat="item in listLocales" value="{{item.id_Local}}">{{item.nombre_Local}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-md-12">Almacen </label>
+                                        <div class="col-md-12">
+                                            <select class="filterAlmacen" id="selectAlmacenRecep" data-width="35%" ng-model="objSaveTransferencia.destino_id_Almacen" data-style="btn-default">
+                                                <option value="0">- Seleccionar - </option>
+                                                <option ng-repeat="item in listAlmacenesRec" value="{{item.id_Almacen}}">{{item.descripcion_Almacen}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-1">
+                <div class="row">
+                    <div class="col-lg-12 Mtop5">
+                        <button class="btn btn-block btn-outline btn-primary {{disabledButtons}}" ng-disabled="loaderCab" id="btnGuardarDet" ng-click="saveTblAlmTran();" style="background: #008efa !important;border: 1px solid #008efa; color:#fff">
+                            <i class="fa fa-save"></i>
+                            {{textSaveDet}}
+                        </button>
+                    </div>
+                    <div class="col-lg-12 Mtop10">
+                        <button class="btn btn-block btn-outline btn-primary" id="btnGuardarCab" ng-click="volverGuia();" style="background: #008efa !important;border: 1px solid #008efa;color: #fff">
+                            <i class="fa fa-arrow-circle-left"></i>
+                            Regresar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+
+        <!--  DETALLE DE LA GUIA -->
+        <div class="row " style="padding-bottom:10px;">
+            <div class="col-lg-11 {{disabledDet}}">
+                <fieldset>
+                    <legend>Productos en el Almacen</legend>
+                    <div class="myadmin-alert errorContent myadmin-alert-icon myadmin-alert-click alert-danger myadmin-alert-bottom alerttop2 " id="errorDet">
+                        <h4>Ocurrio un error !</h4>
+                        <i class="ti-alert"></i>{{textError}}
+                        <a href="#" class="closed">&times;</a>
+                    </div>
+                    <div class="row ContentFilters">
+                        <div class="col-lg-12">
+                            <div class="white-box">
+                                <div class="form-group col-sm-12">
+                                    <input type="text" class="form-control inputBorder2" ng-model="SearchPA"><span class="highlight"></span> <span class="bar"></span>
+                                    <label for="txtObs">BUSQUEDA GENERAL</label> <span class="help-block"></span>
+                                </div>
+ 
+                                <table id="tblProductos" class="table m-b-0 toggle-arrow-tiny table-bordered tableRecepcion">
+                                    <thead>
+                                        <tr>
+                                            <th data-toggle="true" style="width:25px;">#</th> 
+                                            <th data-toggle="true" style="width:100px;">Cod.Interno</th>
+                                            <th data-hide="" style="width:300px;"> Descripción Matricula</th>
+                                            <th data-hide="" style="width:80px;"> UM</th>
+                                            <th data-hide="" style="width:140px;"> Nro Lote</th>
+                                            <th data-hide="" style="width:140px;"> F.Produccion</th>
+                                            <th data-hide="" style="width:140px;"> F.Vencimiento</th>
+                                            <th data-hide="" style="width:80px;"> Stock</th>
+                                            <th style="width:100px;text-align:center">Agregar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in listStockMateriales | filter : validateStock | filter :SearchPA ">
+                                            <td style="width:25px;">{{$index + 1}}</td>
+ 
+                                            <td style="width:100px;text-align:center;">{{item.codigo_Producto}}</td>
+                                            <td style="width:300px;text-align:left;">{{item.nombre_Producto}}</td>
+                                            <td style="width:80px;text-align:center;">{{item.um_Producto}}</td>
+                                            <td style="width:120px;text-align:center">{{item.nroLote}}</td>
+                                            <td style="width:120px;text-align:center">{{item.fechaProduccion}}</td>
+                                            <td style="width:120px;text-align:center">{{item.fechaVencimiento}}</td>
+                                            <td style="width:80px;text-align:center">{{item.stock_Producto}}</td>
+                                            <td style="width:100px;text-align:center;margin-left: -25px;">
+                                                <div class="form-group col-sm-12 Mtop-15">
+                                                    <input type="text" class="form-control inputBorder" numbers-onlyd ng-model="item.cantidad_ingresada" ng-enter="saveRecepcion(item)" style="background-color:transparent"><span class="highlight"></span> <span class="bar"></span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="text-right">
+                                    <ul class="pagination pagination-split m-t-30"></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <legend>Productos a Recepcionar</legend>
+
+                    <div class="row ContentFilters">
+                        <div class="col-lg-12">
+                            <div class="white-box">
+                                <div class="form-group col-sm-12">
+                                    <input type="text" class="form-control inputBorder2" ng-model="SearchPR"><span class="highlight"></span> <span class="bar"></span>
+                                    <label for="txtObs">BUSQUEDA GENERAL RECEPCIÓN</label> <span class="help-block"></span>
+                                </div>
+ 
+                                <table id="tblProductos" class="table m-b-0 toggle-arrow-tiny table-bordered tableRecepcion">
+                                    <thead>
+                                        <tr>
+                                            <th data-toggle="true" style="width:25px;">#</th>
+                                            <th data-toggle="true" style="width:40px;">Id</th>
+                                            <th data-toggle="true" style="width:100px;">Codigo Interno</th>
+                                            <th data-hide="" style="width:300px;"> Descripción Matricula</th>
+                                            <th data-hide="" style="width:80px;"> UM</th>
+                                            <th data-hide="" style="width:140px;"> F.Produccion</th>
+                                            <th data-hide="" style="width:140px;"> F.Vencimiento</th>
+                                            <th data-hide="" style="width:140px;"> Nro Lote</th>
+                                            <th data-hide="" style="width:80px;"> Stock</th>
+                                            <th style="width:100px;text-align:center">Quitar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in listRecepcionMateriales | filter : validateStockRec | filter : SearchPR">
+                                            <td style="width:25px;">{{$index + 1}}</td>
+                                            <td style="width:40px;text-align:center">{{item.id_Producto}}</td>
+                                            <td style="width:100px;text-align:center;">{{item.codigo_Producto}}</td>
+                                            <td style="width:300px;text-align:left;">{{item.nombre_Producto}}</td>
+                                            <td style="width:80px;text-align:center;">{{item.um_Producto}}</td>
+                                            <td style="width:120px;text-align:center">{{item.fechaProduccion |  date:'dd/MM/yyyy' }}</td>
+                                            <td style="width:120px;text-align:center">{{item.fechaVencimiento |  date:'dd/MM/yyyy' }}</td>
+                                            <td style="width:140px;text-align:center">{{item.nroLote}}</td>
+                                            <td style="width:80px;text-align:center">{{item.cantidad_ingresada}}</td>
+                                            <td style="width:100px;text-align:center;margin-left: -25px;">
+                                                <div class="form-group col-sm-12 Mtop-15">
+                                                    <input type="text" class="form-control" ng-disabled="disabledButtons" numbers-onlyd ng-model="item.cantidad_ingresadaA" ng-enter="deleteRecepcion(item)" style="background-color:transparent"><span class="highlight"></span> <span class="bar"></span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="text-right">
+                                    <ul class="pagination pagination-split m-t-30"></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="col-lg-1">
+                <div class="row">
+                    <div class="col-lg-12" style="margin-top:20px;">
+                        <button class="btn btn-block btn-outline btn-primary" ng-click="nuevaGuia();" style="background:#ac2925 !important;border: 1px solid #ac2925; color: #fff">
+                            <i class="fa fa-plus-circle"></i>
+                            Nuevo
+                        </button>
+                    </div>
+                    <div class="col-lg-12" style="margin-top:20px;">
+                        <button class="btn btn-block btn-outline btn-primary" style="background:#ac2925 !important;border: 1px solid #ac2925; color:#fff">
+                            <i class="fa fa-arrow-circle-left"></i>
+                            Deshacer
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+    <!--  MODALES -->
+    <!-- MODAL AGREGAR PRODUCTOS-->
+    <div class="modal fade bs-example-modal-lg" id="ModalSearch" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myLargeModalLabel">{{titleModal}}</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="cssload-speeding-wheel" ng-if="loaderModal"></div>
+                    <div ng-show="!loaderModal">
+                        <div class="row">
+                            <form class="floating-labels ">
+
+                                <div class="form-group m-b-40 ">
+                                    <input type="text" class="form-control" ng-enter="ModalSearch(valueAux);" id="txtSearch" required><span class="highlight"></span> <span class="bar"></span>
+                                    <label for="txtSearch">Busqueda General</label>
+                                    <small>Ingrese un texto para realizar la busqueda por cualquier columna</small>
+                                    <span class="glyphicon glyphicon-search form-control-feedback t-0"></span>
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="row  Mtop-45 tableFilter">
+                            <div class="col-lg-12">
+                                <div class="white-box">
+                                    <table id="tblProductos" class="table m-b-0 toggle-arrow-tiny " data-page-size="5">
+                                        <thead>
+                                            <tr>
+                                                <th data-toggle="true">#</th>
+                                                <th data-toggle="true">Codigo</th>
+                                                <th data-hide=""> Descripción</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="item in listBusqueda">
+                                                <td>{{$index + 1}}</td>
+                                                <td>{{item.codigo}}</td>
+                                                <td>{{item.descripcion}}</td>
+                                                <td>
+                                                    <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline " ng-click="selectId(item,1);"><i class=" ti-arrow-right"></i></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="text-right">
+                                        <ul class="pagination pagination-split m-t-30"></ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer ">
+                    <button type="button" class="btn btn-default " data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalAprobar" class="modal fade bd-example-modal-lg " tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myLargeModalLabel">REGISTRO DE LA GUIA</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="loaderModal" ng-if="loaderSave"></div>
+                    <div class="contentRegistro contentCombo floating-labels form-inline">
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <fieldset>
+                                    <legend>Datos de la Guía</legend>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control" id="serie" maxlength="10" ng-model="objeto_parametros.serie"><span class="highlight"></span> <span class="bar"></span>
+                                            <label for="serie">Serie</label> <span class="help-block"></span>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control" numbers-onlyg id="nroDocumento" maxlength="10" ng-model="objeto_parametros.nroDocumento"><span class="highlight"></span> <span class="bar"></span>
+                                            <label for="nroDocumento">Nro</label> <span class="help-block"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="input-group col-sm-6">
+                                            <label for="fecha_emision" style=" margin-top: -13px; margin-left: 7px;">Fecha Emision</label> <span class="help-block"></span>
+                                            <input type="text" class="form-control datepicker" ng-model="objeto_parametros.fecha_emision" id="fecha_emision" placeholder="Fecha - mm/dd/yyyy">
+                                            <span class="input-group-addon"><i class="icon-calender"></i></span>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="col-md-6">
+                                <fieldset>
+                                    <legend>Datos del Transportista</legend>
+                                    <div class="row">
+                                        <div class="col-md-12" style=" margin-top: -25px;">
+                                            <label for="nroDoc_personal">Transportista</label> <span class="help-block"></span>
+                                            <select class="selectModal" id="cbo_transportista" style="width:95%;" data-style="btn-default" ng-model="objeto_parametros.id_Transportista">
+                                                <option value="0">[ ----   Seleccione  --- ]</option>
+                                                <option ng-repeat="item in Lista_Transportista" value="{{item.id_Transportista}}">{{item.documento_Transportista}} :  {{item.nombre_Transportista}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <legend>Datos del Vehiculo</legend>
+                                    <div class="row">
+                                        <div class="col-md-12" style=" margin-top: -25px;">
+                                            <label for="cbo_vehiculo">Vehiculo </label> <span class="help-block"></span>
+                                            <select class="selectModal" id="cbo_vehiculo" style="width:95%;" data-style="btn-default" ng-model="objeto_parametros.id_vehiculo">
+                                                <option value="0">[ ----   Seleccione  --- ]</option>
+                                                <option ng-repeat="item in Lista_Vehiculo" value="{{item.id_vehiculo}}">{{item.vehiculo_Placa}} : {{item.marca_Vehiculo}} </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <fieldset>
+                                    <legend>Datos del Destinatario</legend>
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <label for="cbo_proveedor">Destinatario</label> <span class="help-block"></span>
+                                            <select class="selectModal" id="cbo_proveedor" style="width:95%;" data-style="btn-default" ng-model="objeto_parametros.id_Proveedor" ng-change="change_Proveedor();">
+                                                <option value="0">[ ----   Seleccione  --- ]</option>
+                                                <option ng-repeat="item in Lista_Proveedor" value="{{item.id_Proveedor}}">{{item.nroDocumento_Proveedor}} :  {{item.razonSocial_Proveedor}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="fecha_traslado" style=" margin-top: -13px;">Fecha Traslado</label> <span class="help-block"></span>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control datepicker" ng-model="objeto_parametros.fecha_traslado" id="fecha_traslado" placeholder="Fecha - mm/dd/yyyy">
+                                                <span class="input-group-addon"><i class="icon-calender"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <label for="direccion_Proveedor">Direccion</label> <span class="help-block"></span>
+                                            <input type="text" class="form-control" disabled numbers-onlyg id="direccion_Proveedor" maxlength="20" ng-model="objeto_parametros.direccion_Proveedor"><span class="highlight"></span> <span class="bar"></span>
+
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer ">
+                    <a class="btn btn-primary" ng-click="Generate_GuiaRemision();"> <span class="glyphicon glyphicon-floppy-disk"></span> Guardar</a>
+                    <a class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-sign"></span> Cerrar</a>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+
+</div>

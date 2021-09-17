@@ -1,0 +1,202 @@
+﻿<style>
+    .panel-body {
+        padding: 5px !important;
+    }
+
+    .control-label {
+        font-size: 11px !important;
+        color: #2b89e0;
+        font-family: Tahoma;
+    }
+
+    .form-control {
+        font-size: 11px;
+        height: 30px;
+    }
+
+    .contentCombo .select2-container {
+        margin-left: 0px;
+        margin-top: -10px;
+        width: 98% !important;
+    }
+
+    .ModalBorderSombra .modal-content {
+        box-shadow: inset 0px 0px 7px rgba(0,0,0,.5), 1px 1px 5px #fff;
+    }
+
+    .contenedorGrupo legend {
+        font-size: 12px !important;
+        font-family: GillSans, Calibri, Trebuchet, sans-serif;
+        color: #2c5ca9;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+
+    .contenedorGrupo fieldset {
+        padding-left: 20px;
+        padding-right: 20px;
+        border: 1px solid #2c4d6d;
+        padding-bottom: 10px;
+        border-radius: 4px;
+    }
+
+    .ContentFilters .select2-container .select2-choice, label {
+        font-size: 11px;
+    }
+
+    .input-group-btn .btn {
+        padding: 8px 12px;
+        height: 30px;
+    }
+
+    .jq-toast-wrap.top-right {
+        top: 20px;
+        right: 40px;
+        width: 300px;
+    }
+
+    .pagination > li > a, .pagination > li > span {
+        padding: 1px !important;
+        color: #337ab7 !important;
+    }
+
+
+    .btn span.glyphicon {
+        opacity: 0;
+    }
+
+    .btn.active span.glyphicon {
+        opacity: 1;
+    }
+
+    #s2id_cbo_tipo_Factura {
+        width: 25% !important;
+        margin-bottom: -7px;
+    }
+
+    #map {
+        height: 600px;
+    }
+
+    .checkbox label {
+        font-size: 13px !important;
+        color: cornflowerblue;
+    }
+
+    .card {
+        /* Add shadows to create the "card" effect */
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+    }
+
+        /* On mouse-over, add a deeper shadow */
+        .card:hover {
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+        }
+
+    .jumbotron p {
+        margin-bottom: 15px;
+        font-size: 12px;
+        font-weight: 200;
+    }
+
+    .ContentFilters .form-control-feedback {
+        left: inherit;
+    }
+</style>
+
+
+
+<div ng-init="initAll(); ">
+
+    <br />
+    <br />
+    <section id="ubicacion">
+        <div class="panel-body ContentFilters contentCombo">
+
+            <div class="well" style="background-color: #2b4c6c;padding-bottom: 0px; padding-top: 0px;color: #fff;">
+
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col-md-6">
+                        <label> Almacén : </label>
+                        <div style="margin-top: 10px;">
+                            <select class="selectFiltros" id="cbo_local" ng-model="Objeto_ParametroFiltro.id_almacen">
+                                <option value="0">[ ----  SELECCIONE  --- ]</option>
+                                <option ng-repeat="item in Lista_Almacen" value="{{item.id_Almacen}}">{{item.descripcion_Almacen}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group" style=" margin-top: 20px; text-align:center ">
+                            <button class="btn btn-primary" ng-click="MostrarReporteStock()">  Mostrar </button>
+                            <button class="btn btn-success" ng-click="descargarReporteStock()">  Descargar</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="form-inline ">
+        <div class="row">
+            <div class="col-sm-12">
+                <div style="text-align:center">
+                    <div class="cssload-speeding-wheel" ng-if="loaderfiltros"></div>
+                </div>
+            </div>
+        </div>
+        <a id="id_link" href="" download style="display:none">link</a>
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="white-box">
+                <table id="data_cabecera" class="table" data-page-size="10">
+                    <thead style="background:rgba(17, 96, 142, 0.18);     text-transform: uppercase;" >
+                        <tr>
+                            <th>Item</th>
+                            <th>Codigo</th>
+                            <th>Descripcion</th>
+                            <th>UM.</th>
+                            <th>Stock  </th>
+                            <th>Precio Menor</th>
+                            <th>Precio Mayor</th>
+                            <th>Usuario Importo</th>
+                            <th>Fecha Importacion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in Lista_DataCabecera">
+                            <td>{{$index+1}}</td>
+                            <td>{{item.codigo}}</td>
+                            <td>{{item.descripcion}}</td>
+                            <td>{{item.um}}</td>
+                            <td>{{item.stock}}</td>
+                            <td>{{item.precioMenor}}</td>
+
+                            <td>{{item.precioMayor}}</td>
+                            <td>{{item.usuarioImporto}}</td>
+                            <td>{{item.fechaImportacion}}</td>
+
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="text-center">
+                    <ul class="pagination pagination-split m-t-10"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div style="padding-left: 45%;" ng-if="showLoaderSave">
+        <p class="loader">
+        </p>
+    </div>
+
+</div>
+
+
+

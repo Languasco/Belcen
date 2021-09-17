@@ -1,0 +1,141 @@
+﻿
+<style>
+    .container-s {
+        display: flex;
+        width: 80%;
+    }
+
+    table {
+        display: block;
+        overflow: scroll;
+    }
+
+
+    #listMenu span, a {
+        text-align: left !important;
+    }
+
+    .contentRegistro fieldset legend {
+        text-align: left !important;
+    }
+
+    .jq-toast-wrap {
+        width: 300px !important;
+    }
+
+    .floating-labels label {
+        top: -6px;
+    }
+
+    .contentRegistro .select2-container {
+        margin-left: 0px;
+        margin-top: 2px;
+    }
+
+    #paddin-lef {
+        padding-left: 40px !important;
+    }
+
+    .contentCombo .select2-container {
+        margin-left: 0px;
+        margin-top: 0px;
+        width: 95% !important;
+    }
+
+    .contentRegistro label {
+        font-size: 11px;
+        font-family: tahoma;
+        color: #2c5ca9;
+        font-weight: 600;
+    }
+
+    .contentRegistro {
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .ModalBorderSombra .modal-content {
+        box-shadow: inset 0px 0px 7px rgba(0,0,0,.5), 1px 1px 5px #fff;
+    }
+
+
+
+    .resaltado {
+        color: #ff94a7 !important;
+    }
+
+    .text-right {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+</style>
+
+
+<div class="container" ng-init="initAll(); ">
+
+    <br />
+    <section>
+        <div ng-if="loading">
+            <p class="loader">
+            </p>
+        </div>
+        <div class="panel-body ContentFilters contentCombo">                                                        
+
+            <div class="container card" style="background-color: #2b4c6c; padding-bottom: 20px; padding-top:  20px;color: #fff;">
+                <div class="row">
+                    <div class="col-xs-12  col-sm-4 col-md-4 ">
+                        <label for="cbo_zonaVenta">Zona de Venta</label> <span class="help-block"></span>
+                        <select class="selectFiltros" id="cbo_zonaVenta" ng-model="objeto_parametros.id_zonaVenta" ng-change="change_Local_Almacen(objeto_parametros.id_zonaVenta);" >
+                            <option value="0">[ ----  SELECCIONE  --- ]</option>
+                            <option ng-repeat="item in Lista_Zona" value="{{item.id}}">  {{item.descripcion}} </option>
+                        </select>
+                    </div>
+                    <div class="col-xs-12 col-sm-4 col-md-4 ">
+                        <label for="cbo_almacen">Almacen</label> <span class="help-block"></span>
+                        <select class="selectFiltros" id="cbo_almacen" ng-model="objeto_parametros.id_almacen" ng-change="change_almacen_anexo(objeto_parametros.id_almacen);" >
+                            <option value="0">[ ----  SELECCIONE  --- ]</option>
+                            <option ng-repeat="item in lista_almacenes" value="{{item.id_Almacen}}">{{item.descripcion_Almacen}}</option>
+                        </select>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-4 col-md-4 ">
+                        <label for="cbo_anexo">Anexo</label> <span class="help-block"></span>
+                         <select class="selectFiltros" id="cbo_anexo" style="width:95%;" data-style="btn-default" ng-model="objeto_parametros.id_anexo">
+                            <option value="0">[ ----  SELECCIONE  --- ]</option>
+                            <option ng-repeat="item in lista_anexos" value="{{item.id}}">{{item.descripcion}}</option>
+                        </select>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12  col-sm-4 col-md-4 ">
+                        <label for="cbo_tipoDoc">Tipo de Documento </label> <span class="help-block"></span>
+                        <select class="selectFiltros" id="cbo_tipoDoc" ng-model="objeto_parametros.id_tipoDoc">
+                            <option value="0">[ ----  SELECCIONE  --- ]</option>
+                            <option ng-repeat="item in lista_tipoDoc" value="{{item.id}}">{{item.descripcion}}</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-12 col-sm-4 col-md-4">
+                        <label for="cbo_almacen">Nro. Documento</label>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <input ng-model="objeto_parametros.serie" id="dtp_serie" type="text" class="form-control datepicker" placeholder="Serie" style="margin-right: 10px">
+                            </div>
+                            <div class="col-md-8">
+                                <input ng-model="objeto_parametros.numero" id="dtp_numero" type="text" class="form-control datepicker" placeholder="Numero">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-4 col-md-4 ">
+                        <br />
+                        <button id="btn-material" class="btn btn-danger btn-sm m-l-10" ng-click="AnularDocumento();" style="margin-top: 10px;">
+                            Anular Documento
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

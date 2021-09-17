@@ -1,0 +1,158 @@
+﻿
+<style>
+    .control-label {
+        font-size: 11px !important;
+        color: #2b89e0;
+        font-family: Tahoma;
+    }
+
+    .form-control {
+        font-size: 11px;
+        height: 30px;
+    }
+
+    .contentCombo .select2-container {
+        margin-left: 0px;
+        margin-top: -10px;
+        width: 98% !important;
+    }
+
+
+
+    .ModalBorderSombra .modal-content {
+        box-shadow: inset 0px 0px 7px rgba(0,0,0,.5), 1px 1px 5px #fff;
+    }
+
+    .contenedorGrupo legend {
+        font-size: 12px !important;
+        font-family: GillSans, Calibri, Trebuchet, sans-serif;
+        color: #2c5ca9;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+
+    .contenedorGrupo fieldset {
+        padding-left: 20px;
+        padding-right: 20px;
+        border: 1px solid #2c4d6d;
+        padding-bottom: 10px;
+        border-radius: 4px;
+    }
+
+    .ContentFilters .select2-container .select2-choice, label {
+        font-size: 11px;
+    }
+
+    .input-group-btn .btn {
+        padding: 8px 12px;
+        height: 30px;
+    }
+
+    .jq-toast-wrap.top-right {
+        top: 20px;
+        right: 40px;
+        width: 300px;
+    }
+
+    .pagination > li > a, .pagination > li > span {
+        padding: 1px !important;
+        color: #337ab7 !important;
+    }
+
+    .radio  label{
+        font-size: 11px;
+        font-family: tahoma;
+        color: #2c4d6d;
+        font-weight: 600;
+    }
+
+    .titulo {
+        font-family: tahoma;
+        color: #2c4d6d;
+        font-weight: 600;
+    }
+
+</style>
+
+<div class="container" ng-init="initAll();">
+    <div class="panel-body ContentFilters contentCombo">
+        <div class="row">
+            <div class="col-sm-12 col-md-3 col-lg-3">
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="well" style="background-color:#dfe4ea;padding-bottom:0px;padding-top:0px">
+                    <br />
+
+                    <center> <h3 class="titulo">Reporte Contable </h3> </center>
+
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12">
+                            <label for="cbo_anexo" class="control-label"> Anexo </label>
+                            <br />
+                            <select class="selectFiltros" id="cbo_anexo" style="width:95%;" data-style="btn-default" ng-model="Objeto_ParametroFiltro.id_anexo">
+                                <option value="0">[ ----  TODOS  --- ]</option>
+                                <option ng-repeat="item in lista_anexos" value="{{item.id}}">{{item.descripcion}}</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12" style=" margin-bottom: -20px;">
+                            <div class="form-group">
+                                <label class="col-sm-12 control-label" style="text-align :left">Rango de Fechas</label>
+                                <br>
+                                <div class="input-group col-sm-12">
+                                    <input ng-model="Objeto_ParametroFiltro.fecha_ini" id="dtp_fechaIni_filtro" type="text" class="form-control datepicker" placeholder="dia/mes/año">
+                                    <span class="input-group-addon bg-primary" style="color:white"> Hasta </span>
+                                    <input ng-model="Objeto_ParametroFiltro.fecha_fin" id="dtp_fechaFin_filtro" type="text" class="form-control datepicker" placeholder="dia/mes/año">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-12">
+                           <h5 class="titulo">Tipo Reporte Contable </h5>  
+                           <hr  style="margin: 0px;"/>
+ 
+                            <div class="radio">
+                                <input id="radio1_Opt1" type="radio" ng-model="Objeto_ParametroFiltro.opcion_reporte" value="1" checked>
+                                <label for="radio1_Opt1"   >PLANILLA DE IMPORTACION DE VENTAS</label>
+                            </div>
+                            <div class="radio">
+                                <input id="radio1_Opt2" type="radio" ng-model="Objeto_ParametroFiltro.opcion_reporte" value="2">
+                                <label for="radio1_Opt2"   > PLANILLA DE IMPORTACION DE COMPRAS</label>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12" style=" margin-bottom: -20px;margin-top: -4px;">
+                            <div class="form-group" style=" margin-top: 5px; text-align:center ">
+                                <button class="btn btn-primary" ng-click="descargarExcel_contable()"><span class="glyphicon glyphicon-refresh"></span> Mostrar</button>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-inline ">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div style="text-align:center">
+                                    <div class="cssload-speeding-wheel" ng-if="loaderfiltros"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <a id="id_link" href="" download style="display:none">link</a>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-md-3 col-lg-3">
+            </div>
+        </div>
+    </div>
+</div>
+

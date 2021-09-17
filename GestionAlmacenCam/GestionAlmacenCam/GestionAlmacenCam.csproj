@@ -1,0 +1,1002 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{EFD9A65C-9502-48B4-9677-34D73484FF1D}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GestionAlmacenCam</RootNamespace>
+    <AssemblyName>GestionAlmacenCam</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.0\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.0\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.0\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.0\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.0\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.1.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.1.0\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.1.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\Microsoft.Owin.2.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.2.1.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\packages\Microsoft.Owin.Security.2.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Facebook">
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.2.1.0\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.2.1.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.2.1.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.2.1.0\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter">
+      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.2.1.0\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount">
+      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.2.1.0\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\AccountController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\AdministracionController\HomeAdministracionController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\AlmacenController\HomeAlmacenController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\AlmacenController\MantenimientoAlmacenController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\AlmacenController\ProcesosController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\AlmacenController\ReportesAlmacenController.cs" />
+    <Compile Include="Controllers\AlmacenController\ServiciosController.cs" />
+    <Compile Include="Controllers\Cobranza\CobranzaController.cs" />
+    <Compile Include="Controllers\FacturacionController\HomeFacturacionController.cs" />
+    <Compile Include="Controllers\FacturacionController\ProcesosFacturacionController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\FacturacionController\ReportesFacturacionController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\HomeController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\LoginController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\ManageController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\Mantenimiento\MantenimientoController.cs" />
+    <Compile Include="Controllers\RepartoController\HomeRepartoController.cs" />
+    <Compile Include="Controllers\RepartoController\ProcesosRepartoController.cs" />
+    <Compile Include="Controllers\RepartoController\ReportesRepartoController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App\app.js" />
+    <Content Include="App\Controlladores\Administracion\SeguridadDeSistema\accesosController.js" />
+    <Content Include="App\Controlladores\Administracion\UsuarioAlmacen\UsuarioAlmacenController.js" />
+    <Content Include="App\Controlladores\Administracion\UsuarioLocal\UsuarioLocalController.js" />
+    <Content Include="App\Controlladores\Administracion\Usuario\UsuarioController.js" />
+    <Content Include="App\Controlladores\Almacen\Mantenimientos\Almacen\AlmacenesController.js" />
+    <Content Include="App\Controlladores\Almacen\Mantenimientos\Canal\CanalesNegocioController.js" />
+    <Content Include="App\Controlladores\Almacen\Mantenimientos\Cargo\CargoController.js" />
+    <Content Include="App\Controlladores\Almacen\Mantenimientos\Cliente\ClienteController.js" />
+    <Content Include="App\Controlladores\Almacen\Mantenimientos\Cliente\Cliente_IIController.js" />
+    <Content Include="App\Controlladores\Almacen\Mantenimientos\FormaPago\FormaPagoController.js" />
+    <Content Include="App\Controlladores\Almacen\Mantenimientos\GiroNegocio\GirosNegocioController.js" />
+    <Content Include="App\Controlladores\Almacen\Mantenimientos\GrupoDet\GrupoDetController.js" />
+    <Content Include="App\Controlladores\Almacen\Mantenimientos\Locales\LocalesController.js" />
+    <Content Include="App\Controlladores\Almacen\Mantenimientos\Personal\PersonalController.js" />
+    <Content Include="App\Controlladores\Almacen\Mantenimientos\ProductoCategoria\productocategoriaController.js" />
+    <Content Include="App\Controlladores\Almacen\Mantenimientos\ProductoLinea\productolineaController.js" />
+    <Content Include="App\Controlladores\Almacen\Mantenimientos\ProductoMarcaModelo\productomarcamodeloController.js" />
+    <Content Include="App\Controlladores\Almacen\Mantenimientos\ProductoMarca\productomarcaController.js" />
+    <Content Include="App\Controlladores\Almacen\Mantenimientos\ProductoSubLinea\ProductoSubLineaController.js" />
+    <Content Include="App\Controlladores\Almacen\Mantenimientos\Producto\productosController.js" />
+    <Content Include="App\Controlladores\Almacen\Mantenimientos\Proveedor\ProveedorController.js" />
+    <Content Include="App\Controlladores\Almacen\Mantenimientos\PuntoVenta\PuntoVentaController.js" />
+    <Content Include="App\Controlladores\Almacen\Mantenimientos\TipoDocumento\TipoDocController.js" />
+    <Content Include="App\Controlladores\Almacen\Mantenimientos\Transportista\TransportistaController.js" />
+    <Content Include="App\Controlladores\Almacen\Mantenimientos\UnidadMedida\UnidadController.js" />
+    <Content Include="App\Controlladores\Almacen\Mantenimientos\Vehiculo\VehiculosController.js" />
+    <Content Include="App\Controlladores\Almacen\Mantenimientos\Vendedor\VendedorController.js" />
+    <Content Include="App\Controlladores\Almacen\Procesos\AprobacionTransferenciasController.js" />
+    <Content Include="App\Controlladores\Almacen\Procesos\IngresoGuiasController.js" />
+    <Content Include="App\Controlladores\Almacen\Procesos\IngresoGuiasOrdenCompraController.js" />
+    <Content Include="App\Controlladores\Almacen\Procesos\IngresoTransferenciasCompraController.js" />
+    <Content Include="App\Controlladores\Almacen\Procesos\IngresoFacturasController.js" />
+    <Content Include="App\Controlladores\Almacen\Procesos\transferenciasNewController.js" />
+    <Content Include="App\Controlladores\Almacen\Procesos\transferenciasController.js" />
+    <Content Include="App\Controlladores\Almacen\Reportes\Kardex\KardexAlmacenController.js" />
+    <Content Include="App\Controlladores\Almacen\Reportes\Stock\StockController.js" />
+    <Content Include="App\Controlladores\Almacen\Reportes\Transacciones\TransaccionesController.js" />
+    <Content Include="App\Controlladores\Cobranzas\AnularDocumentosController.js" />
+    <Content Include="App\Controlladores\Cobranzas\CobranzaManualController.js" />
+    <Content Include="App\Controlladores\Cobranzas\CobranzaReporteController.js" />
+    <Content Include="App\Controlladores\Cobranzas\CancelacionMasivaController.js" />
+    <Content Include="App\Controlladores\Cobranzas\cancelacion_x_documentoController.js" />
+    <Content Include="App\Controlladores\Cobranzas\Reportes\estadoDocumentoController.js" />
+    <Content Include="App\Controlladores\Facturacion\Procesos\AnularNumero\anularNumeroController.js" />
+    <Content Include="App\Controlladores\Facturacion\Procesos\ArqueoCaja\ArqueoCajaController.js" />
+    <Content Include="App\Controlladores\Facturacion\Procesos\CancelacionDocVendedor\CancelacionDocVendedorController.js" />
+    <Content Include="App\Controlladores\Facturacion\Procesos\Documentos_Manuales\DocumentosManualesController.js" />
+    <Content Include="App\Controlladores\Facturacion\Procesos\EnvioSunatNotaCreditoDebito\envioSunatNotasCreditoDebitoController.js" />
+    <Content Include="App\Controlladores\Facturacion\Procesos\Pedidos\CancelacionMasivaDocumentosController.js" />
+    <Content Include="App\Controlladores\Facturacion\Procesos\Pedidos\Pedidos_IIController.js" />
+    <Content Include="App\Controlladores\Facturacion\Procesos\Reimpresion\ReimpresionController.js" />
+    <Content Include="App\Controlladores\Facturacion\Procesos\Documentos_Masivos\Documentos_MasivosController.js" />
+    <Content Include="App\Controlladores\Facturacion\Procesos\DocumentoVenta\DocumentoVentaController.js" />
+    <Content Include="App\Controlladores\Facturacion\Procesos\Consolidado\ConsolidadoController.js" />
+    <Content Include="App\Controlladores\Facturacion\Procesos\RevisionPedido\RevisionPedidoController.js" />
+    <Content Include="App\Controlladores\Facturacion\Procesos\Promociones\PromocionesController.js" />
+    <Content Include="App\Controlladores\Facturacion\Procesos\ListaPrecios\ListaPreciosController.js" />
+    <Content Include="App\Controlladores\Facturacion\Procesos\NotaCreditoDebito\NotaCreditoDebitoController.js" />
+    <Content Include="App\Controlladores\Facturacion\Procesos\Pedidos\PedidosAprobacionController.js" />
+    <Content Include="App\Controlladores\Facturacion\Procesos\Pedidos\PedidosController.js" />
+    <Content Include="App\Controlladores\Facturacion\Procesos\Pedidos\Pedidos_DirectoController.js" />
+    <Content Include="App\Controlladores\Facturacion\Procesos\Reenvio_Documentos\Reenvio_DocumentosController.js" />
+    <Content Include="App\Controlladores\Facturacion\Reportes\ReportesContables\ReporteContableController.js" />
+    <Content Include="App\Controlladores\Facturacion\Reportes\ResumenVentas\ResumenVentasController.js" />
+    <Content Include="App\Controlladores\Facturacion\Reportes\RegistroVentas\RegistroVentasController.js" />
+    <Content Include="App\Controlladores\Facturacion\Reportes\PagosVendedor\PagoVendedorController.js" />
+    <Content Include="App\Controlladores\loginController.js" />
+    <Content Include="App\Controlladores\Mantenimiento\BancosController.js" />
+    <Content Include="App\Controlladores\Mantenimiento\AnexosController.js" />
+    <Content Include="App\Controlladores\Mantenimiento\RutasVentasController.js" />
+    <Content Include="App\Controlladores\Mantenimiento\UsuariosController.js" />
+    <Content Include="App\Controlladores\Mantenimiento\ZonasVentasController.js" />
+    <Content Include="App\Controlladores\Reparto\Mantenimientos\HabilitarUsuario\HabilitarUsuarioController.js" />
+    <Content Include="App\Controlladores\Reparto\Mantenimientos\ImportarPrecio\ImportarPrecioController.js" />
+    <Content Include="App\Controlladores\Reparto\Mantenimientos\ImportarStockAlmacen\ImportarStockAlmacenController.js" />
+    <Content Include="App\Controlladores\Reparto\Procesos\AprobarDevolucion\AprobarDevolucionController.js" />
+    <Content Include="App\Controlladores\Reparto\Procesos\ImportarPedido\ImportarPedidoController.js" />
+    <Content Include="App\Controlladores\Reparto\Procesos\ExportarPedido\ExportarPedidoController.js" />
+    <Content Include="App\Controlladores\Reparto\Procesos\EntregaPedido\EntregaPedidoController.js" />
+    <Content Include="App\Controlladores\Reparto\Reportes\ReporteStockController.js" />
+    <Content Include="App\Controlladores\Reparto\Reportes\ReporteKpiController.js" />
+    <Content Include="App\Controlladores\Reparto\Reportes\ReporteCoberturaController.js" />
+    <Content Include="App\Servicios\Administracion\SeguridadDeSistema\AccesosServices.js" />
+    <Content Include="App\Servicios\Administracion\UsuarioAlmacen\UsuarioAlmacenServices.js" />
+    <Content Include="App\Servicios\Administracion\UsuarioLocal\UsuarioLocalServices.js" />
+    <Content Include="App\Servicios\Administracion\Usuario\UsuarioServices.js" />
+    <Content Include="App\Servicios\Almacen\Mantenimientos\Almacen\AlmacenServices.js" />
+    <Content Include="App\Servicios\Almacen\Mantenimientos\Auditar\AuditarServices.js" />
+    <Content Include="App\Servicios\Almacen\Mantenimientos\Canal\CanalServices.js" />
+    <Content Include="App\Servicios\Almacen\Mantenimientos\Cargo\CargoServices.js" />
+    <Content Include="App\Servicios\Almacen\Mantenimientos\Cliente\ClienteServices.js" />
+    <Content Include="App\Servicios\Almacen\Mantenimientos\Cliente\Cliente_IIServices.js" />
+    <Content Include="App\Servicios\Almacen\Mantenimientos\CondicionFacturacion\CondicionFacturacionServices.js" />
+    <Content Include="App\Servicios\Almacen\Mantenimientos\Empresa\EmpresaServices.js" />
+    <Content Include="App\Servicios\Almacen\Mantenimientos\Estados\EstadosServices.js" />
+    <Content Include="App\Servicios\Almacen\Mantenimientos\FormaPago\FormapagoServices.js" />
+    <Content Include="App\Servicios\Almacen\Mantenimientos\Giro\GiroServices.js" />
+    <Content Include="App\Servicios\Almacen\Mantenimientos\GrupoCab\GrupoCabServices.js" />
+    <Content Include="App\Servicios\Almacen\Mantenimientos\GrupoDet\GrupoDetServices.js" />
+    <Content Include="App\Servicios\Almacen\Mantenimientos\Locales\LocalesServices.js" />
+    <Content Include="App\Servicios\Almacen\Mantenimientos\Moneda\MonedaServices.js" />
+    <Content Include="App\Servicios\Almacen\Mantenimientos\Perfil\PerfilServices.js" />
+    <Content Include="App\Servicios\Almacen\Mantenimientos\Personal\PersonalServices.js" />
+    <Content Include="App\Servicios\Almacen\Mantenimientos\ProductoCategoria\productoCategoriaServices.js" />
+    <Content Include="App\Servicios\Almacen\Mantenimientos\ProductoLinea\productoLineaServices.js" />
+    <Content Include="App\Servicios\Almacen\Mantenimientos\ProductoMarca\productoMarcaServices.js" />
+    <Content Include="App\Servicios\Almacen\Mantenimientos\ProductoModelo\productoModeloServices.js" />
+    <Content Include="App\Servicios\Almacen\Mantenimientos\ProductoSubLinea\productoSubLineaServices.js" />
+    <Content Include="App\Servicios\Almacen\Mantenimientos\Productos\productosServices.js" />
+    <Content Include="App\Servicios\Almacen\Mantenimientos\Proveedor\ProveedorServices.js" />
+    <Content Include="App\Servicios\Almacen\Mantenimientos\PuntoVenta\PuntoVentaServices.js" />
+    <Content Include="App\Servicios\Almacen\Mantenimientos\TipoDocumento\TipoDocumentoServices.js" />
+    <Content Include="App\Servicios\Almacen\Mantenimientos\Transportista\TransportistaServices.js" />
+    <Content Include="App\Servicios\Almacen\Mantenimientos\Ubigeo\UbigeoServices.js" />
+    <Content Include="App\Servicios\Almacen\Mantenimientos\UnidadMedida\umServices.js" />
+    <Content Include="App\Servicios\Almacen\Procesos\transferenciasNewServices.js" />
+    <Content Include="App\Servicios\Almacen\Reportes\Transacciones\TransaccionesServices.js" />
+    <Content Include="App\Servicios\Facturacion\Procesos\ArqueoCaja\ArqueoCajaServices.js" />
+    <Content Include="App\Servicios\Cobranzas\CobranzaManualServices.js" />
+    <Content Include="App\Servicios\Cobranzas\CobranzaReporteServices.js" />
+    <Content Include="App\Servicios\Facturacion\Reportes\ReportesContables\ReporteContableServices.js" />
+    <Content Include="App\Servicios\Mantenimiento\BancosServices.js" />
+    <Content Include="App\Servicios\Mantenimiento\UsuariosServices.js" />
+    <Content Include="App\Servicios\Almacen\Mantenimientos\Vehiculo\VehiculoServices.js" />
+    <Content Include="App\Servicios\Almacen\Mantenimientos\Vendedor\VendedorServices.js" />
+    <Content Include="App\Servicios\Almacen\Procesos\IngresoGuiasServices.js" />
+    <Content Include="App\Servicios\Almacen\Procesos\IngresoTransferenciasServices.js" />
+    <Content Include="App\Servicios\Almacen\Procesos\IngresoFacturasServices.js" />
+    <Content Include="App\Servicios\Almacen\Procesos\StockAlmacenServices.js" />
+    <Content Include="App\Servicios\Almacen\Reportes\Stock\StockServices.js" />
+    <Content Include="App\Servicios\Almacen\Servicio\Cargo\CargoServices.js" />
+    <Content Include="App\Servicios\Almacen\Servicio\FormaPago\FormapagoServices.js" />
+    <Content Include="App\Servicios\Almacen\Servicio\Locales\LocalesServices.js" />
+    <Content Include="App\Servicios\Almacen\Servicio\Transportista\TransportistaServices.js" />
+    <Content Include="App\Servicios\Almacen\Servicio\Vehiculo\VehiculoServices.js" />
+    <Content Include="App\Servicios\Almacen\Servicio\Vendedor\VendedorServices.js" />
+    <Content Include="App\Servicios\auxiliarServices.js" />
+    <Content Include="App\Servicios\Cobranzas\cancelacion_x_documentoServices.js" />
+    <Content Include="App\Servicios\Cobranzas\CancelacionMasivaServices.js" />
+    <Content Include="App\Servicios\Facturacion\Procesos\CancelacionDocVendedor\CancelacionDocVendedorServices.js" />
+    <Content Include="App\Servicios\Facturacion\Procesos\Documentos_Manuales\DocumentosManualesServices.js" />
+    <Content Include="App\Servicios\Facturacion\Procesos\Reimpresion\ReimpresionServices.js" />
+    <Content Include="App\Servicios\Facturacion\Procesos\Documentos_Masivos\Documentos_MasivosServices.js" />
+    <Content Include="App\Servicios\Facturacion\Procesos\DocumentoVenta\DocumentoVentaServices.js" />
+    <Content Include="App\Servicios\Facturacion\Procesos\Consolidado\ConsolidadoServices.js" />
+    <Content Include="App\Servicios\Facturacion\Procesos\RevisionPedido\RevisionPedidoServices.js" />
+    <Content Include="App\Servicios\Facturacion\Procesos\Promociones\PromocionesServices.js" />
+    <Content Include="App\Servicios\Facturacion\Procesos\ListaPrecios\ListaPrecioServices.js" />
+    <Content Include="App\Servicios\Facturacion\Procesos\NotaCreditoDebito\NotaCreditoDebitoServices.js" />
+    <Content Include="App\Servicios\Facturacion\Procesos\Pedidos\PedidosServices.js" />
+    <Content Include="App\Servicios\Facturacion\Procesos\Reenvio_Documentos\Reenvio_DocumentosServices.js" />
+    <Content Include="App\Servicios\Facturacion\Reportes\ResumenVentas\ResumenVentasServices.js" />
+    <Content Include="App\Servicios\Facturacion\Reportes\RegistroVentas\RegistroVentasServices.js" />
+    <Content Include="App\Servicios\Facturacion\Reportes\PagosVendedor\PagosVendedorServices.js" />
+    <Content Include="App\Servicios\loginServices.js" />
+    <Content Include="App\Servicios\Mantenimiento\AnexosServices.js" />
+    <Content Include="App\Servicios\Mantenimiento\ZonasVentasServices.js" />
+    <Content Include="App\Servicios\Mantenimiento\RutasVentasServices.js" />
+    <Content Include="App\Servicios\Reparto\Mantenimientos\HabilitarUsuario\HabilitarUsuarioServices.js" />
+    <Content Include="App\Servicios\Reparto\Mantenimientos\ImportarPrecio\ImportarPrecioServices.js" />
+    <Content Include="App\Servicios\Reparto\Mantenimientos\ImportarStockAlmacen\ImportarStockAlmacenServices.js" />
+    <Content Include="App\Servicios\Reparto\Procesos\AprobarDevolucion\AprobarDevolucionServices.js" />
+    <Content Include="App\Servicios\Reparto\Procesos\ImportarPedido\ImportarServices.js" />
+    <Content Include="App\Servicios\Reparto\Procesos\ExportarPedido\ExportarServices.js" />
+    <Content Include="App\Servicios\Reparto\Procesos\EntregaPedido\EntregaPedidoServices.js" />
+    <Content Include="App\Servicios\Reparto\Reportes\ReporteCoberturaServices.js" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\img\1047.gif" />
+    <Content Include="Content\img\1051.gif" />
+    <Content Include="Content\img\1053.gif" />
+    <Content Include="Content\img\home-icon.png" />
+    <Content Include="Content\img\logocam.png" />
+    <Content Include="Content\img\report1.png" />
+    <Content Include="Content\img\report4.png" />
+    <Content Include="Content\img\report5.png" />
+    <Content Include="Content\img\report6.png" />
+    <Content Include="Content\img\report7.png" />
+    <Content Include="Content\Site.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Plugins\angular-base64\angular-base64.js" />
+    <Content Include="Plugins\angular-base64\angular-base64.min.js" />
+    <Content Include="Plugins\angular-uploader\angular-file-upload-shim.js" />
+    <Content Include="Plugins\angular-uploader\angular-file-upload.js" />
+    <Content Include="Plugins\angular-uploader\tableHeadFixer.js" />
+    <Content Include="Plugins\angular-uploader\ui-bootstrap-tpls-0.13.4.min.js" />
+    <Content Include="Plugins\bootstrap\dist\css\bootstrap.min.css" />
+    <Content Include="Plugins\bootstrap\dist\fonts\glyphicons-halflings-regular.html" />
+    <Content Include="Plugins\bootstrap\dist\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Plugins\bootstrap\dist\js\bootstrap.min.js" />
+    <Content Include="Plugins\bower_components\blockUI\jquery.blockUI.js" />
+    <Content Include="Plugins\bower_components\bootstrap-datepicker\bootstrap-datepicker.min.css" />
+    <Content Include="Plugins\bower_components\bootstrap-datepicker\bootstrap-datepicker.min.js" />
+    <Content Include="Plugins\bower_components\bootstrap-daterangepicker\daterangepicker.css" />
+    <Content Include="Plugins\bower_components\bootstrap-daterangepicker\daterangepicker.js" />
+    <Content Include="Plugins\bower_components\bootstrap-select\bootstrap-select.min.css" />
+    <Content Include="Plugins\bower_components\bootstrap-select\bootstrap-select.min.js" />
+    <Content Include="Plugins\bower_components\bootstrap-table\dist\bootstrap-table.ints.js" />
+    <Content Include="Plugins\bower_components\bootstrap-table\dist\bootstrap-table.min.css" />
+    <Content Include="Plugins\bower_components\bootstrap-table\dist\bootstrap-table.min.js" />
+    <Content Include="Plugins\bower_components\bootstrap-tagsinput\dist\bootstrap-tagsinput.css" />
+    <Content Include="Plugins\bower_components\bootstrap-tagsinput\dist\bootstrap-tagsinput.min.js" />
+    <Content Include="Plugins\bower_components\bootstrap-touchspin\dist\jquery.bootstrap-touchspin.min.css" />
+    <Content Include="Plugins\bower_components\bootstrap-touchspin\dist\jquery.bootstrap-touchspin.min.js" />
+    <Content Include="Plugins\bower_components\bootstrap-treeview-master\dist\bootstrap-treeview-init.js" />
+    <Content Include="Plugins\bower_components\bootstrap-treeview-master\dist\bootstrap-treeview.min.js" />
+    <Content Include="Plugins\bower_components\calendar\dist\fullcalendar.css" />
+    <Content Include="Plugins\bower_components\calendar\dist\fullcalendar.min.js" />
+    <Content Include="Plugins\bower_components\calendar\dist\jquery.fullcalendar.js" />
+    <Content Include="Plugins\bower_components\calendar\jquery-ui.min.js" />
+    <Content Include="Plugins\bower_components\Chart.js\Chart.min.js" />
+    <Content Include="Plugins\bower_components\Chart.js\chartjs.init.js" />
+    <Content Include="Plugins\bower_components\clockpicker\dist\jquery-clockpicker.min.css" />
+    <Content Include="Plugins\bower_components\clockpicker\dist\jquery-clockpicker.min.js" />
+    <Content Include="Plugins\bower_components\counterup\jquery.counterup.min.js" />
+    <Content Include="Plugins\bower_components\cropper\cropper-init.js" />
+    <Content Include="Plugins\bower_components\cropper\cropper.min.css" />
+    <Content Include="Plugins\bower_components\cropper\cropper.min.js" />
+    <Content Include="Plugins\bower_components\css-chart\css-chart.css" />
+    <Content Include="Plugins\bower_components\custom-select\custom-select.css" />
+    <Content Include="Plugins\bower_components\custom-select\custom-select.min.js" />
+    <Content Include="Plugins\bower_components\custom-select\select2-spinner.html" />
+    <Content Include="Plugins\bower_components\custom-select\select2.png" />
+    <Content Include="Plugins\bower_components\custom-select\select2x2.html" />
+    <Content Include="Plugins\bower_components\datatables\dataTables.bootstrap.js" />
+    <Content Include="Plugins\bower_components\datatables\jquery.dataTables.min.css" />
+    <Content Include="Plugins\bower_components\datatables\jquery.dataTables.min.js" />
+    <Content Include="Plugins\bower_components\datatables\sort_asc.png" />
+    <Content Include="Plugins\bower_components\datatables\sort_asc_disabled.png" />
+    <Content Include="Plugins\bower_components\datatables\sort_both.png" />
+    <Content Include="Plugins\bower_components\datatables\sort_desc.png" />
+    <Content Include="Plugins\bower_components\datatables\sort_desc_disabled.png" />
+    <Content Include="Plugins\bower_components\dropify\dist\css\dropify.min.css" />
+    <Content Include="Plugins\bower_components\dropify\dist\js\dropify.min.js" />
+    <Content Include="Plugins\bower_components\dropify\src\images\test-image-1.jpg" />
+    <Content Include="Plugins\bower_components\dropify\src\images\test-image-2.jpg" />
+    <Content Include="Plugins\bower_components\dropzone-master\dist\dropzone.css" />
+    <Content Include="Plugins\bower_components\dropzone-master\dist\dropzone.js" />
+    <Content Include="Plugins\bower_components\fancybox\ekko-lightbox.min.css" />
+    <Content Include="Plugins\bower_components\fancybox\ekko-lightbox.min.js" />
+    <Content Include="Plugins\bower_components\flot.tooltip\js\jquery.flot.tooltip.min.js" />
+    <Content Include="Plugins\bower_components\flot\excanvas.min.js" />
+    <Content Include="Plugins\bower_components\flot\jquery.flot.crosshair.js" />
+    <Content Include="Plugins\bower_components\flot\jquery.flot.js" />
+    <Content Include="Plugins\bower_components\flot\jquery.flot.pie.js" />
+    <Content Include="Plugins\bower_components\flot\jquery.flot.resize.js" />
+    <Content Include="Plugins\bower_components\flot\jquery.flot.stack.js" />
+    <Content Include="Plugins\bower_components\flot\jquery.flot.time.js" />
+    <Content Include="Plugins\bower_components\footable\css\fonts\footable.svg" />
+    <Content Include="Plugins\bower_components\footable\css\footable.core.css" />
+    <Content Include="Plugins\bower_components\footable\js\footable.all.min.js" />
+    <Content Include="Plugins\bower_components\gallery\css\animated-masonry-gallery.css" />
+    <Content Include="Plugins\bower_components\gallery\js\animated-masonry-gallery.js" />
+    <Content Include="Plugins\bower_components\gallery\js\jquery.isotope.min.js" />
+    <Content Include="Plugins\bower_components\gmaps\gmaps.min.js" />
+    <Content Include="Plugins\bower_components\gmaps\jquery.gmaps.js" />
+    <Content Include="Plugins\bower_components\horizontal-timeline\css\horizontal-timeline.css" />
+    <Content Include="Plugins\bower_components\horizontal-timeline\js\horizontal-timeline.js" />
+    <Content Include="Plugins\bower_components\html5-editor\bootstrap-wysihtml5.css" />
+    <Content Include="Plugins\bower_components\html5-editor\bootstrap-wysihtml5.js" />
+    <Content Include="Plugins\bower_components\html5-editor\wysihtml5-0.3.0.js" />
+    <Content Include="Plugins\bower_components\ion-rangeslider\css\ion.rangeSlider.css" />
+    <Content Include="Plugins\bower_components\ion-rangeslider\css\ion.rangeSlider.skinModern.css" />
+    <Content Include="Plugins\bower_components\ion-rangeslider\img\sprite-skin-modern.png" />
+    <Content Include="Plugins\bower_components\ion-rangeslider\js\ion-rangeSlider\ion.rangeSlider-init.js" />
+    <Content Include="Plugins\bower_components\ion-rangeslider\js\ion-rangeSlider\ion.rangeSlider.min.js" />
+    <Content Include="Plugins\bower_components\jquery-asColorPicker-master\css\asColorPicker.css" />
+    <Content Include="Plugins\bower_components\jquery-asColorPicker-master\dist\jquery-asColorPicker.min.js" />
+    <Content Include="Plugins\bower_components\jquery-asColorPicker-master\images\alpha.png" />
+    <Content Include="Plugins\bower_components\jquery-asColorPicker-master\images\hue.png" />
+    <Content Include="Plugins\bower_components\jquery-asColorPicker-master\images\saturation.png" />
+    <Content Include="Plugins\bower_components\jquery-asColorPicker-master\images\transparent.png" />
+    <Content Include="Plugins\bower_components\jquery-asColorPicker-master\libs\jquery-asColor.js" />
+    <Content Include="Plugins\bower_components\jquery-asColorPicker-master\libs\jquery-asGradient.js" />
+    <Content Include="Plugins\bower_components\jquery-datatables-editable\datatables.css" />
+    <Content Include="Plugins\bower_components\jquery-datatables-editable\jquery.dataTables.js" />
+    <Content Include="Plugins\bower_components\jquery-sparkline\jquery.charts-sparkline.js" />
+    <Content Include="Plugins\bower_components\jquery-sparkline\jquery.sparkline.min.js" />
+    <Content Include="Plugins\bower_components\jquery-wizard-master\css\wizard.css" />
+    <Content Include="Plugins\bower_components\jquery-wizard-master\dist\jquery-wizard.min.js" />
+    <Content Include="Plugins\bower_components\jquery-wizard-master\libs\formvalidation\bootstrap.min.js" />
+    <Content Include="Plugins\bower_components\jquery-wizard-master\libs\formvalidation\formValidation.min.css" />
+    <Content Include="Plugins\bower_components\jquery-wizard-master\libs\formvalidation\formValidation.min.js" />
+    <Content Include="Plugins\bower_components\jquery.easy-pie-chart\dist\jquery.easypiechart.min.js" />
+    <Content Include="Plugins\bower_components\jquery.easy-pie-chart\easy-pie-chart.init.js" />
+    <Content Include="Plugins\bower_components\jquery\dist\jquery.min.js" />
+    <Content Include="Plugins\bower_components\jsgrid\db.js" />
+    <Content Include="Plugins\bower_components\jsgrid\dist\jsgrid-theme.min.css" />
+    <Content Include="Plugins\bower_components\jsgrid\dist\jsgrid.min.css" />
+    <Content Include="Plugins\bower_components\jsgrid\dist\jsgrid.min.js" />
+    <Content Include="Plugins\bower_components\knob\jquery.knob.js" />
+    <Content Include="Plugins\bower_components\Magnific-Popup-master\dist\jquery.magnific-popup-init.js" />
+    <Content Include="Plugins\bower_components\Magnific-Popup-master\dist\jquery.magnific-popup.min.js" />
+    <Content Include="Plugins\bower_components\Magnific-Popup-master\dist\magnific-popup.css" />
+    <Content Include="Plugins\bower_components\moment\moment.js" />
+    <Content Include="Plugins\bower_components\morrisjs\morris.css" />
+    <Content Include="Plugins\bower_components\morrisjs\morris.js" />
+    <Content Include="Plugins\bower_components\multiselect\css\multi-select.css" />
+    <Content Include="Plugins\bower_components\multiselect\img\switch.png" />
+    <Content Include="Plugins\bower_components\multiselect\js\jquery.multi-select.js" />
+    <Content Include="Plugins\bower_components\nestable\jquery.nestable.js" />
+    <Content Include="Plugins\bower_components\nestable\nestable.css" />
+    <Content Include="Plugins\bower_components\owl.carousel\owl.carousel.min.css" />
+    <Content Include="Plugins\bower_components\owl.carousel\owl.carousel.min.js" />
+    <Content Include="Plugins\bower_components\owl.carousel\owl.custom.js" />
+    <Content Include="Plugins\bower_components\owl.carousel\owl.theme.default.css" />
+    <Content Include="Plugins\bower_components\owl.carousel\owl.video.play.html" />
+    <Content Include="Plugins\bower_components\peity\jquery.peity.init.js" />
+    <Content Include="Plugins\bower_components\peity\jquery.peity.min.js" />
+    <Content Include="Plugins\bower_components\raphael\raphael-min.js" />
+    <Content Include="Plugins\bower_components\select2-search\css\select2-spinner.gif" />
+    <Content Include="Plugins\bower_components\select2-search\css\select2.css" />
+    <Content Include="Plugins\bower_components\select2-search\css\select2.png" />
+    <Content Include="Plugins\bower_components\select2-search\js\select2.min.js" />
+    <Content Include="Plugins\bower_components\sidebar-nav\dist\sidebar-nav.min.css" />
+    <Content Include="Plugins\bower_components\sidebar-nav\dist\sidebar-nav.min.js" />
+    <Content Include="Plugins\bower_components\skycons\skycons.js" />
+    <Content Include="Plugins\bower_components\styleswitcher\jQuery.style.switcher.js" />
+    <Content Include="Plugins\bower_components\summernote\dist\summernote.css" />
+    <Content Include="Plugins\bower_components\summernote\dist\summernote.min.js" />
+    <Content Include="Plugins\bower_components\sweetalert\jquery.sweet-alert.custom.js" />
+    <Content Include="Plugins\bower_components\sweetalert\sweetalert.css" />
+    <Content Include="Plugins\bower_components\sweetalert\sweetalert.min.js" />
+    <Content Include="Plugins\bower_components\switchery\dist\switchery.min.css" />
+    <Content Include="Plugins\bower_components\switchery\dist\switchery.min.js" />
+    <Content Include="Plugins\bower_components\tablesaw-master\dist\tablesaw-init.js" />
+    <Content Include="Plugins\bower_components\tablesaw-master\dist\tablesaw.css" />
+    <Content Include="Plugins\bower_components\tablesaw-master\dist\tablesaw.js" />
+    <Content Include="Plugins\bower_components\timepicker\bootstrap-timepicker.min.css" />
+    <Content Include="Plugins\bower_components\timepicker\bootstrap-timepicker.min.js" />
+    <Content Include="Plugins\bower_components\tiny-editable\mindmup-editabletable.js" />
+    <Content Include="Plugins\bower_components\tiny-editable\numeric-input-example.js" />
+    <Content Include="Plugins\bower_components\tinymce\tinymce.min.js" />
+    <Content Include="Plugins\bower_components\toast-master\css\jquery.toast.css" />
+    <Content Include="Plugins\bower_components\toast-master\js\jquery.toast.js" />
+    <Content Include="Plugins\bower_components\typeahead.js-master\dist\typeahead-init.js" />
+    <Content Include="Plugins\bower_components\typeahead.js-master\dist\typeahead.bundle.min.js" />
+    <Content Include="Plugins\bower_components\typeahead.js-master\dist\typehead-min.css" />
+    <Content Include="Plugins\bower_components\vectormap\jquery-jvectormap-2.0.2.css" />
+    <Content Include="Plugins\bower_components\vectormap\jquery-jvectormap-2.0.2.min.js" />
+    <Content Include="Plugins\bower_components\vectormap\jquery-jvectormap-au-mill.js" />
+    <Content Include="Plugins\bower_components\vectormap\jquery-jvectormap-in-mill.js" />
+    <Content Include="Plugins\bower_components\vectormap\jquery-jvectormap-uk-mill-en.js" />
+    <Content Include="Plugins\bower_components\vectormap\jquery-jvectormap-us-aea-en.js" />
+    <Content Include="Plugins\bower_components\vectormap\jquery-jvectormap-world-mill-en.js" />
+    <Content Include="Plugins\bower_components\vectormap\jvectormap.custom.js" />
+    <Content Include="Plugins\bower_components\waypoints\lib\jquery.waypoints.js" />
+    <Content Include="Plugins\bower_components\x-editable\dist\bootstrap3-editable\css\bootstrap-editable.css" />
+    <Content Include="Plugins\bower_components\x-editable\dist\bootstrap3-editable\img\clear.png" />
+    <Content Include="Plugins\bower_components\x-editable\dist\bootstrap3-editable\img\loading.gif" />
+    <Content Include="Plugins\bower_components\x-editable\dist\bootstrap3-editable\js\bootstrap-editable.min.js" />
+    <Content Include="Plugins\css\animate.css" />
+    <Content Include="Plugins\css\colors\blue.css" />
+    <Content Include="Plugins\css\spinners.css" />
+    <Content Include="Plugins\css\style.css" />
+    <Content Include="Plugins\fooTables\css\fonts\footable.svg" />
+    <Content Include="Plugins\fooTables\css\footable.core.css" />
+    <Content Include="Plugins\fooTables\js\footable-init.js" />
+    <Content Include="Plugins\fooTables\js\footable.all.min.js" />
+    <Content Include="Plugins\fooTables\js\tableHeadFixer.js" />
+    <Content Include="Plugins\images\alert.png" />
+    <Content Include="Plugins\images\alert2.png" />
+    <Content Include="Plugins\images\alert3.png" />
+    <Content Include="Plugins\images\alert4.png" />
+    <Content Include="Plugins\images\alert5.png" />
+    <Content Include="Plugins\images\alert6.png" />
+    <Content Include="Plugins\images\alert7.png" />
+    <Content Include="Plugins\images\assets\landscape1.jpg" />
+    <Content Include="Plugins\images\assets\landscape10.jpg" />
+    <Content Include="Plugins\images\assets\landscape11.jpg" />
+    <Content Include="Plugins\images\assets\landscape12.jpg" />
+    <Content Include="Plugins\images\assets\landscape13.jpg" />
+    <Content Include="Plugins\images\assets\landscape14.jpg" />
+    <Content Include="Plugins\images\assets\landscape15.jpg" />
+    <Content Include="Plugins\images\assets\landscape16.jpg" />
+    <Content Include="Plugins\images\assets\landscape17.jpg" />
+    <Content Include="Plugins\images\assets\landscape18.jpg" />
+    <Content Include="Plugins\images\assets\landscape2.jpg" />
+    <Content Include="Plugins\images\assets\landscape3.jpg" />
+    <Content Include="Plugins\images\assets\landscape4.jpg" />
+    <Content Include="Plugins\images\assets\landscape5.jpg" />
+    <Content Include="Plugins\images\assets\landscape6.jpg" />
+    <Content Include="Plugins\images\assets\landscape7.jpg" />
+    <Content Include="Plugins\images\assets\landscape8.jpg" />
+    <Content Include="Plugins\images\assets\landscape9.jpg" />
+    <Content Include="Plugins\images\assets\studio1.jpg" />
+    <Content Include="Plugins\images\assets\studio10.jpg" />
+    <Content Include="Plugins\images\assets\studio11.jpg" />
+    <Content Include="Plugins\images\assets\studio12.jpg" />
+    <Content Include="Plugins\images\assets\studio13.jpg" />
+    <Content Include="Plugins\images\assets\studio14.jpg" />
+    <Content Include="Plugins\images\assets\studio15.jpg" />
+    <Content Include="Plugins\images\assets\studio16.jpg" />
+    <Content Include="Plugins\images\assets\studio17.jpg" />
+    <Content Include="Plugins\images\assets\studio18.jpg" />
+    <Content Include="Plugins\images\assets\studio19.jpg" />
+    <Content Include="Plugins\images\assets\studio2.jpg" />
+    <Content Include="Plugins\images\assets\studio20.jpg" />
+    <Content Include="Plugins\images\assets\studio21.jpg" />
+    <Content Include="Plugins\images\assets\studio22.jpg" />
+    <Content Include="Plugins\images\assets\studio23.jpg" />
+    <Content Include="Plugins\images\assets\studio24.jpg" />
+    <Content Include="Plugins\images\assets\studio25.jpg" />
+    <Content Include="Plugins\images\assets\studio26.jpg" />
+    <Content Include="Plugins\images\assets\studio27.jpg" />
+    <Content Include="Plugins\images\assets\studio3.jpg" />
+    <Content Include="Plugins\images\assets\studio4.jpg" />
+    <Content Include="Plugins\images\assets\studio5.jpg" />
+    <Content Include="Plugins\images\assets\studio6.jpg" />
+    <Content Include="Plugins\images\assets\studio7.jpg" />
+    <Content Include="Plugins\images\assets\studio8.jpg" />
+    <Content Include="Plugins\images\assets\studio9.jpg" />
+    <Content Include="Plugins\images\big\circle.jpg" />
+    <Content Include="Plugins\images\big\img1.jpg" />
+    <Content Include="Plugins\images\big\img2.jpg" />
+    <Content Include="Plugins\images\big\img3.jpg" />
+    <Content Include="Plugins\images\big\img4.jpg" />
+    <Content Include="Plugins\images\big\img5.jpg" />
+    <Content Include="Plugins\images\big\img6.jpg" />
+    <Content Include="Plugins\images\camera-icon.png" />
+    <Content Include="Plugins\images\check.png" />
+    <Content Include="Plugins\images\favicon.png" />
+    <Content Include="Plugins\images\heading-bg\slide1.jpg" />
+    <Content Include="Plugins\images\heading-bg\slide2.jpg" />
+    <Content Include="Plugins\images\heading-bg\slide3.jpg" />
+    <Content Include="Plugins\images\heading-bg\slide4.jpg" />
+    <Content Include="Plugins\images\heading-bg\slide6.jpg" />
+    <Content Include="Plugins\images\home-icon.png" />
+    <Content Include="Plugins\images\img1.jpg" />
+    <Content Include="Plugins\images\img2.jpg" />
+    <Content Include="Plugins\images\img3.jpg" />
+    <Content Include="Plugins\images\large\img1.jpg" />
+    <Content Include="Plugins\images\large\img2.jpg" />
+    <Content Include="Plugins\images\large\img3.jpg" />
+    <Content Include="Plugins\images\large\img4.jpg" />
+    <Content Include="Plugins\images\large\img5.jpg" />
+    <Content Include="Plugins\images\large\img6.jpg" />
+    <Content Include="Plugins\images\LOGO1.jpg" />
+    <Content Include="Plugins\images\model.png" />
+    <Content Include="Plugins\images\model2.png" />
+    <Content Include="Plugins\images\model3.png" />
+    <Content Include="Plugins\images\nelson.jpg" />
+    <Content Include="Plugins\images\news\slide1.jpg" />
+    <Content Include="Plugins\images\pixeladmin-logo-dark.png" />
+    <Content Include="Plugins\images\pixeladmin-logo.png" />
+    <Content Include="Plugins\images\pixeladmin-text-dark.png" />
+    <Content Include="Plugins\images\pixeladmin-text.png" />
+    <Content Include="Plugins\images\tooltip\Euclid.png" />
+    <Content Include="Plugins\images\users\1.jpg" />
+    <Content Include="Plugins\images\users\2.jpg" />
+    <Content Include="Plugins\images\users\3.jpg" />
+    <Content Include="Plugins\images\users\4.jpg" />
+    <Content Include="Plugins\images\users\5.jpg" />
+    <Content Include="Plugins\images\users\6.jpg" />
+    <Content Include="Plugins\images\users\7.jpg" />
+    <Content Include="Plugins\images\users\8.jpg" />
+    <Content Include="Plugins\images\users\arijit.jpg" />
+    <Content Include="Plugins\images\users\genu.jpg" />
+    <Content Include="Plugins\images\users\govinda.jpg" />
+    <Content Include="Plugins\images\users\hritik.jpg" />
+    <Content Include="Plugins\images\users\john.jpg" />
+    <Content Include="Plugins\images\users\pawandeep.jpg" />
+    <Content Include="Plugins\images\users\ritesh.jpg" />
+    <Content Include="Plugins\images\users\salman.jpg" />
+    <Content Include="Plugins\images\users\sonu.jpg" />
+    <Content Include="Plugins\images\users\varun.jpg" />
+    <Content Include="Plugins\jsPDF\faker.min.js" />
+    <Content Include="Plugins\jsPDF\jspdf.js" />
+    <Content Include="Plugins\jsPDF\jspdf.min.js" />
+    <Content Include="Plugins\jsPDF\jspdf.plugin.autotable.js" />
+    <Content Include="Plugins\jsPDF\jspdf.plugin.text-align.js" />
+    <Content Include="Plugins\jsPDF\pdfFromHTML.js" />
+    <Content Include="Plugins\js\cbpFWTabs.js" />
+    <Content Include="Plugins\js\chat.js" />
+    <Content Include="Plugins\js\custom.min.js" />
+    <Content Include="Plugins\js\dashboard1.js" />
+    <Content Include="Plugins\js\flot-data.js" />
+    <Content Include="Plugins\js\footable-init.js" />
+    <Content Include="Plugins\js\jasny-bootstrap.js" />
+    <Content Include="Plugins\js\jquery.slimscroll.js" />
+    <Content Include="Plugins\js\jsgrid-init.js" />
+    <Content Include="Plugins\js\mask.js" />
+    <Content Include="Plugins\js\morris-data.js" />
+    <Content Include="Plugins\js\toastr.js" />
+    <Content Include="Plugins\js\validator.js" />
+    <Content Include="Plugins\js\waves.js" />
+    <Content Include="Plugins\js\widget.js" />
+    <Content Include="Plugins\less\icons\font-awesome\fonts\fontawesome-webfont3295.html" />
+    <Content Include="Plugins\less\icons\font-awesome\fonts\fontawesome-webfont3295.svg" />
+    <Content Include="Plugins\less\icons\linea-icons\fonts\linea-arrows-10.svg" />
+    <Content Include="Plugins\less\icons\linea-icons\fonts\linea-basic-10.svg" />
+    <Content Include="Plugins\less\icons\linea-icons\fonts\linea-basic-elaboration-10.svg" />
+    <Content Include="Plugins\less\icons\linea-icons\fonts\linea-ecommerce-10.svg" />
+    <Content Include="Plugins\less\icons\linea-icons\fonts\linea-music-10.svg" />
+    <Content Include="Plugins\less\icons\linea-icons\fonts\linea-software-10.svg" />
+    <Content Include="Plugins\less\icons\linea-icons\fonts\linea-weather-10.svg" />
+    <Content Include="Plugins\less\icons\simple-line-icons\fonts\Simple-Line-Icons4c82.html" />
+    <Content Include="Plugins\less\icons\simple-line-icons\fonts\Simple-Line-Icons4c82.svg" />
+    <Content Include="Plugins\less\icons\themify-icons\fonts\themify9f24.svg" />
+    <Content Include="Plugins\less\icons\weather-icons\font\weathericons-regular-webfont.html" />
+    <Content Include="Plugins\less\icons\weather-icons\font\weathericons-regular-webfont.svg" />
+    <Content Include="Plugins\lightbox\css\lightbox.css" />
+    <Content Include="Plugins\lightbox\css\lightbox.min.css" />
+    <Content Include="Plugins\lightbox\images\close.png" />
+    <Content Include="Plugins\lightbox\images\loading.gif" />
+    <Content Include="Plugins\lightbox\images\next.png" />
+    <Content Include="Plugins\lightbox\images\prev.png" />
+    <Content Include="Plugins\lightbox\js\lightbox.js" />
+    <Content Include="Plugins\lightbox\js\lightbox.min.js" />
+    <Content Include="Plugins\MaterialFloating\style.css" />
+    <Content Include="Scripts\Angular\angular-route.js" />
+    <Content Include="Scripts\Angular\angular.js" />
+    <Content Include="Scripts\Angular\angular.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Plugins\bootstrap\dist\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Plugins\bootstrap\dist\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Plugins\bootstrap\dist\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Plugins\bootstrap\dist\fonts\glyphicons-halflings-regulard41d.eot" />
+    <Content Include="Plugins\less\icons\font-awesome\fonts\fontawesome-webfont3295.eot" />
+    <Content Include="Plugins\less\icons\font-awesome\fonts\fontawesome-webfont3295.ttf" />
+    <Content Include="Plugins\less\icons\font-awesome\fonts\fontawesome-webfont3295.woff" />
+    <Content Include="Plugins\less\icons\font-awesome\fonts\fontawesome-webfontd41d.eot" />
+    <Content Include="Plugins\less\icons\linea-icons\fonts\linea-arrows-10.eot" />
+    <Content Include="Plugins\less\icons\linea-icons\fonts\linea-arrows-10.ttf" />
+    <Content Include="Plugins\less\icons\linea-icons\fonts\linea-arrows-10.woff" />
+    <Content Include="Plugins\less\icons\linea-icons\fonts\linea-arrows-10d41d.eot" />
+    <Content Include="Plugins\less\icons\linea-icons\fonts\linea-basic-10.eot" />
+    <Content Include="Plugins\less\icons\linea-icons\fonts\linea-basic-10.ttf" />
+    <Content Include="Plugins\less\icons\linea-icons\fonts\linea-basic-10.woff" />
+    <Content Include="Plugins\less\icons\linea-icons\fonts\linea-basic-10d41d.eot" />
+    <Content Include="Plugins\less\icons\linea-icons\fonts\linea-basic-elaboration-10.eot" />
+    <Content Include="Plugins\less\icons\linea-icons\fonts\linea-basic-elaboration-10.ttf" />
+    <Content Include="Plugins\less\icons\linea-icons\fonts\linea-basic-elaboration-10.woff" />
+    <Content Include="Plugins\less\icons\linea-icons\fonts\linea-basic-elaboration-10d41d.eot" />
+    <Content Include="Plugins\less\icons\linea-icons\fonts\linea-ecommerce-10.eot" />
+    <Content Include="Plugins\less\icons\linea-icons\fonts\linea-ecommerce-10.ttf" />
+    <Content Include="Plugins\less\icons\linea-icons\fonts\linea-ecommerce-10.woff" />
+    <Content Include="Plugins\less\icons\linea-icons\fonts\linea-ecommerce-10d41d.eot" />
+    <Content Include="Plugins\less\icons\linea-icons\fonts\linea-music-10.eot" />
+    <Content Include="Plugins\less\icons\linea-icons\fonts\linea-music-10.ttf" />
+    <Content Include="Plugins\less\icons\linea-icons\fonts\linea-music-10.woff" />
+    <Content Include="Plugins\less\icons\linea-icons\fonts\linea-music-10d41d.eot" />
+    <Content Include="Plugins\less\icons\linea-icons\fonts\linea-software-10.eot" />
+    <Content Include="Plugins\less\icons\linea-icons\fonts\linea-software-10.ttf" />
+    <Content Include="Plugins\less\icons\linea-icons\fonts\linea-software-10.woff" />
+    <Content Include="Plugins\less\icons\linea-icons\fonts\linea-software-10d41d.eot" />
+    <Content Include="Plugins\less\icons\linea-icons\fonts\linea-weather-10.eot" />
+    <Content Include="Plugins\less\icons\linea-icons\fonts\linea-weather-10.ttf" />
+    <Content Include="Plugins\less\icons\linea-icons\fonts\linea-weather-10.woff" />
+    <Content Include="Plugins\less\icons\linea-icons\fonts\linea-weather-10d41d.eot" />
+    <Content Include="Plugins\less\icons\simple-line-icons\fonts\Simple-Line-Icons4c82.eot" />
+    <Content Include="Plugins\less\icons\simple-line-icons\fonts\Simple-Line-Icons4c82.ttf" />
+    <Content Include="Plugins\less\icons\simple-line-icons\fonts\Simple-Line-Icons4c82.woff" />
+    <Content Include="Plugins\less\icons\simple-line-icons\fonts\Simple-Line-Iconsd41d.eot" />
+    <Content Include="Plugins\less\icons\themify-icons\fonts\themify9f24.eot" />
+    <Content Include="Plugins\less\icons\themify-icons\fonts\themify9f24.ttf" />
+    <Content Include="Plugins\less\icons\themify-icons\fonts\themify9f24.woff" />
+    <Content Include="Plugins\less\icons\themify-icons\fonts\themifyd41d.eot" />
+    <Content Include="Plugins\less\icons\weather-icons\font\weathericons-regular-webfont.eot" />
+    <Content Include="Plugins\less\icons\weather-icons\font\weathericons-regular-webfont.ttf" />
+    <Content Include="Plugins\less\icons\weather-icons\font\weathericons-regular-webfont.woff" />
+    <Content Include="Plugins\less\icons\weather-icons\font\weathericons-regular-webfontd41d.eot" />
+    <Content Include="Plugins\bower_components\footable\css\fonts\footable.eot" />
+    <Content Include="Plugins\bower_components\footable\css\fonts\footable.ttf" />
+    <Content Include="Plugins\bower_components\footable\css\fonts\footable.woff" />
+    <Content Include="Plugins\bower_components\footable\css\fonts\footabled41d.eot" />
+    <Content Include="Plugins\fooTables\css\fonts\footable.eot" />
+    <Content Include="Plugins\fooTables\css\fonts\footable.ttf" />
+    <Content Include="Plugins\fooTables\css\fonts\footable.woff" />
+    <Content Include="Plugins\fooTables\css\fonts\footabled41d.eot" />
+    <Content Include="Content\format\FORMATO_STOCK_DIARIO.xlsx" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\Style\container.css" />
+    <Content Include="Scripts\Style\MyStyle.css" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Views\Account\ConfirmEmail.cshtml" />
+    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\SendCode.cshtml" />
+    <Content Include="Views\Account\VerifyCode.cshtml" />
+    <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
+    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Account\_RemoveAccountPartial.cshtml" />
+    <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
+    <Content Include="Views\HomeAdministracion\AccesosUsuario.cshtml" />
+    <Content Include="Views\HomeAdministracion\HomeAdministracion.cshtml" />
+    <Content Include="Views\HomeAlmacen\HomeAlmacen.cshtml" />
+    <Content Include="Views\HomeFacturacion\HomeFacturacion.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Home.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Home\Index.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Login\LoginIndex.cshtml" />
+    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
+    <Content Include="Views\Manage\ChangePassword.cshtml" />
+    <Content Include="Views\Manage\Index.cshtml" />
+    <Content Include="Views\Manage\ManageLogins.cshtml" />
+    <Content Include="Views\Manage\SetPassword.cshtml" />
+    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
+    <Content Include="Views\MantenimientoAlmacen\Almacenes_index.cshtml" />
+    <Content Include="Views\MantenimientoAlmacen\CanalesNegocio_index.cshtml" />
+    <Content Include="Views\MantenimientoAlmacen\Cargo_index.cshtml" />
+    <Content Include="Views\MantenimientoAlmacen\CategoriaProductoAlmacen.cshtml" />
+    <Content Include="Views\MantenimientoAlmacen\Clientes_index.cshtml" />
+    <Content Include="Views\MantenimientoAlmacen\FormaPago_index.cshtml" />
+    <Content Include="Views\MantenimientoAlmacen\GirosNegorio_index.cshtml" />
+    <Content Include="Views\MantenimientoAlmacen\GrupoDet_index.cshtml" />
+    <Content Include="Views\MantenimientoAlmacen\locales_index.cshtml" />
+    <Content Include="Views\MantenimientoAlmacen\Personal_index.cshtml" />
+    <Content Include="Views\MantenimientoAlmacen\ProductoLineaAlmacen.cshtml" />
+    <Content Include="Views\MantenimientoAlmacen\ProductoMarcaAlmacen.cshtml" />
+    <Content Include="Views\MantenimientoAlmacen\ProductoModeloMarcaAlmacen.cshtml" />
+    <Content Include="Views\MantenimientoAlmacen\ProductosAlmacen.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\MantenimientoAlmacen\ProductoSubLineaAlamacen.cshtml" />
+    <Content Include="Views\MantenimientoAlmacen\Proveedor_index.cshtml" />
+    <Content Include="Views\MantenimientoAlmacen\PuntoVenta_index.cshtml" />
+    <Content Include="Views\MantenimientoAlmacen\TipoDocumento_index.cshtml" />
+    <Content Include="Views\MantenimientoAlmacen\Transportista_index.cshtml" />
+    <Content Include="Views\MantenimientoAlmacen\UnidadDeMedidaAlmacen.cshtml" />
+    <Content Include="Views\MantenimientoAlmacen\Vehiculo_index.cshtml" />
+    <Content Include="Views\MantenimientoAlmacen\Vendedor_index.cshtml" />
+    <Content Include="Views\ProcesosFacturacion\CancelacionDocVendedor_index.cshtml" />
+    <Content Include="Views\ProcesosFacturacion\GeneracionDocumentoVenta_Index.cshtml" />
+    <Content Include="Views\ProcesosFacturacion\GeneracionMasivaDocumentos_Index.cshtml" />
+    <Content Include="Views\ProcesosFacturacion\ListaPrecio_index.cshtml" />
+    <Content Include="Views\Procesos\AprobacionTransferencias.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Procesos\IngresoGuias.cshtml" />
+    <Content Include="Views\Procesos\IngresoGuiasOrdenCompra.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Procesos\IngresoTransferencias.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Procesos\Transferencias.cshtml" />
+    <Content Include="Views\ReportesAlmacen\KardexAlmacen.cshtml" />
+    <Content Include="Views\ReportesAlmacen\Stock_index.cshtml" />
+    <Content Include="Views\ReportesFacturacion\PagosVendedor_index.cshtml" />
+    <Content Include="Views\Servicios\Cargo_index.cshtml" />
+    <Content Include="Views\Servicios\FormaPago_index.cshtml" />
+    <Content Include="Views\Servicios\GrupoDet_index.cshtml" />
+    <Content Include="Views\Servicios\locales_index.cshtml" />
+    <Content Include="Views\Servicios\Transportista_index.cshtml" />
+    <Content Include="Views\Servicios\Vehiculo_index.cshtml" />
+    <Content Include="Views\Servicios\Vendedor_index.cshtml" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\HomeAdministracion\UsuarioAlmacen_index.cshtml" />
+    <Content Include="Views\HomeAdministracion\UsuarioLocal_index.cshtml" />
+    <Content Include="Views\MantenimientoAlmacen\Clientes_II_index.cshtml" />
+    <Content Include="Views\ProcesosFacturacion\Pedidos_Directo_Index.cshtml" />
+    <Content Include="Views\ProcesosFacturacion\Pedidos_Index.cshtml" />
+    <Content Include="Views\ProcesosFacturacion\NotaCreditoDebito_Index.cshtml" />
+    <Content Include="Views\ReportesFacturacion\RegistroVentas_Index.cshtml" />
+    <Content Include="Views\ReportesFacturacion\ResumenVentas_Index.cshtml" />
+    <Content Include="Views\Cobranza\Cancelacion_masiva.cshtml" />
+    <Content Include="Views\ProcesosFacturacion\ReenvioDocumentos_Index.cshtml" />
+    <Content Include="Views\Cobranza\Cancelacion_x_documento.cshtml" />
+    <Content Include="Views\ProcesosFacturacion\Pedidos_Aprobacion_Index.cshtml" />
+    <Content Include="Views\ProcesosFacturacion\Pedidos_new.cshtml" />
+    <Content Include="Views\ProcesosFacturacion\Pedidos_Directo_new.cshtml" />
+    <Content Include="Views\ProcesosFacturacion\NotaCreditoDebito_new.cshtml" />
+    <Content Include="Views\ProcesosFacturacion\GeneracionMasivaDocumentos_new.cshtml" />
+    <Content Include="Views\ProcesosFacturacion\ReenvioDocumentos_new.cshtml" />
+    <Content Include="Views\HomeReparto\HomeReparto.cshtml" />
+    <Content Include="Views\ProcesosReparto\EntregaReparto_index.cshtml" />
+    <Content Include="Views\ProcesosReparto\ExportaPedido_index.cshtml" />
+    <Content Include="Views\ProcesosReparto\ImportaPedido_index.cshtml" />
+    <Content Include="Views\ProcesosReparto\AprobarDevolucion_index.cshtml" />
+    <Content Include="Views\ReportesReparto\reporteCobertura_index.cshtml" />
+    <Content Include="Views\ReportesReparto\reporteKpi_index.cshtml" />
+    <Content Include="Views\ProcesosReparto\ImportaStockAlmacen_index.cshtml" />
+    <Content Include="Views\ProcesosReparto\HabilitarUsuario_index.cshtml" />
+    <Content Include="Views\ProcesosReparto\ImportarPrecio_index.cshtml" />
+    <Content Include="Views\ReportesReparto\reporteStock_index.cshtml" />
+    <Content Include="Views\ProcesosFacturacion\Promociones_index.cshtml" />
+    <Content Include="Views\ProcesosFacturacion\RevisionPedidos_index.cshtml" />
+    <Content Include="Views\ProcesosFacturacion\ConsolidadoMercaderia_index.cshtml" />
+    <Content Include="Views\ProcesosFacturacion\ReimpresionDocumentos_index.cshtml" />
+    <Content Include="Views\ProcesosFacturacion\DocumentosManuales_index.cshtml" />
+    <Content Include="Views\Procesos\IngresoFacturas.cshtml" />
+    <Content Include="Views\Mantenimiento\Usuario_index.cshtml" />
+    <Content Include="Views\ProcesosFacturacion\CancelacionMasivaDocumentos_index.cshtml" />
+    <Content Include="Views\Mantenimiento\RutasVentas_index.cshtml" />
+    <Content Include="Views\Mantenimiento\ZonasVentas_index.cshtml" />
+    <Content Include="Views\Mantenimiento\Anexos_index.cshtml" />
+    <Content Include="Views\ProcesosFacturacion\ArqueoCaja_index.cshtml" />
+    <Content Include="Views\Mantenimiento\Bancos_index.cshtml" />
+    <Content Include="Views\Cobranza\ReporteCobranza_index.cshtml" />
+    <Content Include="Views\Cobranza\GeneracionManual_index.cshtml" />
+    <Content Include="Views\Cobranza\AnularDocumento_index.cshtml" />
+    <Content Include="Views\ReportesAlmacen\consultaTransacciones.cshtml" />
+    <Content Include="Views\ProcesosFacturacion\envioSunatNotasCreditoDebito_index.cshtml" />
+    <Content Include="Views\Procesos\transferenciasNew.cshtml" />
+    <Content Include="Views\ProcesosFacturacion\Pedidos_II.cshtml" />
+    <Content Include="Views\ReportesFacturacion\ReporteContable_Index.cshtml" />
+    <Content Include="Views\ProcesosFacturacion\anularNumero_index.cshtml" />
+    <Content Include="Views\ReportesFacturacion\estadoDocumento_index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App\Controlladores\Almacen\Servicio\Cargo\" />
+    <Folder Include="App\Controlladores\Almacen\Servicio\FormaPago\" />
+    <Folder Include="App\Controlladores\Almacen\Servicio\GrupoDet\" />
+    <Folder Include="App\Controlladores\Almacen\Servicio\Locales\" />
+    <Folder Include="App\Controlladores\Almacen\Servicio\Transportista\" />
+    <Folder Include="App\Controlladores\Almacen\Servicio\Vehiculo\" />
+    <Folder Include="App\Controlladores\Almacen\Servicio\Vendedor\" />
+    <Folder Include="App\Servicios\Almacen\Servicio\GrupoCab\" />
+    <Folder Include="App\Servicios\Almacen\Servicio\GrupoDet\" />
+    <Folder Include="App_Data\" />
+    <Folder Include="Properties\PublishProfiles\" />
+    <Folder Include="Views\Almacen\" />
+    <Folder Include="Views\Cobranzas\" />
+    <Folder Include="Views\zonasVentas\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="packages.config" />
+    <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>56740</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:56740/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

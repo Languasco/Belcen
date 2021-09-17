@@ -1,0 +1,195 @@
+﻿
+
+
+
+<style>
+    #listMenu span, a {
+        text-align: left !important;
+    }
+
+    .contentRegistro fieldset legend {
+        text-align: left !important;
+    }
+
+    .jq-toast-wrap {
+        width: 300px !important;
+    }
+
+    .floating-labels label {
+        top: -6px;
+    }
+
+    .contentRegistro .select2-container {
+        margin-left: 0px;
+        margin-top: 2px;
+    }
+
+    #paddin-lef {
+        padding-left: 40px !important;
+    }
+
+    .contentCombo .select2-container {
+        margin-left: 0px;
+        margin-top: -20px;
+        width: 95% !important;
+    }
+
+    .ContentFilters .table {
+        display: table;
+    }
+
+    .contentRegistro label {
+        font-size: 11px;
+        font-family: tahoma;
+        color: #2c5ca9;
+        font-weight: 600;
+    }
+
+    .contentRegistro {
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .ModalBorderSombra .modal-content {
+        box-shadow: inset 0px 0px 7px rgba(0,0,0,.5), 1px 1px 5px #fff;
+    }
+
+
+
+    .resaltado {
+        color: #ff94a7 !important;
+    }
+
+    .text-right {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+</style>
+
+<script type="text/javascript">
+
+    function filterFloat(evt, input) {
+        // Backspace = 8, Enter = 13, ‘0′ = 48, ‘9′ = 57, ‘.’ = 46, ‘-’ = 43
+        var key = window.Event ? evt.which : evt.keyCode;
+        var chark = String.fromCharCode(key);
+        var tempValue = input.value + chark;
+        if (key >= 48 && key <= 57) {
+            if (filter(tempValue) === false) {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            if (key == 8 || key == 13 || key == 0) {
+                return true;
+            } else if (key == 46) {
+                if (filter(tempValue) === false) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } else {
+                return false;
+            }
+        }
+    }
+    function filter(__val__) {
+        var preg = /^([0-9]+\.?[0-9]{0,3})$/;
+        if (preg.test(__val__) === true) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+</script>
+
+
+
+<div class=" container" ng-init="initAll();">
+    <div class="panel-body  contentRegistro contentCombo ContentFilters">
+        <div class="white-box">
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="cboEstado" class="control-label"> Anexo </label> <span class="help-block"></span>
+                    <select class="selectFiltros" id="cbo_anexo" ng-model="Objeto_Parametro_Filtro.anexo" ng-change="listados_changeAlmacenes(Objeto_Parametro_Filtro.anexo  ); ">
+                        <option value="0">[ ----  TODOS  --- ]</option>
+                        <option ng-repeat="item in lista_anexos" value="{{item.id}}">{{item.descripcion}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="cboEstado" class="control-label"> Almacen </label> <span class="help-block"></span>
+                    <select class="selectFiltros" id="cbo_almacen" ng-model="Objeto_Parametro_Filtro.almacen">
+                        <option value="0">[ ----  TODOS  --- ]</option>
+                        <option ng-repeat="item in Lista_Almacen" value="{{item.id}}">{{item.descripcion}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="form-group" style="    margin-bottom: 0px;">
+                        <label class="control-label" style="text-align :left">Rango de Fechas</label>
+                        <br>
+                        <div class="input-group">
+                            <input ng-model="Objeto_Parametro_Filtro.fechaIni" id="dtp_fechaIni" type="text" class="form-control input-sm   datepicker" placeholder="dia/mes/año">
+                            <span class="input-group-addon bg-primary" style="color:white">al</span>
+                            <input ng-model="Objeto_Parametro_Filtro.fechaFin" id="dtp_fechaFin" type="text" class="form-control input-sm   datepicker" placeholder="dia/mes/año">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <fieldset>
+                <legend>Tipo de Reporte </legend>
+                <div class="row" style="margin-top: -10px">
+                    <div class="col-sm-6 col-md-3">
+                        <div class="radio">
+                            <input id="radio1_Opt1" type="radio" ng-model="Objeto_Parametro_Filtro.tipoReporte" value="1" checked>
+                            <label for="radio1_Opt1" style="font-size: 11px;font-family: tahoma; font-weight: 600;"> Ingreso </label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="radio">
+                            <input type="radio" id="radio1_Opt2" ng-model="Objeto_Parametro_Filtro.tipoReporte" value="2">
+                            <label for="radio1_Opt2" style="font-size: 11px;font-family: tahoma;font-weight: 600;"> Transferencia</label>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <br />
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="input-group">
+                        <input type="text" class="form-control" ng-enter="BuscarProducto();" title="Busqueda por Codigo Producto" placeholder="Ingrese Codigo Producto" ng-model="Objeto_Parametro_Filtro.codigoProducto">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" type="submit" ng-click="BuscarProducto();">
+                                <i class="glyphicon glyphicon-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <input type="text" ng-model="Objeto_Parametro_Filtro.descripcionProducto" class="form-control " placeholder="Descripcion del Producto" disabled>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <button id="btnDescargar" class="btn btn-outline btn-success btn-sm m-l-10" ng-click="descargarExcel_transacciones()"  >
+                        <i class="glyphicon glyphicon-download"></i> Reportar
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="loaderModal" ng-if="loaderFiltro"></div>
+        <a id="id_link" href="" download style="display:none">link</a>
+
+    </div>
+</div>

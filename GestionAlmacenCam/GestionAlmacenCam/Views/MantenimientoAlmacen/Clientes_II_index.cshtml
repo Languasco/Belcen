@@ -1,0 +1,608 @@
+﻿
+<link href="https://fonts.googleapis.com/css?family=Eczar&display=swap" rel="stylesheet">
+<style>
+
+    #listMenu span, a {
+        text-align: left !important;
+    }
+
+    .contentRegistro fieldset legend {
+        text-align: left !important;
+    }
+
+    .jq-toast-wrap {
+        width: 300px !important;
+    }
+
+    .floating-labels label {
+        top: -6px;
+    }
+
+    .contentRegistro .select2-container {
+        margin-left: 0px;
+        margin-top: 2px;
+    }
+
+    #paddin-lef {
+        padding-left: 40px !important;
+    }
+
+    .contentCombo .select2-container {
+        margin-left: 0px;
+        margin-top: 0px;
+        width: 100% !important;
+    }
+
+    .ContentFilters .table {
+        display: table;
+    }
+
+    .contentRegistro label {
+        font-size: 11px;
+        font-family: tahoma;
+        color: #2c5ca9;
+        font-weight: 600;
+    }
+
+    .contentRegistro {
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .ModalBorderSombra .modal-content {
+        box-shadow: inset 0px 0px 7px rgba(0,0,0,.5), 1px 1px 5px #fff;
+    }
+
+    .resaltado {
+        color: #ff94a7 !important;
+    }
+
+    .text-right {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    #resultado, #existente {
+        background-color: red;
+        color: white;
+        font-weight: bold;
+        margin-top: -5px;
+    }
+
+    #resultado.ok, #existente.ok {
+        background-color: green;
+    }
+ 
+
+</style>
+
+<script language=Javascript>
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        return true;
+    }
+</script>
+
+<div class=" container-fluid" ng-init="initAll();">
+ 
+        <div class="contentRegistro ContentFilters contentCombo " style="background-color:white; padding: 5px; margin-top: 5px;">
+            <div class="row">
+                <div class="col-sm-6 col-md-3">
+                    <label for="cbo_tipocliente" class="control-label">Tipo de Cliente.</label>  
+                    <select class="selectFiltros" id="cbo_tipocliente" ng-model="Objeto_Parametro_Filtro.id_TipoCliente">
+                        <option value="0">[ --- TODOS --- ]</option>
+                        <option ng-repeat="item in Lista_TipoCliente" value="{{item.id_detalleTabla}}">{{item.descripcion_grupoTabla}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-6 col-md-3"> 
+                    <label  class="control-label"> Doc Identidad</label> <span class="help-block"></span>   
+                    <input type="text" class="form-control form-control input-sm " onkeypress="return isNumberKey(event)"  ng-model="Objeto_Parametro_Filtro.doc_identidad" style="margin-top: -12px;text-align:left; font-size: 11px;">
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <label   class="control-label"> Nombre Razon Social </label>  <span class="help-block"></span>
+                    <input type="text" class="form-control form-control input-sm " ng-model="Objeto_Parametro_Filtro.razon_social" style="margin-top: -12px;text-align:left; font-size: 11px;">
+                </div> 
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6 col-md-3">
+                    <label for="cbo_zona" class="control-label">Zona Venta</label>
+                    <select class="selectFiltros" id="cbo_zona" ng-model="Objeto_Parametro_Filtro.id_zona" ng-change="change_Zona_vendedor(Objeto_Parametro_Filtro.id_zona)">
+                        <option value="0">[ ----  TODOS  --- ]</option>
+                        <option ng-repeat="item in Lista_Zona" value="{{item.id}}">{{item.descripcion}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <label for="cbo_vendedor">Vendedor</label>
+                    <select class="selectFiltros" id="cbo_vendedor" ng-model="Objeto_Parametro_Filtro.id_vendedor">
+                        <option value="0">[ ----  TODOS  --- ]</option>
+                        <option ng-repeat="item in Lista_VendedorFiltro" value="{{item.id}}">{{item.descripcion}}  </option>
+                    </select>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <label for="cbo_condPago" class="control-label"> Condicion Pago </label>
+                    <select class="selectModal" id="cbo_condPago" ng-model="Objeto_Parametro_Filtro.id_condicionPago">
+                        <option value="0">[ ----  TODOS  --- ]</option>
+                        <option ng-repeat="item in Lista_CondicionFact" value="{{item.id_detalleTabla}}">{{item.descripcion_grupoTabla}}</option>
+                    </select>
+
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <label class="control-label" style="text-align :left">Direccion Entrega </label> <span class="help-block"></span>
+                    <input type="text" class="form-control form-control input-sm " ng-model="Objeto_Parametro_Filtro.direccion_entrega" style="margin-top: -12px;text-align:left; font-size: 11px;">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6 col-md-3">
+                    <label for="cboestadoFilter" class="control-label"> Estados </label>
+                    <select class="selectFiltros" id="cboestadoFilter" ng-model="Objeto_Parametro_Filtro.id_estado"  data-style="btn-default"  style=" font-size: 15px;   color: #0e0e0e;">
+                        <option ng-repeat="item in listStatus" value="{{item.id}}">{{item.descripcion}}</option>
+                    </select>
+                </div>
+
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group" style="margin-top: 22px; margin-bottom: 0px;">
+                        <button class="btn btn-primary" style="font-family: tahoma; font-size: 13px;" ng-click="get_Listando_Clientes();"><span class="glyphicon glyphicon-refresh"></span> Actualizar</button>
+
+                        <button id="btn-material"   class="btn btn-warning btn-sm m-l-10" ng-click="Open_New_Modal();">
+                            <i class="glyphicon glyphicon-plus"></i> Nuevo
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <br />
+       
+        <div class="form-inline ">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div style="text-align:center">
+                        <div class="cssload-speeding-wheel" ng-if="loader"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="white-box">
+                    <table id="tbl_clientes" class="table m-b-0 toggle-arrow-tiny table-bordered table-hover" data-page-size="10">
+                        <thead>
+                            <tr>
+                                <th data-toggle="true">#</th>
+                                <th data-toggle="true">TIPO DE CLIENTE</th>
+                                <th data-toggle="true">NRO DOC</th>
+                                <th data-hide=""> CLIENTE</th>
+                                <th data-hide=""> DIRECCION</th>
+                                <th data-hide=""> ESTADO</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in Lista_Clientes | filter : search" style="{{item.estado == 0 | iif : 'background-color: rgb(230, 115, 115) !important;color:#fff;font-weight: 600;'}}">
+                                <td>{{$index + 1}}</td>
+                                <td>{{item.tipoCliente}}</td>
+                                <td>{{item.nroDoc_Cliente}}</td>
+                                <td>{{item.nombres_Cliente}}</td>
+                                <td>{{item.direccion_referencia}}</td>
+                                <td>{{item.estado == 0 | iif : "Anulado" : "Activado"}}</td>
+                                <td>
+                                    <button type="button" class="btn btn-primary btn-circle " ng-click="Open_Update_Modal(item);" data-toggle="tooltip" title="EDITAR"><i class=" ti-pencil-alt"></i></button>
+                                    <button type="button" class="btn btn-success btn-circle" ng-click="getAuditoria(item)"><i class="fa fa-cog"></i> </button>
+                                    <button type="button" class="btn btn-warning btn-circle" ng-click="getAnular(item);" style="background-color: #ff6849; border-color: #ff6849;" title="ANULAR"><i class="fa fa-trash"></i> </button>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="text-center">
+                        <ul class="pagination pagination-split m-t-30"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+ 
+</div>
+
+<div id="modalMantenimiento" class="modal fade bd-example-modal-lg ModalBorderSombra  " tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header"  style="background-color: #162737;" >
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myLargeModalLabel" style="color:white !important">{{titleModal}}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="loaderModal" ng-if="loaderSave"></div>
+                <div class="contentRegistro contentCombo  floating-labels form-inline {{disabledContent}}">
+                    <div class="row contenedorGrupo">
+
+                        <ul class="nav nav-pills">
+                            <li ng-class="{ active: isSet(1) }">
+                                <a href="" ng-click="setTab(1)" style="font-size: 15px; text-align :center">DATOS GENERALES</a>
+                            </li>
+                            <li ng-class="{ active: isSet(2) }">
+                                <a href="" ng-click="setTab(2)" style="font-size: 15px;  text-align :center"> DISTRIBUCION </a>
+                            </li>
+                            <li ng-class="{ active: isSet(3) }">
+                                <a href="" ng-click="setTab(3)" style="font-size: 15px;  text-align :center"> CREDITO Y COBRANZA </a>
+                            </li>
+                        </ul>
+                        @*---------- Datos Generales --------------*@
+                        <div ng-show="isSet(1)">
+
+                            <fieldset style="margin-top: 5px;">
+                                <legend>Datos Generales</legend>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label for="cbo_tipocliente" class="control-label">Tipo de Cliente.</label> <span class="help-block"></span>
+                                        <select class="selectModal" id="cbo_tipocliente" ng-model="objeto_parametros_cliente.id_TipoCliente">
+                                            <option value="0">[ ---SELECCIONE--- ]</option>
+                                            <option ng-repeat="item in Lista_TipoCliente" value="{{item.id_detalleTabla}}">{{item.descripcion_grupoTabla}}</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <label for="cbo_tipoDoc" class="control-label">Tipo Documento</label> <span class="help-block"></span>
+                                        <select class="selectModal" id="cbo_tipoDoc" ng-model="objeto_parametros_cliente.id_DocumentoIdentidad" ng-change="change_TipoDocumento(objeto_parametros_cliente.id_DocumentoIdentidad);">
+                                            <option value="0">[ ----  SELECCIONE  --- ]</option>
+                                            <option ng-repeat="item in Lista_documento" value="{{item.id_detalleTabla}}">{{item.descripcion_grupoTabla}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <br />
+
+                                <div class="row">
+                                    @*<div class="col-sm-4">
+                                        <label for="txt_nrodoc" class="control-label">Nro Documento</label> <span class="help-block"></span>
+                                        <input type="text" id="txt_nrodoc" class="form-control input-sm" title="" placeholder="Ingrese el nro. Doc" maxlength="20" onkeypress="return isNumberKey(event)" ng-model="objeto_parametros_cliente.nroDoc_Cliente" style="background-color: cornsilk;color: red;font-size: 13px !important; font-family: tahoma;">
+                                    </div>*@
+
+
+                                    <div class="col-sm-6 col-md-5">
+                                        <input type="text" class="form-control disabledContent" style="font-size: 17px !important;font-weight: 800;background-color: beige;" id="txt_nrodoc" onkeypress="return filterFloat(event,this);" ng-change="validarRuc(objeto_parametros_cliente.nroDoc_Cliente)" ng-model="objeto_parametros_cliente.nroDoc_Cliente" maxlength="11"><span class="highlight"></span> <span class="bar"></span>
+                                        <label for="txt_nrodoc">N° Documento </label> <span class="help-block"></span>
+                                    </div>
+                                    <div class="col-sm-6  col-md-7" ng-show="showRuc">
+                                        <pre id="resultado" style="width:250px"></pre>
+                                    </div>
+
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label for="cboGiro" class="control-label"> Giro de Negocio</label> <span class="help-block"></span>
+                                        <select class="selectModal" id="cboGiro" ng-model="objeto_parametros_cliente.id_GiroNegocio">
+                                            <option value="0">[ ----  SELECCIONE  --- ]</option>
+                                            <option ng-repeat="item in ListaGiroNegocio" value="{{item.id_GiroNegocio}}">{{item.nombre_GiroNegocio}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="cboCanales" class="control-label"> Canal de Negocio </label> <span class="help-block"></span>
+                                        <select class="selectModal" id="cboCanales" ng-model="objeto_parametros_cliente.id_CanalNegocio">
+                                            <option value="0">[ ----  SELECCIONE  --- ]</option>
+                                            <option ng-repeat="item in ListaCanalesNegocio " value="{{item.id_CanalNegocio}}">{{item.Nombre_CanalNegocio}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+
+                                    <div class="col-sm-8">
+                                        <label for="txt_nombresCliente" class="control-label">Datos del Cliente (Nombres - Razon Social)</label> <span class="help-block"></span>
+                                        <input type="text" id="txt_nombresCliente" class="form-control" ng-model="objeto_parametros_cliente.nombres_Cliente" autocomplete="off" style="margin-top: -12px;text-align:left; font-size: 11px;">
+                                    </div>
+
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label for="cbo_provincia" class="control-label">Departamento</label> <span class="help-block"></span>
+                                        <select class="selectModal" id="cbo_departamento" ng-model="objeto_parametros_cliente.id_departamento" ng-change="change_departamento_provincia(objeto_parametros_cliente.id_departamento, 0);">
+                                            <option value="0">[ ---SELECCIONE--- ]</option>
+                                            <option ng-repeat="item in Lista_Departamentos" value="{{item.codigo_detalleTabla}}">{{item.descripcion_grupoTabla}}</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <label for="cbo_provincia" class="control-label">Provincia</label> <span class="help-block"></span>
+                                        <select class="selectModal" id="cbo_provincia" ng-model="objeto_parametros_cliente.id_Provincia" ng-change="change_provincia_distrito(objeto_parametros_cliente.id_Provincia, 0);">
+                                            <option value="0">[ ---SELECCIONE--- ]</option>
+                                            <option ng-repeat="item in Lista_Provincia" value="{{item.id_detalleTabla}}">{{item.descripcion_grupoTabla}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label for="cbo_distrito" class="control-label">Distrito</label> <span class="help-block"></span>
+                                        <select class="selectModal" id="cbo_distrito" ng-model="objeto_parametros_cliente.id_distrito">
+                                            <option value="0">[ ---SELECCIONE--- ]</option>
+                                            <option ng-repeat="item in Lista_Distrito" value="{{item.id_distrito}}">{{item.nombre_distrito}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <label for="txt_direccion" class="control-label">Dirección</label> <span class="help-block"></span>
+                                        <input type="text" id="txt_direccion" class="form-control" ng-model="objeto_parametros_cliente.direccion_Cliente" autocomplete="off" style="margin-top: -12px;text-align:left; font-size: 11px;">
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="text-center">
+                                            <a class="btn btn-primary" ng-click="abrirModalMapa();"> <span class="glyphicon glyphicon-map-marker"></span> Ubicación</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label for="txt_referencia" class="control-label">Referencia</label> <span class="help-block"></span>
+                                        <input type="text" id="txt_referencia" class="form-control" ng-model="objeto_parametros_cliente.direccion_referencia" autocomplete="off" style="margin-top: -12px;text-align:left; font-size: 11px;">
+                                    </div>
+                                </div>
+                                <br />
+
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label for="txtTelefono" class="control-label">Teléfono</label> <span class="help-block"></span>
+                                        <input type="text" id="txtTelefono" class="form-control" ng-model="objeto_parametros_cliente.nroTelefono_Cliente" autocomplete="off" style="margin-top: -12px;text-align:left; font-size: 11px;">
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <label for="txt_email" class="control-label">Email</label> <span class="help-block"></span>
+                                        <input type="text" id="txt_email" class="form-control" ng-model="objeto_parametros_cliente.email_Cliente"   maxlength="150" placeholder="Correo Electronico" style="margin-top: -12px;text-align:left;     font-size: 13px !important;">
+                                    </div>
+
+                                </div>
+                                <br />
+
+                                @*<div class="row">
+                                    <div class="col-sm-6">
+                                        <label for="cbo_personalVendedor" class="control-label">Personal Vendedor</label> <span class="help-block"></span>
+                                        <select class="selectModal" id="cbo_personalVendedor" ng-model="objeto_parametros_cliente.id_PersonalVendedor">
+                                            <option value="0">[ ----  SELECCIONE  --- ]</option>
+                                            <option ng-repeat="item in Lista_Vendedor" value="{{item.id_personal}}">{{item.apellidos_personal}}  {{item.nombres_personal}} </option>
+                                        </select>
+
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="cbo_condFacturacion" class="control-label">Condicion de Facturacion</label> <span class="help-block"></span>
+                                        <select class="selectModal" id="cbo_condFacturacion" ng-model="objeto_parametros_cliente.cond_facturacion">
+                                            <option value="0">[ ----  SELECCIONE  --- ]</option>
+                                            <option ng-repeat="item in Lista_CondicionFact" value="{{item.id_detalleTabla}}">{{item.descripcion_grupoTabla}}</option>
+                                        </select>
+
+                                    </div>
+                                </div>*@
+
+
+                                <br />
+
+                                <div class="contentRegistro">
+                                    <div>
+                                        <div class="row ">
+                                            <div class="col-sm-6">
+                                                <fieldset style="margin-left: -7px;">
+                                                    <legend>Estado</legend>
+                                                    <div class="row Mtop-20">
+                                                        <div class="col-sm-6 ">
+                                                            <div class="form-group">
+                                                                <div class="checkbox checkbox-success" style="    padding-left: 20px; margin-top: 15px !important;">
+                                                                    <input id="checkbox1" type="checkbox" ng-model="objEstados.activo" ng-change="changeStatus(objEstados.activo);">
+                                                                    <label for="checkbox1" class="estadoModal" style="color : {{objEstados.colorText}}">{{objEstados.text}}</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </fieldset>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </fieldset>
+
+                            <hr />
+                            <div class="text-center">
+                                <a class="btn btn-primary" ng-click="GuardarRegistro();"> <span class="glyphicon glyphicon-floppy-disk"></span> Guardar</a>
+                            </div>
+
+                            <br />
+                        </div>
+
+                        @*---------- Distribucion --------------*@
+                        <div ng-show="isSet(2)">
+
+                            <fieldset style="margin-top: 5px;">
+                                <legend>Datos Distribución Visitas</legend>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label for="cboZona" class="control-label"> Zona </label> <span class="help-block"></span>
+                                        <select class="selectModal" id="cboZona" ng-model="objeto_parametros_cliente.id_ZonaVta">
+                                            <option value="0">[ ----  SELECCIONE  --- ]</option>
+                                            <option ng-repeat="item in ListaZonas" value="{{item.id}}">{{item.descripcion}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label for="cboRuta" class="control-label"> Ruta </label> <span class="help-block"></span>
+                                        <select class="selectModal" id="cboRuta" ng-model="objeto_parametros_cliente.id_RutaVta" ng-change="changeRuta(objeto_parametros_cliente.id_RutaVta)">
+                                            <option value="0">[ ----  SELECCIONE  --- ]</option>
+                                            <option ng-repeat="item in ListaRutas" value="{{item.id}}">{{item.descripcion}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label for="cboVendedor" class="control-label"> Vendedor</label> <span class="help-block"></span>
+                                        <select class="selectModal" id="cboVendedor" ng-model="objeto_parametros_cliente.id_PersonalVendedor">
+                                            <option value="0">[ ----  SELECCIONE  --- ]</option>
+                                            <option ng-repeat="item in Lista_Vendedor" value="{{item.id_personal}}">{{item.apellidos_personal}}  {{item.nombres_personal}} </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label for="cboSupervisor" class="control-label"> Supervisor </label> <span class="help-block"></span>
+                                        <select class="selectModal" id="cboSupervisor" ng-model="objeto_parametros_cliente.id_Personal_Supervisor">
+                                            <option value="0">[ ----  SELECCIONE  --- ]</option>
+                                            <option ng-repeat="item in ListaSupervisores" value="{{item.id}}">{{item.descripcion}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <br />
+                            <fieldset>
+                                <legend>Programación y Dias de visita</legend>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label for="txt_referencia" class="control-label">Secuencia</label> <span class="help-block"></span>
+                                                <input type="number" id="txt_referencia" class="form-control" ng-model="objeto_parametros_cliente.secuencia_Cliente" style="margin-top: -12px;text-align:left; font-size: 11px;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6  ">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label for="txt_referencia" class="control-label">Dia de Visita</label> <span class="help-block"></span>
+                                                <select id="cobDiaVisita" class="form-control selectModal" ng-model="objeto_parametros_cliente.disDiaVisita" style="border: 1px solid;font-size: 11px;">
+                                                    <option value="0">[ ----  NINGUNA  --- ]</option>
+                                                    <option value="1"> LUNES </option>
+                                                    <option value="2"> MARTES </option>
+                                                    <option value="3"> MIERCOLES </option>
+                                                    <option value="4"> JUEVES </option>
+                                                    <option value="5"> VIERNES </option>
+                                                    <option value="6"> SABADO </option>
+                                                    <option value="7"> DOMINGO </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                            <br />
+                            <fieldset>
+                                <legend>Observaciones</legend>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <h5> <b> Motivo no Comprar </b></h5>
+                                        <hr style="margin-top: -5px;" />
+                                        <textarea class="form-control" rows="5" ng-model="objeto_parametros_cliente.motivodeNocompra" style="border: 1px solid; width: 100%;"></textarea>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <h5> <b> Producto de Interés </b></h5>
+                                        <hr style="margin-top: -5px;" />
+                                        <textarea class="form-control" rows="5" ng-model="objeto_parametros_cliente.productoInteres" style="border: 1px solid;width: 100%;"></textarea>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                            <hr />
+                            <div class="text-center">
+                                <a class="btn btn-primary" ng-click="GuardarDistribucion();"> <span class="glyphicon glyphicon-floppy-disk"></span> Grabar </a>
+                            </div>
+
+                            <br />
+                        </div>
+
+                        @*---------- Credito --------------*@
+                        <div ng-show="isSet(3)">
+
+                            <div class="row" style="margin-top: 5px;">
+                                <div class="col-md-6">
+                                    <fieldset>
+                                        <legend>Condiciones Predeterminadas</legend>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <label for="txtTelefono" class="control-label"> Importe Maximo de Credito</label> <span class="help-block"></span>
+                                                <input type="text" id="txtTelefono" class="form-control" ng-model="objeto_parametros_cliente.importeMaxCredido" style="margin-top: -12px;text-align:left; font-size: 11px;">
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <label for="txtTelefono" class="control-label">Observaciones para la Cobranza </label> <span class="help-block"></span>
+                                                                                                                                       <br />
+                                                <textarea class="form-control" rows="5" ng-model="objeto_parametros_cliente.obsrealizaCobranza" style="border: 1px solid;width: 100%;"></textarea>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="col-md-6">
+                                    <fieldset>
+                                        <legend>Condiciones Especiales  Credito</legend>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <label for="cbo_condFacturacion" class="control-label">Cond. de Facturacion Predeterminada </label> <span class="help-block"></span>
+                                                <select class="selectModal" id="cbo_condFacturacion" ng-model="objeto_parametros_cliente.cond_facturacion">
+                                                    <option value="0">[ ----  SELECCIONE  --- ]</option>
+                                                    <option ng-repeat="item in Lista_CondicionFact" value="{{item.id_detalleTabla}}">{{item.descripcion_grupoTabla}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-sm-12 text-center">
+                                                <a class="btn btn-danger" ng-click="GuardarCreditoCobranza()"> <span class="glyphicon glyphicon-floppy-disk"></span> Guardar</a>
+                                            </div>
+                                        </div>
+                                        <br />
+
+                                    </fieldset>
+                                </div>
+
+                            </div>
+ 
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer ">
+
+                <a class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-sign"></span> Cerrar</a>
+
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="modalMapa" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel"> Ubicación</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 modal_body_map">
+                        <div class="location-map" id="location-map">
+                            <div style="width: 600px; height: 400px;" id="map_canvas"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

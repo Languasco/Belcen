@@ -1,0 +1,279 @@
+﻿<style>
+    #listMenu span, a {
+        text-align: left !important;
+    }
+
+    .contentRegistro fieldset legend {
+        text-align: left !important;
+    }
+
+    .jq-toast-wrap {
+        width: 300px !important;
+    }
+
+    .floating-labels label {
+        top: -6px;
+    }
+
+    .contentRegistro .select2-container {
+        margin-left: 0px;
+        margin-top: 2px;
+    }
+
+    #paddin-lef {
+        padding-left: 40px !important;
+    }
+
+    .contentCombo .select2-container {
+        margin-left: 0px;
+        /*margin-top: -20px;*/
+        width: 95% !important;
+    }
+
+    .ContentFilters .table {
+        display: table;
+    }
+
+    .contentRegistro label {
+        font-size: 11px;
+        font-family: tahoma;
+        color: #2c4d6d;
+        font-weight: 600;
+    }
+
+    .contentRegistro {
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .ModalBorderSombra .modal-content {
+        box-shadow: inset 0px 0px 7px rgba(0,0,0,.5), 1px 1px 5px #fff;
+    }
+
+
+
+    .resaltado {
+        color: #ff94a7 !important;
+    }
+
+    .text-right {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    @@media (min-width: 1200px) {
+        .modal-xlg {
+            width: 95%;
+        }
+    }
+
+    @@media (min-width: 768px) {
+        .modal-xlg {
+            width: 95%;
+        }
+    }
+
+    .form-horizontal .form-group {
+        margin-bottom: 3px;
+    }
+
+    .flex-container {
+        display: flex;
+        /* flex-direction: column;    establece la posicion de los elementos como columna o fila  */
+        /* flex-wrap: wrap; la posicion lo estable una deacuerdo al espacion y nueva fila */
+        /* flex-flow: row wrap; une ambas propiedades anteriores */
+        /* justify-content: center;  se alinean al centro */
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: aqua;
+        padding: 10px;
+    }
+
+    .flex-container-item {
+        width: 100px;
+        margin: 10px;
+        text-align: center;
+        line-height: 75px;
+        font-size: 30px;
+        border: 2px solid red
+    }
+
+    .form-group {
+        margin-bottom: 3px;
+    }
+
+    .montosFichaMonedas {
+        display: flex;
+        flex-direction: row-reverse;
+        align-content: end;
+    }
+
+    .tableArqueo {
+        width: 100%;
+        max-height: 300px;
+    }
+
+    .modal-header {
+        background-color: #025025d4;
+    }
+
+    .modal-footer {
+        background-color: #025025d4;
+    }
+
+    .botonFile {
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+        width: 98%;
+    }
+
+    .botonFile .btn {
+        border: 2px solid gray;
+        color: gray;
+        background-color: white;
+        padding: 8px 20px;
+        border-radius: 8px;
+        font-size: 10px;
+        font-weight: bold;
+    }
+
+    .tabsMenuArqueo {
+        font-size: 13px;
+        text-align: center;
+        border: 0.5px solid #999;
+    }
+
+    .tableFixHead {
+        overflow-y: auto;
+        max-height: 400px;
+    }
+
+    .tableFixHead thead th {
+        position: sticky;
+        top: 0;
+    }
+
+    .ContentFilters table thead th {
+        color: white;
+        background-color: #008efa;
+    }
+</style>
+
+<div class=" container-fluid" ng-init="initAll();">
+    <div class="panel-body  contentRegistro contentCombo ContentFilters ">
+        <div class="white-box">
+            <div class="row contenedorGrupo">
+
+                <div class="row" style="margin-top: -15px;">
+                    <div class="col-xs-12 col-sm-4 col-md-4 ">
+                        <label for="cbo_anexoFiltro" class="control-label"> Anexo </label>
+                        <select class="selectFiltros" id="cbo_anexoFiltro" style="width:95%;" data-style="btn-default" ng-model="parametros_filtro.idAnexo" ng-change="listados_changeAnexoZonasFiltro(parametros_filtro.idAnexo)">
+                            <option value="0">[ ----  SELECCIONE  --- ]</option>
+                            <option ng-repeat="item in lista_anexos" value="{{item.id}}">{{item.descripcion}}</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-12  col-sm-4 col-md-4 ">
+                        <label for="cbo_zonasFiltro" class="control-label"> Zona de Venta </label>
+                        <select class="selectFiltros" id="cbo_zonasFiltro" ng-model="parametros_filtro.idZonaVentas" ng-change="change_Zona_vendedor(parametros_filtro.idZonaVentas)">
+                            <option value="0">[ ----  SELECCIONE  --- ]</option>
+                            <option ng-repeat="item in Lista_zonasFiltro" value="{{item.id}}">  {{item.descripcion}} </option>
+                        </select>
+
+                    </div>
+                    <div class="col-xs-12 col-sm-4 col-md-4 ">
+                        <label for="cbo_vendedor">Vendedor</label> 
+                        <select class="selectFiltros" id="cbo_vendedor" ng-model="parametros_filtro.idVendedor">
+                            <option value="0">[ ----  TODOS  --- ]</option>
+                            <option ng-repeat="item in Lista_Vendedor" value="{{item.id}}">{{item.descripcion}}  </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 5px;">
+
+                    <div class="col-xs-12 col-sm-4 col-md-4">
+                        <label for="cbo_almacen">Rango de Fechas</label>
+                        <div class="input-group col-md-12">
+                            <input ng-model="parametros_filtro.fechaIni" id="dtp_fechaIni" type="text" class="form-control datepicker" placeholder="dia/mes/año">
+                            <span class="input-group-addon bg-primary" style="color:white">al</span>
+                            <input ng-model="parametros_filtro.fechaFin" id="dtp_fechaFin" type="text" class="form-control datepicker" placeholder="dia/mes/año">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-3 col-md-3">
+                        <label for="cbo_almacen">Nro Doc</label>
+                        <input type="text" class="form-control" style="margin-right: 15px;" ng-model="parametros_filtro.buscar" id="dtp_fechaIni_filtro" placeholder="Nro Doc">
+                    </div>
+
+                    <div class="col-xs-12 col-sm-4 col-md-4 ">
+                        <br />
+                        <div class="text-center">
+                            <button id="btn-material" class="btn btn-primary btn-sm m-l-10" ng-click="getReporte();">
+                                <i class="glyphicon glyphicon-search"></i> Buscar
+                            </button>
+                            <button id="btn-material" class="btn btn-success btn-sm m-l-10" ng-click="downloadReporte();">
+                                <i class="glyphicon glyphicon-excel"></i> Exportar Reporte
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+                <br />
+                <a id="id_link" href="" download style="display:none">link</a>
+            </div>
+            <hr />
+            <div class="loaderModal" ng-if="loaderFiltro"></div>
+
+            <div class="tableFixHead">
+                <table class="table m-b-0 toggle-arrow-tiny table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th data-toggle="true">Anexo</th>
+                            <th data-toggle="true">Zona</th>
+                            <th>Vendedor</th>
+                            <th>Fecha de Emisión</th>
+                            <th>Tipo Doc.</th>
+
+                            <th>Serie</th>
+                            <th>Numero</th>
+                            @*<th>Tipo Factura</th>*@
+                            <th>Doc. Identidad Cliente</th>
+                            <th>Nombre Cliente / Razon Social </th>
+
+                            <th>Total Facturado</th>
+                            <th>Total Pagado </th>
+                            <th>Saldo Pendiente</th>
+                            <th>PDF</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in lista_reporte">
+                            <td>{{item.anexo}}</td>
+                            <td>{{item.zona_venta}}</td>
+                            <td>{{item.vendedor}}</td>
+                            <td>{{item.fecha_emision}}</td>
+                            <td>{{item.tipo_doc}}</td>
+
+                            <td>{{item.serie}}</td>
+                            <td>{{item.numero}}</td>
+                            @*<td>{{item.tipo_factura}}</td>*@
+                            <td>{{item.doc_cliente}}</td>
+                            <td>{{item.nombre_cliente}}</td>
+
+                            <td class="text-right">{{item.total_facturado}}</td>
+                            <td class="text-right">{{item.total_pagado}}</td>
+                            <td class="text-right">{{item.saldo_pendiente}}</td>
+                            <td class="text-center">
+                                <span class="label label-default " style="cursor:pointer" ng-click="reporteCobranzasPDF(item);"> Ver </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+ 
+

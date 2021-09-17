@@ -1,0 +1,123 @@
+﻿
+
+
+
+<style>
+    .contentCombo .select2-container {
+        margin-left: 0px;
+        margin-top: -10px;
+        width: 98% !important;
+    }
+</style>
+
+<div class=" container" ng-init="initAll();">
+    <div class="panel-body ContentFilters contentCombo">
+
+        <div class="well" style="background-color:#dfe4ea;padding-bottom:0px;padding-top:0px">
+            <div class="row">
+                <div class="col-md-3">
+
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-4" style=" margin-bottom: -20px;">
+                            <div class="form-group">
+                                <label class="col-lg-12 control-label" style="text-align :left">Fecha :</label>
+                                <br>
+                                <div class="input-group col-md-12">
+                                    <span class="input-group-addon"><i class="icon-calender"></i></span>
+                                    <input type="text" class="form-control datepicker" id="txtFechaEmision" ng-model="Objeto_ParametroFiltro.fecha" placeholder="dia/mes/año">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <label for="cbo_local">Tipo de Reporte</label> <span class="help-block"></span>
+                            <select class="selectFiltros" id="cbo_tipo" ng-model="Objeto_ParametroFiltro.tipo">
+                                <option ng-repeat="item in listTipoReporte" value="{{item.id}}">{{item.des}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-8">
+                            <label for="cbo_local">Local</label> <span class="help-block"></span>
+                            <select class="selectFiltros" id="cbo_local" ng-model="Objeto_ParametroFiltro.local" ng-change="change_LocalesAlmacen();">
+                                <option value="0">[ ----  TODOS  --- ]</option>
+                                <option ng-repeat="item in Lista_Locales" value="{{item.id_Local}}">{{item.nombre_Local}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-8">
+                            <label for="cbo_almacen">Almacen</label> <span class="help-block"></span>
+                            <select class="selectFiltros" id="cbo_almacen" ng-model="Objeto_ParametroFiltro.almacen">
+                                <option value="0">[ ----  TODOS  --- ]</option>
+                                <option ng-repeat="item in Lista_Almacenes" value="{{item.id_Almacen}}">{{item.descripcion_Almacen}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row" style=" margin-bottom: 5px; margin-top: -10px;">
+                        <div class="col-md-6">
+                            <button class="btn btn-block btn-success" ng-click="GenerarReporte(1);"><span class="glyphicon glyphicon-refresh"></span> Visualizar Stock por Almacen</button>
+                        </div>
+
+                        <div class="col-md-6">
+                            <button class="btn btn-block btn-success" ng-click="GenerarReporte(2);"><span class="glyphicon glyphicon-refresh"></span> Exportar Excel</button>
+                        </div>
+                    </div>
+                    <br />
+                    <table id="tblReport" style="display:none;">
+                        <thead>
+                            <tr>
+                                <th ng-if="Objeto_ParametroFiltro.tipo == 2">Local</th>
+                                <th ng-if="Objeto_ParametroFiltro.tipo == 3">Almacen</th>
+                                <th>Codigo</th>
+                                <th>Descripción</th>
+                                <th>Marca</th>
+                                <th>Rubro</th>
+                                <th>U.M</th>
+                                <th>Ingresos</th>
+                                <th>Salidas</th>
+                                <th>Stock</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in listDataReporte" on-finish-render="ngRepeatFinished">
+                                <td ng-if="Objeto_ParametroFiltro.tipo == 2">{{item.local}}</td>
+                                <td ng-if="Objeto_ParametroFiltro.tipo == 3">{{item.almacen}}</td>
+                                <td>{{item.codigo}}</td>
+                                <td>{{item.descripcion}}</td>
+                                <td>{{item.MARCA}}</td>
+                                <td>{{item.rubro}}</td>
+                                <td>{{item.um}}</td>
+                                <td>{{item.ingresos}}</td>
+                                <td>{{item.salidas}}</td>
+                                <td>{{item.stock}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="form-inline ">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div style="text-align:center">
+                                    <div class="cssload-speeding-wheel" ng-if="loaderSave"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

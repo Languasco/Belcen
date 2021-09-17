@@ -1,0 +1,95 @@
+﻿
+<div class="container contentAccesos" ng-init="initAll();">
+    <div class="loaderModal" ng-if="showLoader"></div>
+    <div class="loaderModal" ng-if="showLoader2"></div>
+    <h3>Lista de Accesos por Usuario y Perfil</h3>
+    <div class="row white-box" ng-show="!showLoader">
+        <div class="col-md-6 col-lg-6">
+            <div id="treeViewAccesos" class=""></div>
+        </div>
+        <div class="col-md-6  col-lg-6 ContentFilters">
+            <div class="loaderModal" ng-if="loaderSearch"></div>
+            <div class="row" style="margin-bottom: 5px">
+                <div class="col-sm-12  "> 
+                    <input id="searchStr" data-ng-model="searchStr" type="text" placeholder="Buscar  usuario..." class="form-control btn-block inputSearch" autocomplete="off"> 
+                </div>
+            </div>
+
+            <table id="tblUsuarios" class="table toggle-arrow-tiny" data-page-size="10">
+                <thead>
+                    <tr>
+                        <th data-toggle="true">Permiso</th>
+                        <th data-toggle="true">#</th>
+                        <th data-toggle="true">Nro. Doc.</th>
+                        <th data-toggle="true">Nombre</th>
+                        <th data-hide=""> Usuario</th>
+                        <th data-hide=""> Cargo</th>
+                        <th>Asignar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in listUsuarios">
+                        <td style="left:30px;">
+                            <div class="checkbox checkbox-info disabledContent" style="margin:0px">
+                                <input id="checkbox1" type="checkbox" ng-checked="item.check">
+                                <label for="checkbox1" class="estadoModal"></label>
+                            </div>
+                        </td>
+                        <td>{{$index + 1}}</td>
+                        <td>{{item.nrodoc_usuario}}</td>
+                        <td>{{item.nombres_usuario}} {{item.apellidos_usuario}}</td>
+                        <td>{{item.login_usuario}}</td>
+                        <td>Admin</td>
+                        <td>
+                            <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline " ng-click="openModal(item);"><i class="ti-pencil-alt"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade bs-example-modal-lg" id="ModalPermisos" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myLargeModalLabel">Permisos de Pagina</h4>
+            </div>
+            <div class="modal-body contentOrdenCompra contentRegistro">
+
+                <div class="loaderModal" ng-if="loaderSave"></div>
+                <div class="cssload-speeding-wheel " ng-if="!showBodyModal"></div>
+                <div class="row {{disabledContent}}" ng-show="showBodyModal">
+                    <div class="col-lg-12">
+                        <fieldset>
+                            <legend>Lista de Permisos a Registrar</legend>
+                            <div class="row Mtop-15">
+                                <div class="col-lg-6" ng-repeat="item in listPermisosWeb">
+                                    <div class="checkbox checkbox-success">
+                                        <div class="checkbox checkbox-success">
+                                            <input type="checkbox" ng-model="item.check" ng-change="changeStatus(item);">
+                                            <label class="styleLabelCheck">{{item.text}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </fieldset>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer ">                
+                <button type="button" class="btn btn-default " data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary {{disabledContent}}" ng-click="savePermisson();">Guardar</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

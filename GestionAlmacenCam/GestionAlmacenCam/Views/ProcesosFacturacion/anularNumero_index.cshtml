@@ -1,0 +1,282 @@
+﻿
+
+
+<style>
+    #listMenu span, a {
+        text-align: left !important;
+    }
+
+    .contentRegistro fieldset legend {
+        text-align: left !important;
+    }
+
+    .jq-toast-wrap {
+        width: 300px !important;
+    }
+
+    .floating-labels label {
+        top: -6px;
+    }
+
+    .contentRegistro .select2-container {
+        margin-left: 0px;
+        margin-top: 2px;
+    }
+
+    #paddin-lef {
+        padding-left: 40px !important;
+    }
+
+    .contentCombo .select2-container {
+        margin-left: 0px;
+        /*margin-top: -20px;*/
+        width: 95% !important;
+    }
+
+    .ContentFilters .table {
+        display: table;
+    }
+
+    .contentRegistro label {
+        font-size: 11px;
+        font-family: tahoma;
+        color: #2c4d6d;
+        font-weight: 600;
+    }
+
+    .contentRegistro {
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .ModalBorderSombra .modal-content {
+        box-shadow: inset 0px 0px 7px rgba(0,0,0,.5), 1px 1px 5px #fff;
+    }
+
+
+
+    .resaltado {
+        color: #ff94a7 !important;
+    }
+
+    .text-right {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    @@media (min-width: 1200px) {
+        .modal-xlg {
+            width: 95%;
+        }
+    }
+
+    @@media (min-width: 768px) {
+        .modal-xlg {
+            width: 95%;
+        }
+    }
+
+    .form-horizontal .form-group {
+        margin-bottom: 3px;
+    }
+
+    .flex-container {
+        display: flex;
+        /* flex-direction: column;    establece la posicion de los elementos como columna o fila  */
+        /* flex-wrap: wrap; la posicion lo estable una deacuerdo al espacion y nueva fila */
+        /* flex-flow: row wrap; une ambas propiedades anteriores */
+        /* justify-content: center;  se alinean al centro */
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: aqua;
+        padding: 10px;
+    }
+
+    .flex-container-item {
+        width: 100px;
+        margin: 10px;
+        text-align: center;
+        line-height: 75px;
+        font-size: 30px;
+        border: 2px solid red
+    }
+
+    .form-group {
+        margin-bottom: 3px;
+    }
+
+    .montosFichaMonedas {
+        display: flex;
+        flex-direction: row-reverse;
+        align-content: end;
+    }
+
+    .tableArqueo {
+        width: 100%;
+        max-height: 300px;
+    }
+
+    .modal-header {
+        background-color: #025025d4;
+    }
+
+    .modal-footer {
+        background-color: #025025d4;
+    }
+
+    .botonFile {
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+        width: 98%;
+    }
+
+        .botonFile .btn {
+            border: 2px solid gray;
+            color: gray;
+            background-color: white;
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+    .tabsMenuArqueo {
+        font-size: 13px;
+        text-align: center;
+        border: 0.5px solid #999;
+    }
+
+    .tableFixHead {
+        overflow-y: auto;
+        max-height: 400px;
+    }
+
+        .tableFixHead thead th {
+            position: sticky;
+            top: 0;
+        }
+
+    .ContentFilters table thead th {
+        color: white;
+        background-color: #008efa;
+    }
+    .titulo {
+        font-family: tahoma;
+        color: #2c4d6d;
+        font-weight: 600;
+    }
+    .numeroDoc input {
+        text-transform: uppercase;
+        background-color: beige;
+        color: red;
+        border: 1px solid red;
+        font-weight: 700;
+        font-size: 19px !important; 
+    }
+
+</style>
+
+<script type="text/javascript">
+
+    function isNumberKey(evt) {
+        var charCode = evt.which ? evt.which : event.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        return true;
+    }
+
+
+    function filterFloat(evt, input) {
+        // Backspace = 8, Enter = 13, ‘0′ = 48, ‘9′ = 57, ‘.’ = 46, ‘-’ = 43
+        var key = window.Event ? evt.which : evt.keyCode;
+        var chark = String.fromCharCode(key);
+        var tempValue = input.value + chark;
+        if (key >= 48 && key <= 57) {
+            if (filter(tempValue) === false) {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            if (key == 8 || key == 13 || key == 0) {
+                return true;
+            } else if (key == 46) {
+                if (filter(tempValue) === false) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } else {
+                return false;
+            }
+        }
+    }
+    function filter(__val__) {
+        var preg = /^([0-9]+\.?[0-9]{0,3})$/;
+        if (preg.test(__val__) === true) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+</script>
+
+
+<div class=" container" ng-init="initAll();">
+
+
+    <div class="panel-body  contentRegistro contentCombo ContentFilters ">
+
+        <div class="loaderModal" ng-if="loaderfiltros"></div>
+        <div class="white-box">
+            <div class="row contenedorGrupo">
+                <div class="col-sm-6  col-md-6">
+                    <label for="cbo_zonasFiltro" class="control-label"> Zona de Venta </label>
+                    <select class="selectFiltros" id="cbo_zonasFiltro" ng-model="Objeto_Parametro_filtro.id_ZonaVta">
+                        <option value="0">[ ----  SELECCIONE  --- ]</option>
+                        <option ng-repeat="item in Lista_zonasFiltro" value="{{item.id}}">  {{item.descripcion}} </option>
+                    </select>
+                </div>
+                <div class="col-sm-6  col-md-6">
+                    <div class="form-group" style="    margin-bottom: 0px;">
+                        <label class="control-label" style="text-align :left">Rango de Fechas</label>
+                        <br>
+                        <div class="input-group">
+                            <input ng-model="Objeto_Parametro_filtro.fechaIni" id="dtp_fechaIni" type="text" class="form-control input-sm   datepicker" placeholder="dia/mes/año">
+                            <span class="input-group-addon bg-primary" style="color:white">al</span>
+                            <input ng-model="Objeto_Parametro_filtro.fechaFin" id="dtp_fechaFin" type="text" class="form-control input-sm   datepicker" placeholder="dia/mes/año">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h5 class="titulo">Número Documento </h5>
+                    <hr style="margin: 0px;" />
+                </div>
+            </div>
+
+            <div class="row numeroDoc" style="margin-top: 5px;">
+                <div class="col-xs-3 col-sm-3 col-md-3">
+                    <input ng-model="Objeto_Parametro_filtro.serie" id="dtp_serie" type="text" class="form-control   " placeholder="Serie" style="margin-right: 10px">
+                </div>
+                <div class="col-xs-4 col-sm-6 col-md-4">
+                    <input ng-model="Objeto_Parametro_filtro.numero" id="dtp_numero" type="text" class="form-control   " placeholder="Número">
+                </div>
+                <div class="col-xs-3 col-sm-3 col-md-5 text-center"> 
+                    <button id="btn-material" class="btn btn-danger btn-sm  " ng-click="AnularNumero();" style="margin-top: 4px;">
+                        Anular Número
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+ 

@@ -1,0 +1,156 @@
+﻿
+<style>
+
+    .contentRegistro fieldset legend {
+        text-align: left !important;
+    }
+
+    .floating-labels label {
+        color: #2b89e0;
+        font-size: 11px !important;
+        font-family: Tahoma;
+    }
+
+
+    .contentCombo .select2-container {
+        margin-left: 0px;
+        margin-top: 0px;
+        width: 95% !important;
+    }
+
+    .select2-results .select2-result-label {
+        font-size: 10px;
+        font-family: sans-serif;
+    }
+
+    #form_detalle {
+        height: 300px;
+    }
+
+    #tbl_detalle {
+        width: 90% !important;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #00c292;
+    }
+
+    .contenedorGrupo legend {
+        font-size: 14px !important;
+        font-family: tahoma;
+        color: white !important;
+        font-weight: 600;
+        letter-spacing: 1px;
+        padding: 5px;
+        margin-bottom: 3px;
+    }
+
+    .contenedorGrupo fieldset {
+        padding-left: 20px;
+        padding-right: 20px;
+        border: 1px solid #2c4d6d;
+        padding-bottom: 10px;
+        border-radius: 4px;
+    }
+
+    .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+        padding: 10px 7px;
+    }
+
+    .jq-toast-wrap {
+        width: 350px;
+    }
+
+    .btn-primary.btn-outline {
+        color: white;
+    }
+
+
+    .ContentFilters .table {
+        display: table;
+    }
+</style>
+
+<div ng-init="initAll(); ">
+
+ 
+ 
+    <div class="panel-body ContentFilters contentCombo">
+        <div class="container card" style="background-color: #2b4c6c;padding-bottom: 0px; padding-top: 0px;color: #fff;">
+            <br />
+            <div class="row contenedorGrupo">
+                <div class="col-md-12">
+                    <fieldset>
+                        <legend> Tipo de Usuario</legend>
+                        <div class="radio">
+                            <input id="radio1_Opt1" type="radio" ng-model="Objeto_ParametroFiltro.opcion" value="1" checked >
+                            <label for="radio1_Opt1">Web</label>
+
+                        </div>
+                        <div class="radio">
+                            <input type="radio" id="radio1_Opt2" ng-model="Objeto_ParametroFiltro.opcion" value="2"  >
+                            <label for="radio1_Opt2">Móvil</label>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+
+            <div class="row contenedorGrupo">
+                <div class="col-md-12">
+                    <fieldset>
+                        <legend> Ingrese Login</legend>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" ng-model="Objeto_ParametroFiltro.login" >
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-warning" ng-click="buscarLogin()" type="button">Buscar</button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-lg-8"> 
+                               <input type="text" class="form-control" style="color:red" disabled ng-model="Objeto_ParametroFiltro.descripcion_login"> 
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="row">
+                <div class="col-md-12 text-center">
+
+                    <button class="btn btn-success" ng-click="activarUsuario()" type="button"> Activar Usuario </button>
+
+                </div>
+
+            </div>
+            <br />
+
+
+        </div>
+    </div>
+ 
+
+    <section id="cabeceras" style="margin-bottom: -30px;">
+        <div class="panel-body ContentFilters contentCombo">
+            <div class="form-inline ">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div style="text-align:center">
+                            <div class="cssload-speeding-wheel" ng-if="loaderfiltros"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div style="padding-left: 45%;" ng-if="showLoaderSave">
+        <p class="loader">
+        </p>
+    </div>
+
+</div>
+
+

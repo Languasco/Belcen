@@ -1,0 +1,334 @@
+﻿
+<style>
+ 
+    .contentRegistro fieldset legend {
+        text-align: left !important;
+    }
+
+    .floating-labels label {
+        color: #2b89e0;
+        font-size: 11px !important;
+        font-family: Tahoma;
+    }
+ 
+
+    .contentCombo .select2-container {
+        margin-left: 0px;
+        margin-top: 0px;
+        width: 95% !important;
+    }
+
+    .select2-results .select2-result-label {
+        font-size: 10px;
+        font-family: sans-serif;
+    }
+
+    #form_detalle {
+        height: 300px;
+    }
+
+    #tbl_detalle {
+        width: 90% !important;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #00c292;
+    }
+
+    .contenedorGrupo legend {
+        font-size: 12px !important;
+        font-family: GillSans, Calibri, Trebuchet, sans-serif;
+        color: #2c5ca9;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+
+    .contenedorGrupo fieldset {
+        padding-left: 20px;
+        padding-right: 20px;
+        border: 1px solid #2c4d6d;
+        padding-bottom: 10px;
+        border-radius: 4px;
+    }
+
+    .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+        padding: 10px 7px;
+    }
+
+    .jq-toast-wrap {
+        width: 350px;
+    }
+
+    .btn-primary.btn-outline {
+        color: white;
+    }
+
+
+    .ContentFilters .table {
+        display: table;
+    }
+</style>
+
+<div class=" container-fluid" ng-init="initAll();">
+    <div class="panel-body ContentFilters contentCombo">
+        <div class="well" style="background-color:#2b4c6c;padding-bottom:0px;padding-top:0px">
+
+            <br />
+            <div class="row">
+                <div class="col-md-6">
+                    <label style="color: white;">Local  </label>
+                    <select class="select_local" id="cbo_local" data-width="80%" data-style="btn-default" ng-model="id_locales" ng-change="change_Locales();">
+                        <option value="0">[ ----   Todos  --- ]</option>
+                        <option ng-repeat="item in Lista_local" value="{{item.id_Local}}">{{item.nombre_Local}}</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group input-group-sm" style=" margin-top: -5px;">
+                        <span class="input-group-addon">Buscar</span>
+                        <input id="inputSearch" type="text" placeholder="Busqueda General . . " style="width: 120%;" class="form-control btn-block inputSearch" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="btn-group">
+                        <button id="btn-material" style="background-color: #357c55;" class="btn btn-outline btn-primary btn-sm m-l-10" ng-click="Open_New_Modal();">
+                            <i class="glyphicon glyphicon-plus"></i>AGREGAR NUEVO
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="loaderModal" ng-if="loader"></div>
+            </div>
+            <br />
+        </div>
+ 
+        <div class="cssload-speeding-wheel" ng-if="loaderProd"></div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="white-box" style="border-left: 20px solid #2b4c6c;">
+                    <table id="tbl_Almacenes" class="table m-b-0 toggle-arrow-tiny table-bordered table-hover" data-page-size="10">
+                        <thead>
+                            <tr>
+                                <th data-toggle="true">#</th>
+                                <th data-toggle="true">CODIGO</th>
+                                <th data-toggle="true">DESCRIPCIÓN</th>
+                                <th data-toggle="true">DIRECCIÓN</th>
+                                <th data-hide=""> ANEXO</th>
+                                <th data-hide=""> LOCAL</th>
+                                <th data-hide=""> ESTADO</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in Lista_Almacenes" class="classEstado{{item.estado}}" style="{{item.estado == 0 | iif : 'background-color: rgb(230, 115, 115) !important;color:#fff;font-weight: 600;'}}">
+                                <td>{{$index + 1}}</td>
+                                <td>{{item.codigo_Almacen}}</td>
+                                <td>{{item.descripcion_Almacen}}</td>
+                                <td>{{item.direccion_Almacen}}</td>
+                                <td>{{item.nombreAnexo}}</td>
+                                <td>{{item.nombre_Local}}</td>
+                                <td>{{item.estado == 0 | iif : "Anulado" : "Activado"}}</td>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-primary btn-circle " ng-click="Open_Update_Modal(item);" data-toggle="tooltip" title="EDITAR"><i class=" ti-pencil-alt"></i></button>
+                                    <button type="button" class="btn btn-success btn-circle" ng-click="getAuditoria(item);" data-toggle="tooltip" title="AUDITAR"><i class="fa fa-cog"></i> </button>
+                                    <button type="button" class="btn btn-warning btn-circle" ng-click="getAnular(item);" style="background-color: #ff6849; border-color: #ff6849;" title="ANULAR"><i class="fa fa-trash"></i> </button>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="text-center">
+                        <ul class="pagination pagination-split m-t-30"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="modalMantenimiento" class="modal fade bd-example-modal-lg " tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="width: 70%;">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #2b4c6c">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" style="color:white !important" id="myLargeModalLabel">{{titleModal}}</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="loaderModal" ng-if="loaderSave"></div>
+                <div class="contentRegistro   ContentFilters contentCombo floating-labels form-inline {{disabledContent}}">
+                    <fieldset>
+                        <legend>Datos Generales</legend>
+                        <div class="row">
+                            @*<div class="col-md-6">
+                                <label for="cbo_empresas">Empresa</label> <span class="help-block"></span> 
+                                <br />
+                                <select class="select_empresas" id="cbo_empresas" style="width:95%;" data-style="btn-default" ng-model="objeto_parametros.id_Empresa">
+                                    <option value="0">[ ----  Seleccione  --- ]</option>
+                                    <option ng-repeat="item in Lista_Empresas" value="{{item.id_Empresa}}">{{item.nombre_Empresa}}</option>
+                                </select>
+                            </div>*@
+                            <div class="col-md-6">
+                                <label for="cbo_anexo">Anexo</label> <span class="help-block"></span>
+                                <br />
+                                <select class="selectAnexo" id="cbo_anexo" style="width:95%;" data-style="btn-default" ng-model="objeto_parametros.id_Anexos">
+                                    <option value="0">[ ----  Seleccione  --- ]</option>
+                                    <option ng-repeat="item in lista_anexos" value="{{item.id}}">{{item.descripcion}}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="cbo_locales">Local</label> <span class="help-block"></span>
+                                <br />
+                                <select class="select_locales" id="cbo_locales" style="width:95%;" data-style="btn-default" ng-model="objeto_parametros.id_Local">
+                                    <option value="0">[ ----   Seleccione  --- ]</option>
+                                    <option ng-repeat="item in Lista_local" value="{{item.id_Local}}">{{item.nombre_Local}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br />
+
+                        <div class="row">
+                            <div class="col-md-4" style="margin-top: -10px;">
+                                <label for="txtcodigo">Codigo</label>  <span class="help-block"></span>
+                                <input type="text" class="form-control" id="txtcodigo" required maxlength="20" ng-model="objeto_parametros.codigo_Almacen"><span class="highlight"></span> <span class="bar"></span>
+
+                            </div> 
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="txt_descripcion" required maxlength="150"   ng-model="objeto_parametros.descripcion_Almacen"><span class="highlight"></span> <span class="bar"></span>
+                                <label for="txt_descripcion">Descripción</label> <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="text" class="form-control" id="txt_direccion" required ng-model="objeto_parametros.direccion_Almacen"><span class="highlight"></span> <span class="bar"></span>
+                                <label for="txt_direccion">Direccion de almacen</label> <span class="help-block"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label for="cbo_provincia" class="control-label">Departamento</label> <span class="help-block"></span>
+                                <br />
+                                <select class="selectModal" id="cbo_departamento" ng-model="objeto_parametros.id_departamento" ng-change="change_departamento_provincia(objeto_parametros.id_departamento, 0);">
+                                    <option value="0">[ ---SELECCIONE--- ]</option>
+                                    <option ng-repeat="item in Lista_Departamentos" value="{{item.codigo_detalleTabla}}">{{item.descripcion_grupoTabla}}</option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label for="cbo_provincia" class="control-label">Provincia</label> <span class="help-block"></span>
+                                                                                                   <br />
+                                <select class="selectModal" id="cbo_provincia" ng-model="objeto_parametros.id_provincia" ng-change="change_provincia_distrito(objeto_parametros.id_provincia, 0);">
+                                    <option value="0">[ ---SELECCIONE--- ]</option>
+                                    <option ng-repeat="item in Lista_Provincia" value="{{item.id_detalleTabla}}">{{item.descripcion_grupoTabla}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-3" style="    margin-top: -10px;">
+                                <label for="cbo_distrito" class="control-label">Distrito</label> <span class="help-block"></span>                                                                                                 <br />
+                                <select class="selectModal" id="cbo_distrito" ng-model="objeto_parametros.id_distrito">
+                                    <option value="0">[ ---SELECCIONE--- ]</option>
+                                    <option ng-repeat="item in Lista_Distrito" value="{{item.id_distrito}}">{{item.nombre_distrito}}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-9" style=" margin-top: 7px;">
+                                <input type="text" class="form-control" id="txt_direccion_sunat" required ng-model="objeto_parametros.direccion_serie_sunat"><span class="highlight"></span> <span class="bar"></span>
+                                <label for="txt_direccion_sunat">Direccion para la Sunat</label> <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <br /> 
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label for="cbo_establecimientos" class="control-label">Codigo de establecimiento</label> <span class="help-block"></span>                                                                                                                          <br />
+                                <select class="selectModal" id="cbo_establecimientos" ng-model="objeto_parametros.cod_establecimiento">
+                                    <option value="0">[ ---SELECCIONE--- ]</option>
+                                    <option ng-repeat="item in Lista_establecimientos" value="{{item.codigo_detalleTabla}}">{{item.descripcion_grupoTabla}}</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="cbo_pedidoMovil" class="control-label">Pedido Movil</label> <span class="help-block"></span>                                                                                                                          <br />
+                                <select class="selectModal" id="cbo_pedidoMovil" ng-model="objeto_parametros.pedidosMovil_Almacen">
+                                    <option value="0">[ -SELECCIONE- ]</option>
+                                    <option value="SI">SI</option>
+                                    <option value="NO">NO</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="cbo_venta" class="control-label">Ventas x Mayor</label> <span class="help-block"></span>                                                                                                                          <br />
+                                <select class="selectModal" id="cbo_venta" ng-model="objeto_parametros.ventaMayorista">
+                                    <option value="0">[ -SELECCIONE- ]</option>
+                                    <option value="SI">SI</option>
+                                    <option value="NO">NO</option>
+                                </select>
+                            </div>
+
+
+                        </div>
+
+
+
+                    </fieldset>
+                </div>
+
+                <div class="contentRegistro">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <fieldset>
+                                <legend>Datos Generales</legend>
+                                <div class="radio radio-primary">
+                                    <input type="radio" name="radio" id="rb_normales" value="option3" checked>
+                                    <label for="radio1"> Normales </label>
+                                </div>
+                                <div class="radio radio-primary">
+                                    <input type="radio" name="radio" id="rb_baja" value="option3">
+                                    <label for="radio2"> Material de Baja o Desecho </label>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="row ">
+                            <div class="col-sm-6">
+                                <fieldset>
+                                    <legend>Estado</legend>
+                                    <div class="row Mtop-20">
+                                        <div class="col-sm-6 ">
+                                            <div class="form-group">
+                                                <div class="checkbox checkbox-success">
+                                                    <input id="checkbox1" type="checkbox" ng-model="objEstados.activo" ng-change="changeStatus(objEstados.activo);">
+                                                    <label for="checkbox1" class="estadoModal" style="color : {{objEstados.colorText}}">{{objEstados.text}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer ">
+                <a class="btn btn-primary" ng-click="GuardarRegistro();"> <span class="glyphicon glyphicon-floppy-disk"></span> Guardar</a>
+                <a class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-sign"></span> Cerrar</a>
+ 
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+    </div>
+
+
+
+

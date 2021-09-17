@@ -1,0 +1,1113 @@
+    var get_Json_Facturacion_Electronica_8 = function (cab) {
+        var acum = 1;
+        var InvoiceLine_aux = [];
+        var nroLetra = '';
+        var x = 1;
+
+        cab.forEach(function (item, index) {
+
+            acum = 1;
+            item.DETCONTENT.forEach(function (itemDet, indexDet) {
+                InvoiceLine_aux.push([{
+                    "ID": [
+                        {
+                            "IdentifierContent": acum
+                        }
+                    ],
+                    "Note": [
+                        {
+                            "TextContent": "UNIDAD"
+                        }
+                    ],
+                    "InvoicedQuantity": [
+                        {
+                            "QuantityContent": itemDet.cantidad,
+                            "QuantityUnitCode": itemDet.cod_unidad_sunat,
+                            "QuantityUnitCodeListIdentifier": "UN/ECE rec 20",
+                            "QuantityUnitCodeListAgencyNameText": "United Nations Economic Commission for Europe"
+                        }
+                    ],
+                    "LineExtensionAmount": [
+                        {
+                            "AmountContent": itemDet.monto_sub_total_det,
+                            "AmountCurrencyIdentifier": itemDet.tipo_moneda_sunat
+                        }
+                    ],
+                    "PricingReference": [
+                        {
+                            "AlternativeConditionPrice": [
+                                {
+                                    "PriceAmount": [
+                                        {
+                                            "AmountContent": itemDet.monto_total_det,
+                                            "AmountCurrencyIdentifier": itemDet.tipo_moneda_sunat
+                                        }
+                                    ],
+                                    "PriceTypeCode": [
+                                        {
+                                            "CodeContent": "01",
+                                            "CodeListNameText": "SUNAT:Indicador de Tipo de Precio",
+                                            "CodeListAgencyNameText": "PE:SUNAT",
+                                            "CodeListUniformResourceIdentifier": "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo16"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "TaxTotal": [
+                        {
+                            "TaxAmount": [
+                                {
+                                    "AmountContent": itemDet.monto_total_igv_det,
+                                    "AmountCurrencyIdentifier": itemDet.tipo_moneda_sunat
+                                }
+                            ],
+                            "TaxSubtotal": [
+                                {
+                                    "TaxableAmount": [
+                                        {
+                                            "AmountContent": itemDet.monto_total_det,
+                                            "AmountCurrencyIdentifier": itemDet.tipo_moneda_sunat
+                                        }
+                                    ],
+                                    "TaxAmount": [
+                                        {
+                                            "AmountContent": itemDet.monto_total_igv_det,
+                                            "AmountCurrencyIdentifier": itemDet.tipo_moneda_sunat
+                                        }
+                                    ],
+                                    "TaxCategory": [
+                                        {
+                                            "ID": [
+                                                {
+                                                    "IdentifierContent": "S",
+                                                    "IdentificationSchemeIdentifier": "UN/ECE 5305",
+                                                    "IdentificationSchemeNameText": "Tax Category Identifier",
+                                                    "IdentificationSchemeAgencyNameText": "United Nations Economic Commission for Europe"
+                                                }
+                                            ],
+                                            "TaxExemptionReasonCode": [
+                                                {
+                                                    "CodeContent": "10",
+                                                    "CodeListAgencyNameText": "PE:SUNAT",
+                                                    "CodeListNameText": "SUNAT:Codigo de Tipo de Afectación del IGV",
+                                                    "CodeListUniformResourceIdentifier": "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo07"
+                                                }
+                                            ],
+                                            "TaxScheme": [
+                                                {
+                                                    "ID": [
+                                                        {
+                                                            "IdentifierContent": "1000",
+                                                            "IdentificationSchemeIdentifier": "UN/ECE 5153",
+                                                            "IdentificationSchemeAgencyIdentifier": "6"
+                                                        }
+                                                    ],
+                                                    "Name": [
+                                                        {
+                                                            "TextContent": "IGV"
+                                                        }
+                                                    ],
+                                                    "TaxTypeCode": [
+                                                        {
+                                                            "CodeContent": "VAT"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "Item": [
+                        {
+                            "Description": [
+                                {
+                                    "TextContent": itemDet.nombre_producto
+                                }
+                            ],
+                            "SellersItemIdentification": [
+                                {
+                                    "ID": [
+                                        {
+                                            "IdentifierContent": itemDet.codigo_producto
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "Price": [
+                        {
+                            "PriceAmount": [
+                                {
+                                    "AmountContent": itemDet.monto_sub_total_det,
+                                    "AmountCurrencyIdentifier": item.tipo_moneda_sunat
+                                }
+                            ]
+                        }
+                    ]
+                }]);
+
+                acum = acum + 1;
+            });
+
+            nroLetra = NumeroALetras(item.monto_total);
+
+            var json_Facturacion = {
+                "_D": "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2",
+                "_S": "urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2",
+                "_B": "urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2",
+                "_E": "urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2",
+                "Invoice": [
+                    {
+                        "UBLVersionID": [
+                            {
+                                "IdentifierContent": "2.1"
+                            }
+                        ],
+                        "CustomizationID": [
+                            {
+                                "IdentifierContent": "2.0"
+                            }
+                        ],
+                        "ProfileID": [
+                            {
+                                "IdentifierContent": item.cod_unidad_sunat,
+                                "IdentificationSchemeNameText": "SUNAT:Identificador de Tipo de Operación",
+                                "IdentificationSchemeAgencyNameText": "PE:SUNAT",
+                                "IdentificationSchemeUniformResourceIdentifier": "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo17"
+                            }
+                        ],
+                        "ID": [
+                            {
+                                "IdentifierContent": item.nro_doc
+                            }
+                        ],
+                        "IssueDate": [
+                            {
+                                "DateContent": item.fecha_emision
+                            }
+                        ],
+                        "IssueTime": [
+                            {
+                                "DateTimeContent": item.hora_emision
+                            }
+                        ],
+                        "InvoiceTypeCode": [
+                            {
+                                "CodeContent": item.tipo_doc_sunat,
+                                "CodeListSchemeUniformResourceIdentifier": "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo01",
+                                "CodeListNameText": "SUNAT:Identificador de Tipo de Documento",
+                                "CodeListAgencyNameText": "PE:SUNAT"
+                            }
+                        ],
+                        "Note": [
+                            {
+                                "TextContent": nroLetra,
+                                "LanguageLocaleIdentifier": "1000"
+                            }
+                        ],
+                        "DocumentCurrencyCode": [
+                            {
+                                "CodeContent": item.tipo_moneda_sunat,
+                                "CodeListIdentifier": "ISO 4217 Alpha",
+                                "CodeListNameText": "Currency",
+                                "CodeListAgencyNameText": "United Nations Economic Commission for Europe"
+                            }
+                        ],
+                        "LineCountNumeric": [
+                            {
+                                "NumericContent": item.DETCONTENT.length
+                            }
+                        ],
+                        "Signature": [
+                            {
+                                "ID": [
+                                    {
+                                        "IdentifierContent": "IDSignature"
+                                    }
+                                ],
+                                "SignatoryParty": [
+                                    {
+                                        "PartyIdentification": [
+                                            {
+                                                "ID": [
+                                                    {
+                                                        "IdentifierContent": item.ruc_empresa_emite
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "PartyName": [
+                                            {
+                                                "Name": [
+                                                    {
+                                                        "TextContent": item.razon_social_emite
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "DigitalSignatureAttachment": [
+                                    {
+                                        "ExternalReference": [
+                                            {
+                                                "URI": [
+                                                    {
+                                                        "TextContent": "IDSignature"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ],
+                        "AccountingSupplierParty": [
+                            {
+                                "Party": [
+                                    {
+                                        "PartyName": [
+                                            {
+                                                "Name": [
+                                                    {
+                                                        "TextContent": item.razon_social_emite
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "PostalAddress": [
+                                            {
+                                                "ID": [
+                                                    {
+                                                        "IdentifierContent": "150122"
+                                                    }
+                                                ],
+                                                "StreetName": [
+                                                    {
+                                                        "TextContent": "Av. Los Dominicos 155"
+                                                    }
+                                                ],
+                                                "CityName": [
+                                                    {
+                                                        "TextContent": "LIMA"
+                                                    }
+                                                ],
+                                                "CountrySubentity": [
+                                                    {
+                                                        "TextContent": "LIMA"
+                                                    }
+                                                ],
+                                                "District": [
+                                                    {
+                                                        "TextContent": "MIRAFLORES"
+                                                    }
+                                                ],
+                                                "Country": [
+                                                    {
+                                                        "IdentificationCode": [
+                                                            {
+                                                                "IdentifierContent": "PE"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "PartyTaxScheme": [
+                                            {
+                                                "RegistrationName": [
+                                                    {
+                                                        "TextContent": item.razon_social_emite
+                                                    }
+                                                ],
+                                                "CompanyID": [
+                                                    {
+                                                        "IdentifierContent": item.ruc_empresa_emite,
+                                                        "IdentificationSchemeIdentifier": item.tipo_doc_identidad_emite,
+                                                        "IdentificationSchemeNameText": "SUNAT:Identificador de Documento de Identidad",
+                                                        "IdentificationSchemeAgencyNameText": "PE:SUNAT",
+                                                        "IdentificationSchemeUniformResourceIdentifier": "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06"
+                                                    }
+                                                ],
+                                                "RegistrationAddress": [
+                                                    {
+                                                        "AddressTypeCode": [
+                                                            {
+                                                                "CodeContent": "0001"
+                                                            }
+                                                        ]
+                                                    }
+                                                ],
+                                                "TaxScheme": [
+                                                    {
+                                                        "ID": [
+                                                            {
+                                                                "IdentifierContent": "-"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ],
+                        "AccountingCustomerParty": [
+                            {
+                                "Party": [
+                                    {
+                                        "PostalAddress": [
+                                            {
+                                                "ID": [
+                                                    {
+                                                        "IdentifierContent": "150115"
+                                                    }
+                                                ],
+                                                "StreetName": [
+                                                    {
+                                                        "TextContent": "AV. PROLONGACION PARINACOCHAS 1094 "
+                                                    }
+                                                ],
+                                                "CityName": [
+                                                    {
+                                                        "TextContent": "LIMA"
+                                                    }
+                                                ],
+                                                "CountrySubentity": [
+                                                    {
+                                                        "TextContent": "LIMA"
+                                                    }
+                                                ],
+                                                "District": [
+                                                    {
+                                                        "TextContent": "LA VICTORIA"
+                                                    }
+                                                ],
+                                                "Country": [
+                                                    {
+                                                        "IdentificationCode": [
+                                                            {
+                                                                "IdentifierContent": "PE"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "PartyTaxScheme": [
+                                            {
+                                                "RegistrationName": [
+                                                    {
+                                                        "TextContent": item.razon_social_receptora
+                                                    }
+                                                ],
+                                                "CompanyID": [
+                                                    {
+                                                        "IdentifierContent": item.ruc_empresa_receptora,
+                                                        "IdentificationSchemeIdentifier": item.tipo_doc_identidad_receptora,
+                                                        "IdentificationSchemeNameText": "SUNAT:Identificador de Documento de Identidad",
+                                                        "IdentificationSchemeAgencyNameText": "PE:SUNAT",
+                                                        "IdentificationSchemeUniformResourceIdentifier": "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06"
+                                                    }
+                                                ],
+                                                "RegistrationAddress": [
+                                                    {
+                                                        "AddressTypeCode": [
+                                                            {
+                                                                "CodeContent": "0001"
+                                                            }
+                                                        ]
+                                                    }
+                                                ],
+                                                "TaxScheme": [
+                                                    {
+                                                        "ID": [
+                                                            {
+                                                                "IdentifierContent": "-"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "Contact": [
+                                            {
+                                                "ElectronicMail": [
+                                                    {
+                                                        "TextContent": "fmontes@efact.pe"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ],
+                        "PaymentMeans": [
+                            {
+                                "PaymentMeansCode": [
+                                    {
+                                        "CodeContent": "01"
+                                    }
+                                ],
+                                "PaymentDueDate": [
+                                    {
+                                        "DateContent": cab[indice].fecha_vencimiento
+                                    }
+                                ]
+                            }
+                        ],
+                        "TaxTotal": [
+                            {
+                                "TaxAmount": [
+                                    {
+                                        "AmountContent": item.monto_total_igv,
+                                        "AmountCurrencyIdentifier": item.tipo_moneda_sunat
+                                    }
+                                ],
+                                "TaxSubtotal": [
+                                    {
+                                        "TaxableAmount": [
+                                            {
+                                                "AmountContent": item.monto_total_inafecto,
+                                                "AmountCurrencyIdentifier": item.tipo_moneda_sunat
+                                            }
+                                        ],
+                                        "TaxAmount": [
+                                            {
+                                                "AmountContent": item.monto_total_igv,
+                                                "AmountCurrencyIdentifier": item.tipo_moneda_sunat
+                                            }
+                                        ],
+                                        "TaxCategory": [
+                                            {
+                                                "ID": [
+                                                    {
+                                                        "IdentifierContent": "S",
+                                                        "IdentificationSchemeIdentifier": "UN/ECE 5305",
+                                                        "IdentificationSchemeNameText": "Tax Category Identifier",
+                                                        "IdentificationSchemeAgencyNameText": "United Nations Economic Commission for Europe"
+                                                    }
+                                                ],
+                                                "Percent": [
+                                                    {
+                                                        "NumericContent": 18
+                                                    }
+                                                ],
+                                                "TaxScheme": [
+                                                    {
+                                                        "ID": [
+                                                            {
+                                                                "IdentifierContent": "1000",
+                                                                "IdentificationSchemeIdentifier": "UN/ECE 5153",
+                                                                "IdentificationSchemeAgencyIdentifier": "6"
+                                                            }
+                                                        ],
+                                                        "Name": [
+                                                            {
+                                                                "TextContent": "IGV"
+                                                            }
+                                                        ],
+                                                        "TaxTypeCode": [
+                                                            {
+                                                                "CodeContent": "VAT"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ],
+                        "LegalMonetaryTotal": [
+                            {
+                                "LineExtensionAmount": [
+                                    {
+                                        "AmountContent": item.monto_sub_total,
+                                        "AmountCurrencyIdentifier": item.tipo_moneda_sunat
+                                    }
+                                ],
+                                "TaxInclusiveAmount": [
+                                    {
+                                        "AmountContent": item.monto_total,
+                                        "AmountCurrencyIdentifier": item.tipo_moneda_sunat
+                                    }
+                                ],
+                                "PayableAmount": [
+                                    {
+                                        "AmountContent": item.monto_total,
+                                        "AmountCurrencyIdentifier": item.tipo_moneda_sunat
+                                    }
+                                ]
+                            }
+                        ],
+                        "InvoiceLine": InvoiceLine_aux
+
+                    }
+                ]
+            }
+            ///---- fin variable json
+
+            //console.log(JSON.stringify(json_Facturacion));
+
+            console.log(x)
+            console.log(item.nombreArchivo)
+            /// guardando el servidor el archivo creado---
+            generate_json_file(JSON.stringify(json_Facturacion), item.nombreArchivo)
+
+            x = x + 1;
+
+        });
+
+    };
+    
+    var get_Json_Boleta_Electronica_8 = function (cab) {
+        var acum = 1;
+        var InvoiceLine_aux = [];
+        var nroLetra
+
+        cab.forEach(function (item, index) {
+
+            acum = 1;
+            nroLetra = NumeroALetras(item.monto_total);
+
+            item.DETCONTENT.forEach(function (itemDet, indexDet) {
+
+                InvoiceLine_aux.push([{
+                    "ID": [
+                        {
+                            "IdentifierContent": acum
+                        }
+                    ],
+                    "Note": [
+                        {
+                            "TextContent": "UNIDAD"
+                        }
+                    ],
+                    "InvoicedQuantity": [
+                        {
+                            "QuantityContent": itemDet.cantidad ,
+                            "QuantityUnitCode": itemDet.cod_unidad_sunat,
+                            "QuantityUnitCodeListIdentifier": "UN/ECE rec 20",
+                            "QuantityUnitCodeListAgencyNameText": "United Nations Economic Commission for Europe"
+                        }
+                    ],
+                    "LineExtensionAmount": [
+                        {
+                            "AmountContent": itemDet.monto_sub_total_det,
+                            "AmountCurrencyIdentifier": item.tipo_moneda_sunat
+                        }
+                    ],
+                    "PricingReference": [
+                        {
+                            "AlternativeConditionPrice": [
+                                {
+                                    "PriceAmount": [
+                                        {
+                                            "AmountContent": itemDet.monto_total_det,
+                                            "AmountCurrencyIdentifier": item.tipo_moneda_sunat
+                                        }
+                                    ],
+                                    "PriceTypeCode": [
+                                        {
+                                            "CodeContent": "01",
+                                            "CodeListNameText": "SUNAT:Indicador de Tipo de Precio",
+                                            "CodeListAgencyNameText": "PE:SUNAT",
+                                            "CodeListUniformResourceIdentifier": "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo16"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "TaxTotal": [
+                        {
+                            "TaxAmount": [
+                                {
+                                    "AmountContent": itemDet.monto_total_igv_det,
+                                    "AmountCurrencyIdentifier": item.tipo_moneda_sunat
+                                }
+                            ],
+                            "TaxSubtotal": [
+                                {
+                                    "TaxableAmount": [
+                                        {
+                                            "AmountContent": itemDet.monto_total_det ,
+                                            "AmountCurrencyIdentifier": item.tipo_moneda_sunat
+                                        }
+                                    ],
+                                    "TaxAmount": [
+                                        {
+                                            "AmountContent": itemDet.monto_total_igv_det,
+                                            "AmountCurrencyIdentifier": item.tipo_moneda_sunat
+                                        }
+                                    ],
+                                    "TaxCategory": [
+                                        {
+                                            "ID": [
+                                                {
+                                                    "IdentifierContent": "S",
+                                                    "IdentificationSchemeIdentifier": "UN/ECE 5305",
+                                                    "IdentificationSchemeNameText": "Tax Category Identifier",
+                                                    "IdentificationSchemeAgencyNameText": "United Nations Economic Commission for Europe"
+                                                }
+                                            ],
+                                            "TaxExemptionReasonCode": [
+                                                {
+                                                    "CodeContent": "10",
+                                                    "CodeListAgencyNameText": "PE:SUNAT",
+                                                    "CodeListNameText": "SUNAT:Codigo de Tipo de Afectación del IGV",
+                                                    "CodeListUniformResourceIdentifier": "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo07"
+                                                }
+                                            ],
+                                            "TaxScheme": [
+                                                {
+                                                    "ID": [
+                                                        {
+                                                            "IdentifierContent": "1000",
+                                                            "IdentificationSchemeIdentifier": "UN/ECE 5153",
+                                                            "IdentificationSchemeAgencyIdentifier": "6"
+                                                        }
+                                                    ],
+                                                    "Name": [
+                                                        {
+                                                            "TextContent": "IGV"
+                                                        }
+                                                    ],
+                                                    "TaxTypeCode": [
+                                                        {
+                                                            "CodeContent": "VAT"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "Item": [
+                        {
+                            "Description": [
+                                {
+                                    "TextContent": itemDet.nombre_producto
+                                }
+                            ],
+                            "SellersItemIdentification": [
+                                {
+                                    "ID": [
+                                        {
+                                            "IdentifierContent": itemDet.codigo_producto
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "Price": [
+                        {
+                            "PriceAmount": [
+                                {
+                                    "AmountContent": itemDet.monto_sub_total_det,
+                                    "AmountCurrencyIdentifier": item.tipo_moneda_sunat
+                                }
+                            ]
+                        }
+                    ]
+                }]);
+
+                acum = acum + 1;
+            });
+
+            var json_Boletas = {
+                "_D": "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2",
+                "_S": "urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2",
+                "_B": "urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2",
+                "_E": "urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2",
+                "Invoice": [
+                    {
+                        "UBLVersionID": [
+                            {
+                                "IdentifierContent": "2.1"
+                            }
+                        ],
+                        "CustomizationID": [
+                            {
+                                "IdentifierContent": "2.0"
+                            }
+                        ],
+                        "ProfileID": [
+                            {
+                                "IdentifierContent": "0301",
+                                "IdentificationSchemeNameText": "SUNAT:Identificador de Tipo de Operación",
+                                "IdentificationSchemeAgencyNameText": "PE:SUNAT",
+                                "IdentificationSchemeUniformResourceIdentifier": "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo17"
+                            }
+                        ],
+                        "ID": [
+                            {
+                                "IdentifierContent": item.nro_doc
+                            }
+                        ],
+                        "IssueDate": [
+                            {
+                                "DateContent": item.fecha_emision
+                            }
+                        ],
+                        "IssueTime": [
+                            {
+                                "DateTimeContent": item.hora_emision
+                            }
+                        ],
+                        "InvoiceTypeCode": [
+                            {
+                                "CodeContent": item.tipo_doc_sunat,
+                                "CodeListSchemeUniformResourceIdentifier": "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo01",
+                                "CodeListNameText": "SUNAT:Identificador de Tipo de Documento",
+                                "CodeListAgencyNameText": "PE:SUNAT"
+                            }
+                        ],
+                        "Note": [
+                            {
+                                "TextContent": nroLetra,
+                                "LanguageLocaleIdentifier": "1000"
+                            }
+                        ],
+                        "DocumentCurrencyCode": [
+                            {
+                                "CodeContent": item.tipo_moneda_sunat,
+                                "CodeListIdentifier": "ISO 4217 Alpha",
+                                "CodeListNameText": "Currency",
+                                "CodeListAgencyNameText": "United Nations Economic Commission for Europe"
+                            }
+                        ],
+                        "LineCountNumeric": [
+                            {
+                                "NumericContent": item.DETCONTENT.length
+                            }
+                        ],
+                        "Signature": [
+                            {
+                                "ID": [
+                                    {
+                                        "IdentifierContent": "IDSignature"
+                                    }
+                                ],
+                                "SignatoryParty": [
+                                    {
+                                        "PartyIdentification": [
+                                            {
+                                                "ID": [
+                                                    {
+                                                        "IdentifierContent": item.ruc_empresa_emite
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "PartyName": [
+                                            {
+                                                "Name": [
+                                                    {
+                                                        "TextContent": item.razon_social_emite
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "DigitalSignatureAttachment": [
+                                    {
+                                        "ExternalReference": [
+                                            {
+                                                "URI": [
+                                                    {
+                                                        "TextContent": "IDSignature"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ],
+                        "AccountingSupplierParty": [
+                            {
+                                "Party": [
+                                    {
+                                        "PartyName": [
+                                            {
+                                                "Name": [
+                                                    {
+                                                        "TextContent": item.razon_social_emite
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "PostalAddress": [
+                                            {
+                                                "ID": [
+                                                    {
+                                                        "IdentifierContent": "150122"
+                                                    }
+                                                ],
+                                                "StreetName": [
+                                                    {
+                                                        "TextContent": "Av. Los Dominicos 155"
+                                                    }
+                                                ],
+                                                "CityName": [
+                                                    {
+                                                        "TextContent": "LIMA"
+                                                    }
+                                                ],
+                                                "CountrySubentity": [
+                                                    {
+                                                        "TextContent": "LIMA"
+                                                    }
+                                                ],
+                                                "District": [
+                                                    {
+                                                        "TextContent": "MIRAFLORES"
+                                                    }
+                                                ],
+                                                "Country": [
+                                                    {
+                                                        "IdentificationCode": [
+                                                            {
+                                                                "IdentifierContent": "PE"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "PartyTaxScheme": [
+                                            {
+                                                "RegistrationName": [
+                                                    {
+                                                        "TextContent": item.razon_social_emite
+                                                    }
+                                                ],
+                                                "CompanyID": [
+                                                    {
+                                                        "IdentifierContent": item.ruc_empresa_emite,
+                                                        "IdentificationSchemeIdentifier": item.tipo_doc_identidad_emite,
+                                                        "IdentificationSchemeNameText": "SUNAT:Identificador de Documento de Identidad",
+                                                        "IdentificationSchemeAgencyNameText": "PE:SUNAT",
+                                                        "IdentificationSchemeUniformResourceIdentifier": "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06"
+                                                    }
+                                                ],
+                                                "RegistrationAddress": [
+                                                    {
+                                                        "AddressTypeCode": [
+                                                            {
+                                                                "CodeContent": "0001"
+                                                            }
+                                                        ]
+                                                    }
+                                                ],
+                                                "TaxScheme": [
+                                                    {
+                                                        "ID": [
+                                                            {
+                                                                "IdentifierContent": "-"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ],
+                        "AccountingCustomerParty": [
+                            {
+                                "Party": [
+                                    {
+                                        "PostalAddress": [
+                                            {
+                                                "ID": [
+                                                    {
+                                                        "IdentifierContent": "150115"
+                                                    }
+                                                ],
+                                                "StreetName": [
+                                                    {
+                                                        "TextContent": "AV. PROLONGACION PARINACOCHAS 1094 "
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "PartyTaxScheme": [
+                                            {
+                                                "RegistrationName": [
+                                                    {
+                                                        "TextContent": item.razon_social_receptora
+                                                    }
+                                                ],
+                                                "CompanyID": [
+                                                    {
+                                                        "IdentifierContent": item.ruc_empresa_receptora,
+                                                        "IdentificationSchemeIdentifier": "1",
+                                                        "IdentificationSchemeNameText": "SUNAT:Identificador de Documento de Identidad",
+                                                        "IdentificationSchemeAgencyNameText": "PE:SUNAT",
+                                                        "IdentificationSchemeUniformResourceIdentifier": "urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06"
+                                                    }
+                                                ],
+                                                "RegistrationAddress": [
+                                                    {
+                                                        "AddressTypeCode": [
+                                                            {
+                                                                "CodeContent": "0001"
+                                                            }
+                                                        ]
+                                                    }
+                                                ],
+                                                "TaxScheme": [
+                                                    {
+                                                        "ID": [
+                                                            {
+                                                                "IdentifierContent": "-"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "Contact": [
+                                            {
+                                                "ElectronicMail": [
+                                                    {
+                                                        "TextContent": "fmontes@efact.pe"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ],
+                        "PaymentMeans": [
+                            {
+                                "PaymentMeansCode": [
+                                    {
+                                        "CodeContent": "01"
+                                    }
+                                ],
+                                "PaymentDueDate": [
+                                    {
+                                        "DateContent": cab[indice].fecha_vencimiento
+                                    }
+                                ]
+                            }
+                        ],
+                        "TaxTotal": [
+                            {
+                                "TaxAmount": [
+                                    {
+                                        "AmountContent": item.monto_total_igv,
+                                        "AmountCurrencyIdentifier": item.tipo_moneda_sunat
+                                    }
+                                ],
+                                "TaxSubtotal": [
+                                    {
+                                        "TaxableAmount": [
+                                            {
+                                                "AmountContent": item.monto_total_inafecto,
+                                                "AmountCurrencyIdentifier": item.tipo_moneda_sunat
+                                            }
+                                        ],
+                                        "TaxAmount": [
+                                            {
+                                                "AmountContent": item.monto_total_igv,
+                                                "AmountCurrencyIdentifier": item.tipo_moneda_sunat
+                                            }
+                                        ],
+                                        "TaxCategory": [
+                                            {
+                                                "ID": [
+                                                    {
+                                                        "IdentifierContent": "S",
+                                                        "IdentificationSchemeIdentifier": "UN/ECE 5305",
+                                                        "IdentificationSchemeNameText": "Tax Category Identifier",
+                                                        "IdentificationSchemeAgencyNameText": "United Nations Economic Commission for Europe"
+                                                    }
+                                                ],
+                                                "Percent": [
+                                                    {
+                                                        "NumericContent": 18
+                                                    }
+                                                ],
+                                                "TaxScheme": [
+                                                    {
+                                                        "ID": [
+                                                            {
+                                                                "IdentifierContent": "1000",
+                                                                "IdentificationSchemeIdentifier": "UN/ECE 5153",
+                                                                "IdentificationSchemeAgencyIdentifier": "6"
+                                                            }
+                                                        ],
+                                                        "Name": [
+                                                            {
+                                                                "TextContent": "IGV"
+                                                            }
+                                                        ],
+                                                        "TaxTypeCode": [
+                                                            {
+                                                                "CodeContent": "VAT"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ],
+                        "LegalMonetaryTotal": [
+                            {
+                                "LineExtensionAmount": [
+                                    {
+                                        "AmountContent": item.monto_sub_total,
+                                        "AmountCurrencyIdentifier": item.tipo_moneda_sunat
+                                    }
+                                ],
+                                "TaxInclusiveAmount": [
+                                    {
+                                        "AmountContent": item.monto_total,
+                                        "AmountCurrencyIdentifier": item.tipo_moneda_sunat
+                                    }
+                                ],
+                                "PayableAmount": [
+                                    {
+                                        "AmountContent": item.monto_total,
+                                        "AmountCurrencyIdentifier": item.tipo_moneda_sunat
+                                    }
+                                ]
+                            }
+                        ],
+                        "InvoiceLine": InvoiceLine_aux
+
+                    }
+                ]
+            }
+
+            ///---- fin variable json
+
+            console.log(JSON.stringify(json_Boletas));
+
+        });
+
+    };

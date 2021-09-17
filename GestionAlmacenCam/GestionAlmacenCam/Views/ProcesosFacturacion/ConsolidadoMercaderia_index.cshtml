@@ -1,0 +1,185 @@
+﻿
+
+
+<style>
+    #listMenu span, a {
+        text-align: left !important;
+    }
+
+    .contentRegistro fieldset legend {
+        text-align: left !important;
+    }
+
+    .jq-toast-wrap {
+        width: 300px !important;
+    }
+
+    .floating-labels label {
+        top: -6px;
+    }
+
+    .contentRegistro .select2-container {
+        margin-left: 0px;
+        margin-top: 2px;
+    }
+
+    #paddin-lef {
+        padding-left: 40px !important;
+    }
+
+    .contentCombo .select2-container {
+        margin-left: 0px;
+        margin-top: -20px;
+        width: 95% !important;
+    }
+
+    .ContentFilters .table {
+        display: table;
+    }
+
+    .contentRegistro label {
+        font-size: 11px;
+        font-family: tahoma;
+        color: #2c5ca9;
+        font-weight: 600;
+    }
+
+    .contentRegistro {
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .ModalBorderSombra .modal-content {
+        box-shadow: inset 0px 0px 7px rgba(0,0,0,.5), 1px 1px 5px #fff;
+    }
+
+
+
+    .resaltado {
+        color: #ff94a7 !important;
+    }
+
+    .text-right {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+
+    .tableFixHead {
+        overflow-y: auto;
+        height: 400px;
+    }
+</style>
+
+<script type="text/javascript">
+
+    function filterFloat(evt, input) {
+        // Backspace = 8, Enter = 13, ‘0′ = 48, ‘9′ = 57, ‘.’ = 46, ‘-’ = 43
+        var key = window.Event ? evt.which : evt.keyCode;
+        var chark = String.fromCharCode(key);
+        var tempValue = input.value + chark;
+        if (key >= 48 && key <= 57) {
+            if (filter(tempValue) === false) {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            if (key == 8 || key == 13 || key == 0) {
+                return true;
+            } else if (key == 46) {
+                if (filter(tempValue) === false) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } else {
+                return false;
+            }
+        }
+    }
+    function filter(__val__) {
+        var preg = /^([0-9]+\.?[0-9]{0,3})$/;
+        if (preg.test(__val__) === true) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+</script>
+
+<div class=" container " ng-init="initAll();">
+    <div class="panel-body  contentRegistro contentCombo ContentFilters  ">
+        <div class="loaderModal" ng-if="loaderFiltro"></div>
+        <div class="white-box">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group" style="    margin-bottom: 0px;">
+                        <label class="control-label" style="text-align :left">Rango de Pedidos</label>
+                        <br>
+                        <div class="input-group">
+                            <input ng-model="Objeto_ParametroFiltro.fechaIni" id="dtp_fechaIni" type="text" class="form-control input-sm   datepicker" placeholder="dia/mes/año">
+                            <span class="input-group-addon bg-primary" style="color:white">al</span>
+                            <input ng-model="Objeto_ParametroFiltro.fechaFin" id="dtp_fechaFin" type="text" class="form-control input-sm   datepicker" placeholder="dia/mes/año">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="cbo_local">Zona de Venta</label> <span class="help-block"></span>
+                    <select class="selectFiltros" id="cbo_local" ng-model="Objeto_ParametroFiltro.id_zona" ng-change="change_Local_transportista(Objeto_ParametroFiltro.id_zona); change_Local_vendedor(Objeto_ParametroFiltro.id_zona)">
+                        <option value="0">[ ----  SELECCIONE  --- ]</option>
+                        <option ng-repeat="item in Lista_Local" value="{{item.id}}">  {{item.descripcion}} </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12"> 
+                    <label for="cbo_vendedor">Vendedor</label> <span class="help-block"></span>
+                    <select class="selectFiltros" id="cbo_vendedor" ng-model="Objeto_ParametroFiltro.id_vendedor">
+                        <option value="0">[ ----  TODOS  --- ]</option>
+                        <option ng-repeat="item in Lista_Vendedor" value="{{item.id}}">{{item.descripcion}}  </option>
+                    </select> 
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="cboTransportista" class="control-label"> Transportista </label> <span class="help-block"></span>
+                    <select class="selectFiltros" id="cboTransportista" ng-model="Objeto_ParametroFiltro.id_transportista">
+                        <option value="0">[ ----  TODOS  --- ]</option>
+                        <option ng-repeat="item in Lista_Transportista " value="{{item.id}}">{{item.descripcion}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button id="btn-material" class="btn   btn-primary " ng-click="reporteDespacho();">
+                    <i class="glyphicon glyphicon-print"></i> Visualizar
+                </button>
+                <button id="btn-material" class="btn   btn-danger m-l-10 " ng-click="reporteLiquidacionTransportista();">
+                    <i class="glyphicon glyphicon-print"></i> Liquidacion Transportista
+                </button>
+                <button id="btn-material" class="btn   btn-warning m-l-10 " ng-click="reportePlanillaCobranza();">
+                    <i class="glyphicon glyphicon-print"></i> Planilla de Cobranza
+                </button>
+                @*<button id="btn-material" class="btn   btn-success m-l-10 " ng-click="generarConsolidado_guiaRemisionSunat();">
+                <i class="glyphicon glyphicon-print"></i> Generar Guia Remision
+            </button>*@
+            </div>
+
+
+
+                </div>
+
+            </div>
+        </div>
+
+
+
+

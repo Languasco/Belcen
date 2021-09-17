@@ -1,0 +1,369 @@
+﻿ 
+<style>
+    label {
+        font-size: 11px;
+        font-family: tahoma;
+        color: white;
+    }
+
+    .contentCombo .select2-container {
+        margin-left: 0px;
+        margin-top: 0px;
+        width: 95% !important;
+    }
+
+    .select2-results .select2-result-label {
+        font-size: 10px;
+        font-family: sans-serif;
+    }
+
+    #form_cabecera {
+        height: 300px;
+    }
+
+    #tbl_detalle {
+        width: 95% !important;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #00c292;
+    }
+
+    .contenedorGrupo legend {
+        font-size: 12px !important;
+        font-family: GillSans, Calibri, Trebuchet, sans-serif;
+        color: #2c5ca9;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+
+    .contenedorGrupo fieldset {
+        padding-left: 20px;
+        padding-right: 20px;
+        border: 1px solid #2c4d6d;
+        padding-bottom: 10px;
+        border-radius: 4px;
+    }
+
+    .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+        padding: 5px 7px;
+    }
+
+    .jq-toast-wrap {
+        width: 350px;
+    }
+
+    /*tr:nth-child(even) {
+        background-color: #DFFFDE
+    }*/
+
+    .table tbody td {
+        color: #2B4C6C;
+        /*border-left: 1px solid #C6FFC2;*/
+        font-size: 12px;
+        border-bottom: 1px solid #E1EEF4;
+        font-weight: normal;
+    }
+
+    .table thead th {
+        font-size: 12px;
+        padding: 10px 7px;
+    }
+
+    .sweet-alert p {
+        line-height: 30px;
+        font-size: 13px;
+        font-family: monospace;
+        color: red;
+    }
+
+    .btn-success, .btn-success.disabled {
+        background: rgb(54, 117, 45);
+        border: rgb(54, 117, 45);
+    }
+
+    tr:hover {
+        background-color: #ffff99;
+    }
+
+    .Cancelacion_masiva_stilos {
+        background-color: #09131c;
+        color: white;
+        text-align: center
+    }
+
+    .Cancelacion_tabla_stilos tbody tr {
+        font-family: sans-serif !important;
+        font-weight:400;
+        font-size: 11px;
+    }
+
+    .Cancelacion_masiva_stilos_input {
+        margin-top: -5px;
+        margin-bottom: -10px;
+        height: 25px;
+        text-align: right;
+        color: red;
+        background-color: beige;
+        font-family: tahoma;
+        font-size: 13px;
+    }
+
+    .Cancelacion_centrar_stilos {
+        text-align: center !important
+    }
+
+    .Cancelacion_formatear_stilos {
+        text-align: right;
+        font-size: 12px;
+    }
+
+    .Cancelacion_medioPago_stilos {
+        background-color: #16a085;
+        cursor: pointer
+    }
+
+    table {
+        width: auto !important;
+    }
+
+    .card {
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+    }
+
+    .card:hover {
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
+
+    .cursor {
+        cursor: pointer;
+    }
+
+    .resaltado {
+        background-color: red;
+    }
+    .seleccionado {
+        background-color: aquamarine;
+    }
+    .form-control {
+        height: 30px;
+    }
+
+</style>
+
+<div ng-init="initAll(); ">
+    <section id="cabeceras" style="margin-bottom: -30px;">
+        <div class="panel-body ContentFilters contentCombo">
+            <div class="well" style="background-color: #2b4c6c;padding-bottom: 0px; padding-top: 0px;color: #fff;    width: 100%;">
+                <div class="row">
+                    <div class="col-sm-12 text-center " style="margin-bottom: -15px;">
+                        <div class="col-sm-3">
+                            <label> Local </label>  
+                            <select class="selectFiltros" id="cbo_local" ng-model="Objeto_ParametroFiltro.id_local" ng-change="change_Local_Almacen(Objeto_ParametroFiltro.id_local);">
+                                <option value="0">[ ----  SELECCIONE  --- ]</option>
+                                <option ng-repeat="item in Lista_Local" value="{{item.id_Local}}">{{item.nombre_Local}}</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-3">
+                            <label> Almacen </label>  
+                            <select class="selectFiltros" id="cbo_almacen" ng-model="Objeto_ParametroFiltro.id_almacen">
+                                <option value="0">[ ----  SELECCIONE  --- ]</option>
+                                <option ng-repeat="item in Lista_Almacen" value="{{item.id_Almacen}}">{{item.descripcion_Almacen}}</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label> Vendedor </label>  
+                                <select class="selectFiltros" id="cbo_vendedor_filtro" ng-model="Objeto_ParametroFiltro.id_Vendedor">
+                                    <option value="0">[ ----  TODOS  --- ]</option>
+                                    <option ng-repeat="item in Lista_Vendedor" value="{{item.id_personal}}">{{item.apellidos_personal}}  {{item.nombres_personal}} </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 ">
+                            <label> Transportista </label>    
+                            <select class="selectFiltros" id="cbo_transportista" ng-model="Objeto_ParametroFiltro.id_transportista">
+                                <option value="0">[ ----  TODOS  --- ]</option>
+                                <option ng-repeat="item in Lista_Transportista" value="{{item.id_personal}}">{{item.apellidos_personal}}   {{item.nombres_personal}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-bottom:0px; ">
+                    <div class="col-sm-6 text-center">
+                        <div class="col-sm-4">
+                            <label> Tipo Entrega </label>  
+                            <select class="selectFiltros" id="cbo_tipoEntrega" ng-model="Objeto_ParametroFiltro.id_tipoEntrega" ng-click="change_aprobar(Objeto_ParametroFiltro.id_tipoEntrega)">
+                                <option value="0">[ ----  Seleccione  --- ]</option>
+                                <option value="31"> Entrega Total</option>
+                                <option value="32"> Parcial</option>
+                                <option value="30"> Devuelto</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-4" style="margin-top: 0px;">
+                            <label> Fecha</label>
+                            <input type="text" class="form-control datepicker" ng-model="Objeto_ParametroFiltro.fecha_ini" id="dtp_fechaIni_filtro" placeholder="Fecha - mm/dd/yyyy">
+                        </div>
+                        <div class="col-sm-4" style="padding: 20px;">
+                            <div class="btn-group">
+                                <button role="button" class="btn btn-primary btn-sm" id="btnBuscar" ng-click="ActualizarPedidosCab()"><i class="glyphicon glyphicon-refresh" aria-hidden="true"></i> Actualizar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-inline ">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div style="text-align:center">
+                            <div class="cssload-speeding-wheel" ng-if="loaderfiltros"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="ubicacion" style="padding: 20px;">
+        <div class="row">
+            <div class="col-md-12 card">
+                     <center><h6>RELACIÓN DE PEDIDOS</h6></center>
+                <div id="form_cabecera" style="display:none">
+                    <table id="tbl_cabecera" class="table Cancelacion_tabla_stilos">
+                        <thead style="font-size:12px">
+                            <tr>
+                                <th class="Cancelacion_masiva_stilos">#</th>
+                                <th class="Cancelacion_masiva_stilos">ID</th>
+                                <th class="Cancelacion_masiva_stilos">NRO_PEDIDO</th>
+                                <th class="Cancelacion_masiva_stilos">NRO_DOC</th>
+
+                                <th class="Cancelacion_masiva_stilos">FECHA_DOC</th>
+                                <th class="Cancelacion_masiva_stilos">RUC_DNI </th>
+                                <th class="Cancelacion_masiva_stilos">CLIENTE</th>
+
+                                <th class="Cancelacion_masiva_stilos Cancelacion_formatear_stilos">TOTAL_FACTURACION</th>
+                                <th class="Cancelacion_masiva_stilos Cancelacion_formatear_stilos">TOTAL_ENTREGA</th>
+                                <th class="Cancelacion_masiva_stilos Cancelacion_formatear_stilos">TOTAL_DEVUELTO</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in listaPedido_Cab" cellpadding="0" cellspacing="0" ng-class="{'seleccionado': seleccionado == {{item.id_Pedido_Cab}}}">
+                                <td> {{$index+1}} </td>
+                                <td class="cursor" ng-click="ActualizarPedidosDet(item);"> {{item.id_Pedido_Cab}} </td>
+                                <td class="cursor" ng-click="ActualizarPedidosDet(item);"> {{item.Numero_Pedido}} </td>
+                                <td class="cursor" ng-click="ActualizarPedidosDet(item);"> {{item.Numero_Documento}} </td>
+
+                                <td class="cursor" ng-click="ActualizarPedidosDet(item);"> {{item.fechaEmision_Pedido_Cab}} </td>
+                                <td class="cursor" ng-click="ActualizarPedidosDet(item);"> {{item.nroDoc_Cliente}}   </td>
+                                <td class="cursor" ng-click="ActualizarPedidosDet(item);"> <div style="width:250px !important;"> {{item.nombres_Cliente}} </div>   </td>
+
+                                <td class="Cancelacion_formatear_stilos"> {{item.total_facturacion}} </td>
+                                <td class="Cancelacion_formatear_stilos"> {{item.total_entrega}} </td>
+                                <td class="Cancelacion_formatear_stilos"> {{item.total_devuelto}} </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="form-inline ">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div style="text-align:center">
+                        <div class="cssload-speeding-wheel" ng-if="loaderfiltrosDet"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br />
+        <div class="row">
+            <div class="col-md-12 card">
+                <center><h6> <button type="button" class="btn btn-default"  style="background-color:aquamarine" disabled></button>  <b> DETALLE DE PEDIDOS</b> </h6></center>
+                <div id="form_detalle" style="display:none">
+                    <table id="tbl_detalle" class="table Cancelacion_tabla_stilos">
+                        <thead>
+                            <tr>
+                                <th class="Cancelacion_masiva_stilos">#</th>
+                                <th class="Cancelacion_masiva_stilos">ID</th>
+                                <th class="Cancelacion_masiva_stilos">CODIGO</th>
+                                <th class="Cancelacion_masiva_stilos">DESCRIPCION</th>
+                                <th class="Cancelacion_masiva_stilos">UM</th>
+                                <th class="Cancelacion_masiva_stilos">PRECIO </th>
+                                <th class="Cancelacion_masiva_stilos">CANT_PEDIDO</th>
+                                <th class="Cancelacion_masiva_stilos">CANT_APROBADA</th>
+                                <th class="Cancelacion_masiva_stilos">TOTAL</th>
+                                <th class="Cancelacion_masiva_stilos">ESTADO</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in listaPedido_Det" cellpadding="0" cellspacing="0" ng-class="{'resaltado': item.estado == 0}">
+                                <td> {{$index+1}} </td>
+                                <td> {{item.id_Pedido_Cab}} </td>
+                                <td> {{item.codigo1_Producto}} </td>
+                                <td> {{item.nombre_Producto}} </td>
+                                <td> {{item.abreviatura_UnidadMedida}}  </td>
+                                <td class="Cancelacion_formatear_stilos"> {{item.precioVenta_Pedido_Det}} </td>
+                                <td class="Cancelacion_formatear_stilos"> {{item.cantidad_pedido}} </td>
+                                <td class="Cancelacion_formatear_stilos">{{item.cantidad_aprobada}} </td>
+                                <td class="Cancelacion_formatear_stilos">{{item.total}} </td>
+                                <td>{{item.estado}} </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <hr />
+        <div class="text-center">
+            <button ng-click="AbrirModal_AprobarDevolucion();" id="btnAprobar" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> Aprobar Devolucion</button>
+        </div>
+    </section>
+
+
+    <div id="modalAprobarDevolucion" class="modal fade bd-example-modal-lg ModalBorderSombra" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style=" width: 400px;">
+            <div class="modal-content">
+                <div class="modal-header" style=" background-color:#2B4C6C;">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myLargeModalLabel" style="color:white !important; font-size: 15px;"> Aprobar Devolucion</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="loaderModal" ng-if="loader_modal_ayuda"></div>
+                    <div class="row contenedorGrupo">
+                        <fieldset>
+                            <legend>Datos</legend>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label style="color:#2B4C6C"> Fecha</label>
+                                    <input type="text" class="form-control datepicker" ng-model="Objeto_ParametroFiltro.fecha_aprovacion" id="dtp_fecha_aprobar" placeholder="dia/mes/anio">
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label style="color:#2B4C6C"> Numero de nota de credito</label>
+                                    <input type="text" id="txt_email" class="form-control" ng-model="Objeto_ParametroFiltro.numero_notacredito" maxlength="150" placeholder="Numero de Nota de Credito" style="text-align:left; font-size: 14px !important;color:red" >
+                                </div>
+                            </div>
+
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="modal-footer " style=" background-color: #2B4C6C;">
+                    <a class="btn btn-default" ng-click="generar_AprobarDevolucion();"><span class="glyphicon glyphicon-floppy-saved"></span> Guardar</a>
+                    <a class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-sign"></span> Cerrar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+

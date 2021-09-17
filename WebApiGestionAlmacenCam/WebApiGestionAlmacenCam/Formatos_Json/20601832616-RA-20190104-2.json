@@ -1,0 +1,174 @@
+{
+  "_D": "urn:sunat:names:specification:ubl:peru:schema:xsd:VoidedDocuments-1",
+  "_S": "urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2",
+  "_B": "urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2",
+  "_E": "urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2",
+  "_SUNAT": "urn:sunat:names:specification:ubl:peru:schema:xsd:SunatAggregateComponents-1",
+  "VoidedDocuments": [
+    {
+      "UBLVersionID": [
+        {
+          "IdentifierContent": "2.0"
+        }
+      ],
+      "CustomizationID": [
+        {
+          "IdentifierContent": "1.0"
+        }
+      ],
+      "ID": [
+        {
+          "IdentifierContent": "RA-20190104-2"
+        }
+      ],
+      "ReferenceDate": [
+        {
+          "DateContent": "2019-01-04"
+        }
+      ],
+      "IssueDate": [
+        {
+          "DateContent": "2019-01-04"
+        }
+      ],
+      "Signature": [
+        {
+          "ID": [
+            {
+              "IdentifierContent": "IDSignature"
+            }
+          ],
+          "SignatoryParty": [
+            {
+              "PartyIdentification": [
+                {
+                  "ID": [
+                    {
+                      "IdentifierContent": "20601832616"
+                    }
+                  ]
+                }
+              ],
+              "PartyName": [
+                {
+                  "Name": [
+                    {
+                      "TextContent": "CORPORACION BELCEN S.A.C. - BELCEN S.A.C. "
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "DigitalSignatureAttachment": [
+            {
+              "ExternalReference": [
+                {
+                  "URI": [
+                    {
+                      "TextContent": "IDSignature"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "AccountingSupplierParty": [
+        {
+          "CustomerAssignedAccountID": [
+            {
+              "IdentifierContent": "20601832616"
+            }
+          ],
+          "AdditionalAccountID": [
+            {
+              "IdentifierContent": "6"
+            }
+          ],
+          "Party": [
+            {
+              "PostalAddress": [
+                {
+                  "ID": [
+                    {
+                      "IdentifierContent": "150122"
+                    }
+                  ],
+                  "StreetName": [
+                    {
+                      "TextContent": "alcazar 1458 rimac"
+                    }
+                  ],
+                  "CityName": [
+                    {
+                      "TextContent": "Lima"
+                    }
+                  ],
+                  "CountrySubentity": [
+                    {
+                      "TextContent": "LIMA"
+                    }
+                  ],
+                  "District": [
+                    {
+                      "TextContent": "Santa Anita"
+                    }
+                  ],
+                  "Country": [
+                    {
+                      "IdentificationCode": [
+                        {
+                          "CodeContent": "PE"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "PartyLegalEntity": [
+                {
+                  "RegistrationName": [
+                    {
+                      "TextContent": "20601832616"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "VoidedDocumentsLine": [
+        {
+          "LineID": [
+            {
+              "IdentifierContent": 1
+            }
+          ],
+          "DocumentTypeCode": [
+            {
+              "CodeContent": "03"
+            }
+          ],
+          "DocumentSerialID": [
+            {
+              "TextContent": "B001"
+            }
+          ],
+          "DocumentNumberID": [
+            {
+              "TextContent": "0000705"
+            }
+          ],
+          "VoidReasonDescription": [
+            {
+              "TextContent": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

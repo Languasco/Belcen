@@ -1,0 +1,263 @@
+﻿
+ 
+<style>
+    label {
+        font-size: 11px;
+        font-family: tahoma;
+        color: #2c5ca9;
+        font-weight: 600;
+    }
+
+    .contentCombo .select2-container {
+        margin-left: 0px;
+        margin-top: 0px;
+        width: 95% !important;
+    }
+
+    .select2-results .select2-result-label {
+        font-size: 11px !important;
+    }
+
+    #form_detalle {
+        height: 385px;
+    }
+
+    #tbl_detalle {
+        width: 95% !important;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #00c292;
+    }
+
+    .contenedorGrupo legend {
+        font-size: 12px !important;
+        font-family: GillSans, Calibri, Trebuchet, sans-serif;
+        color: #2c5ca9;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+
+    .contenedorGrupo fieldset {
+        padding-left: 20px;
+        padding-right: 20px;
+        border: 1px solid #2c4d6d;
+        padding-bottom: 10px;
+        border-radius: 4px;
+    }
+
+    .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+        padding: 7px 7px;
+    }
+
+    .jq-toast-wrap {
+        width: 350px;
+    }
+
+    /*tr:nth-child(even) {
+        background-color: #DFFFDE
+    }*/
+
+    .table tbody td {
+        color: #275420;
+        border-left: 1px solid #C6FFC2;
+        font-size: 11px;
+        border-bottom: 1px solid #E1EEF4;
+        font-weight: normal;
+    }
+
+    .sweet-alert p {
+        line-height: 30px;
+        font-size: 13px;
+        font-family: monospace;
+        color: red;
+    }
+
+    .btn-success, .btn-success.disabled {
+        background: rgb(54, 117, 45);
+        border: rgb(54, 117, 45);
+    }
+
+    tr:hover {
+        background-color: #ffff99;
+    }
+
+    .Cancelacion_masiva_stilos {
+        background-color: #36752D;
+        color: white;
+        text-align: center
+    }
+
+    .Cancelacion_tabla_stilos tbody tr {
+        /*font-family: 'Montserrat', sans-serif;*/
+        font-size: 9px;
+    }
+
+    .Cancelacion_masiva_stilos_input {
+        margin-top: -5px;
+        margin-bottom: -10px;
+        height: 25px;
+        text-align: right;
+        color: red;
+        background-color: beige;
+        font-family: tahoma;
+        font-size: 13px;
+    }
+
+    .Cancelacion_centrar_stilos {
+        text-align: center !important
+    }
+
+    .Cancelacion_formatear_stilos {
+        text-align: right;
+        font-size: 13px;
+    }
+
+    .Cancelacion_medioPago_stilos {
+        background-color: #16a085;
+        cursor: pointer
+    }
+
+    /* input file */
+    .botonFile {
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+        width: 98%;
+    }
+
+        .botonFile .btn {
+            border: 2px solid gray;
+            color: gray;
+            background-color: white;
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: bold;
+            width: 100%;
+        }
+
+    /* Fin de input file */
+
+
+    .sweet-alert p {
+        color: #2c5ca9 !important;
+        font-size: 13px !important;
+        font-family: tahoma !important;
+        text-align: center !important;
+        font-weight: 600 !important;
+    }
+
+    .contentRegistro {
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .well {
+        background: #f5f5dc;
+    }
+</style>
+
+<html lang="en">
+<body>
+    <div class=" container-fluid" ng-init="initAll();">
+        <div class="panel-body ">
+
+            <div class="well ContentFilters contentCombo" style=" padding-bottom: 10px;padding-top: 0px; color: white;">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="row" style=" margin-top: 10px;">
+                            <div class="col-sm-6 col-md-3">
+                                <label for="cbo_local">Zona Venta</label>  
+                                <select class="selectFiltros" id="cbo_local" ng-model="Objeto_ParametroFiltro.id_local" ng-change="change_Local_Almacen(Objeto_ParametroFiltro.id_local);">
+                                    <option value="0">[ ----  TODOS  --- ]</option>
+                                    <option ng-repeat="item in Lista_Local" value="{{item.id}}">{{item.descripcion}}</option>
+                                </select>
+
+                            </div>
+                            <div class="col-sm-6 col-md-3">
+                                <label for="cbo_almacen">Almacen</label>  
+                                <select class="selectFiltros" id="cbo_almacen" ng-model="Objeto_ParametroFiltro.id_almacen" ng-change="change_almacen_anexo(Objeto_ParametroFiltro.id_almacen);">
+                                    <option value="0">[ ----  TODOS  --- ]</option>
+                                    <option ng-repeat="item in Lista_Almacen" value="{{item.id_Almacen}}">{{item.descripcion_Almacen}}</option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-6 col-md-3">
+                                <label for="cbo_anexo" class="control-label"> Anexo </label>  
+                                <select class="selectFiltros" id="cbo_anexo" style="width:95%;" data-style="btn-default" ng-model="Objeto_ParametroFiltro.id_Anexos">
+                                    <option value="0">[ ----  TODOS  --- ]</option>
+                                    <option ng-repeat="item in lista_anexos" value="{{item.id}}">{{item.descripcion}}</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-6 col-md-3">
+                                <div class="form-group" style=" margin-top: 17px; margin-bottom: 10px;">
+                                    <button class="btn btn-block btn-default" ng-click="listando_documentosNotasCreditoDebito();"><span class="glyphicon glyphicon-refresh"></span> Actualizar</button>
+                                </div>
+                            </div>
+                        </div>
+ 
+
+
+                    </div>
+                </div>
+            </div>
+            <div id="id_alertas">
+                <h4 style="margin-top:-15px; font-size: 22px;color: orangered; text-align:center">{{NombreTipoDocumento}} ...</h4>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 col-md-12">
+                    <div class="loaderModal" ng-if="loader_modal"></div>
+                </div>
+            </div>
+            <!--  Cabecera del pedido -->
+            <div id="form_detalle" style="display:none">
+                <table id="tbl_detalle" class="table Cancelacion_tabla_stilos">
+                    <thead>
+                        <tr style="font-family: sans-serif; font-size: 10px;">
+                            <th class="Cancelacion_masiva_stilos">#</th>
+                            <th class="Cancelacion_masiva_stilos">CLIENTE</th>
+                            <th class="Cancelacion_masiva_stilos">TIPO_DOCUMENTO</th>
+                            <th class="Cancelacion_masiva_stilos">NRO_DOCUMENTO</th>
+                            <th class="Cancelacion_masiva_stilos">FORMA_PAGO</th>
+                            <th class="Cancelacion_masiva_stilos">FECHA_EMISION </th>
+                            <th class="Cancelacion_masiva_stilos">FECHA_VENCIMIENTO</th>
+                            <th class="Cancelacion_masiva_stilos">MENSAJE</th>
+                            <th class="text-left" style=" background-color: rgb(54, 117, 45);">
+                                <div class="checkbox clip-check check-danger checkbox-inline" style="   margin-bottom: -5px;">
+                                    <input type="checkbox" id="checkboxAll" value="1" ng-model="checkedAll" ng-click="checkedAll_doc(checkedAll)">
+                                    <label for="checkboxAll" style="color:white">
+                                        Marcar
+                                    </label>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in listadetalle_documentos" style="font-family: monospace !important; font-size: 9px; " cellpadding="0" cellspacing="0">
+                            <td> {{$index+1}} </td>
+                            <td> {{item.nombres_Cliente}} </td>
+                            <td> {{item.Descripcion_TipoDocumento}} </td>
+                            <td class="Cancelacion_centrar_stilos"> {{item.Numero_Documento}} </td>
+                            <td> <div style="width:110px;">  {{item.forma_pago}}   </div>   </td>
+                            <td class="Cancelacion_centrar_stilos"> {{item.fecha_emision}} </td>
+                            <td class="Cancelacion_centrar_stilos"> {{item.fecha_vencimiento}} </td>
+                            <td>   {{item.mensaje}}    </td>
+                            <td class="text-left">
+                                <div style="margin-top: -7px;">
+                                    <input type="checkbox" id="chk_{{$index}}" value="true" ng-model="item.checkeado">
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <hr />
+            <div class="Cancelacion_centrar_stilos" style="margin-top: -10px;">
+                <button class="btn btn-success" id="btn_cancelar" disabled ng-click="generando_reenvio_Documentos_new();"><span class="glyphicon glyphicon-floppy-saved"></span> Enviar</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

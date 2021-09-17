@@ -1,0 +1,324 @@
+﻿
+<style>
+    #listMenu span, a {
+        text-align: left !important;
+    }
+
+    .contentRegistro fieldset legend {
+        text-align: left !important;
+    }
+
+    .jq-toast-wrap {
+        width: 300px !important;
+    }
+
+    .floating-labels label {
+        top: -6px;
+    }
+
+    .contentRegistro .select2-container {
+        margin-left: 0px;
+        margin-top: 2px;
+    }
+
+    #paddin-lef {
+        padding-left: 40px !important;
+    }
+
+    .contentCombo .select2-container {
+        margin-left: 0px;
+        margin-top: 0px;
+        width: 95% !important;
+    }
+
+    .ContentFilters .table {
+        display: table;
+    }
+
+    .contentRegistro label {
+        font-size: 11px;
+        font-family: tahoma;
+        color: #2c5ca9;
+        font-weight: 600;
+    }
+
+    .contentRegistro {
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .ModalBorderSombra .modal-content {
+        box-shadow: inset 0px 0px 7px rgba(0,0,0,.5), 1px 1px 5px #fff;
+    }
+
+
+
+    .resaltado {
+        color: #ff94a7 !important;
+    }
+
+    .text-right {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+</style>
+
+
+<div class=" container" ng-init="initAll();">
+    <div class="panel-body ContentFilters contentCombo" style=" margin-bottom: -35px;">
+        <div class="well" style="background-color: #2b4c6c;padding-bottom: 10px; padding-top: 0px;color: #fff;    width: 100%;">
+            <div class="row">
+                <div class="col-sm-12  ">
+                    <div class="row col-sm-5" style="padding-right: 20px;">
+                        <br />
+                        <input id="searchStr" data-ng-model="searchStr"  type="text" placeholder="Buscar usuario..." style="width: 120%;" class="form-control btn-block inputSearch" autocomplete="off">
+                    </div>
+                    <div class="col-sm-2">
+                        <label for="cbo_acceso">ACCESO</label>
+                        <select class="select_modal" id="cboaccesoFilter" ng-model="Objeto_ParametroFiltro.acceso" data-style="btn-default" style=" font-size: 15px;   color: #0e0e0e;" ng-change="get_BuscarUsuarios()">
+                            <option ng-repeat="item in listAccess" value="{{item.id}}">{{item.descripcion}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <label for="cbo_ESTADO">ESTADO</label>
+                        <select class="select_modal" id="cboestadoFilter" ng-model="Objeto_ParametroFiltro.estado" data-style="btn-default" style=" font-size: 15px;   color: #0e0e0e;" ng-change="get_BuscarUsuarios()">
+                            <option ng-repeat="item in listStatus" value="{{item.id}}">{{item.descripcion}}</option>
+                        </select>
+                    </div>
+                    <div class="row col-sm-3">
+                        <br />
+                        @*<button id="btn-material" class="btn btn-primary btn-sm m-l-10" ng-click="get_BuscarUsuarios();">
+                            <i class="glyphicon glyphicon-search"></i> Buscar
+                        </button>*@
+                        <button id="btn-material" class="btn btn-outline btn-primary btn-sm m-l-10" ng-click="Open_New_Modal();">
+                            <i class="glyphicon glyphicon-plus"></i>Nuevo
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body ContentFilters">
+        <div class="form-inline ">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div style="text-align:center">
+                        <div class="cssload-speeding-wheel" ng-if="loader"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="white-box">
+                    <table id="tbl_usuario" class="table m-b-0 toggle-arrow-tiny table-hover table-bordered" data-page-size="10">
+                        <thead>
+                            <tr>
+                                <th data-toggle="true">#</th>
+                                <th data-toggle="true">Nro Doc</th>
+                                <th data-toggle="true">Nombres y Apellidos</th>
+                                <th data-hide=""> Usuario</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in Lista_Usuarios" style="{{item.estado == 0 | iif : 'background-color: rgb(230, 115, 115) !important;color:#fff;font-weight: 600;'}}">
+                                <td>{{$index + 1}}</td>
+                                <td>{{item.nro_doc}}</td>
+                                <td>{{item.nombres}} {{item.apellidos}}</td>
+                                <td>{{item.login_usuario}}</td>
+                                <td>{{item.estado == 0 | iif : "Anulado" : "Activado"}}</td>
+                                <td>
+                                    <button type="button" class="btn btn-primary btn-circle " ng-click="Open_Update_Modal(item);" data-toggle="tooltip" title="EDITAR"><i class=" ti-pencil-alt"></i></button>
+                                    @*<button type="button" class="btn btn-success btn-circle" ng-click="getAuditoria(item)"><i class="fa fa-cog"></i> </button>*@
+                                    <button type="button" class="btn btn-warning btn-circle" ng-click="getAnular(item);" style="background-color: #ff6849; border-color: #ff6849;" title="ANULAR"><i class="fa fa-trash"></i> </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="text-right">
+                        <ul class="pagination pagination-split m-t-30"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="modalMantenimiento" class="modal fade bd-example-modal-lg " tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header"  style="background-color: #2b4c6c ">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myLargeModalLabel" style="color:white !important">{{Flag_modoEdicion ? 'Actualizar': 'Registrar'}} {{titleModal}}</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="loaderModal" ng-if="loaderSave"></div>
+
+                <div class="contentRegistro contentCombo floating-labels form-inline">
+                    <fieldset>
+                        <legend>Datos Generales</legend>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="cbo_tipoDoc_personal">Tipo de Documento</label> <span class="help-block"></span>
+                                <select class="select_modals" id="cbo_tipoDoc_personal" style="width:95%;" data-style="btn-default" ng-model="objeto_parametros.tipo_doc">
+                                    <option value="0">[ ----   Seleccione  --- ]</option>
+                                    <option ng-repeat="item in Lista_TipoDoc" value="{{item.id}}">{{item.des}}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" numbers-onlyg id="nro_doc" maxlength="20" ng-model="objeto_parametros.nro_doc"><span class="highlight"></span> <span class="bar"></span>
+                                <label for="nroDoc_personal">Nro de Documento</label> <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" autocomplete="off" id="apellidos_personal" maxlength="150" ng-model="objeto_parametros.apellidos"><span class="highlight"></span> <span class="bar"></span>
+                                <label for="apellidos_personal">Apellidos</label> <span class="help-block"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" autocomplete="off" id="nombres_personal" maxlength="150" ng-model="objeto_parametros.nombres"><span class="highlight"></span> <span class="bar"></span>
+                                <label for="nombres_personal">Nombres</label> <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="email" class="form-control" id="email_personal" maxlength="100" ng-model="objeto_parametros.email"><span class="highlight"></span> <span class="bar"></span>
+                                <label for="email_personal">Email</label> <span class="help-block"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="cbo_celular" maxlength="150" ng-model="objeto_parametros.nro_celular"><span class="highlight"></span> <span class="bar"></span>
+                                <label for="cbo_celular">Nro. Celular</label> <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom: 20px;">
+                            <div class="col-md-6">
+                                <label for="cbo_id_cargo_personal">Cargo</label> <span class="help-block"></span>
+                                <select class="select_modal" id="cbo_id_cargo_personal" data-style="btn-default" ng-model="objeto_parametros.id_cargo">
+                                    <option value="0">[ ----   Seleccione  --- ]</option>
+                                    <option ng-repeat="item in Lista_Cargo" value="{{item.id_CargoPersonal}}">{{item.descripcion_CargoPersonal}}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="cbo_id_perfil">Perfil</label> <span class="help-block"></span>
+                                <select class="select_modal" id="cbo_id_perfil" style="width:95%;" data-style="btn-default" ng-model="objeto_parametros.id_perfil">
+                                    <option value="0">[ ----   Seleccione  --- ]</option>
+                                    <option ng-repeat="item in Lista_Perfil" value="{{item.id_perfil}}">{{item.des_perfil}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div ng-if="objeto_parametros.acceso_movil" class="row">
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" autocomplete="off" id="cbo_codigo" maxlength="150" ng-model="objeto_parametros.codigo"><span class="highlight"></span> <span class="bar"></span>
+                                <label for="cbo_codigo">Cod. Interno</label> <span class="help-block"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="cbo_tip_personal">Tipo de Personal</label> <span class="help-block"></span>
+                                <select class="select_modal_type" id="cbo_tip_personal" style="width:95%;" data-style="btn-default" ng-model="objeto_parametros.tipo">
+                                    <option value="0">[ ----   Seleccione  --- ]</option>
+                                    <option ng-repeat="item in Lista_TipoPersonal" value="{{item.id}}">{{item.des}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </div>
+
+                <div class="contentRegistro floating-labels form-inline">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <fieldset>
+                                <legend>Login Acceso</legend>
+                                
+                                <div class="row" style="margin-bottom: 20px;">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="checkbox checkbox-success">
+                                                <input id="checkWeb" type="checkbox" ng-model="objeto_parametros.acceso_web" ng-change="accessWeb(objeto_parametros.acceso_web);">
+                                                <label for="checkWeb" class="estadoModal">Web</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="checkbox checkbox-success">
+                                                <input id="checkMovil" type="checkbox" ng-model="objeto_parametros.acceso_movil" ng-change="accessMovil(objeto_parametros.acceso_movil);">
+                                                <label for="checkMovil" class="estadoModal">Movíl</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" id="nombreUsario_personal" maxlength="50" ng-model="objeto_parametros.login_usuario"><span class="highlight"></span> <span class="bar"></span>
+                                        <label for="nombreUsario_personal">Usuario</label> <span class="help-block"></span>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <input type="password" class="form-control" id="contrasenia_personal" maxlength="30" ng-model="objeto_parametros.contrasenia_usuario"><span class="highlight"></span> <span class="bar"></span>
+                                        <label for="contrasenia_personal">Contraseña</label> <span class="help-block"></span>
+                                    </div>
+                                </div>
+
+                                <br />
+                            </fieldset>
+                        </div>
+                    </div>
+
+                        <div ng-if="objeto_parametros.acceso_movil" class="row">
+                            <div class="col-md-12">
+                                <fieldset>
+                                    <legend>Envio en Linea</legend>
+                                    <div class="row col-sm-6" style=" margin-top: -10px;">
+                                        <div class="form-group">
+                                            <div class="checkbox checkbox-success">
+                                                <input id="chk_envioenLinea" type="checkbox" ng-model="objEstados_Envio.activo" ng-change="changeStatus_Envio(objEstados_Envio.activo);">
+                                                <label for="chk_envioenLinea" class="estadoModal" style="color : {{objEstados_Envio.colorText}}">{{objEstados_Envio.text}}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-md-12">
+                                <fieldset>
+                                    <legend>Estado</legend>
+                                    <div class="row " style=" margin-top: -10px;">
+                                        <div class="col-sm-6 ">
+                                            <div class="form-group">
+                                                <div class="checkbox checkbox-success">
+                                                    <input id="checkbox1" type="checkbox" ng-model="objEstados.activo" ng-change="changeStatus(objEstados.activo);">
+                                                    <label for="checkbox1" class="estadoModal" style="color : {{objEstados.colorText}}">{{objEstados.text}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="text" id="fechaCreacion" maxlength="50" ng-model="objeto_parametros.fecha_cese" class="form-control datepicker" placeholder="dia/mes/año"><span class="highlight"></span> <span class="bar"></span>
+                                            <label for="fechaCreacion">Fecha de Cese</label> <span class="help-block"></span>
+                                        </div>
+                                    </div>
+
+                                </fieldset>
+                            </div>
+                        </div>
+                </div>
+
+            </div>
+            <div class="modal-footer ">
+                <a class="btn btn-primary" ng-click="GuardarRegistro();"> <span class="glyphicon glyphicon-floppy-disk"></span> {{Flag_modoEdicion ? 'Actualizar': 'Agregar'}}</a>
+                <a class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-sign"></span> Cerrar</a>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+
+

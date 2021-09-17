@@ -1,0 +1,406 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C69005CD-A1BA-4B88-9AE9-C81C8A21B1E1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Entidades</RootNamespace>
+    <AssemblyName>Entidades</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Accessos\PersonalAccessAndData.cs" />
+    <Compile Include="Accessos\Usuario_Almacen_E.cs" />
+    <Compile Include="Accessos\Usuario_Local_E.cs" />
+    <Compile Include="Almacen\Procesos\IngresoFacturas_E.cs" />
+    <Compile Include="Cobranzas\CancelacionMasiva_doc_E.cs" />
+    <Compile Include="Cobranzas\CobranzaManual.cs" />
+    <Compile Include="Cobranzas\detalle_cancelaciones_E.cs" />
+    <Compile Include="Cobranzas\CobranzaReporte_E.cs" />
+    <Compile Include="EntityGestionAlmacenCam.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntityGestionAlmacenCam.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityGestionAlmacenCam.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityGestionAlmacenCam.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntityGestionAlmacenCam.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorVar\ObjErrors.cs" />
+    <Compile Include="Facturacion\Procesos\CancelacionDocumentosVendedor_E.cs" />
+    <Compile Include="Facturacion\Procesos\DocumentoVenta_E.cs" />
+    <Compile Include="Facturacion\Procesos\Error_Documentos_E.cs" />
+    <Compile Include="Facturacion\Procesos\Guias_E.cs" />
+    <Compile Include="Facturacion\Procesos\Items_E.cs" />
+    <Compile Include="Facturacion\Procesos\Pedidos_E.cs" />
+    <Compile Include="Facturacion\Procesos\Respuesta_E.cs" />
+    <Compile Include="Facturacion\Procesos\revisionPedidoE.cs" />
+    <Compile Include="Facturacion\Reporte\Registro_ventas.cs" />
+    <Compile Include="Facturacion\Reporte\PagosVendedor_E.cs" />
+    <Compile Include="Mantenimiento\Proceso\ListaPrecio.cs" />
+    <Compile Include="Mantenimiento\Proceso\PersonalNew.cs" />
+    <Compile Include="Mantenimiento\Reportes\ReporteStock_E.cs" />
+    <Compile Include="Mantenimiento\usuarios\Usuario.cs" />
+    <Compile Include="Procesos\Movil\Ent_FacturacionCancelacion.cs" />
+    <Compile Include="Procesos\Movil\ENT_stockAlmacen.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reparto\Reporte\ReporteStock_Reparto_E.cs" />
+    <Compile Include="StockAlmacen\StockAlmacen_Ent.cs" />
+    <Compile Include="tbl_Alm_Almacen.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Alm_DetalleVentas.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Alm_Guias_Cab.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Alm_Guias_Det.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Alm_Movimientos.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Alm_Producto.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Alm_ProductoCategoria.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Alm_ProductoLinea.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Alm_ProductoMarca.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Alm_ProductoModeloMarca.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Alm_ProductoSubLinea.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Alm_Proveedor.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Alm_Transferencia_Cab.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Alm_Transferencia_Det.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Alm_UnidadMedida.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Anexos.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_ArqueoCaja_Cab.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_ArqueoCaja_Cobranza.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_ArqueoCaja_Depositos.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_ArqueoCaja_Devolucion.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_ArqueoCaja_Egresos.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_ArqueoCaja_Moneda.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_ArqueoCaja_PagoProveedor.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_ArqueoCaja_Ventas.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tbl_Bancos.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_BilleteMoneda.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tbl_Cargo.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tbl_Clientes.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tbl_Clientes_Fotos.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tbl_Clientes_Programados.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Com_Canales_Negocio.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Com_Cliente.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Com_Cliente_Credito.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Com_CondicionFacturacion.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tbl_Com_Facturas_Cab.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tbl_Com_Facturas_Cancelacion_Cab.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tbl_Com_Facturas_Det.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Com_FormaPago.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Com_Giros_Negocio.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Com_Pedidos_Cab.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tbl_Com_Pedidos_Det.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Com_PuntoVenta.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Com_TipoDocumento.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tbl_Cuadrillas.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tbl_Cuadrilla_Personal.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Definicion_Opciones.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tbl_Distritos.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Empresas.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TBL_EstadoCelular.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Estados.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tbl_Fac_Facturas_Cab.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tbl_Fac_Facturas_Compras_cab.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tbl_Fac_Facturas_Compras_det.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tbl_Fac_Facturas_Det.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tbl_Fac_FormaPago.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Fac_ListaPrecios.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tbl_Fac_Pedidos_Cab.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tbl_Fac_Pedidos_Det.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tbl_Fac_PuntosVenta.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tbl_Fac_PuntosVenta_Series.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_fac_tipo_NC_ND_electronico.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_GiroNegocio.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tbl_GrupoTabla_Cab.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tbl_GrupoTabla_Det.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Locales.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TBL_MATERIALES_STOCK_AYUDA.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Moneda.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_MotivosAnulacion.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_numero_correlativo.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TBL_Operarios_RegistroGPS.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TBL_Parametros.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Perfil.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Personal.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Promocion_Canasta.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Promocion_Canasta_Det.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Promocion_Productos.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Promocion_Productos_Configuracion.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Ruta_Venta.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_serie_local.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_TipoCambio.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tbl_TipoDocumentos.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Transportista.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Ubigeo.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Ubigeos.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Usuarios.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Usuarios_Almacen.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Usuarios_Locales.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Vehiculo.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_vendedor.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Web_Aceesos.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Zonas_Venta.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Versiones.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="EntityGestionAlmacenCam.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>EntityGestionAlmacenCam.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="EntityGestionAlmacenCam.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>EntityGestionAlmacenCam.edmx</DependentUpon>
+      <LastGenOutput>EntityGestionAlmacenCam.Context.cs</LastGenOutput>
+    </None>
+    <None Include="EntityGestionAlmacenCam.edmx.diagram">
+      <DependentUpon>EntityGestionAlmacenCam.edmx</DependentUpon>
+    </None>
+    <None Include="EntityGestionAlmacenCam.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>EntityGestionAlmacenCam.edmx</DependentUpon>
+      <LastGenOutput>EntityGestionAlmacenCam.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

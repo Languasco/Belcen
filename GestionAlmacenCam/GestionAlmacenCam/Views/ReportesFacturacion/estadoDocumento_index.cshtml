@@ -1,0 +1,431 @@
+﻿
+<style>
+    .contentCombo .select2-container {
+        margin-left: 0px;
+        margin-top: -10px;
+        width: 98% !important;
+    }
+
+    .checkbox, .radio {
+        margin: 10px;
+    }
+
+    .checkbox, .radio {
+        position: relative;
+    }
+
+
+    .label-check label {
+        padding-left: 20px;
+    }
+
+    .label-check input[type="radio"],
+    .label-check input[type="radio"]:focus {
+        outline: none;
+    }
+
+        .label-check input[type="radio"] + label:before,
+        .label-check input[type="radio"] + label:after {
+            content: "";
+            display: block;
+            position: absolute;
+            left: -10px;
+            top: 1px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            -webkit-transition: 240ms;
+            -o-transition: 240ms;
+            transition: 240ms;
+        }
+
+        .label-check input[type="radio"] + label:before {
+            left: -8px;
+            top: 3px;
+        }
+
+        .label-check input[type="radio"] + label:before {
+            background-color: #2196f3;
+            -webkit-transform: scale(0);
+            -ms-transform: scale(0);
+            -o-transform: scale(0);
+            transform: scale(0);
+        }
+
+        .label-check input[type="radio"] + label:after {
+            top: 1px;
+            border: 2px solid #666666;
+            z-index: 1;
+        }
+
+        .label-check input[type="radio"]:checked + label:before {
+            -webkit-transform: scale(0.6);
+            -ms-transform: scale(0.6);
+            -o-transform: scale(0.6);
+            transform: scale(0.6);
+        }
+
+        .label-check input[type="radio"]:disabled:checked + label:before {
+            background-color: #bbbbbb;
+        }
+
+        .label-check input[type="radio"]:checked + label:after {
+            border-color: #2196f3;
+        }
+
+        .label-check input[type="radio"]:disabled + label:after,
+        .label-check input[type="radio"]:disabled:checked + label:after {
+            border-color: #bbbbbb;
+        }
+
+    .radio label {
+        font-weight: 600;
+        font-size: 16px;
+        margin-bottom: -2px;
+    }
+</style>
+
+<div class="container-fluid" ng-init="initAll();">
+    <div class="panel-body ContentFilters contentCombo">
+
+
+        <div class="well" style="background-color:#dfe4ea;padding-bottom:0px;padding-top:0px">
+                 <div class="row">
+                    <div class="col-sm-6 col-md-6">
+                        <label for="cbo_anexoFiltro" class="control-label"> Anexo </label>
+                        <br />
+                        <select class="selectFiltros" id="cbo_anexoFiltro" style="width:95%;" data-style="btn-default" ng-model="Objeto_ParametroFiltro.idAnexo" ng-change="listados_changeAnexoZonasFiltro(Objeto_ParametroFiltro.idAnexo)">
+                            <option value="0">[ ----  SELECCIONE  --- ]</option>
+                            <option ng-repeat="item in lista_anexos" value="{{item.id}}">{{item.descripcion}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <label for="cbo_zonasFiltro" class="control-label"> Zona de Venta </label>
+                        <br />
+                        <select class="selectFiltros" id="cbo_zonasFiltro" ng-model="Objeto_ParametroFiltro.idZonaVentas">
+                            <option value="0">[ ----  SELECCIONE  --- ]</option>
+                            <option ng-repeat="item in Lista_zonasFiltro" value="{{item.id}}">  {{item.descripcion}} </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-sm-3 col-md-4">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                    <label for="cbo_vendedor">Buscar por:</label> <span class="help-block"></span>
+                                <div class="radio">
+                                    <input id="radio1_Opt1" type="radio" ng-model="Objeto_ParametroFiltro.opcion" value="1" checked ng-click="ClienteChecked();">
+                                    <label for="radio1_Opt1">Cliente</label>
+                                </div>
+                                <div class="radio">
+                                    <input id="radio1_Opt2" type="radio" ng-model="Objeto_ParametroFiltro.opcion" value="2" ng-click="ClienteChecked();">
+                                    <label for="radio1_Opt2"> N° Documento</label>
+                                </div>
+                                <div class="radio">
+                                    <input id="radio1_Opt3" type="radio" ng-model="Objeto_ParametroFiltro.opcion" value="3" ng-click="ClienteChecked();">
+                                    <label for="radio1_Opt3"> Fecha</label>
+                                </div>
+                                <div class="radio">
+                                    <input id="radio1_Opt4" type="radio" ng-model="Objeto_ParametroFiltro.opcion" value="4" ng-click="ClienteChecked();">
+                                    <label for="radio1_Opt4"> Vendedor</label>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                        <br />
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="selected-element animate-show-hide" ng-show="Objeto_ParametroFiltro.opcion == 1 || Objeto_ParametroFiltro.opcion == 4">
+                                    <div class="form-group col-md-12">
+                                        <label for="cbo_vendedor">{{ Objeto_ParametroFiltro.opcion == 1 ? 'Cliente' : 'Vendedor'  }}</label>
+                                        <div class="col-md-12 text-center" style="margin-top: -5px; margin-bottom: 5px;" ng-show="Objeto_ParametroFiltro.opcion == 1">
+                                            <button class="btn btn-block btn-primary" ng-click="Open_New_Modal_AyudaCliente();">{{Objeto_ParametroFiltro.nombre_clienteMostrar}}</button>
+                                        </div>
+                                        <div class="col-md-12 text-center" style="margin-top: -5px; margin-bottom: 5px;" ng-show="Objeto_ParametroFiltro.opcion == 4">
+                                            <button class="btn btn-block btn-warning" ng-click="Open_New_Modal_Ayuda();"> {{ Objeto_ParametroFiltro.label_boton   }} </button>
+                                        </div>
+
+                                        <div class="input-group col-md-12" style="margin-top:6px">
+                                            <input ng-model="Objeto_ParametroFiltro.fechaInicio" id="dtp_fechaIni" type="text" class="form-control datepicker" placeholder="dia/mes/año">
+                                            <span class="input-group-addon bg-primary" style="color:white">al</span>
+                                            <input ng-model="Objeto_ParametroFiltro.fechaFin" id="dtp_fechaFin" type="text" class="form-control datepicker" placeholder="dia/mes/año">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="selected-element animate-show-hide" ng-show="Objeto_ParametroFiltro.opcion == 2">
+                                    <div class="form-group">
+                                        <label class="control-label" style="text-align :left">Nro. Documento</label>
+                                        <br>
+                                        <div class="input-group col-md-12">
+                                            <input ng-model="Objeto_ParametroFiltro.nro_doc" id="dtp_item" type="text" class="form-control" placeholder="N° Doc.">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="selected-element animate-show-hide" ng-show="Objeto_ParametroFiltro.opcion ==  3">
+                                    <div class="form-group">
+                                        <label class="control-label" style="text-align :left">Rango de Fechas</label>
+                                        <br>
+                                        <div class="input-group col-md-12">
+                                            <input ng-model="Objeto_ParametroFiltro.fecha_ini" id="dtp_fechaIni" type="text" class="form-control datepicker" placeholder="dia/mes/año">
+                                            <span class="input-group-addon bg-primary" style="color:white">al</span>
+                                            <input ng-model="Objeto_ParametroFiltro.fecha_fin" id="dtp_fechaFin" type="text" class="form-control datepicker" placeholder="dia/mes/año">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class=" col-sm-3  col-md-4">
+                        <br />
+                        <br />
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button class="btn btn-block btn-success" ng-click="GenerarReporte();"><span class="glyphicon glyphicon-refresh"></span> Mostrar Reporte</button>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+
+
+                <a id="id_link" href="" download style="display:none">link</a>
+
+                <div class="form-inline ">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div style="text-align:center">
+                                <div class="cssload-speeding-wheel" ng-if="loaderSave"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+
+            <div class="row">
+                <div class="col-sm-12">
+
+                    <div class="white-box">
+
+                        <div class="row" style=" margin-bottom: 5px;">
+                            <div class="col-sm-12" style=" margin-top: 1px;">
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-addon">Buscar</span>
+                                    <input id="inputSearch" type="text" placeholder="Busqueda General . . " style="width:100%" class="form-control btn-block inputSearch" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+
+                        <table id="tablaPagosVendedor" class="table m-b-0 toggle-arrow-tiny" data-page-size="10">
+                            <thead style="background:rgba(17, 96, 142, 0.18)">
+                                <tr>
+                                    <th>#</th>
+                                    <th> VENDEDOR</th>
+                                    <th> FECHA EMISION </th>
+                                    <th> TIPO DOC  </th>
+                                    <th> SERIE </th>
+                                    <th> NUMERO </th>
+
+                                    <th> DOC IDENTIDAD CLIENTE </th>
+                                    <th> NOMBRE CLIENTE / RAZON SOCIAL </th>
+                                    <th> TOTAL FACTURADO </th>
+                                    <th> TOTAL PAGADO </th>
+                                    <th> SALDO PENDIENTE </th>
+                                    <th>  ESTADO </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in Lista_PagosVendedor">
+                                    <td>{{$index+1}}</td>
+                                    <td>{{item.vendedor}}</td>
+                                    <td>{{item.fechaEmision}}</td>
+                                    <td>{{item.tipoDoc}}</td>
+                                    <td>{{item.serie}}</td>
+                                    <td>{{item.numero}}</td>
+                                    <td>{{item.docIdentidadCliente}}</td>
+                                    <td>{{item.nombreCliente}}</td>
+
+                                    <td style="text-align :right">{{item.totalFacturado}}</td>
+                                    <td style="text-align :right">{{item.totalPagado}}</td>
+                                    <td style="text-align :right">{{item.saldoPendiente}}</td>
+                                    <td>{{item.descripcionEstado}}</td> 
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="text-right">
+                            <ul class="pagination pagination-split m-t-30"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div id="modalAyuda_Cliente" class="modal fade bd-example-modal-lg ModalBorderSombra" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div class="modal-dialog" style=" width: 50%;">
+                    <div class="modal-content">
+                        <div class="modal-header" style=" background-color: #27ae60;">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title" id="myLargeModalLabel" style="color:white !important; font-size: 15px;">Seleccione un cliente</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="loaderModal" ng-if="loader_modal_ayuda"></div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <input type="text" id="txt_busquedaCliente" ng-enter="Ayuda_BuscarCliente();" class="form-control" style="background-color: beige" placeholder="Buscar cliente">
+                                    <hr />
+                                </div>
+                            </div>
+                            <div id="regionDetalle" style="display:none">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="white-box">
+                                            <table id="tbl_busquedaCliente" class="table .table-bordered m-b-0 toggle-arrow-tiny" data-page-size="10">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>nroDoc</th>
+                                                        <th>Cliente</th>
+                                                        <th>Direccion</th>
+                                                        <th>Accion</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="item in Lista_Busqueda_Cliente">
+                                                        <td>{{$index+1}}</td>
+                                                        <td>{{item.nroDoc_Cliente}}  </td>
+                                                        <td>{{item.nombres_Cliente}}  </td>
+                                                        <td>{{item.direccion_referencia}}  </td>
+                                                        <td>
+                                                            <button style="margin-top: -10px; margin-bottom: -10px;" type="button" class="btn btn-sm btn-icon btn-pure btn-outline " ng-click="Agregar_Cliente(item);"><i class="ti-check-box"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="text-right">
+                                                <ul class="pagination pagination-split m-t-30"></ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer " style=" background-color: #27ae60;">
+                            <a class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-sign"></span> Cerrar</a>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+
+
+            <div id="fotos" class="modal fade" role="dialog" tabindex="-1" data-backdrop="static" data-keyboard="false">
+                <div class="modal-dialog" style="width: 30% !important;">
+                    <div class="panel panel-oscuro">
+                        <div class="panel-heading">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h6 class="modal-title"><i class="fa fa-cogs fa-lg"></i> FOTO-VOUCHER| </h6>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div id="galeria" class="table table-responsive" style=" max-height: 520px !important;overflow: auto;">
+                                    <div class="thumbnails">
+                                        <div class="col-md-12" style=" text-align:center;" ng-repeat="pic in pictures">
+                                            <a href="{{pic.url}}" data-lightbox="example-set" data-title="Fotos">
+                                                <img class="img-thumbnail" ng-src="{{pic.url}}" style="width: 530px; height: 310px;">
+                                            </a>
+                                            <hr />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="btn-group btn-group-sm" role="group" aria-label="Mantenimiento" style="float: right;">
+                                        <button role="button" id="btnCancelar" class="btn btn-default" style="background-color: #fff;" data-dismiss="modal"><i class="fa fa-close fa-lg"></i> Cerrar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="modalAyuda" class="modal fade bd-example-modal-lg ModalBorderSombra" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div class="modal-dialog" style=" width: 50%;">
+                    <div class="modal-content">
+                        <div class="modal-header" style=" background-color: #27ae60;">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title" id="myLargeModalLabel" style="color:white !important; font-size: 15px;">Seleccione Vendedor</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="loaderModal" ng-if="loader_modal_ayuda"></div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <input type="text" id="txt_busqueda" ng-enter="Ayuda_busqueda();" class="form-control" style="background-color: beige" placeholder="Ingrese dato a buscar, luego presione la tecla Enter">
+                                    <hr />
+                                </div>
+                            </div>
+                            <div id="regionDetalleBusqueda" style="display:none">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="white-box">
+                                            <table id="tbl_busqueda" class="table .table-bordered m-b-0 toggle-arrow-tiny" data-page-size="10">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>id</th>
+                                                        <th>Nro Doc</th>
+                                                        <th>Vendedor</th>
+                                                        <th>Accion</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="item in ListaDetalleBusqueda">
+                                                        <td>{{$index+1}}</td>
+                                                        <td>{{item.id}}  </td>
+                                                        <td>{{item.nroDoc}}  </td>
+                                                        <td>{{item.descripcion}}  </td>
+                                                        <td>
+                                                            <button style="margin-top: -10px; margin-bottom: -10px;" type="button" class="btn btn-sm btn-icon btn-pure btn-outline " ng-click="Agregar_busqueda(item);"><i class="ti-check-box"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="text-right">
+                                                <ul class="pagination pagination-split m-t-30"></ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer " style=" background-color: #27ae60;">
+                            <a class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-sign"></span> Cerrar</a>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+
+        </div>
+</div>
+
+

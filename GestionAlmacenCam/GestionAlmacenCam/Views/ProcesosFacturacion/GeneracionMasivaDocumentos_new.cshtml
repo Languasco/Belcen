@@ -1,0 +1,434 @@
+﻿
+<style>
+    .contentCombo .select2-container {
+        margin-left: 0px;
+        margin-top: -20px;
+        width: 98% !important;
+    }
+
+    .contentRegistro {
+        margin-left: 0px;
+    }
+
+        .contentRegistro fieldset legend {
+            text-align: left !important;
+        }
+
+    .contentRegistro {
+        width: 100%;
+    }
+
+    .ModalBorderSombra .modal-content {
+        box-shadow: inset 0px 0px 7px rgba(0,0,0,.5), 1px 1px 5px #fff;
+    }
+
+    .contenedorGrupo legend {
+        font-size: 12px !important;
+        font-family: GillSans, Calibri, Trebuchet, sans-serif;
+        color: #2c5ca9;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+
+    .contenedorGrupo fieldset {
+        padding-left: 20px;
+        padding-right: 20px;
+        border: 1px solid #2c4d6d;
+        padding-bottom: 10px;
+        border-radius: 4px;
+    }
+
+    .btn-primary, .btn-primary.disabled {
+        background: rgba(0,0,0,.5);
+        border: 1px solid #2c5ca9;
+    }
+
+    .pagination > li > a, .pagination > li > span {
+        padding: 1px !important;
+        color: #337ab7 !important;
+    }
+
+    .table th {
+        font-size: 20px !important;
+        
+    }
+
+    .table tr td {
+        font-size: 20px !important;
+    }
+
+    .datepicker table thead, tbody {
+        font-family: GillSans, Calibri, Trebuchet, sans-serif !important;
+        font-size: 13px;
+    }
+
+</style>
+
+<html lang="en">
+<body>         
+    <div class=" container-fluid" ng-init="initAll();">
+        <div class="panel-body ContentFilters contentCombo">
+            <div class="well" style="background-color: #00c292; padding-bottom: 0px;padding-top: 0px; color: white;">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            @*<div class="col-sm-6 col-md-3">
+            <label for="cbo_local">Zona Venta</label> <span class="help-block"></span>
+            <select class="selectFiltros" id="cbo_local" ng-model="Objeto_ParametroFiltro.id_local" ng-change="change_Local_Almacen(Objeto_ParametroFiltro.id_local);change_Local_vendedor(Objeto_ParametroFiltro.id_local); change_Local_transportista(Objeto_ParametroFiltro.id_local)">
+                <option value="0">[ ----  SELECCIONE  --- ]</option>
+                <option ng-repeat="item in Lista_Local" value="{{item.id}}">{{item.descripcion}}</option>
+            </select>
+        </div>
+        <div class="col-sm-6 col-md-3">
+            <label for="cbo_almacen">Almacen</label> <span class="help-block"></span>
+            <select class="selectFiltros" id="cbo_almacen" ng-model="Objeto_ParametroFiltro.id_almacen" ng-change="change_almacen_anexo(Objeto_ParametroFiltro.id_almacen);" >
+                <option value="0">[ ----  SELECCIONE  --- ]</option>
+                <option ng-repeat="item in Lista_Almacen" value="{{item.id_Almacen}}">{{item.descripcion_Almacen}}</option>
+            </select>
+        </div>
+        <div class="col-sm-6 col-md-3">
+            <label for="cbo_anexo" class="control-label"> Anexo </label> <span class="help-block"></span>
+            <select class="selectFiltros" id="cbo_anexo" style="width:95%;" data-style="btn-default" ng-model="Objeto_ParametroFiltro.id_Anexos">
+                <option value="0">[ ----  SELECCIONE  --- ]</option>
+                <option ng-repeat="item in lista_anexos" value="{{item.id}}">{{item.descripcion}}</option>
+            </select>
+        </div>*@
+
+
+                            <div class="col-sm-6 col-md-3">
+                                <label for="cbo_anexo"> Anexo </label> <span class="help-block"></span>
+                                <select class="selectFiltros" id="cbo_anexo" style="width:95%;" data-style="btn-default" ng-model="Objeto_ParametroFiltro.id_Anexos" ng-change="get_changeAnexoZonasFiltro(Objeto_ParametroFiltro.id_Anexos); change_anexo_Almacen_filtro(Objeto_ParametroFiltro.id_Anexos)">
+                                    <option value="0">[ ----  SELECCIONE  --- ]</option>
+                                    <option ng-repeat="item in lista_anexos" value="{{item.id}}">{{item.descripcion}}</option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-2">
+                                <label for="cbo_zonasFiltro"> Zona de Venta</label> <span class="help-block"></span>
+                                <select class="selectFiltros" id="cbo_zonasFiltro" ng-model="Objeto_ParametroFiltro.id_ZonaVta" ng-change="change_Local_vendedor(Objeto_ParametroFiltro.id_ZonaVta); change_Local_transportista(Objeto_ParametroFiltro.id_ZonaVta)">
+                                    <option value="0">[ ----  SELECCIONE  --- ]</option>
+                                    <option ng-repeat="item in Lista_zonasFiltro" value="{{item.id}}">  {{item.descripcion}} </option>
+                                </select>
+                            </div>
+                            <div class="col-sm-2">
+                                <label for="cbo_almacen">Almacen</label> <span class="help-block"></span>
+                                <select class="selectFiltros" id="cbo_almacen" ng-model="Objeto_ParametroFiltro.id_almacen">
+                                    <option value="0">[ ----  SELECCIONE  --- ]</option>
+                                    <option ng-repeat="item in Lista_Almacen" value="{{item.id_Almacen}}">{{item.descripcion_Almacen}}</option>
+                                </select>
+                            </div>
+
+
+
+
+                            <div class="col-sm-6 col-md-3">
+                                <label class="control-label" style="text-align :left">Fecha de Pedido</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="icon-calender"></i></span>
+                                    <input ng-model="Objeto_ParametroFiltro.fecha" id="dtp_fecha" type="text" style="width:200px" class="form-control datepicker ng-pristine ng-valid ng-touched" placeholder="dia/mes/año">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3">
+                                <label for="cbo_vendedor">Vendedor</label> <span class="help-block"></span>
+                            <select class="selectFiltros" id="cbo_vendedor" ng-model="Objeto_ParametroFiltro.vendedor">
+                                <option value="0">[ ----  TODOS  --- ]</option>
+                                <option ng-repeat="item in Lista_Vendedor" value="{{item.id}}">{{item.descripcion}}  </option>
+                            </select>
+                            </div>
+                            <div class="col-sm-6 col-md-3">
+                                <label for="cboTransportista" class="control-label"> Transportista </label> <span class="help-block"></span>
+                                <select class="selectFiltros" id="cboTransportista" ng-model="Objeto_ParametroFiltro.id_transportista">
+                                    <option value="0">[ ----  TODOS  --- ]</option>
+                                    <option ng-repeat="item in Lista_Transportista " value="{{item.id}}">{{item.descripcion}}</option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-6 col-md-4">
+                                <div class="form-group" style="    margin-top: 10px;     margin-bottom: 10px;">
+                                    <button class="btn btn-block btn-primary" ng-click="listando_documentos_movil();"><span class="glyphicon glyphicon-refresh"></span> Actualizar </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="loaderModal" ng-if="loader_modal"></div>
+
+            <div class="row" style="background-color: cadetblue">
+                <div class="col-sm-12">
+                    <div class="row ">
+                        <div class="col-sm-12">
+                            <div class="contentRegistro">
+                                <fieldset style="background-color: cadetblue;">
+                                    <legend style="color:white">Ingrese los datos de la Generación de Documentos</legend>
+                                    <h4 style="margin-top:-15px; font-size: 22px;color: orangered; text-align:center">{{NombreTipoDocumento}} ...</h4>
+                                    <div class="row">
+                                        <div class="col-xs-12 col-lg-12">
+                                            <div class="col-xs-6  col-sm-6 col-md-4" style="margin-bottom: 5px;">
+                                                <label class="control-label" style="text-align :left;    color: white;">Fecha de Factura</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="icon-calender"></i></span>
+                                                    <input ng-model="Objeto_ParametroFiltro.fecha_Factura" id="dtp_fecha_Factura" type="text" style="width:150px !important;font-size: 20px !important;" class="form-control datepicker ng-pristine ng-valid ng-touched" placeholder="dia/mes/año">
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-6 col-sm-6 col-md-6" style="margin-bottom: 5px;">
+                                                <label class="control-label" style="text-align :left;  color: white;">Numero Guía</label>
+                                                <div class="input-group col-xs-12 col-sm-12" style="margin-top: 12px;">
+                                                    <input type="text" class="form-control" id="txt_serie" ng-enter="enterFocus(1,'txt_num_doc')" maxlength="5" ng-model="Objeto_ParametroFiltro.serie" style="margin-top: -12px; width:60px  !important;background-color: beige" placeholder="Serie">
+                                                    <input type="text" class="form-control" id="txt_num_doc" ng-enter="enterFocus(1,'btn_generarDoc')" maxlength="15" ng-model="Objeto_ParametroFiltro.num_doc" style="margin-top: -12px;width:100px  !important;background-color: beige" placeholder="Nro. Doc">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-8 col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="white-box">
+                                                        <table id="tablaImprimirDoc" class="table  m-b-0 toggle-arrow-tiny">
+                                                            <thead style="background:rgba(17, 96, 142, 0.18)">
+                                                                <tr style="font-size:20px">
+                                                                    <th>Tip. Docum.</th>
+                                                                    <th>Pedidos</th>
+                                                                    <th>Acciones</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="item in listGeneracionDocu">
+                                                                    <td ng-if="1 == item.id_TipoDocumento" style="color:red;cursor:pointer" ng-click="open_modal_pedidos(item);"> {{item.des_tipo_factura}} </td>
+                                                                    <td ng-if="2 == item.id_TipoDocumento" style="color:red;cursor:pointer" ng-click="open_modal_pedidos(item);"> <div style="width:100px;"> {{item.des_tipo_factura}}</div> </td>
+                                                                    <td ng-if="14 == item.id_TipoDocumento"> <div style="width:100px;"> {{item.des_tipo_factura}}</div>  </td>
+
+                                                                    <td ng-if="1 == item.id_TipoDocumento" style="color:red;cursor:pointer" ng-click="open_modal_pedidos(item);"> {{item.cant_pedidos}} </td>
+                                                                    <td ng-if="2 == item.id_TipoDocumento" style="color:red;cursor:pointer" ng-click="open_modal_pedidos(item);"> {{item.cant_pedidos}} </td>
+
+                                                                    <td ng-if="14 == item.id_TipoDocumento"> {{item.cant_pedidos}} </td>
+
+                                                                    <td ng-if="1 == item.id_TipoDocumento"> <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline " ng-click="Eliminar_ImpresionDocumento($index);"><i class="ti-trash"></i></button> </td>
+                                                                    <td ng-if="2 == item.id_TipoDocumento"> <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline " ng-click="Eliminar_ImpresionDocumento($index);"><i class="ti-trash"></i></button> </td>
+                                                                    <td ng-if="14 == item.id_TipoDocumento"> </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="form-group" style="margin-top:15px;">
+                                                        <button id="btn_generarDoc" disabled class="btn btn-primary" ng-click="GeneracionDocumento_new();"><span class="glyphicon glyphicon-list"></span> Generar Documentos</button>
+                                                        <button class="btn btn-primary btn-success" ng-click="generarFacturacion_boletasFacturas();"><span class="glyphicon glyphicon-th"></span> Generar Sunat</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-lg-4" ng-if="showImprimir();">
+                                            <div class="white-box">
+                                                <table id="tablaListaPrecio" class="table m-b-0 toggle-arrow-tiny">
+                                                    <thead style="background:rgba(17, 96, 142, 0.18)">
+                                                        <tr>
+                                                            <th>Tip. Docu</th>
+                                                            <th>Acción</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="item in listTipoDoc">
+                                                            <td>{{item.des}}</td>
+                                                            <td style="cursor:pointer" ng-click="generarDocuImprimir_Sunat(item.id);"><a>Imprimir</a></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                    <a id="id_link" href="" download style="display:none">link</a>
+                    <div class="form-inline ">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div style="text-align:center">
+                                    <div class="cssload-speeding-wheel" ng-if="loaderSave"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="modalPedidos" class="modal fade bd-example-modal-lg ModalBorderSombra" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" style=" width:90%;">
+                    <div class="modal-content">
+                        <div class="modal-header" style="background-color: #162737;    text-align: right;">
+                            <button type="button" data-dismiss="modal" aria-hidden="true" style="background: red !important;border: 1px solid black; color: white;">x</button>
+                            <h4 class="modal-title" id="myLargeModalLabel" style="    color: white !important;  font-size: 15px;  text-align: left; margin-top: -26px;"> Relacion de Pedidos a Facturar</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="loaderModal" ng-if="loader_modal"></div>
+
+                            <!--  Cabecera del pedido -->
+                            <div class="row" style="margin-top: -12px">
+                                <div class="col-sm-12">
+                                    <div class="row contenedorGrupo">
+                                        <div class="col-sm-12 ">
+                                            <fieldset>
+                                                <legend>Datos del Pedido</legend>
+                                                <div class="white-box" style="margin-top: -10px;">
+                                                    <table id="data_cabecera" class="table m-b-0 toggle-arrow-tiny" data-page-size="5">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>#</th>
+                                                                @*<th>Numero Pedido</th>*@
+                                                                <th>Almacen</th>
+                                                                <th>Forma de Pago</th>
+                                                                <th>Fecha Emision</th>
+                                                                <th>Cliente</th>
+                                                                <th>Dirección</th>
+                                                                <th>Observacion</th>
+                                                                <th>Rechazar</th>
+                                                                <th class="cls_GeneraGuia">Genera-Guia</th>
+                                                                <th>Imprime-Documento</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="item in Lista_DataCabecera">
+                                                                <td>{{$index+1}}</td>
+                                                 
+                                                                <td style="cursor:pointer" ng-click="mostrarDetalle_Pedido(item.id_Pedido_Cab);">{{item.descripcion_Almacen}}  </td>
+                                                                <td style="cursor:pointer" ng-click="mostrarDetalle_Pedido(item.id_Pedido_Cab);">{{item.formaPago}}  </td>
+                                                                <td style="cursor:pointer" ng-click="mostrarDetalle_Pedido(item.id_Pedido_Cab);">{{item.fecha_emision}}  </td>
+                                                                <td style="cursor:pointer" ng-click="mostrarDetalle_Pedido(item.id_Pedido_Cab);">{{item.nombres_Cliente}}  </td>
+                                                                <td>{{item.direccion_Pedido_Cab}}  </td>
+                                                                <td>{{item.observaciones_Pedido_Cab}}  </td>
+                                                                <td style="text-align:center;"><button type="button" class="btn btn-sm btn-icon btn-pure btn-outline" style="margin-top:-5px; margin-bottom: -6px;" ng-click="Rechazar_Pedido($index,item);"><i class="ti-close"></i></button></td>
+                                                                <td style="text-align: center;" class="cls_GeneraGuia">
+                                                                    <label class="checkbox-inline" style="margin-top: -27px;"><input type="checkbox" value="" ng-model="item.checkeado_guia" ng-change="Change_Genera_Guia(item.checkeado_guia, item.id_Pedido_Cab);"></label>
+                                                                </td>
+                                                                <td style="text-align: center;">
+                                                                    <label class="checkbox-inline" style="margin-top: -27px;"><input type="checkbox" value="" ng-model="item.checkeado_pedido" ng-change="Change_Imprime_Pedido(item.checkeado_pedido, item.id_Pedido_Cab);"></label>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <div class="text-right">
+                                                        <ul class="pagination pagination-split m-t-30"></ul>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--  Detalle del pedido -->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="row contenedorGrupo">
+                                        <div class="col-sm-12">
+                                            <fieldset>
+                                                <legend>Detalle del Pedido</legend>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <table id="data_detalle" class="table m-b-0 toggle-arrow-tiny" data-page-size="10">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>#</th>
+                                                                    @*<th>Numero Pedido</th>*@
+                                                                    <th>Codigo</th>
+                                                                    <th>Producto</th>
+                                                                    <th>U.M.</th>
+                                                                    <th>Marca</th>
+                                                                    <th>Cantidad</th>
+                                                                    <th>Precio</th>
+                                                                    <th>Importe</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="item in Lista_DataDetalle">
+                                                                    <td>{{$index+1}}</td>
+                                                                    @*<td>{{item.Numero_Pedido}}  </td>*@
+                                                                    <td>{{item.codigo1_Producto}}  </td>
+                                                                    <td>{{item.nombre_Producto}}  </td>
+                                                                    <td>{{item.abreviatura_UnidadMedida}}  </td>
+                                                                    <td>{{item.nombre_marcaproducto}}  </td>
+                                                                    <td style="text-align:right">{{item.cantidad_Pedido_Det}}  </td>
+                                                                    <td> <input type="text" class="form-control ng-valid ng-touched ng-dirty" ng-enter="Editar_PrecioPedido(item);" style="background-color: beige;text-align:right;    height: 30px;" ng-model="item.precioVenta_Pedido_Det" placeholder="Precio"> </td>
+                                                                    <td style="text-align:right">{{item.total_Pedido_Det}}  </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <br />
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6  col-md-9 " style="text-align:center">
+
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-3">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="text-right">
+                                                <label for="txt_subTotal_G" class="col-sm-3 control-label">Sub-Total</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" id="txt_subTotal_G" style="text-align:right" ng-model="SubTotal_G" class="form-control" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="text-right">
+                                                <label for="txt_igv_G" class="col-sm-3 control-label">I.G.V</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" id="txt_igv_G" style="text-align:right" ng-model="Igv_G" class="form-control" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="text-right">
+                                                <label for="txt_Total_G" class="col-sm-3 control-label">Total</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" id="txt_Total_G" style="text-align:right" ng-model="Total_G" class="form-control" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer " style=" background-color: #162737;">
+                            <a class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-sign"></span> Cerrar</a>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+
+
+        </div>
+    </div>
+</body>
+</html>

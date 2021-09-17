@@ -1,0 +1,283 @@
+﻿
+<style>
+    #listMenu span, a {
+        text-align: left !important;
+    }
+
+    .contentRegistro fieldset legend {
+        text-align: left !important;
+    }
+
+    .jq-toast-wrap {
+        width: 300px !important;
+    }
+
+    .floating-labels label {
+        top: -6px;
+    }
+
+    .contentRegistro .select2-container {
+        margin-left: 0px;
+        margin-top: 2px;
+    }
+
+    #paddin-lef {
+        padding-left: 40px !important;
+    }
+
+    .contentCombo .select2-container {
+        margin-left: 0px;
+        margin-top: -20px;
+        width: 95% !important;
+    }
+
+    .ContentFilters .table {
+        display: table;
+    }
+
+    .contentRegistro label {
+        font-size: 11px;
+        font-family: tahoma;
+        color: #2c5ca9;
+        font-weight: 600;
+    }
+
+    .contentRegistro {
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .ModalBorderSombra .modal-content {
+        box-shadow: inset 0px 0px 7px rgba(0,0,0,.5), 1px 1px 5px #fff;
+    }
+
+
+
+    .resaltado {
+        color: #ff94a7 !important;
+    }
+
+    .text-right {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+
+    .tableFixHead {
+        overflow-y: auto;
+        height: 400px;
+    }
+</style>
+
+<script type="text/javascript">
+
+    function filterFloat(evt, input) {
+        // Backspace = 8, Enter = 13, ‘0′ = 48, ‘9′ = 57, ‘.’ = 46, ‘-’ = 43
+        var key = window.Event ? evt.which : evt.keyCode;
+        var chark = String.fromCharCode(key);
+        var tempValue = input.value + chark;
+        if (key >= 48 && key <= 57) {
+            if (filter(tempValue) === false) {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            if (key == 8 || key == 13 || key == 0) {
+                return true;
+            } else if (key == 46) {
+                if (filter(tempValue) === false) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } else {
+                return false;
+            }
+        }
+    }
+    function filter(__val__) {
+        var preg = /^([0-9]+\.?[0-9]{0,3})$/;
+        if (preg.test(__val__) === true) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+</script>
+
+<div class=" container-fluid  contentRegistro contentCombo ContentFilters " ng-init="initAll();">
+    <div class="panel-body ">
+
+        <div class="white-box">
+
+            <div class="row">
+                @*<div class="col-sm-6 col-md-3">
+            <label for="cbo_local">Zona de Venta</label> <span class="help-block"></span>
+            <select class="selectFiltros" id="cbo_local" ng-model="Objeto_ParametroFiltro.id_zona" ng-change="change_Local_Almacen(Objeto_ParametroFiltro.id_zona);change_Local_vendedor(Objeto_ParametroFiltro.id_zona); change_Local_transportista(Objeto_ParametroFiltro.id_zona)">
+                <option value="0">[ ----  SELECCIONE  --- ]</option>
+                <option ng-repeat="item in Lista_Zona" value="{{item.id}}">  {{item.descripcion}} </option>
+            </select>
+        </div>
+
+        <div class="col-sm-6 col-md-3">
+            <label for="cbo_almacen">Almacen</label> <span class="help-block"></span>
+            <select class="selectFiltros" id="cbo_almacen" ng-model="Objeto_ParametroFiltro.id_almacen" ng-change="change_almacen_anexo(Objeto_ParametroFiltro.id_almacen);">
+                <option value="0">[ ----  SELECCIONE  --- ]</option>
+                <option ng-repeat="item in Lista_Almacen" value="{{item.id_Almacen}}">{{item.descripcion_Almacen}}</option>
+            </select>
+        </div>
+
+        <div class="col-sm-6 col-md-3">
+            <label for="cbo_anexo" class="control-label"> Anexo </label> <span class="help-block"></span>
+            <select class="selectFiltros" id="cbo_anexo" style="width:95%;" data-style="btn-default" ng-model="Objeto_ParametroFiltro.id_Anexos">
+                <option value="0">[ ----  SELECCIONE  --- ]</option>
+                <option ng-repeat="item in lista_anexos" value="{{item.id}}">{{item.descripcion}}</option>
+            </select>
+        </div>*@
+
+                <div class="col-sm-6 col-md-3">
+                    <label for="cbo_anexo"> Anexo </label> <span class="help-block"></span>
+                    <select class="selectFiltros" id="cbo_anexo" style="width:95%;" data-style="btn-default" ng-model="Objeto_ParametroFiltro.id_Anexos" ng-change="get_changeAnexoZonasFiltro(Objeto_ParametroFiltro.id_Anexos); change_anexo_Almacen_filtro(Objeto_ParametroFiltro.id_Anexos)">
+                        <option value="0">[ ----  SELECCIONE  --- ]</option>
+                        <option ng-repeat="item in lista_anexos" value="{{item.id}}">{{item.descripcion}}</option>
+                    </select>
+                </div>
+
+                <div class="col-sm-6 col-md-3">
+                    <label for="cbo_zonasFiltro"> Zona de Venta</label> <span class="help-block"></span>
+                    <select class="selectFiltros" id="cbo_zonasFiltro" ng-model="Objeto_ParametroFiltro.id_ZonaVta" ng-change="change_Local_vendedor(Objeto_ParametroFiltro.id_ZonaVta); change_Local_transportista(Objeto_ParametroFiltro.id_ZonaVta)">
+                        <option value="0">[ ----  SELECCIONE  --- ]</option>
+                        <option ng-repeat="item in Lista_zonasFiltro" value="{{item.id}}">  {{item.descripcion}} </option>
+                    </select>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <label for="cbo_almacen">Almacen</label> <span class="help-block"></span>
+                    <select class="selectFiltros" id="cbo_almacen" ng-model="Objeto_ParametroFiltro.id_almacen">
+                        <option value="0">[ ----  SELECCIONE  --- ]</option>
+                        <option ng-repeat="item in Lista_Almacen" value="{{item.id_Almacen}}">{{item.descripcion_Almacen}}</option>
+                    </select>
+                </div>
+
+                <div class="col-sm-6 col-md-3">
+                    <label for="cbo_vendedor">Vendedor</label> <span class="help-block"></span>
+                    <select class="selectFiltros" id="cbo_vendedor" ng-model="Objeto_ParametroFiltro.id_vendedor">
+                        <option value="0">[ ----  TODOS  --- ]</option>
+                        <option ng-repeat="item in Lista_Vendedor" value="{{item.id}}">{{item.descripcion}}  </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group" style="    margin-bottom: 0px;">
+                        <label class="control-label" style="text-align :left">Rango de Fechas</label>
+                        <br>
+                        <div class="input-group">
+                            <input ng-model="Objeto_ParametroFiltro.fechaIni" id="dtp_fechaIni" type="text" class="form-control input-sm   datepicker" placeholder="dia/mes/año">
+                            <span class="input-group-addon bg-primary" style="color:white">al</span>
+                            <input ng-model="Objeto_ParametroFiltro.fechaFin" id="dtp_fechaFin" type="text" class="form-control input-sm   datepicker" placeholder="dia/mes/año">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-md-3">
+                    <label for="cboTransportista" class="control-label"> Transportista </label> <span class="help-block"></span>
+                    <select class="selectFiltros" id="cboTransportista" ng-model="Objeto_ParametroFiltro.id_transportista">
+                        <option value="0">[ ----  TODOS  --- ]</option>
+                        <option ng-repeat="item in Lista_Transportista " value="{{item.id}}">{{item.descripcion}}</option>
+                    </select>
+                </div>
+
+                <div class="col-sm-6 col-md-3">
+                    <label for="cboTipoDoc" class="control-label"> Tipo Documento </label> <span class="help-block"></span>
+                    <select class="selectFiltros" id="cboTipoDoc" ng-model="Objeto_ParametroFiltro.id_tipoDoc">
+                        <option value="0">[ ----  SELECCIONE  --- ]</option>
+                        <option ng-repeat="item in lista_documentos " value="{{item.id}}">{{item.descripcion}}</option>
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <br />
+                    <button id="btn-material" class="btn btn-outline btn-primary btn-sm m-l-10" ng-click="listadoDocumentosCab();">
+                        <i class="glyphicon glyphicon-refresh"></i>Actualizar
+                    </button>
+                    <button id="btn-material" class="btn btn-warning btn-sm m-l-10" ng-click="imprimirDocumentos();">
+                        <i class="glyphicon glyphicon-print"></i> Imprimir
+                    </button>
+                </div>
+            </div>
+
+            <div class="row" style="margin-bottom: 10px;">
+                <div class="col-md-12">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-addon">Buscar</span>
+                        <input type="text" placeholder="Busqueda General . . " style="width: 120%;" class="form-control btn-block inputSearch" ng-model="search" autocomplete="off" @*onkeyup="this.value=this.value.toUpperCase();"*@>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+            <div class="loaderModal" ng-if="loaderFiltro"></div>
+
+            <div class="white-box tableFixHead">
+                <div class="checkbox clip-check check-danger checkbox-inline" style="margin-left: 10px;">
+                    <input type="checkbox" id="checkboxAll" value="1" ng-model="checkedAll" ng-click="marcarTodos(checkedAll)">
+                    <label for="checkboxAll">
+                        Marcar Todos
+                    </label>
+                </div>
+
+                <table id="tablaFacturas" class="table m-b-0 toggle-arrow-tiny" data-page-size="10">
+                    <thead style="background:rgba(17, 96, 142, 0.18)">
+                        <tr>
+                            <th>
+                            </th>
+                            <th> Tipo Doc Documento</th>
+                            <th> Nro Documento</th>
+                            <th> Fecha</th>
+                            <th> Cliente</th>
+
+                            <th> Forma Pago</th>
+                            <th> Valor Bruto</th>
+                            <th> IGV</th>
+                            <th> Importe Neto</th>
+                            <th> Vendedor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in facturasCab  | filter : search " ng-class="{'resaltado': item.estado == 0}">
+                            <td style="text-align: center;">
+                                <label class="checkbox-inline" style="margin-top: -27px;"><input type="checkbox" value="" ng-model="item.checkeado"></label>
+                            </td>
+                            <td>{{item.descripcionTipoDoc}}</td>
+                            <td>{{item.nrodocumento}}</td>
+                            <td>{{item.fecha }}</td>
+                            <td>{{item.cliente }}</td>
+
+                            <td>{{item.formaPago}}</td>
+                            <td>{{item.valorBruto}}</td>
+                            <td>{{item.igv}}</td>
+                            <td>{{item.importeNeto}}</td>
+                            <td>{{item.vendedor}}</td>
+
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="text-right">
+                    <ul class="pagination pagination-split m-t-30"></ul>
+                </div>
+            </div>
+ 
+
+ 
+        </div>
+    </div>
+
+
+
+
+

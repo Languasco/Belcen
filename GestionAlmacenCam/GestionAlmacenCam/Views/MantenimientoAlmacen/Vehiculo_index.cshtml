@@ -1,0 +1,214 @@
+﻿<style>
+    #listMenu span, a {
+        text-align: left !important;
+    }
+
+    .contentRegistro fieldset legend {
+        text-align: left !important;
+    }
+
+    .jq-toast-wrap {
+        width: 300px !important;
+    }
+
+    .floating-labels label {
+        top: -6px;
+    }
+
+    .contentRegistro .select2-container {
+        margin-left: 0px;
+        margin-top: 2px;
+    }
+
+    #paddin-lef {
+        padding-left: 60px !important;
+    }
+     #btn-material{
+    font-size: 1.2rem;outline: 0;border: none;border-radius: 2px;display: inline-block;height: 36px;line-height: 36px;padding: 0 2rem;text-transform: uppercase;vertical-align: middle;-webkit-tap-highlight-color: transparent;text-decoration: none;color: #fff;background-color: #2b4c6c;text-align: center;letter-spacing: .5px;-webkit-transition: .2s ease-out;transition: .2s ease-out;cursor: pointer;-webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+    }
+    #btn-save{
+    font-size: 1.2rem;outline: 0;border: none;border-radius: 2px; border: 1px solid #2c5ca9;display: inline-block;height: 36px;line-height: 36px;padding: 0 2rem;text-transform: uppercase;vertical-align: middle;-webkit-tap-highlight-color: transparent;text-decoration: none;color: #fff;background: #2c5ca9;text-align: center;letter-spacing: .5px;-webkit-transition: .2s ease-out;transition: .2s ease-out;cursor: pointer;-webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+    }
+    #btn-close{
+    font-size: 1.2rem;outline: 0;border: none;border-radius: 2px;background: #f75b36;border: 1px solid #f75b36;display: inline-block;height: 36px;line-height: 36px;padding: 0 2rem;text-transform: uppercase;vertical-align: middle;-webkit-tap-highlight-color: transparent;text-decoration: none;color: #fff;text-align: center;letter-spacing: .5px;-webkit-transition: .2s ease-out;transition: .2s ease-out;cursor: pointer;-webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+    }
+              .contentCombo .select2-container {
+        margin-left: 0px;
+        margin-top: -20px;
+        /*width: 120% !important;*/
+    }
+
+    .ContentFilters .table {
+        display: table;
+    }
+</style>
+<div class=" container" ng-init="initAll();">
+    <div class="panel-body ContentFilters">
+        <div class="form-inline ">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div style="text-align:center">
+                        <div class="cssload-speeding-wheel" ng-if="loader"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body ContentFilters contentCombo" style=" margin-bottom: -35px;">
+            <div class="well" style="background-color: #2b4c6c;padding-bottom: 0px; padding-top: 0px;color: #fff;    width: 100%;">
+                <div class="row">
+                    <div class="col-sm-12 text-center ">
+
+                        <div class="row col-sm-3">
+                            <div style="width: 80%">
+                                <label for="cbo_ESTADO">ESTADO</label> <span class="help-block"></span>
+
+                                <select class="select_modal" id="cboestadoFilter" ng-model="estados" data-style="btn-default" ng-change="changeEstado(estados)" style=" font-size: 15px;   color: #0e0e0e;">
+                                    <option ng-repeat="item in listStatus" value="{{item.id}}">{{item.descripcion}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row col-sm-6">
+                            <div class="form-group" style="margin-top: 15px">
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-addon">Buscar</span>
+                                    <input id="inputSearch" type="text" placeholder="Busqueda General . . " style="width: 120%;" class="form-control btn-block inputSearch" autocomplete="off" @*onkeyup="this.value=this.value.toUpperCase();"*@>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 " style="margin-bottom: 15px;margin-top: -16px;">
+
+                        <div class="btn-group">
+                            <button id="btn-material" style="background-color: #357c55;" class="btn btn-outline btn-primary btn-sm m-l-10" ng-click="Open_New_Modal();">
+                                <i class="glyphicon glyphicon-plus"></i>Agregar Nuevo
+                            </button>
+                            <button id="btn-material" style="background-color: #357c55;" class="btn btn-outline btn-primary btn-sm m-l-10" ng-click=" ExportarToExcel();">
+                                <i class="glyphicon glyphicon-save"></i>Exportar
+                            </button>
+                            <button id="btn-material" style="background-color: #357c55;" class="btn btn-outline btn-primary btn-sm m-l-10" ng-click=" open_new_modal();">
+                                <i class="glyphicon glyphicon-floppy-disk"></i>Importar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="white-box" style="border-left: 20px solid #2b4c6c;">
+                    <table id="tbl_Vehiculo" class="table m-b-0 toggle-arrow-tiny table-bordered table-hover" data-page-size="10">
+                        <thead>
+                            <tr>
+                                <th data-toggle="true">#</th>
+                                <th data-toggle="true" id="paddin-lef">PLACA_VEHICULAR</th>
+                                <th data-toggle="true" id="paddin-lef">MARCA_VEHICULAR</th>
+                                <th data-toggle="true" id="paddin-lef">MODELO_VEHICULAR</th>
+                                <th data-toggle="true" id="paddin-lef">DESCRIPCION_VEHICULAR</th>
+                                <th data-toggle="true"> ESTADO</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+                            <tr ng-repeat="item in listVehiculos" style="{{item.estado == 0 | iif : 'background-color: rgb(230, 115, 115) !important;color:#fff;font-weight: 600;'}}">
+                                <td>{{$index + 1}}</td>
+                                <td id="paddin-lef">{{item.vehiculo_Placa}}</td>
+                                <td id="paddin-lef">{{item.marca_Vehiculo}}</td>
+                                <td id="paddin-lef">{{item.modelo_Vehiculo}}</td>
+                                <td id="paddin-lef">{{item.descripcion_vehiculo}}</td>
+                                <td>{{item.estado == 0 | iif : "Anulado" : "Activado"}}</td>
+                                <td>
+
+                                    <button type="button" class="btn btn-primary btn-circle " ng-click="Open_Update_Modal(item);" data-toggle="tooltip" title="EDITAR"><i class=" ti-pencil-alt"></i></button>
+                                    <button type="button" class="btn btn-success btn-circle" ng-click="getAuditoria(item);" data-toggle="tooltip" title="AUDITAR"><i class="fa fa-cog"></i> </button>
+                                    <button type="button" class="btn btn-warning btn-circle" ng-click="getAnular(item);" style="background-color: #ff6849; border-color: #ff6849;" title="ANULAR"><i class="fa fa-trash"></i> </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="text-center">
+                        <ul class="pagination pagination-split m-t-30"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="ModalVehiculos" class="modal fade bd-example-modal-lg " tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background:#0f66bb;  padding: 15px; border-bottom: 2px solid #ef0752; color:#ffffff">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myLargeModalLabel" style="color: #fcfdff !important;">{{titleModal}}</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="loaderModal" ng-if="loaderSave"></div>
+
+                <div class="contentRegistro floating-labels form-inline">
+                    <fieldset>
+                        <legend>INGRESO DEl DATO GENERAL DEL VEHICULO</legend>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" id="txtplaca_veh" ng-model="objeto_parametros.vehiculo_Placa" ng-keydown="ValidateEnterM($event);" maxlength="7" onkeyup="this.value=this.value.toUpperCase();"><span class="highlight"></span> <span class="bar"></span>
+                                <label for="txtplaca_veh">PLACA VEHICULAR</label> <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <input type="text" class="form-control" id="txtmarca_veh" ng-model="objeto_parametros.marca_Vehiculo" ng-keydown="ValidateEnterMo($event);" ng-keypress="ValidateEnterC($event);" maxlength="20" onkeyup="this.value=this.value.toUpperCase();"><span class="highlight"></span> <span class="bar"></span>
+                                <label for="txtmarca_veh">MARCA DEL VEHICULO</label> <span class="help-block"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="txtmodelo_veh" ng-model=" objeto_parametros.modelo_Vehiculo" ng-keydown="ValidateEnterD($event);" ng-keypress="Validationletter($event);" maxlength="20" onkeyup="this.value=this.value.toUpperCase();"><span class="highlight"></span> <span class="bar"></span>
+                                <label for="txtmodelo_veh">MODELO DEL VEHICULO</label> <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="text" class="form-control" id="txtdescr_veh" ng-model="objeto_parametros.descripcion_vehiculo" maxlength="40" onkeyup="this.value=this.value.toUpperCase();"><span class="highlight" ></span> <span class="bar"></span>
+                                <label for="txtdescr_veh">DESCRIPCION DEL VEHICULO</label> <span class="help-block"></span>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </div>
+
+                <div class="contentRegistro floating-labels form-inline">
+                    <div>
+                        <div class="row ">
+                            <div class="col-sm-6">
+                                <fieldset>
+                                    <legend>Estado</legend>
+                                    <div class="row " style=" margin-top: -10px;">
+                                        <div class="col-sm-6 ">
+                                            <div class="form-group">
+                                                <div class="checkbox checkbox-success">
+                                                    <input id="checkbox1" type="checkbox" ng-model="objEstados.activo" ng-change="changeStatus(objEstados.activo);">
+                                                    <label for="checkbox1" class="estadoModal" style="color : {{objEstados.colorText}}">{{objEstados.text}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer ">
+                <a class="btn btn-primary" ng-click="GuardarRegistro();" id="btn-save"> <span class="glyphicon glyphicon-floppy-disk"></span> Guardar</a>
+                <a class="btn btn-danger" data-dismiss="modal" id="btn-close"><span class="glyphicon glyphicon-remove-sign"></span> Cerrar</a>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
