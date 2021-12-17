@@ -117,6 +117,11 @@ namespace Negocio.Facturacion.Procesos
                                 Entidad.id_PersonalTransportista = row["id_PersonalTransportista"].ToString();
                                 Entidad.generaGuia = row["generaGuia"].ToString();
 
+                                Entidad.fecha_creacion = row["fecha_creacion"].ToString();
+                                Entidad.usuario_edicion = row["usuario_edicion"].ToString();
+                                Entidad.fecha_edicion = row["fecha_edicion"].ToString();
+
+
                                 obj_List.Add(Entidad);
                             }
                         }
@@ -217,6 +222,11 @@ namespace Negocio.Facturacion.Procesos
                                 Entidad.id_ZonaVta = row["id_ZonaVta"].ToString();
                                 Entidad.id_PersonalTransportista = row["id_PersonalTransportista"].ToString();
                                 Entidad.generaGuia = row["generaGuia"].ToString();
+                                Entidad.flag_DocManual = row["flag_DocManual"].ToString();
+
+                                Entidad.fecha_creacion = row["fecha_creacion"].ToString();
+                                Entidad.usuario_edicion = row["usuario_edicion"].ToString();
+                                Entidad.fecha_edicion = row["fecha_edicion"].ToString();
 
                                 obj_List.Add(Entidad);
                             }
@@ -903,7 +913,7 @@ namespace Negocio.Facturacion.Procesos
                 using (SqlConnection cn = new SqlConnection(bdConexion.cadenaBDcx()))
                 {
                     cn.Open();
-                    using (SqlCommand cmd = new SqlCommand("SP_GENERAR_NOTA_CREDITO_II", cn))
+                    using (SqlCommand cmd = new SqlCommand("SP_GENERAR_NOTA_CREDITO_NEW", cn))
                     {
                         cmd.CommandTimeout = 0;
                         cmd.CommandType = CommandType.StoredProcedure;
@@ -1053,6 +1063,11 @@ namespace Negocio.Facturacion.Procesos
                                 Entidad.id_ZonaVta = row["id_ZonaVta"].ToString();
                                 Entidad.id_Anexo = row["id_Anexo"].ToString();
 
+                                Entidad.fecha_creacion = row["fecha_creacion"].ToString();
+                                Entidad.usuario_edicion = row["usuario_edicion"].ToString();
+                                Entidad.fecha_edicion = row["fecha_edicion"].ToString();
+ 
+
                                 obj_List.Add(Entidad);
                             }
                         }
@@ -1146,6 +1161,11 @@ namespace Negocio.Facturacion.Procesos
 
                                 Entidad.id_ZonaVta = row["id_ZonaVta"].ToString();
                                 Entidad.id_Anexo = row["id_Anexo"].ToString();
+
+
+                                Entidad.fecha_creacion = row["fecha_creacion"].ToString();
+                                Entidad.usuario_edicion = row["usuario_edicion"].ToString();
+                                Entidad.fecha_edicion = row["fecha_edicion"].ToString();
 
                                 obj_List.Add(Entidad);
                             }
@@ -1328,7 +1348,7 @@ namespace Negocio.Facturacion.Procesos
                 using (SqlConnection con = new SqlConnection(bdConexion.cadenaBDcx()))
                 {
                     con.Open();
-                    using (SqlCommand cmd = new SqlCommand("SP_D_NOTAS_CREDITO_DEBITO", con))
+                    using (SqlCommand cmd = new SqlCommand("SP_D_NOTAS_CREDITO_DEBITO_II", con))
                     {
                         cmd.CommandTimeout = 0;
                         cmd.CommandType = CommandType.StoredProcedure;
@@ -1342,7 +1362,7 @@ namespace Negocio.Facturacion.Procesos
 
                         bulkCopy.BatchSize = 500;
                         bulkCopy.NotifyAfter = 1000;
-                        bulkCopy.DestinationTableName = "T_TEMPORAL_DETALLE_NOTAS";
+                        bulkCopy.DestinationTableName = "T_TEMPORAL_DETALLE_NOTAS_II";
                         bulkCopy.WriteToServer(dt_detalle);
                     }
 
@@ -2852,12 +2872,10 @@ namespace Negocio.Facturacion.Procesos
             return res;
         }
 
-
         public void GenerarComprobanteElectronico_otrosModulos_GuiaRemision_nubeFact(int id_GuiaCab, int id_Anexo)
         {
             try
             {
-
                 string ruta = "";
                 string token = "";
 

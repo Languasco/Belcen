@@ -378,7 +378,7 @@
 
 .disabledContent {
     pointer-events: none !important;
-    opacity: 0.7 !important;
+    opacity: 0.8 !important;
 }
 
 .disabledPointerContent {
@@ -782,4 +782,8 @@
     cursor: none;
     pointer-events: none;
     color: transparent;
+}
+
+.jq-toast-wrap.top-right {
+    width: 450px !important;
 }

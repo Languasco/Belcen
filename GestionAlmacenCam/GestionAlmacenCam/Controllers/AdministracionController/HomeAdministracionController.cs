@@ -27,5 +27,11 @@ namespace GestionAlmacenCam.Controllers.AdministracionController
         {
             return View();
         }
+
+        public ActionResult cambioContrasenia_index()
+        {
+            return View();
+        }
+
     }
 }

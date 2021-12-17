@@ -1,5 +1,4 @@
-﻿/// <reference path="controlladores/cobranzas/reportes/estadodocumentocontroller.js" />
- 
+﻿
 var app = angular.module('appGestion',
     ['ngRoute', 'appGestion.auxiliarServices', 'angularFileUpload',
         'appGestion.loginController', 'appGestion.loginServices',
@@ -63,12 +62,10 @@ var app = angular.module('appGestion',
         'appGestion.IngresoFacturasController', 'appGestion.IngresoFacturasServices',
         'appGestion.UsuarioController', 'appGestion.UsuarioServices',
         'appGestion.ArqueoCajaController', 'appGestion.ArqueoCajaServices',
-
         'appGestion.Documentos_MasivosController', 'appGestion.Documentos_MasivosServices', 'appGestion.KardexAlmacenController',
         'appGestion.AnexosServices', 'appGestion.RutasVentasServices', 'appGestion.ZonasVentasServices', 'appGestion.UsuariosController',
         'appGestion.ZonasVentasController', 'appGestion.RutasVentasController', 'appGestion.AnexosController',
         'appGestion.BancosServices', 'appGestion.BancosController',
-
         'appGestion.CobranzaReporteService', 'appGestion.CobranzaReporteController', 'appGestion.CobranzaManualService', 'appGestion.CobranzaManualController',
         'appGestion.AnularDocumentosController',
         'appGestion.TransaccionesController', 'appGestion.TransaccionesServices',
@@ -78,8 +75,12 @@ var app = angular.module('appGestion',
         'appGestion.ReporteContableController', 'appGestion.ReporteContableServices',
         'appGestion.anularNumeroController',
         'appGestion.estadoDocumentoController',
+        'appGestion.transformacionProductosController', 'appGestion.transformacionProductosServices',
+        'appGestion.HistoricoFacturacionController', 'appGestion.HistoricoFacturacionServices',
+        'appGestion.importarAjusteInventarioController', 'appGestion.importarAjusteInventarioServices',
+        'appGestion.VentaAcumuladaController', 'appGestion.VentaAcumuladaServices',
+
     ])
-    //.constant('urlApi', 'http://192.168.1.8:83/api/')
     .constant('urlApi', 'http://192.168.0.109:8083/api/')
 
 
@@ -568,6 +569,26 @@ var app = angular.module('appGestion',
             .when('/estadoDocumento', {
                 templateUrl: '/ReportesFacturacion/estadoDocumento_index',
                 controller: 'estadoDocumentoController'
+            })
+            .when('/cambiarContrasenia', {
+                templateUrl: '/HomeAdministracion/cambioContrasenia_index',
+                controller: 'UsuarioController'
+            })
+            .when('/tranformacionProductos', {
+                templateUrl: '/Procesos/transformacionProductos_index',
+                controller: 'transformacionProductosController'
+            })
+            .when('/HistoricoFacturacion', {
+                templateUrl: '/ReportesFacturacion/HistoricoFacturacion_index',
+                controller: 'HistoricoFacturacionController'
+            })
+            .when('/importarAjusteInventario', {
+                templateUrl: '/Procesos/importarAjusteInventario_index',
+                controller: 'importarAjusteInventarioController'
+            })
+            .when('/ventaAcumulada', {
+                templateUrl: '/ReportesFacturacion/ventaAcumulada_index',
+                controller: 'VentaAcumuladaController'
             })
             .otherwise({
                 redirectTo: '/Login'

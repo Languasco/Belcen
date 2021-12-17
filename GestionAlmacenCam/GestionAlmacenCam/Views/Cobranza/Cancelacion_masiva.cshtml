@@ -220,7 +220,6 @@
                         <input ng-model="Objeto_ParametroFiltro.fechaFin" id="dtp_fechaFin" type="text" class="form-control input-sm   datepicker" placeholder="dia/mes/año">
                     </div>
                 </div>
-
             </div>
         </div>
 
@@ -235,7 +234,7 @@
             <div class="col-sm-6 col-md-3">
                 <label for="cboTransportista" style="font-size: 11px;font-family:Tahoma;  font-weight: 600;" class="control-label"> Transportista </label>   <br />
                 <select class="selectFiltros" id="cboTransportista" ng-model="Objeto_ParametroFiltro.id_transportista">
-                    <option value="0">[ ----  SELECCIONE  --- ]</option>
+                    <option value="0">[ ----  TODOS  --- ]</option>
                     <option ng-repeat="item in Lista_Transportista " value="{{item.id}}">{{item.descripcion}}</option>
                 </select>
             </div>
@@ -254,10 +253,7 @@
                 </div>
             </div>
         </div>
-
         <a id="id_link" href="" download style="display:none">link</a>
-
-
     </div>
 
     <div class="  ContentFilters contentCombo " style="background-color:#f5f5dc; padding: 5px; margin-top: 5px;">
@@ -288,15 +284,12 @@
                     <option ng-repeat="item in Lista_Transportista " value="{{item.id}}">{{item.descripcion}}</option>
                 </select>
             </div>
-
             <div class="col-sm-6 col-md-3">
                 <label class="control-label" style="text-align :left">Fecha Pago:</label>
                 <input ng-model="Objeto_ParametroFiltro.fecha_cancelacion" style="width:100px;" ng-enter="enterFocus(1,'txt_observaciones')" id="dtp_doc" type="text" class="form-control input-sm datepicker " placeholder="dia/mes/año"> 
             </div>
-
         </div>
-    </div>
- 
+    </div> 
 
         <div class="form-inline ">
             <div class="row">

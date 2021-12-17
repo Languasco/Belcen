@@ -864,6 +864,9 @@ app.controller('ConsolidadoController', function ($scope, $location, $timeout, a
         const fechaIni = $scope.Objeto_ParametroFiltro.fechaIni;
         const fechaFin = $scope.Objeto_ParametroFiltro.fechaFin;
 
+        ////const idGuia = 687;
+        ////$scope.get_guiaRemisionImpresion(idGuia);
+
         var params = {
             title: "Desea continuar ?",
             text: 'Esta por Generar la guía de Remisión Electrónica',
@@ -905,9 +908,9 @@ app.controller('ConsolidadoController', function ($scope, $location, $timeout, a
                         return;
                     }
 
-                    ////---- no se pueden imprimir documentos que no se hallan enviado correctamente a la sunat
+                    //---- no se pueden imprimir documentos que no se hallan enviado correctamente a la sunat
                     if (res.data[0].guia_electronica_pdf == null || res.data[0].guia_electronica_pdf == undefined || res.data[0].guia_electronica_pdf == '') {
-                        alert(`Hubo un error en el envio de la Guia  a la sunat  idGuia ${idGuia}  : ${res[0].factura_electronica_alertas}`);
+                        alert(`Hubo un error en el envio de la Guia  a la sunat  idGuia ${idGuia}  : ${res.data[0].guia_electronica_alertas}`);
                         return;
                     }
 

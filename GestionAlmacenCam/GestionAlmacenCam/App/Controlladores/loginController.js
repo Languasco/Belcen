@@ -71,49 +71,27 @@ app.controller('ctrlLogin', function ($scope, auxiliarServices, loginServices, $
         };
         loginServices.initSession(params)
             .then(function (res) { 
-
                 if (res.ok == true) {
-
-                $timeout(function () {
-                    // HABILITAMOS MENU Y HEADER
-                    header.style.display = "";
-                    menu.style.display = "";
-                    $location.path('/Home');
-                    auxiliarServices.saveUserPermission(res.data);
-                    auxiliarServices.changeNameUser();
-                }, 1000);
-
-
-                //const idUsuario = res.data.dataUsuario.id_Usuario;
-                //loginServices.get_ActivarDesactivarSesion(idUsuario, 1)
-                //    .then((result) => { 
-                //        if (result == "OK" || result == '"OK') {                            
-                //            $timeout(function () {
-                //                // HABILITAMOS MENU Y HEADER
-                //                header.style.display = "";
-                //                menu.style.display = "";
-                //                $location.path('/Home');
-                //                auxiliarServices.saveUserPermission(res.data);
-                //                auxiliarServices.changeNameUser();
-                //            }, 1000);
-                //        }
-                //    }, (err) => {
-                //        console.log('err');
-                //        console.log(err);
-                //    })
-
-            } else {
-                $scope.paramsLoad.showLoader = false;
-                $.toast({
-                    heading: 'Sistemas',
-                    text: res.data,
-                    position: 'top-right',
-                    loaderBg: '#008efa',
-                    icon: 'error',
-                    hideAfter: 3500,
-                    stack: 6
-                });
-            }
+                        $timeout(function () {
+                            // HABILITAMOS MENU Y HEADER
+                            header.style.display = "";
+                            menu.style.display = "";
+                            $location.path('/Home');
+                            auxiliarServices.saveUserPermission(res.data);
+                            auxiliarServices.changeNameUser();
+                        }, 1000);
+                } else  {
+                    $scope.paramsLoad.showLoader = false;
+                    $.toast({
+                        heading: 'Sistemas',
+                        text: res.data,
+                        position: 'top-right',
+                        loaderBg: '#008efa',
+                        icon: 'error',
+                        hideAfter: 3500,
+                        stack: 6
+                    });
+                }
 
         }, function (err) {
             $timeout(function () {
@@ -132,6 +110,71 @@ app.controller('ctrlLogin', function ($scope, auxiliarServices, loginServices, $
 
             });             
     };
+
+
+    $scope.retrieveEmail = '';
+    $scope.openModal_recuperarPassword = function () {
+        $('#modalRecuperar').modal('show');
+        $scope.retrieveEmail = '';
+    }
+
+    $scope.set_recuperarPassword_Email = function () {
+
+        if ($scope.retrieveEmail.trim() == '') {
+            $.toast({
+                heading: 'Sistemas',
+                text: 'Tiene que ingresar el correo con el que se Registro en el sistema',
+                position: 'top-right',
+                loaderBg: '#008efa',
+                icon: 'error',
+                hideAfter: 3500,
+                stack: 6
+            });
+            return 
+        }
+
+        var params = {
+            title: "Sistemas",
+            text: 'Esta por enviar ? .',
+            type: 'confirmationAlert',
+        }
+        auxiliarServices.initSweetAlert(params).then(function (res) {
+            if (res == true) {
+ 
+                $scope.loaderSaveD = true;
+                loginServices.set_recuperarPassword_Email($scope.retrieveEmail.trim())
+                    .then(function (res) {
+
+                        if (res.ok == true) {
+                            $scope.loaderSaveD = false;
+                            $('#modalRecuperar').modal('hide');
+                            $timeout(function () {
+                                let params = {
+                                    type: 'alert',
+                                    title: 'Excelente !',
+                                    text: 'Correo enviado correctamente !'
+                                }
+                                auxiliarServices.initSweetAlert(params).then(function (res) {
+                                });
+
+                            }, 500)
+
+                        } else {
+                            $scope.loaderSaveD = false; 
+                            alert(JSON.stringify(res.data));
+                        }
+                    }, function (error) {
+                        $scope.Objeto_Parametro_arqueoCaja.fechaArqueoCaja = fechaArqueoCaja;
+                        $scope.loaderSaveD = false;
+                        console.log(error)
+                    })
+            }
+        });
+
+
+
+
+    }
 
 
 

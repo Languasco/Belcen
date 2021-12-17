@@ -85,6 +85,8 @@
 
     Result.update_Cliente = function (object) {
 
+
+
         let url = urlApi + "tblCom_Cliente/" + object.id_cliente;
         var q = $q.defer();
         $http.put(url, object)

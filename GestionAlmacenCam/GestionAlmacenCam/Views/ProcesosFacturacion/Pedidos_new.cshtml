@@ -429,10 +429,10 @@
                                     <button type="button" ng-class="(item.flag_cancelacion =='SI') ? 'btn btn-primary btn-circle btnDolar' : 'btn btn-primary btn-circle btnWhite'" ng-click="AbrirModal_PagosPendientes(item);" data-toggle="tooltip" title="Pagos Pendientes">
                                         <i class=" ti-money"></i>
                                     </button>
-                                                                        <!-- -->
+                                    <!-- -->
                                     <button type="button" class="btn btn-warning btn-circle" ng-click="Rechazar_Pedido(item);" style="background-color: #ff6849; border-color: #ff6849;" title="RECHAZAR"><i class="fa fa-close"></i> </button>
                                     <button type="button" class="btn btn-success btn-circle" ng-click="generarVistaPreliminar_Sunat(item.id_TipoDocumento, item.Numero_Documento);" data-toggle="tooltip" title="IMPRIMIR"><i class="ti-printer"></i> </button>
-
+                                    <button type="button" class="btn btn-success btn-circle" ng-click="getAuditorias(item);" data-toggle="tooltip" title="AUDITAR"><i class="fa fa-cog"></i> </button>
 
                                 </th>
                             </tr>

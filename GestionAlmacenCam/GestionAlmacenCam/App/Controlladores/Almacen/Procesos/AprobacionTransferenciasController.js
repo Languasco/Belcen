@@ -60,14 +60,9 @@ app.controller('CtrlAprobacionTransferenciasController', function ($scope, Ingre
             return
         }
 
-        var filter = $scope.objFilter.id_Local + '|' + $scope.objFilter.id_Almacen + '|' + $scope.objFilter.opcion;
-        $scope.loaderDet = true;
-        var params = {
-            value: "2",
-            filter : filter
-        }
-      
-        IngresoTransferenciasServices.getTransferencias(params)
+        //var filter = $scope.objFilter.id_Local + '|' + $scope.objFilter.id_Almacen + '|' + $scope.objFilter.opcion;
+        $scope.loaderDet = true;      
+        IngresoTransferenciasServices.getTransferencias_new($scope.objFilter.id_Local, $scope.objFilter.id_Almacen, $scope.objFilter.opcion )
        .then(function (res) {
             $scope.loaderDet = false;
  

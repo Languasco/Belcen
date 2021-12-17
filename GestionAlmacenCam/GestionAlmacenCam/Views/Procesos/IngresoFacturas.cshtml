@@ -258,6 +258,7 @@
                         <td> {{item.descripcionEstado}}</td>
                         <td class="text-center">
                             <button type="button" class="btn btn-primary btn-circle " ng-click="EdicionRegistros(item);" data-toggle="tooltip" title="EDITAR"><i class=" ti-pencil-alt"></i></button>
+                            <button type="button" class="btn btn-success btn-circle" ng-click="getAuditorias(item);" data-toggle="tooltip" title="AUDITAR"><i class="fa fa-cog"></i> </button>
                             <button type="button" ng-if="item.idEstado == 3" class="btn btn-warning btn-circle" ng-click="anular_ingreoFactura(item);" style="background-color: #ff6849; border-color: #ff6849;" title="Anular"><i class="fa fa-close"></i> </button>
                         </td>
                     </tr>

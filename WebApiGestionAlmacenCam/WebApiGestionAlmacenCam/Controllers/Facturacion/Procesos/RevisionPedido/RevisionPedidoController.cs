@@ -9,7 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 
-namespace WebApiGestionAlmacenCam.Controllers.Facturacion.Procesos.RevisionPedido
+namespace WebApi_Ventas.Controllers.Facturacion.Procesos.RevisionPedido
 {
     [EnableCors("*", "*", "*")]
 
@@ -211,9 +211,12 @@ namespace WebApiGestionAlmacenCam.Controllers.Facturacion.Procesos.RevisionPedid
                 string idPedidosMasivo = String.Join(",", listIdPedidos);
 
                 int idusuario = Convert.ToInt32(parametros[0].ToString());
+                int idanexo = Convert.ToInt32(parametros[1].ToString());
+                int id_ZonaVta = Convert.ToInt32(parametros[2].ToString());
+                int id_almacen = Convert.ToInt32(parametros[3].ToString());
 
                 RevisionPedidos_BL obj_negocio = new RevisionPedidos_BL();
-                resultado = obj_negocio.set_grabar_asignacionTecnico(idPedidosMasivo, idusuario);               
+                resultado = obj_negocio.set_grabar_asignacionTecnico(idPedidosMasivo, idusuario, idanexo, id_ZonaVta, id_almacen);               
             }
             catch (Exception ex)
             {

@@ -3,7 +3,7 @@
     .factory('UsuariosServices', function (urlApi, $http, $q, $http, $timeout, auxiliarServices) {
 
     var Result = {};
-    Result.getUsuarios = function () {
+        Result.getUsuarios = function () {
         var q = $q.defer();
         var url = urlApi + "tblUsuarios";
 
@@ -148,17 +148,17 @@
         return q.promise;
     }
 
-        Result.anular_usuario = function (nro_doc, userId) {
-            let url = urlApi + 'tblUsuarios?nro_doc=' + nro_doc + '&userId=' + userId;
-        var q = $q.defer();
-        $http.delete(url)
-            .success(function (res) {
-                q.resolve(res);
-            })
-            .error(function (err) {
-                q.reject(err);
-            })
-        return q.promise;
+        Result.anular_usuario = function (nro_doc, userId, idRegistro, tipoAcceso) {
+            let url = urlApi + 'tblUsuarios?nro_doc=' + nro_doc + '&userId=' + userId + '&idRegistro=' + idRegistro + '&tipoAcceso=' + tipoAcceso;
+            var q = $q.defer();
+            $http.delete(url)
+                .success(function (res) {
+                    q.resolve(res);
+                })
+                .error(function (err) {
+                    q.reject(err);
+                })
+            return q.promise;
         }
 
     return Result;

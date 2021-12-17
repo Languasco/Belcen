@@ -62,6 +62,11 @@ namespace Negocio.Almacen.Procesos
                                 Entidad.igv = dr["igv"].ToString();
                                 Entidad.total = dr["total"].ToString();
 
+                                Entidad.usuario_creacion = dr["usuario_creacion"].ToString();
+                                Entidad.fecha_creacion = dr["fecha_creacion"].ToString();
+                                Entidad.usuario_edicion = dr["usuario_edicion"].ToString();
+                                Entidad.fecha_edicion = dr["fecha_edicion"].ToString();
+
                                 obj_List.Add(Entidad);
                             }
 
@@ -957,9 +962,6 @@ namespace Negocio.Almacen.Procesos
             }
             return res;
         }
-
-
-
         public string GenerarArchivoExcel_reporteContable_compras(DataTable dt_detalles)
         {
             string Res = "";
@@ -1103,6 +1105,137 @@ namespace Negocio.Almacen.Procesos
             return Res;
         }
 
+        public object ExportarExcel_ventaAcumulada(int id_anexo, string fecha_ini, string fecha_fin, int id_usuario)
+        {
+            Resul res = new Resul();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("PROC_R_VENTAS_ACUMULADAS_CLIENTES", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@anexo", SqlDbType.Int).Value = id_anexo;
+                        cmd.Parameters.Add("@fechaIni", SqlDbType.VarChar).Value = fecha_ini;
+                        cmd.Parameters.Add("@fechaFin", SqlDbType.VarChar).Value = fecha_fin;
+
+                        DataTable dt_detalle = new DataTable();
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt_detalle);
+                            if (dt_detalle.Rows.Count <= 0)
+                            {
+                                res.ok = false;
+                                res.data = "0|No hay informacion disponible";
+                            }
+                            else
+                            {
+                                res.ok = true;
+                                res.data = GenerarArchivoExcel_reporteVentasAcumulada(dt_detalle );
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+            return res;
+        }
+
+        public string GenerarArchivoExcel_reporteVentasAcumulada(DataTable dt_detalles )
+        {
+            string Res = "";
+            string _servidor;
+
+            int _fila = 7;
+            int pos = 1;
+            string FileRuta = "";
+            string FileExcel = "";
+
+            try
+            {
+                _servidor = String.Format("{0:ddMMyyyy_hhmmss}.xlsx", DateTime.Now);
+                FileRuta = System.Web.Hosting.HostingEnvironment.MapPath("~/ArchivosExcel/ReporteVentaAcumulada" + _servidor);
+                string rutaServer = ConfigurationManager.AppSettings["servidor_archivos"];
+
+                FileExcel = rutaServer + "ReporteVentaAcumulada" + _servidor;
+                FileInfo _file = new FileInfo(FileRuta);
+                if (_file.Exists)
+                {
+                    _file.Delete();
+                    _file = new FileInfo(FileRuta);
+                }
+
+                using (Excel.ExcelPackage oEx = new Excel.ExcelPackage(_file))
+                {
+                    Excel.ExcelWorksheet oWs = oEx.Workbook.Worksheets.Add("ReporteVentaAcumulada");
+                    oWs.Cells.Style.Font.SetFromFont(new Font("Tahoma", 8));
+
+
+                    oWs.Cells[2, 1, 2, 6].Merge = true;  // combinar celdaS dt
+                    oWs.Cells[2, 1].Value = dt_detalles.Rows[0]["tituloReporte"].ToString();
+                    oWs.Cells[2, 1].Style.Font.Size = 15; //letra tamaño  
+                    oWs.Cells[2, 1].Style.HorizontalAlignment = Style.ExcelHorizontalAlignment.Center;
+                    oWs.Cells[2, 1].Style.VerticalAlignment = Style.ExcelVerticalAlignment.Center;
+                    oWs.Cells[2, 1].Style.Font.Bold = true; //Letra negrita
+
+                    oWs.Cells[4, 1, 4, 6].Merge = true;  // combinar celdaS dt
+                    oWs.Cells[4, 1].Value = "Desde " + dt_detalles.Rows[0]["fechaInicial"].ToString() + " Hasta " + dt_detalles.Rows[0]["fechaFinal"].ToString();
+                    oWs.Cells[4, 1].Style.Font.Size = 12; //letra tamaño  
+                    oWs.Cells[4, 1].Style.HorizontalAlignment = Style.ExcelHorizontalAlignment.Center;
+                    oWs.Cells[4, 1].Style.VerticalAlignment = Style.ExcelVerticalAlignment.Center;
+                    oWs.Cells[4, 1].Style.Font.Bold = true; //Letra negrita
+
+
+                    oWs.Cells[6, pos].Value = "NRO"; pos += 1;
+                    oWs.Cells[6, pos].Value = "ZONA"; pos += 1;
+                    oWs.Cells[6, pos].Value = "CÓDIGO"; pos += 1;
+                    oWs.Cells[6, pos].Value = "NOMBRE VENDEDOR"; pos += 1;
+                    oWs.Cells[6, pos].Value = "VENTA ACUMULADA"; pos += 1;
+                    oWs.Cells[6, pos].Value = "CLIENTES ATENDIDOS"; pos += 1; 
+                    int ac = 0;
+                    foreach (DataRow oBj in dt_detalles.Rows)
+                    {
+                        pos = 1;
+                        ac += 1;
+                        oWs.Cells[_fila, pos].Value = ac; pos += 1;
+                        oWs.Cells[_fila, pos].Value = oBj["nombreZonaVta"].ToString(); pos += 1;
+                        oWs.Cells[_fila, pos].Value = oBj["codigo_personal"].ToString(); pos += 1;
+                        oWs.Cells[_fila, pos].Value = oBj["vendedor"].ToString(); pos += 1;                   
+     
+                        oWs.Cells[_fila, pos].Style.Numberformat.Format = "#,##0.0000";
+                        oWs.Cells[_fila, pos].Value = Convert.ToDouble(oBj["monto"].ToString());
+                        oWs.Cells[_fila, pos].Style.HorizontalAlignment = Style.ExcelHorizontalAlignment.Right;
+                        pos += 1;
+                        oWs.Cells[_fila, pos].Style.Numberformat.Format = "#";
+                        oWs.Cells[_fila, pos].Value = Convert.ToInt32(oBj["clientes"].ToString());
+                        oWs.Cells[_fila, pos].Style.HorizontalAlignment = Style.ExcelHorizontalAlignment.Right;
+                        _fila++;
+                    }
+
+                    oWs.Row(6).Style.Font.Bold = true;
+                    oWs.Row(6).Style.HorizontalAlignment = Style.ExcelHorizontalAlignment.Center;
+                    oWs.Row(6).Style.VerticalAlignment = Style.ExcelVerticalAlignment.Center;
+
+                    for (int k = 1; k <= 6; k++)
+                    {
+                        oWs.Column(k).AutoFit();
+                    }
+                    oEx.Save();
+                }
+                Res = FileExcel;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return Res;
+        }
 
 
 

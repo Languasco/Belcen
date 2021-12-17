@@ -156,7 +156,7 @@
                                 <td>{{item.estado == 0 | iif : "Anulado" : "Activado"}}</td>
                                 <td>
                                     <button type="button" class="btn btn-primary btn-circle " ng-click="Open_Update_Modal(item);" data-toggle="tooltip" title="EDITAR"><i class=" ti-pencil-alt"></i></button>
-                                    @*<button type="button" class="btn btn-success btn-circle" ng-click="getAuditoria(item)"><i class="fa fa-cog"></i> </button>*@
+                                    <button type="button" class="btn btn-success btn-circle" ng-click="getAuditorias(item);" data-toggle="tooltip" title="AUDITAR"><i class="fa fa-cog"></i> </button>
                                     <button type="button" class="btn btn-warning btn-circle" ng-click="getAnular(item);" style="background-color: #ff6849; border-color: #ff6849;" title="ANULAR"><i class="fa fa-trash"></i> </button>
                                 </td>
                             </tr>

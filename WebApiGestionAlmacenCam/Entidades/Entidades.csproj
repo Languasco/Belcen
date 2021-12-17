@@ -52,6 +52,7 @@
     <Compile Include="Accessos\Usuario_Almacen_E.cs" />
     <Compile Include="Accessos\Usuario_Local_E.cs" />
     <Compile Include="Almacen\Procesos\IngresoFacturas_E.cs" />
+    <Compile Include="Almacen\Procesos\TransformacionProducto_E.cs" />
     <Compile Include="Cobranzas\CancelacionMasiva_doc_E.cs" />
     <Compile Include="Cobranzas\CobranzaManual.cs" />
     <Compile Include="Cobranzas\detalle_cancelaciones_E.cs" />

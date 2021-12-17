@@ -400,7 +400,7 @@ namespace WebApiGestionAlmacenCam.Controllers.Facturacion.Procesos.ArqueoCaja
         [Route("api/Arqueocaja/Puttbl_ArqueoCaja_Cab")]
         public object Puttbl_ArqueoCaja_Cab(int id, tbl_ArqueoCaja_Cab tbl_ArqueoCaja_Cab)
         {
-            Resultado res = new Resultado();
+            Resul res = new Resul();
 
             tbl_ArqueoCaja_Cab objReemplazar;
             objReemplazar = db.tbl_ArqueoCaja_Cab.Where(u => u.id_ArqueoCaja == id).FirstOrDefault<tbl_ArqueoCaja_Cab>();

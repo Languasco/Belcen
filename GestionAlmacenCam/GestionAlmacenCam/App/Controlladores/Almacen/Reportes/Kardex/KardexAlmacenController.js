@@ -1,5 +1,5 @@
 ﻿var app = angular.module('appGestion.KardexAlmacenController', []);
-app.controller('ctrlKardex', function ($scope, loginServices, $location, $timeout, productosServices, auxiliarServices, StockServices, AlmacenServices, LocalesServices) {
+app.controller('ctrlKardex', function ($scope, transferenciasNewServices , $location, $timeout, productosServices, auxiliarServices, StockServices, AlmacenServices, LocalesServices) {
 
     $scope.initAll = function () {
         if (!auxiliarServices.validateUserLog()) {
@@ -10,6 +10,11 @@ app.controller('ctrlKardex', function ($scope, loginServices, $location, $timeou
         auxiliarServices.changeTitle("Reporte de Kardex");
         $scope.titleModal = "Reporte de Kardex";
         $scope.loaderSave = false;
+
+        $timeout(function () {
+            $(".selectFiltros").select2();
+        }, 0);
+
         $scope.get_ListandoLocales();
     };
 
@@ -49,7 +54,6 @@ app.controller('ctrlKardex', function ($scope, loginServices, $location, $timeou
                 $scope.Lista_Locales = [];
                 $scope.Lista_Locales = data;
                 setTimeout(function () {
-                    $(".selectFiltros").select2();
                     $('#cbo_local').val("0").trigger('change.select2');
                     $('#cbo_almacen').val("0").trigger('change.select2');
                 }, 500);
@@ -85,35 +89,38 @@ app.controller('ctrlKardex', function ($scope, loginServices, $location, $timeou
     $scope.objSaveGuiasDet = {
         id_Producto: '0',
         nombre_Producto: '',
-        codigo1_Producto: ''
+        codigo1_Producto: '',
+        descripcion_unidadMedida : ''
     };
-    $scope.getProductoByFilter = function () {
-        $scope.loaderProducto = true;
-        $scope.disabledProducto = "disabledContent";
-        var params = {
-            filter: $scope.objSaveGuiasDet.codigo1_Producto
-        };
-        console.log(params);
-        productosServices.getProductosByFilter(params).then(function (res) {
+    //$scope.getProductoByFilter = function () {
+    //    $scope.loaderProducto = true;
+    //    $scope.disabledProducto = "disabledContent";
+    //    var params = {
+    //        filter: $scope.objSaveGuiasDet.codigo1_Producto
+    //    };
+    //    console.log(params);
+    //    productosServices.getProductosByFilter(params).then(function (res) {
 
-            if (res.length === 0) {
-                $scope.objSaveGuiasDet.id_Producto = 0;
-                $scope.objSaveGuiasDet.nombre_Producto = "";
-                $scope.objSaveGuiasDet.abreviatura_Producto = "";
-                $scope.Objeto_ParametroFiltro.idMaterial = 0;
-                $scope.textError = "No se encuentra codigo de producto.";
-            } else {
-                $scope.objSaveGuiasDet.id_Producto = res[0].id_Producto;
-                $scope.objSaveGuiasDet.nombre_Producto = res[0].nombre_Producto;
-                $scope.Objeto_ParametroFiltro.idMaterial = res[0].id_Producto;
-            }
-            $scope.disabledProducto = "";
-            $scope.loaderProducto = false;
+    //        if (res.length === 0) {
+    //            $scope.objSaveGuiasDet.id_Producto = 0;
+    //            $scope.objSaveGuiasDet.nombre_Producto = "";
+    //            $scope.objSaveGuiasDet.abreviatura_Producto = "";
+    //            $scope.Objeto_ParametroFiltro.idMaterial = 0;
+    //            $scope.objSaveGuiasDet.descripcion_unidadMedida = "";
+    //            $scope.textError = "No se encuentra codigo de producto.";
+    //        } else {
+    //            $scope.objSaveGuiasDet.id_Producto = res[0].id_Producto;
+    //            $scope.objSaveGuiasDet.nombre_Producto = res[0].nombre_Producto;
+    //            $scope.Objeto_ParametroFiltro.idMaterial = res[0].id_Producto;
+    //            $scope.objSaveGuiasDet.descripcion_unidadMedida = res[0].nombre_UnidadMedida;
+    //        }
+    //        $scope.disabledProducto = "";
+    //        $scope.loaderProducto = false;
 
-        }, function (err) {
-            console.log(err);
-        });
-    };
+    //    }, function (err) {
+    //        console.log(err);
+    //    });
+    //};
 
     $scope.change_tipoReporte = function (opcion) {
         console.log($scope.Objeto_ParametroFiltro.tipo);
@@ -220,15 +227,8 @@ app.controller('ctrlKardex', function ($scope, loginServices, $location, $timeou
     };
 
 
-
-    $scope.GenerarReporteTodo = function (value) {
-
+    $scope.GenerarReporteValorizado = function () {
         $scope.loaderSave = true;
-
-
-        const fechaIni = auxiliarServices.changeFormatDate(2, $scope.Objeto_ParametroFiltro.fecha);
-        const fechaFin = auxiliarServices.changeFormatDate(2, $scope.Objeto_ParametroFiltro.fecha_fin);
-
        StockServices.getKardexReporte_todo($scope.Objeto_ParametroFiltro )
             .then(function (data) {
                 $scope.loaderSave = false;
@@ -247,13 +247,34 @@ app.controller('ctrlKardex', function ($scope, loginServices, $location, $timeou
             });
     };
 
+    $scope.GenerarReporteValorizado_Todo = function () {
+        $scope.loaderSave = true;
+        StockServices.get_ReporteValorizado_Todo($scope.Objeto_ParametroFiltro)
+            .then(function (data) {
+
+                console.log(data)
+                $scope.loaderSave = false;
+                var result = data.split('|');
+                if (result[0] == 0) {
+
+                } else if (result[0] == 1) {
+                    var link = document.createElement("a");
+                    link.download = "kardexTodo";
+                    link.href = result[1];
+                    link.click();
+                }
+            }, function (err) {
+                $scope.loaderSave = false;
+                console.log(err);
+            });
+    };
+
     $scope.$on('ngRepeatFinished', function (ngRepeatFinishedEvent) {
         $timeout(function () {
             auxiliarServices.initFooTable('tblReport', 'inputSearch');
             // $scope.ExportarToExcel();
         }, 100);
     });
-
 
     $scope.ExportarToExcel = function (value) {        // CAPTURAMOS EL TIPO DE TRANSACCIÓN PARA GENERAR LA CABECERA AL REPORTE
 
@@ -276,7 +297,7 @@ app.controller('ctrlKardex', function ($scope, loginServices, $location, $timeou
                 '<meta charset="utf-8">' +
                 '<!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>Reporte</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]-->' +
                 '<style>' +
-
+                ' .labelProducto {background-color:beige !important  }' +
                 ' table, td, th {' +
                 ' border: 1px solid rgba(0, 0, 0, 0.11);' +
                 ' }' +
@@ -287,7 +308,8 @@ app.controller('ctrlKardex', function ($scope, loginServices, $location, $timeou
                 ' </style> </head>' +
                 '<body>' +
                 '<h2  style="text-align:center;">' + Cabecera + '</h2>' +
-                ' <p  style="text-align:center; font-size: 17px;">Fecha : ' + $scope.Objeto_ParametroFiltro.fecha + ' </p>' +
+                ' <p  style="text-align:center; font-size: 15px;">Fecha : ' + $scope.Objeto_ParametroFiltro.fecha + ' </p>' +
+                ' <p class= "labelProducto"  style="text-align:center; font-size: 17px; background-color:beige !important">' + $scope.objSaveGuiasDet.codigo1_Producto + ' : ' + $scope.objSaveGuiasDet.nombre_Producto + ' </p>' +
                 '<table>{table}</table>' +
                 '</body>' +
                 '</html>',
@@ -324,9 +346,6 @@ app.controller('ctrlKardex', function ($scope, loginServices, $location, $timeou
         $scope.loaderSave = false;
 
     };
-
-
-
 
     function Pdf_ReporteStock(items, fecha, TipoReporte) {
         var TituloReporte = '';
@@ -420,7 +439,6 @@ app.controller('ctrlKardex', function ($scope, loginServices, $location, $timeou
         doc.output('save', 'Kardex.pdf');
     }
 
-
     var getColumnsReporteStock = function (TipoReporte) {
         var Columnas;
         // por stock almacen
@@ -512,4 +530,178 @@ app.controller('ctrlKardex', function ($scope, loginServices, $location, $timeou
             $('#btn_visualizar').attr("disabled", false);
         }
     }
+
+    $scope.Open_New_Modal_AyudaProducto = function () {
+
+        //if ($scope.Objeto_ParametroFiltro.local == '0' || $scope.Objeto_ParametroFiltro.local == 0) {
+        //    auxiliarServices.NotificationMessage('Sistemas', 'Por favor seleccione el Local', 'error', '#ff6849', 1500);
+        //    return;
+        //}
+        //if ($scope.Objeto_ParametroFiltro.almacen == '0' || $scope.Objeto_ParametroFiltro.almacen == 0) {
+        //    auxiliarServices.NotificationMessage('Sistemas', 'Por favor seleccione el Almacén', 'error', '#ff6849', 1500);
+        //    return;
+        //}
+
+
+        var regionDetalle_Producto = document.getElementById('regionDetalle_Producto');
+        $('#txt_busquedaProducto').val('');
+
+        $scope.Lista_Busqueda_Producto = [];
+        regionDetalle_Producto.style.display = 'none';
+        $('#modalAyuda_Producto').modal('show');
+
+        $timeout(function () {
+            $('#inputSearch').val('');
+            $scope.search_P = '';
+        }, 0);
+
+        $timeout(function () {
+            regionDetalle_Producto.style.display = 'none';
+            $('#txt_busquedaProducto').focus().select();
+        }, 800);
+    };
+
+
+    var oTable_Prod;
+    $scope.opcionBusqueda = '';
+
+    $scope.Lista_Busqueda_Producto = [];
+    $scope.Ayuda_BuscarProducto = function () {
+
+        //if ($scope.Objeto_ParametroFiltro.local == '0' || $scope.Objeto_ParametroFiltro.local == 0) {
+        //    auxiliarServices.NotificationMessage('Sistemas', 'Por favor seleccione el Local', 'error', '#ff6849', 1500);
+        //    return false;
+        //}
+        //if ($scope.Objeto_ParametroFiltro.almacen == '0' || $scope.Objeto_ParametroFiltro.almacen == 0) {
+        //    auxiliarServices.NotificationMessage('Sistemas', 'Por favor seleccione el Almacén', 'error', '#ff6849', 1500);
+        //    return false;
+        //}
+
+        const filtroProducto = document.getElementById('txt_busquedaProducto').value;
+        let regionDetalle_Producto = document.getElementById('regionDetalle_Producto');
+        $scope.loader_modal_ayuda = true;
+        StockServices.get_buscarProducto_AyudaModal($scope.Objeto_ParametroFiltro.local, $scope.Objeto_ParametroFiltro.almacen, filtroProducto, auxiliarServices.getUserId())
+            .then(function (res) {
+
+                $scope.loader_modal_ayuda = false;
+                $scope.Lista_Busqueda_Producto = [];
+
+                if (res.ok == true) {
+                    if (res.data.length > 0) {
+
+                        $scope.Lista_Busqueda_Producto = res.data;
+
+                        $timeout(function () {
+                            $scope.loaderfiltros = false;
+                            regionDetalle_Producto.style.display = '';
+
+                            if (oTable_Prod == null) {
+                                oTable_Prod = 'data';
+                                auxiliarServices.initFooTable('tbl_busquedaProducto', 'inputSearch');
+                            } else {
+                                ///---- limpiando el filtrooo en la ayuda ---
+                                $('#tbl_busquedaProducto').trigger('footable_filter', {
+                                    filter: $("#inputSearch").val()
+                                });
+                            }
+                        }, 800);
+        
+                    } else {
+                        auxiliarServices.NotificationMessage('Sistemas', 'No se encontro resultado, verifique.', 'error', '#ff6849', 3000);
+                    }
+                } else {
+                    auxiliarServices.NotificationMessage('Sistemas', 'Lo sentimos se produjo un error', 'error', '#ff6849', 2000);
+                    alert(res.data);
+                }
+            }, function (err) {
+                $scope.loaderfiltros = false;
+                console.log(err);
+            });
+    };
+
+    $scope.Agregar_Producto = function ({ id_Producto, codigo_Producto, descripcion_Producto, id_unidadMedida, descripcion_unidadMedida  }) {
+        $scope.objSaveGuiasDet.id_Producto = id_Producto;
+        $scope.objSaveGuiasDet.codigo1_Producto = codigo_Producto;
+        $scope.objSaveGuiasDet.nombre_Producto = descripcion_Producto + ' - ' + descripcion_unidadMedida;
+        $scope.Objeto_ParametroFiltro.idMaterial = id_Producto;
+        $scope.objSaveGuiasDet.descripcion_unidadMedida = descripcion_unidadMedida;
+
+        $timeout(function () {
+            $('#modalAyuda_Producto').modal('hide');
+        }, 500);
+
+    };
+     
+
+    $scope.getProductoByFilter = function () {
+
+        if ($scope.objSaveGuiasDet.codigo1_Producto == '' || $scope.objSaveGuiasDet.codigo1_Producto == null) {
+            auxiliarServices.NotificationMessage('Sistemas', 'Por favor ingrese el código del Producto', 'error', '#ff6849', 1500);
+            return;
+        }
+
+        const filtroProducto = $scope.objSaveGuiasDet.codigo1_Producto;
+        $scope.loader_modal_ayuda = true;
+        StockServices.get_buscarProducto_AyudaModal($scope.Objeto_ParametroFiltro.local, $scope.Objeto_ParametroFiltro.almacen, filtroProducto, auxiliarServices.getUserId())
+            .then(function (res) {
+                $scope.loader_modal_ayuda = false;      
+
+                if (res.ok == true) {
+                    if (res.data.length > 0) {
+
+                        if (res.data.length == 1) {
+
+                            const { id_Producto, codigo_Producto, descripcion_Producto, id_unidadMedida, descripcion_unidadMedida } = res.data[0];
+
+                            $scope.objSaveGuiasDet.id_Producto = id_Producto;
+                            $scope.objSaveGuiasDet.codigo1_Producto = codigo_Producto;
+                            $scope.objSaveGuiasDet.nombre_Producto = descripcion_Producto + ' - ' + descripcion_unidadMedida;
+                            $scope.Objeto_ParametroFiltro.idMaterial = id_Producto;
+                            $scope.objSaveGuiasDet.descripcion_unidadMedida = descripcion_unidadMedida;
+
+                        } else {
+
+                            var regionDetalle_Producto = document.getElementById('regionDetalle_Producto');
+                            $('#txt_busquedaProducto').val(filtroProducto);
+
+                            $scope.Lista_Busqueda_Producto = [];
+                            regionDetalle_Producto.style.display = 'none';
+                            $('#modalAyuda_Producto').modal('show');
+
+                            $scope.Lista_Busqueda_Producto = res.data;
+
+                            $timeout(function () {
+                                $('#inputSearch').val('');
+                                $scope.search_P = '';
+                            }, 0);
+
+                            $timeout(function () {
+                                regionDetalle_Producto.style.display = '';
+
+                                if (oTable_Prod == null) {
+                                    oTable_Prod = 'data';
+                                    auxiliarServices.initFooTable('tbl_busquedaProducto', 'inputSearch');
+                                } else {
+                                    ///---- limpiando el filtrooo en la ayuda ---
+                                    $('#tbl_busquedaProducto').trigger('footable_filter', {
+                                        filter: $("#inputSearch").val()
+                                    });
+                                }
+                            }, 500);
+                        }
+                    } else {
+                        auxiliarServices.NotificationMessage('Sistemas', 'No se encontro resultados, verifique.', 'error', '#ff6849', 3000);
+                    }
+                } else {
+                    auxiliarServices.NotificationMessage('Sistemas', 'Lo sentimos se produjo un error', 'error', '#ff6849', 2000);
+                    alert(res.data);
+                }
+            }, function (err) {
+                $scope.loaderfiltros = false;
+                console.log(err);
+            });
+    };
+
+
+
 });

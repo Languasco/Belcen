@@ -1,6 +1,6 @@
 ﻿var app = angular.module('appGestion.PromocionesController', [])
 
-app.controller('CtrlPromociones', function ($scope, loginServices, $location, $timeout, auxiliarServices, RevisionPedidoServices, GrupoDetServices, Cliente_IIServices, PromocionesServices) {
+app.controller('CtrlPromociones', function ($scope, loginServices, $location, $timeout, auxiliarServices, RevisionPedidoServices, GrupoDetServices, AuditarServices, PromocionesServices) {
     
     $scope.initAll = function () {
         if (!auxiliarServices.validateUserLog()) {
@@ -28,6 +28,39 @@ app.controller('CtrlPromociones', function ($scope, loginServices, $location, $t
             $(".selectModal").select2();
         }, 100);
     }
+
+
+    $scope.getAuditorias = function (item) {
+
+        console.log(item)
+
+        const uCreacion = (!item.usuario_creacion) ? 0 : item.usuario_creacion;
+        const uEdicion = (!item.usuario_edicion) ? 0 : item.usuario_edicion;
+
+        const fechaCreacion = auxiliarServices.formatDate(item.fecha_creacion);
+        const fechaEdicion = (!item.fecha_edicion) ? '' : auxiliarServices.formatDate(item.fecha_edicion);
+
+        if (uCreacion == 0 && uEdicion == 0) {
+            auxiliarServices.NotificationMessage('Sistemas', 'No hay informacion para mostrar', 'success', '#008000', 5000);
+            return;
+        }
+
+        AuditarServices.getAuditoria(uCreacion, uEdicion)
+            .then(function (res) {
+                if (res.ok) {
+                    let usuarioCreacion = res.data[0].descripcion;
+                    let usuarioEdicion = (res.data.length == 1) ? '' : res.data[1].descripcion;
+
+                    var message = "Fecha Creación : " + fechaCreacion + "</br>" +
+                        "Usuario Creación : " + usuarioCreacion + "</br>" +
+                        "Fecha Edición : " + fechaEdicion + "</br>" +
+                        "Usuario Edición : " + usuarioEdicion + "</br>"
+                    auxiliarServices.NotificationMessage('Sistemas', message, 'success', '#008000', 5000);
+                }
+            })
+    }
+
+
 
     //----- variables Globales
 
@@ -470,6 +503,10 @@ app.controller('CtrlPromociones', function ($scope, loginServices, $location, $t
                 if (res.ok == true) {
                     if (res.data.length > 0) {
                         $scope.Objeto_Parametro_Conf.descripcion_Canasta = res.data[0].descripcion;
+
+                        //---- listando el detalle --
+                        $scope.listandoConfiguracionDet();
+
                     } else {
                         auxiliarServices.NotificationMessage('Sistemas', 'No se encontro resultado con el Codigo de Canasta ingresado, verifique.', 'error', '#ff6849', 3000);
                     }                   
@@ -704,9 +741,15 @@ app.controller('CtrlPromociones', function ($scope, loginServices, $location, $t
     var oTable;
     $scope.configuracionDet = [];
     $scope.listandoConfiguracionDet = function () {
+
+        if ($scope.Objeto_Parametro_Conf.id_Canasta == 0) {
+            $scope.configuracionDet = [];
+            return;
+        }
+
         $scope.loaderSave = true;
         $scope.configuracionDet = [];
-        PromocionesServices.get_configuracionDetalle($scope.idPromocion_Global)
+        PromocionesServices.get_configuracionDetalle($scope.idPromocion_Global, $scope.Objeto_Parametro_Conf.id_Canasta)
             .then(function (res) {
                 $scope.loaderSave = false; 
                 if (res.ok == true) {

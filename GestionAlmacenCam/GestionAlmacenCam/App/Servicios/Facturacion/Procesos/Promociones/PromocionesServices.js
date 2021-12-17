@@ -183,12 +183,12 @@
             return q.promise;
         }
 
-        Result.get_configuracionDetalle = function (idPromocion) {
+        Result.get_configuracionDetalle = function (idPromocion, idCanasta) {
             let url = urlApi + 'Promociones'
             var parameters;
             var q = $q.defer();
 
-            var parametros = idPromocion;
+            var parametros = idPromocion + '|' + idCanasta;
             parameters = {
                 opcion: 4,
                 filtro: parametros

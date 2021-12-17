@@ -237,10 +237,12 @@
     <Content Include="App\Controlladores\Almacen\Mantenimientos\Vehiculo\VehiculosController.js" />
     <Content Include="App\Controlladores\Almacen\Mantenimientos\Vendedor\VendedorController.js" />
     <Content Include="App\Controlladores\Almacen\Procesos\AprobacionTransferenciasController.js" />
+    <Content Include="App\Controlladores\Almacen\Procesos\importarAjusteInventarioController.js" />
     <Content Include="App\Controlladores\Almacen\Procesos\IngresoGuiasController.js" />
     <Content Include="App\Controlladores\Almacen\Procesos\IngresoGuiasOrdenCompraController.js" />
     <Content Include="App\Controlladores\Almacen\Procesos\IngresoTransferenciasCompraController.js" />
     <Content Include="App\Controlladores\Almacen\Procesos\IngresoFacturasController.js" />
+    <Content Include="App\Controlladores\Almacen\Procesos\transformacionProductosController.js" />
     <Content Include="App\Controlladores\Almacen\Procesos\transferenciasNewController.js" />
     <Content Include="App\Controlladores\Almacen\Procesos\transferenciasController.js" />
     <Content Include="App\Controlladores\Almacen\Reportes\Kardex\KardexAlmacenController.js" />
@@ -271,6 +273,8 @@
     <Content Include="App\Controlladores\Facturacion\Procesos\Pedidos\PedidosController.js" />
     <Content Include="App\Controlladores\Facturacion\Procesos\Pedidos\Pedidos_DirectoController.js" />
     <Content Include="App\Controlladores\Facturacion\Procesos\Reenvio_Documentos\Reenvio_DocumentosController.js" />
+    <Content Include="App\Controlladores\Facturacion\Reportes\HistoricoFacturacion\HistoricoFacturacionController.js" />
+    <Content Include="App\Controlladores\Facturacion\Reportes\VentaAcumulada\VentaAcumuladaController.js" />
     <Content Include="App\Controlladores\Facturacion\Reportes\ReportesContables\ReporteContableController.js" />
     <Content Include="App\Controlladores\Facturacion\Reportes\ResumenVentas\ResumenVentasController.js" />
     <Content Include="App\Controlladores\Facturacion\Reportes\RegistroVentas\RegistroVentasController.js" />
@@ -324,11 +328,15 @@
     <Content Include="App\Servicios\Almacen\Mantenimientos\Transportista\TransportistaServices.js" />
     <Content Include="App\Servicios\Almacen\Mantenimientos\Ubigeo\UbigeoServices.js" />
     <Content Include="App\Servicios\Almacen\Mantenimientos\UnidadMedida\umServices.js" />
+    <Content Include="App\Servicios\Almacen\Procesos\importarAjusteInventarioServices.js" />
+    <Content Include="App\Servicios\Almacen\Procesos\transformacionProductosServices.js" />
     <Content Include="App\Servicios\Almacen\Procesos\transferenciasNewServices.js" />
     <Content Include="App\Servicios\Almacen\Reportes\Transacciones\TransaccionesServices.js" />
     <Content Include="App\Servicios\Facturacion\Procesos\ArqueoCaja\ArqueoCajaServices.js" />
     <Content Include="App\Servicios\Cobranzas\CobranzaManualServices.js" />
     <Content Include="App\Servicios\Cobranzas\CobranzaReporteServices.js" />
+    <Content Include="App\Servicios\Facturacion\Reportes\HistoricoFacturacion\HistoricoFacturacionServices.js" />
+    <Content Include="App\Servicios\Facturacion\Reportes\VentaAcumulada\VentaAcumuladaServices.js" />
     <Content Include="App\Servicios\Facturacion\Reportes\ReportesContables\ReporteContableServices.js" />
     <Content Include="App\Servicios\Mantenimiento\BancosServices.js" />
     <Content Include="App\Servicios\Mantenimiento\UsuariosServices.js" />
@@ -783,6 +791,8 @@
     <Content Include="Plugins\fooTables\css\fonts\footable.woff" />
     <Content Include="Plugins\fooTables\css\fonts\footabled41d.eot" />
     <Content Include="Content\format\FORMATO_STOCK_DIARIO.xlsx" />
+    <Content Include="Content\format\FORMATO_IMPORTACION_AJUSTE.xlsx" />
+    <Content Include="Content\format\FORMATO_IMPORTAR_PRECIO.xlsx" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -941,6 +951,11 @@
     <Content Include="Views\ReportesFacturacion\ReporteContable_Index.cshtml" />
     <Content Include="Views\ProcesosFacturacion\anularNumero_index.cshtml" />
     <Content Include="Views\ReportesFacturacion\estadoDocumento_index.cshtml" />
+    <Content Include="Views\HomeAdministracion\cambioContrasenia_index.cshtml" />
+    <Content Include="Views\Procesos\transformacionProductos_index.cshtml" />
+    <Content Include="Views\ReportesFacturacion\HistoricoFacturacion_index.cshtml" />
+    <Content Include="Views\Procesos\importarAjusteInventario_index.cshtml" />
+    <Content Include="Views\ReportesFacturacion\ventaAcumulada_index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\Controlladores\Almacen\Servicio\Cargo\" />

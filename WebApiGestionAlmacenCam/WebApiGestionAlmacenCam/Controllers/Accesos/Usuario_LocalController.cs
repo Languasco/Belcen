@@ -33,9 +33,6 @@ namespace WebApiGestionAlmacenCam.Controllers.Accesos
                                  c.apellidos_usuario,
                                  c.nombres_usuario,
 
-
-
-
                              }).ToList();
                 }
                 else if (opcion == 2)

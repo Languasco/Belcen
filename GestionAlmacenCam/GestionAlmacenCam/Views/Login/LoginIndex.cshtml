@@ -1,4 +1,12 @@
-﻿<!DOCTYPE html>
+﻿<style>
+    .titulo {
+        font-family: tahoma;
+        color: #2c4d6d;
+        font-weight: 600;
+    }
+</style>
+
+<!DOCTYPE html>
 <html lang="en">
 <!-- Mirrored from wrappixel.com/demos/admin-templates/pixeladmin/horizontal-nav-fullwidth/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 07 Nov 2017 15:37:59 GMT -->
 <head>
@@ -10,7 +18,8 @@
     <link rel="icon" type="image/png" sizes="16x16" href="../plugins/images/favicon.png">
     <title>Pixel Admin - Responsive Admin Dashboard Template build with Twitter Bootstrap</title>
 </head>
-<body>   
+
+<body>
     <section id="wrapper" class="login-register" style="    margin-left: -21px;">
         <div class="login-box" style="box-shadow: 2px 2px 5px -2px rgba(0,0,0,0.59);">
             <div class="white-box">
@@ -31,10 +40,10 @@
                     <div class="form-group">
                         <div class="col-md-12">
                             <div class="checkbox checkbox-primary pull-left p-t-0">
-                                <input id="checkbox-signup" type="checkbox">
-                                <label for="checkbox-signup"> Recordar Usuario </label>
+                                @*<input id="checkbox-signup" type="checkbox">
+                                    <label for="checkbox-signup"> Recordar Usuario </label>*@
                             </div>
-                            <a href="javascript:void(0)" id="to-recover" class="text-dark pull-right"><i class="fa fa-lock m-r-5"></i> Recuperar Contraseña?</a>
+                            <a href="javascript:void(0)" ng-click="openModal_recuperarPassword()" id="to-recover" class="text-dark pull-right"><i class="fa fa-lock m-r-5"></i> Recuperar Contraseña?</a>
                         </div>
                     </div>
                     <div class="form-group text-center m-t-20">
@@ -49,11 +58,11 @@
                         </div>
                     </div>
                 </form>
-                <form class="form-horizontal" id="recoverform" action="https://wrappixel.com/demos/admin-templates/pixeladmin/horizontal-nav-fullwidth/index.html">
+                <form class="form-horizontal" id="recoverform">
                     <div class="form-group ">
                         <div class="col-xs-12">
-                            <h3>Recover Password</h3>
-                            <p class="text-muted">Enter your Email and instructions will be sent to you! </p>
+                            @*<h3>Recover Password</h3>
+                                <p class="text-muted">Enter your Email and instructions will be sent to you! </p>*@
                         </div>
                     </div>
                     <div class="form-group ">
@@ -70,6 +79,36 @@
             </div>
         </div>
     </section>
+
+
+
+    <div id="modalRecuperar" class="modal fade bd-example-modal-lg ModalBorderSombra  " tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <center> <h3 class="titulo">Recuperar Contraseña </h3> </center>
+                </div>
+                <div class="modal-body       ">
+                    <div class="loaderModal" ng-if="loaderSaveD"></div>
+                    <div class="row">
+                        <div class="col-md-12 ">
+                            <label class="control-label" style="font-size: 11px; font-family: tahoma; color: #2c5ca9; font-weight: 600;"> Ingrese Correo</label>
+                            <input type="text" ng-model="retrieveEmail" ng-enter="consultarRuc(Objeto_Parametro_egresos.rucProveedor)" class="form-control input-sm" style="background-color: beige; font-size: 17px; font-weight: 700; color: #3e4d6c; text-align: center;" placeholder="">
+                        </div> 
+                    </div>  
+                </div>
+                <div class="modal-footer ">
+                    <button id="btn-material" class="btn btn-success btn-sm m-l-10" ng-click="set_recuperarPassword_Email();"> <i class="glyphicon glyphicon-floppy-saved"></i> Enviar Correo</button>
+                    <a class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-sign"></span> Cerrar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 </body>
-<!-- Mirrored from wrappixel.com/demos/admin-templates/pixeladmin/horizontal-nav-fullwidth/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 07 Nov 2017 15:37:59 GMT -->
+ 
+
 </html>

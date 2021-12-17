@@ -521,19 +521,20 @@ app.controller('ctrlUsuarios', function ($scope, loginServices, $location, $time
     }
     
     $scope.getAnular = function (item) {
-
         if (item.estado == 0 || item.estado == '0') {
             return;
         }
 
+        let tipoAcceso = (item.acceso_web == 'true' || item.acceso_web == true) ? 'W' : 'M';
+
         var params = {
             title: "Desea continuar ?",
-            text: 'Esta por anular el usuario.',
+            text: 'Esta por anular el Registro.',
             type: 'warning',
         }
         auxiliarServices.initSweetAlert(params).then(function (res) {
             if (res == true) {
-                UsuariosServices.anular_usuario(item.nro_doc, auxiliarServices.getUserId())
+                UsuariosServices.anular_usuario(item.nro_doc, auxiliarServices.getUserId(), item.id_Usuario, tipoAcceso )
                    .then(function (res) {
                        var index = $scope.Lista_Usuarios.indexOf(item);
                        $scope.Lista_Usuarios[index].estado = 0;

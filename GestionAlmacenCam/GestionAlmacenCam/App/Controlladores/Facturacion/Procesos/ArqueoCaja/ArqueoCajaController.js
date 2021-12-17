@@ -1,6 +1,6 @@
 ﻿var app = angular.module('appGestion.ArqueoCajaController', [])
 
-app.controller('ArqueoCajaController', function ($scope, RevisionPedidoServices, $location, ArqueoCajaServices, $timeout, auxiliarServices, GrupoDetServices ) {
+app.controller('ArqueoCajaController', function ($scope, AuditarServices, RevisionPedidoServices, $location, ArqueoCajaServices, $timeout, auxiliarServices, GrupoDetServices ) {
 
     $scope.initAll = function () {
         if (!auxiliarServices.validateUserLog()) {
@@ -27,6 +27,36 @@ app.controller('ArqueoCajaController', function ($scope, RevisionPedidoServices,
             $(".selectFiltros").select2();
             $(".selectModal").select2();
         }, 100);
+    }
+
+    $scope.getAuditorias = function (item) {
+
+        console.log(item)
+
+        const uCreacion = (!item.usuario_creacion) ? 0 : item.usuario_creacion;
+        const uEdicion = (!item.usuario_edicion) ? 0 : item.usuario_edicion;
+
+        const fechaCreacion = auxiliarServices.formatDate(item.fecha_creacion);
+        const fechaEdicion = (!item.fecha_edicion) ? '' : auxiliarServices.formatDate(item.fecha_edicion);
+
+        if (uCreacion == 0 && uEdicion == 0) {
+            auxiliarServices.NotificationMessage('Sistemas', 'No hay informacion para mostrar', 'success', '#008000', 5000);
+            return;
+        }
+
+        AuditarServices.getAuditoria(uCreacion, uEdicion)
+            .then(function (res) {
+                if (res.ok) {
+                    let usuarioCreacion = res.data[0].descripcion;
+                    let usuarioEdicion = (res.data.length == 1) ? '' : res.data[1].descripcion;
+
+                    var message = "Fecha Creación : " + fechaCreacion + "</br>" +
+                        "Usuario Creación : " + usuarioCreacion + "</br>" +
+                        "Fecha Edición : " + fechaEdicion + "</br>" +
+                        "Usuario Edición : " + usuarioEdicion + "</br>"
+                    auxiliarServices.NotificationMessage('Sistemas', message, 'success', '#008000', 5000);
+                }
+            })
     }
 
     //--- variables Globales

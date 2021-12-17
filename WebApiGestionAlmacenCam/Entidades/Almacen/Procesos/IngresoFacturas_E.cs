@@ -24,6 +24,11 @@ namespace Entidades.Almacen.Procesos
         public string igv { get; set; }
         public string total { get; set; }
 
+        public string usuario_creacion { get; set; }
+        public string fecha_creacion { get; set; }
+        public string usuario_edicion { get; set; }
+        public string fecha_edicion { get; set; }
+
 
     }
 }

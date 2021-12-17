@@ -256,10 +256,10 @@ app.controller('Ctrl_CancelacionMasiva', function ($scope, ReimpresionServices, 
             auxiliarServices.NotificationMessage('Sistemas', 'Por favor seleccione un Anexo', 'error', '#ff6849', 1500);
             return;
         }
-        if ($scope.Objeto_ParametroFiltro.id_transportista == undefined || $scope.Objeto_ParametroFiltro.id_transportista == null || $scope.Objeto_ParametroFiltro.id_transportista == '0') {
-            auxiliarServices.NotificationMessage('Sistemas', 'Por favor seleccione un Transportista', 'error', '#ff6849', 1500);
-            return;
-        }
+        //if ($scope.Objeto_ParametroFiltro.id_transportista == undefined || $scope.Objeto_ParametroFiltro.id_transportista == null || $scope.Objeto_ParametroFiltro.id_transportista == '0') {
+        //    auxiliarServices.NotificationMessage('Sistemas', 'Por favor seleccione un Transportista', 'error', '#ff6849', 1500);
+        //    return;
+        //}
 
  
         $('#btn_descartar').attr("disabled", true);

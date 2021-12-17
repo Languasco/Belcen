@@ -41,6 +41,14 @@ namespace Entidades.StockAlmacen
         public string codigo_producto { get; set; }
         public string nombre_producto { get; set; }
         public int id_Producto { get; set; }
+
+
+        public string PrecioUnitario { get; set; }
+        public string Almacen { get; set; }
+        public string Responsable { get; set; }
+        public string Estado { get; set; }
+        public string UsuarioCreacion { get; set; }
+ 
     }
 }
 

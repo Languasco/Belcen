@@ -59,7 +59,9 @@ namespace WebApiGestionAlmacenCam.Controllers.Mantenimiento
                                  a.obj_distribucion,
                                  a.estado,
                                  a.usuario_creacion,
-                                 a.usuario_edicion
+                                 a.fecha_creacion,
+                                 a.usuario_edicion,
+                                 a.fecha_edicion
                              }).ToList().Take(20);
                 }
                 else if (opcion == 2)
@@ -94,7 +96,9 @@ namespace WebApiGestionAlmacenCam.Controllers.Mantenimiento
                                  a.obj_distribucion,
                                  a.estado,
                                  a.usuario_creacion,
-                                 a.usuario_edicion
+                                 a.fecha_creacion,
+                                 a.usuario_edicion,
+                                 a.fecha_edicion
                              }).ToList().Take(20);
 
                 }

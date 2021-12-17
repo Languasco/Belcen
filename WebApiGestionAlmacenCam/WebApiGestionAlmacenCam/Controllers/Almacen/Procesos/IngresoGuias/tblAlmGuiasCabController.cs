@@ -11,7 +11,7 @@ using System.Web.Http.Description;
 using Entidades;
 using System.Web.Http.Cors;
 
-namespace WebApiGestionAlmacenCam.Controllers.Almacen.Procesos
+namespace WebApi_Ventas.Controllers.Almacen.Procesos
 {
     [EnableCors("*", "*", "*")]
     public class tblAlmGuiasCabController : ApiController

@@ -1,5 +1,5 @@
 ﻿var app = angular.module('appGestion.Pedidos_IIController', []);
-app.controller('Pedidos_IIController', function ($scope, $location, $timeout, auxiliarServices, $q, PedidosServices, umServices, EstadosServices, RevisionPedidoServices,Cliente_IIServices, GrupoDetServices, Documentos_MasivosServices, NotaCreditoDebitoServices ,VehiculoServices, AlmacenServices, TipoDocumentoServices, PersonalServices, PuntoVentaServices) {
+app.controller('Pedidos_IIController', function ($scope, $location, $timeout, auxiliarServices, $q, PedidosServices, AuditarServices, EstadosServices, RevisionPedidoServices,Cliente_IIServices, GrupoDetServices, Documentos_MasivosServices, NotaCreditoDebitoServices ,VehiculoServices, AlmacenServices, TipoDocumentoServices, PersonalServices, PuntoVentaServices) {
 
     $scope.loaderfiltros = false;
     $scope.initAll = function () {
@@ -17,7 +17,40 @@ app.controller('Pedidos_IIController', function ($scope, $location, $timeout, au
             $(".selectModal").select2(); 
         }, 0);
 
-    }; 
+    };
+
+
+    $scope.getAuditorias = function (item) {
+
+        console.log(item)
+
+        const uCreacion = (!item.usuario_creacion) ? 0 : item.usuario_creacion;
+        const uEdicion = (!item.usuario_edicion) ? 0 : item.usuario_edicion;
+
+        const fechaCreacion = item.fecha_creacion;
+        const fechaEdicion = (!item.fecha_edicion) ? '' : auxiliarServices.formatDate(item.fecha_edicion);
+
+        if (uCreacion == 0 && uEdicion == 0) {
+            auxiliarServices.NotificationMessage('Sistemas', 'No hay informacion para mostrar', 'success', '#008000', 5000);
+            return;
+        }
+
+        AuditarServices.getAuditoria(uCreacion, uEdicion)
+            .then(function (res) {
+                if (res.ok) {
+                    let usuarioCreacion = res.data[0].descripcion;
+                    let usuarioEdicion = (res.data.length == 1) ? '' : res.data[1].descripcion;
+
+                    var message = "Fecha Creación : " + fechaCreacion + "</br>" +
+                        "Usuario Creación : " + usuarioCreacion + "</br>" +
+                        "Fecha Edición : " + fechaEdicion + "</br>" +
+                        "Usuario Edición : " + usuarioEdicion + "</br>"
+                    auxiliarServices.NotificationMessage('Sistemas', message, 'success', '#008000', 5000);
+                }
+            })
+    }
+
+
 
     $scope.Flag_movLote = false;
     $scope.id_Pedido_Cab_Global = 0;

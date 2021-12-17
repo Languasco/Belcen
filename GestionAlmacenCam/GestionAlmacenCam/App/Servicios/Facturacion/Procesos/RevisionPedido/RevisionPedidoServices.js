@@ -49,8 +49,8 @@
         }
 
 
-        Result.get_aprobarRevisionPedidos = function (idPedidosMasivos, idUsuario) {
-            const filtro = idUsuario;
+        Result.get_aprobarRevisionPedidos = function (idPedidosMasivos, idUsuario, { id_Anexos, id_ZonaVta, id_almacen}) {
+            const filtro = idUsuario + '|' + id_Anexos + '|' + id_ZonaVta + '|' + id_almacen;
             let url = urlApi + 'RevisionPedido/post_aprobarRevisiones?filtro=' + filtro
             var q = $q.defer();
             $http.post(url, idPedidosMasivos)

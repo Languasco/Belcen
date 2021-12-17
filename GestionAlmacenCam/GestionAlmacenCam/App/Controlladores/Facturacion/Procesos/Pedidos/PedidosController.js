@@ -1,5 +1,5 @@
 ﻿var app = angular.module('appGestion.PedidosController', []);
-app.controller('CtrlPedidos', function ($scope, $location, $timeout, auxiliarServices, $q, PedidosServices, umServices, EstadosServices, RevisionPedidoServices,Cliente_IIServices, GrupoDetServices, Documentos_MasivosServices, NotaCreditoDebitoServices ,VehiculoServices, AlmacenServices, TipoDocumentoServices, PersonalServices, PuntoVentaServices) {
+app.controller('CtrlPedidos', function ($scope, $location, $timeout, auxiliarServices, $q, PedidosServices, AuditarServices, EstadosServices, RevisionPedidoServices,Cliente_IIServices, GrupoDetServices, Documentos_MasivosServices, NotaCreditoDebitoServices ,VehiculoServices, AlmacenServices, TipoDocumentoServices, PersonalServices, PuntoVentaServices) {
 
     $scope.loaderfiltros = false;
     $scope.initAll = function () {
@@ -21,6 +21,38 @@ app.controller('CtrlPedidos', function ($scope, $location, $timeout, auxiliarSer
 
     $scope.Flag_movLote = false;
     $scope.id_Pedido_Cab_Global = 0;
+
+
+    $scope.getAuditorias = function (item) {
+
+        console.log(item)
+
+        const uCreacion = (!item.usuario_creacion) ? 0 : item.usuario_creacion;
+        const uEdicion = (!item.usuario_edicion) ? 0 : item.usuario_edicion;
+
+        const fechaCreacion = auxiliarServices.formatDate(item.fecha_creacion);
+        const fechaEdicion = (!item.fecha_edicion) ? '' : auxiliarServices.formatDate(item.fecha_edicion);
+
+        if (uCreacion == 0 && uEdicion == 0) {
+            auxiliarServices.NotificationMessage('Sistemas', 'No hay informacion para mostrar', 'success', '#008000', 5000);
+            return;
+        }
+
+        AuditarServices.getAuditoria(uCreacion, uEdicion)
+            .then(function (res) {
+                if (res.ok) {
+                    let usuarioCreacion = res.data[0].descripcion;
+                    let usuarioEdicion = (res.data.length == 1) ? '' : res.data[1].descripcion;
+
+                    var message = "Fecha Creación : " + fechaCreacion + "</br>" +
+                        "Usuario Creación : " + usuarioCreacion + "</br>" +
+                        "Fecha Edición : " + fechaEdicion + "</br>" +
+                        "Usuario Edición : " + usuarioEdicion + "</br>"
+                    auxiliarServices.NotificationMessage('Sistemas', message, 'success', '#008000', 5000);
+                }
+            })
+    }
+
 
     $scope.Objeto_ParametroFiltro = {
         id_ZonaVta: '0',
@@ -668,7 +700,7 @@ app.controller('CtrlPedidos', function ($scope, $location, $timeout, auxiliarSer
         id_Anexos: '0',
         id_ZonaVta: '0',
         id_PersonalTransportista: '0',
-        generaGuia: false,
+        generaGuia: false
     };
 
     $scope.clean = function () {
@@ -719,7 +751,8 @@ app.controller('CtrlPedidos', function ($scope, $location, $timeout, auxiliarSer
         $scope.objeto_parametros.id_Anexos = '0';
         $scope.objeto_parametros.id_ZonaVta = '0';
         $scope.objeto_parametros.id_PersonalTransportista = '0'; 
-        $scope.objeto_parametros.generaGuia = false; 
+        $scope.objeto_parametros.generaGuia = false;
+ 
 
         $scope.Lista_zonasModal = [];
         $scope.Lista_Almacen_pedido = [];
@@ -880,9 +913,7 @@ app.controller('CtrlPedidos', function ($scope, $location, $timeout, auxiliarSer
 
         const flagGeneraGuia = $scope.objeto_parametros.generaGuia;
         $scope.objeto_parametros.generaGuia = (flagGeneraGuia == true) ? 1 : 0;
-
-        //alert($scope.objeto_parametros.generaGuia)
-        
+       
 
         if ($scope.Flag_modoEdicion == false) { // nuevo registroo
 
@@ -1451,7 +1482,6 @@ app.controller('CtrlPedidos', function ($scope, $location, $timeout, auxiliarSer
             return;
         }
  
-
 
         if ($scope.Flag_modoEdicion_detalle === false) { // nuevo registroo detalle
 
@@ -3076,7 +3106,7 @@ app.controller('CtrlPedidos', function ($scope, $location, $timeout, auxiliarSer
 
                     //---- no se pueden imprimir documentos que no se hallan enviado correctamente a la sunat
                     if (res.data[0].guia_electronica_pdf == null || res.data[0].guia_electronica_pdf == undefined || res.data[0].guia_electronica_pdf == '') {
-                        alert(`Hubo un error en el envio de la Guia  a la sunat  ${NroDocumento}  : ${res[0].factura_electronica_alertas}`);
+                        alert(`Hubo un error en el envio de la Guia  a la sunat  ${NroDocumento}  : ${res.data[0].guia_electronica_alertas}`);
                         return;
                     } 
                     
@@ -3485,13 +3515,7 @@ app.controller('CtrlPedidos', function ($scope, $location, $timeout, auxiliarSer
         }
 
 
-
-
        ///----- FIN DE DETALLES DE LA GUIA ----- 
-
-
-
-
 
         //---- FOOTER lado IZQUIERDO -- -----
 
@@ -3576,10 +3600,7 @@ app.controller('CtrlPedidos', function ($scope, $location, $timeout, auxiliarSer
         altura = 250;
         anchoRect = 60;
         largRect = 6;
-
-
-
- 
+        
 
         doc.roundedRect(146, altura - 4, anchoRect, largRect + 30, 1, 1)
 
@@ -3599,17 +3620,8 @@ app.controller('CtrlPedidos', function ($scope, $location, $timeout, auxiliarSer
         x.document.write(iframe);
         x.document.close();
 
-
-
-
     }
-
     
-
-
-
-
-
     $scope.pdf_facturacionElectronica_factura = function (cab) {
                      
         var doc = new jsPDF();

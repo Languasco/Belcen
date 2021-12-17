@@ -1,6 +1,6 @@
 ﻿var app = angular.module('appGestion.IngresoFacturasController', [])
 
-app.controller('IngresoFacturasController', function ($scope, LocalesServices, $location, ProveedorServices, $timeout, auxiliarServices, AlmacenServices, GrupoDetServices,EstadosServices, TipoDocumentoServices, IngresoFacturasServices) {
+app.controller('IngresoFacturasController', function ($scope, LocalesServices, $location, ProveedorServices, $timeout, auxiliarServices, AlmacenServices, GrupoDetServices, EstadosServices, TipoDocumentoServices, IngresoFacturasServices, AuditarServices) {
 
 
     $scope.initAll = function () {
@@ -45,6 +45,40 @@ app.controller('IngresoFacturasController', function ($scope, LocalesServices, $
          fechaFin: auxiliarServices.getDateNow(),
          id_Proveedor: "0",
     };
+
+
+    $scope.getAuditorias = function (item) {
+
+
+        console.log(item)
+
+        const uCreacion = (!item.usuario_creacion) ? 0 : item.usuario_creacion;
+        const uEdicion = (!item.usuario_edicion) ? 0 : item.usuario_edicion;
+
+        const fechaCreacion = auxiliarServices.formatDate(item.fecha_creacion);
+        const fechaEdicion = (!item.fecha_edicion) ? '' : auxiliarServices.formatDate(item.fecha_edicion);
+
+        AuditarServices.getAuditoria(uCreacion, uEdicion)
+            .then(function (res) {
+
+                if (res.ok) {
+
+                    alert(res.data.length )
+
+                    let usuarioCreacion = res.data[0].descripcion;
+                    let usuarioEdicion = (res.data.length == 1) ? '' : res.data[1].descripcion;
+
+                    var message = "Fecha Creación : " + fechaCreacion + "</br>" +
+                        "Usuario Creación : " + usuarioCreacion + "</br>" +
+                        "Fecha Edición : " + fechaEdicion + "</br>" +
+                        "Usuario Edición : " + usuarioEdicion + "</br>"
+                    auxiliarServices.NotificationMessage('Sistemas', message, 'success', '#008000', 5000);
+                }
+            })
+    }
+
+
+
 
     $scope.Objeto_Parametro = {
         id_GuiaCab: '', //----
@@ -294,7 +328,6 @@ app.controller('IngresoFacturasController', function ($scope, LocalesServices, $
     $scope.Listando_Proveedor = function () {
         ProveedorServices.getProveedores()
             .then(function (data) {
-                console.log(data);
                 $scope.Lista_Proveedor = [];
                 $scope.Lista_Proveedor = data.filter((p)=> p.estado ==1);
             }, function (err) {

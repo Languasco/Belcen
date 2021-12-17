@@ -160,7 +160,7 @@
                         <th>Promocion</th>
                         <th>Vigencia Inicial</th>
                         <th>Vigencia Termino</th>
-                        <th colspan="2">Acciones</th>
+                        <th >Acciones</th>
                         <th>Fecha Registro</th>
                         <th>Fecha Edicion</th>
                     </tr>
@@ -173,8 +173,7 @@
                         <td>{{item.fechaVigenciaHasta}}</td>
                         <td>
                             <span class="label label-primary" style="cursor:pointer" ng-if="item.estado > 0" ng-click="EdicionRegistros(item)"> Editar </span>
-                        </td>
-                        <td>
+                            <button type="button" style="margin-left: 5px" class="btn btn-success btn-circle" ng-click="getAuditorias(item);" data-toggle="tooltip" title="AUDITAR"><i class="fa fa-cog"></i> </button>
                             <span class="label label-danger" style="cursor:pointer" ng-if="item.estado== 1" ng-click="anularPromociones(item)">Anular</span>
                         </td>
                         <td>
@@ -370,6 +369,7 @@
                             <table id="tablaConfiguracion" class="table m-b-0 toggle-arrow-tiny" data-page-size="10">
                                 <thead style="background:rgba(17, 96, 142, 0.18)">
                                     <tr>
+                                        @*<th>Canasta</th>*@
                                         <th>Articulo</th>
                                         <th>Descripción</th>
                                         <th>Unidad</th>
@@ -380,6 +380,11 @@
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="item in configuracionDet" ng-class="{'resaltado': item.estado == 0}">
+                                        @*<td> 
+                                            <div style="width: 200px">
+                                                {{item.id_Canasta}} : {{item.descripcion_Canasta}}
+                                            </div>
+                                        </td>*@
                                         <td>{{item.codigo_Producto}}</td>
                                         <td>{{item.descripcion_Producto}}</td>
                                         <td>{{item.descripcion_unidadMedida}}</td>

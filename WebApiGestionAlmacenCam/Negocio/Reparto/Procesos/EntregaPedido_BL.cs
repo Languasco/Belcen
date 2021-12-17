@@ -17,6 +17,8 @@ namespace Negocio.Reparto.Procesos
 {
    public class EntregaPedido_BL
     {
+        OleDbConnection con;
+
         public class Resultado
         {
             public bool ok { get; set; }
@@ -660,7 +662,6 @@ namespace Negocio.Reparto.Procesos
             return res;
         }
 
-
         public string Get_ImportarArchivoPrecio(int user, string nombrefile, int tipoImportacion)
         {
 
@@ -736,9 +737,7 @@ namespace Negocio.Reparto.Procesos
             }
             return Resultado;
         }
-
- 
-
+        
         public object generarDescargaPedidos_txt(int id_local, int id_almacen, int id_Vendedor, string fecha_ini, string fecha_fin, int id_usuario)
         {
             Resultado res = new Resultado();
@@ -854,6 +853,195 @@ namespace Negocio.Reparto.Procesos
             return res;
         }
 
+        public object get_tiposMovimientos(int id_usuario)
+        {
+            Resultado res = new Resultado();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("SP_S_AJUSTE_INVENTARIO_COMBO_MOVIMIENTOS", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@id_usuario", SqlDbType.Int).Value = id_usuario;
+
+                        DataTable dt_detalle = new DataTable();
+
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt_detalle);
+                            res.ok = true;
+                            res.data = dt_detalle;
+
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+
+            return res;
+        }
+
+        private OleDbConnection ConectarExcel(string rutaExcel)
+        {
+            con = new OleDbConnection();
+            try
+            {
+                con.ConnectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + rutaExcel + ";Extended Properties=\"Excel 12.0;HDR=Yes;IMEX=2\"";
+                con.Open();
+                return con;
+            }
+            catch (Exception)
+            {
+                con.Close();
+                throw;
+            }
+        }
+
+        public DataTable ListaExcel(string fileLocation)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                string sql = "SELECT *FROM [Importar$]";
+
+                OleDbDataAdapter da = new OleDbDataAdapter(sql, ConectarExcel(fileLocation));
+                da.SelectCommand.CommandType = CommandType.Text;
+                da.Fill(dt);
+                con.Close();
+            }
+            catch (Exception)
+            {
+                con.Close();
+                throw;
+            }
+            return dt;
+        }
+
+
+
+        public string setAlmacenandoFile_Excel_ajusteInventario(string fileLocation, string nombreArchivo,  int idUsuario)
+        {
+            string resultado = "";
+            DataTable dt = new DataTable();
+
+            try
+            {
+
+                dt = ListaExcel(fileLocation);
+
+                using (SqlConnection con = new SqlConnection(bdConexion.cadenaBDcx()))
+                {
+                    con.Open();
+
+                    //eliminando registros del usuario
+                    using (SqlCommand cmd = new SqlCommand("SP_S_AJUSTE_INVENTARIO_D_TEMPORAL_AJUSTE_INVENTARIO", con))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@id_usuario", SqlDbType.Int).Value = idUsuario;
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    //guardando al informacion de la importacion
+                    using (SqlBulkCopy bulkCopy = new SqlBulkCopy(con))
+                    {
+
+                        bulkCopy.BatchSize = 500;
+                        bulkCopy.NotifyAfter = 1000;
+                        bulkCopy.DestinationTableName = "TEMPORAL_AJUSTE_INVENTARIO";
+                        bulkCopy.WriteToServer(dt);
+
+                        //Actualizando campos 
+
+                        string Sql = "UPDATE TEMPORAL_AJUSTE_INVENTARIO SET nombreArchivo='" + nombreArchivo + "',   usuario_importacion='" + idUsuario + "', fechaBD=getdate()   WHERE usuario_importacion IS NULL    ";
+
+                        using (SqlCommand cmd = new SqlCommand(Sql, con))
+                        {
+                            cmd.CommandTimeout = 0;
+                            cmd.CommandType = CommandType.Text;
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                    resultado = "OK";
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return resultado;
+        }
+
+        public DataTable get_datosCargados_ajusteInventario(int id_usuario)
+        {
+            DataTable dt_detalle = new DataTable();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("SP_S_AJUSTE_INVENTARIO_S_TEMPORAL_AJUSTE_INVENTARIO", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@id_usuario", SqlDbType.Int).Value = id_usuario;
+
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt_detalle);
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return dt_detalle;
+        }
+
+
+        public object set_almacenando_ajusteInventario(int id_usuario, int idLocal, int  idAlmacen, string fecha, int  idMovimiento, string nroDoc)
+        {
+            Resultado res = new Resultado();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(Conexion.bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("SP_S_AJUSTE_INVENTARIO_INSERT_EXCEL", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@idUsuario", SqlDbType.Int).Value = id_usuario;
+                        cmd.Parameters.Add("@idLocal", SqlDbType.Int).Value = idLocal;
+                        cmd.Parameters.Add("@idAlmacen", SqlDbType.Int).Value = idAlmacen;
+
+                        cmd.Parameters.Add("@fecha", SqlDbType.VarChar).Value = fecha;
+                        cmd.Parameters.Add("@idMovimiento", SqlDbType.Int).Value = idMovimiento;
+                        cmd.Parameters.Add("@nroDoc", SqlDbType.VarChar).Value = nroDoc;
+
+                        cmd.ExecuteNonQuery();
+
+                        res.ok = true;
+                        res.data = "OK";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+            return res;
+        }
 
 
     }

@@ -437,7 +437,7 @@
                                 </td>
                                 <th>
                                     <button type="button" class="btn btn-primary btn-circle " ng-click="Open_Update_Modal(item);" data-toggle="tooltip" title="EDITAR"><i class=" ti-pencil-alt"></i></button>
-
+                                    <button type="button" class="btn btn-success btn-circle" style="margin-left: 5px" ng-click="getAuditorias(item);" data-toggle="tooltip" title="AUDITAR"><i class="fa fa-cog"></i> </button>
                                     <!-- PAGOS PENDIENTE SEGUN CONDICIÓN -->
                                     <button type="button" ng-class="(item.flag_cancelacion =='SI') ? 'btn btn-primary btn-circle btnDolar' : 'btn btn-primary btn-circle btnWhite'" ng-click="AbrirModal_PagosPendientes(item);" data-toggle="tooltip" title="Pagos Pendientes">
                                         <i class=" ti-money"></i>

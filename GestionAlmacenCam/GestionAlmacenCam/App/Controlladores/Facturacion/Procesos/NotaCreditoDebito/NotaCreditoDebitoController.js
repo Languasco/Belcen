@@ -1,5 +1,5 @@
 ﻿var app = angular.module('appGestion.NotaCreditoDebitoController', []);
-app.controller('CtrlNotaCreditoDebito', function ($scope, loginServices, $location, $timeout, auxiliarServices, $q, RevisionPedidoServices, NotaCreditoDebitoServices,  GrupoDetServices,PedidosServices, Documentos_MasivosServices, VehiculoServices, AlmacenServices, TipoDocumentoServices, PersonalServices, PuntoVentaServices, CondicionFacturacionServices) {
+app.controller('CtrlNotaCreditoDebito', function ($scope, AuditarServices, $location, $timeout, auxiliarServices, $q, RevisionPedidoServices, NotaCreditoDebitoServices,  GrupoDetServices,PedidosServices, Documentos_MasivosServices, VehiculoServices, AlmacenServices, TipoDocumentoServices, PersonalServices, PuntoVentaServices, CondicionFacturacionServices) {
 
     $scope.loaderfiltros = false;
     $scope.initAll = function () {
@@ -34,6 +34,37 @@ app.controller('CtrlNotaCreditoDebito', function ($scope, loginServices, $locati
         id_transportista: '0',
     };
 
+    $scope.getAuditorias = function (item) {
+
+        console.log(item)
+
+        const uCreacion = (!item.usuario_creacion) ? 0 : item.usuario_creacion;
+        const uEdicion = (!item.usuario_edicion) ? 0 : item.usuario_edicion;
+
+        const fechaCreacion = auxiliarServices.formatDate(item.fecha_creacion);
+        const fechaEdicion = (!item.fecha_edicion) ? '' : auxiliarServices.formatDate(item.fecha_edicion);
+
+        if (uCreacion == 0 && uEdicion == 0) {
+            auxiliarServices.NotificationMessage('Sistemas', 'No hay informacion para mostrar', 'success', '#008000', 5000);
+            return;
+        }
+
+        AuditarServices.getAuditoria(uCreacion, uEdicion)
+            .then(function (res) {
+                if (res.ok) {
+                    let usuarioCreacion = res.data[0].descripcion;
+                    let usuarioEdicion = (res.data.length == 1) ? '' : res.data[1].descripcion;
+
+                    var message = "Fecha Creación : " + fechaCreacion + "</br>" +
+                        "Usuario Creación : " + usuarioCreacion + "</br>" +
+                        "Fecha Edición : " + fechaEdicion + "</br>" +
+                        "Usuario Edición : " + usuarioEdicion + "</br>"
+                    auxiliarServices.NotificationMessage('Sistemas', message, 'success', '#008000', 5000);
+                }
+            })
+    }
+
+
     $('document').ready(function () {
         $timeout(function () {
             $('.datepicker').datepicker({
@@ -52,59 +83,14 @@ app.controller('CtrlNotaCreditoDebito', function ($scope, loginServices, $locati
     $scope.disabledDetalle = "disabledContent";
 
     $scope.disablelocalAlmacen = "";
-
-    //$scope.Lista_Local = [];
-    //$scope.get_Listando_Locales = function () {
-    //    $scope.loaderfiltros = true;
-    //    Documentos_MasivosServices.get_zonasUsuario(auxiliarServices.getUserId())
-    //        .then(function (res) {
-    //            $scope.loaderfiltros = false;
-    //            if (res.ok == true) {
-    //                $scope.Lista_Local = [];
-    //                $scope.Lista_Local = res.data;
-    //                $timeout(function () {
-    //                    $scope.Objeto_ParametroFiltro.id_local = '0';
-    //                    $('#cbo_local').val("0").trigger('change.select2');
-    //                })
-    //            } else {
-    //                auxiliarServices.NotificationMessage('Sistemas', 'Lo sentimos se produjo un error', 'error', '#ff6849', 2000);
-    //                alert(res.data);
-    //            }
-    //        }, function (err) {
-    //            console.log(err);
-    //        });
-    //};
-    //$scope.get_Listando_Locales();
-
-
-    //$scope.lista_anexos = [];
-    //$scope.change_almacen_anexo = function (idAlmacen) {
-    //    $scope.loaderFiltro = true;
-    //    RevisionPedidoServices.get_Anexos_Almacen(idAlmacen).then(function (res) {
-    //        $scope.loaderFiltro = false;
-    //        if (res.ok == true) {
-    //            $scope.lista_anexos = [];
-    //            $scope.lista_anexos = res.data;
-    //            $timeout(function () {
-    //                $('#cbo_anexo').val('0').trigger('change.select2');
-    //            })
-
-    //        } else {
-    //            auxiliarServices.NotificationMessage('Sistemas', 'Lo sentimos se produjo un error', 'error', '#ff6849', 2000);
-    //            alert(res.data);
-    //        }
-    //    }, function (err) {
-    //        $scope.loaderFiltro = false;
-    //        console.log(err);
-    //    });
-    //};
+ 
 
     $scope.Lista_Transportista = [];
     $scope.change_Local_transportista = function (idlocal) {
-        $scope.loaderFiltro = true;
+        $scope.loaderfiltros = true;
         RevisionPedidoServices.get_transportistaLocal(idlocal)
             .then(function (res) {
-                $scope.loaderFiltro = false;
+                $scope.loaderfiltros = false;
 
                 if (res.ok == true) {
                     $scope.Lista_Transportista = [];
@@ -119,42 +105,11 @@ app.controller('CtrlNotaCreditoDebito', function ($scope, loginServices, $locati
                     alert(res.data);
                 }
             }, function (err) {
-                $scope.loaderFiltro = false;
+                $scope.loaderfiltros = false;
                 console.log(err);
             });
     };
-
-
-    //$scope.Lista_Almacen = [];
-    //$scope.change_Local_Almacen = function (idlocal) {
-    //    $scope.loaderFiltro = true;
-    //    AlmacenServices.get_almacenesZona(idlocal, auxiliarServices.getUserId())
-    //        .then(function (res) {
-    //            $scope.loaderFiltro = false;
-    //            if (res.ok == true) {
-    //                $scope.Lista_Almacen = [];
-    //                $scope.Lista_Almacen = res.data;
-    //                setTimeout(function () {
-    //                    $scope.Objeto_ParametroFiltro.id_almacen = '0';
-    //                    $('#cbo_almacen').val("0").trigger('change.select2');
-
-    //                    $scope.lista_anexos = [];
-    //                    $scope.Objeto_ParametroFiltro.id_Anexos = '0';
-    //                    $('#cbo_anexo').val('0').trigger('change.select2');
-    //                }, 0);
-    //            } else {
-    //                auxiliarServices.NotificationMessage('Sistemas', 'Lo sentimos se produjo un error', 'error', '#ff6849', 2000);
-    //                alert(res.data);
-    //            }
-
-    //        }, function (err) {
-    //            $scope.loaderFiltro = false;
-    //            console.log(err);
-    //        });
-    //};
-
-
-
+ 
     $scope.Lista_Almacen_pedido = [];
     $scope.change_Local_Almacen_pedido = function (idlocal, id_Almacen) {
         $scope.loader_modal = true;
@@ -377,6 +332,12 @@ app.controller('CtrlNotaCreditoDebito', function ($scope, loginServices, $locati
         if (NotaCreditoDebitoServices.validate_filtros($scope.Objeto_ParametroFiltro) === false) {
             return;
         }
+        if ($scope.Objeto_ParametroFiltro.id_almacen === 0 || $scope.Objeto_ParametroFiltro.id_almacen === '0'  ) {
+            auxiliarServices.NotificationMessage('Sistemas', 'Por favor seleccione un Almacén', 'error', '#ff6849', 1500);
+            return false;
+        }
+
+
         $scope.Objeto_ParametroFiltro.fecha_ini_aux = '';
         $scope.Objeto_ParametroFiltro.fecha_fin_aux = '';
 
@@ -627,7 +588,6 @@ app.controller('CtrlNotaCreditoDebito', function ($scope, loginServices, $locati
        
     function ListaMarcoProducto() {
         let ListaData = [];
-
         for (var i = 0; i < $scope.Lista_DataDetalle.length; i++) { 
                 ListaData.push({
                     id_Producto: $scope.Lista_DataDetalle[i].id_Producto,
@@ -635,7 +595,8 @@ app.controller('CtrlNotaCreditoDebito', function ($scope, loginServices, $locati
                     cantidad: $scope.Lista_DataDetalle[i].cantidad_Factura_Det,
                     total: $scope.Lista_DataDetalle[i].total_Factura_Det,
                     usuario: auxiliarServices.getUserId(),
-                    id_doc_ref: $scope.objeto_parametros.id_Factura_Cab
+                    id_doc_ref: $scope.objeto_parametros.id_Factura_Cab,
+                    tipoIGV_Sunat: $scope.Lista_DataDetalle[i].tipoIGV_Sunat
                 });          
         }
         return ListaData;
@@ -649,20 +610,13 @@ app.controller('CtrlNotaCreditoDebito', function ($scope, loginServices, $locati
         }
         //------guardando la informacion del detalle -----
 
-
         if ($scope.Lista_DataDetalle.length == 0) {
             auxiliarServices.NotificationMessage('Sistemas', 'El nuevo documento debe de tener al menos un Detalle..', 'error', '#ff6849', 2000);
             return;
         }
 
-
         var List_codigo = [];
         List_codigo = ListaMarcoProducto();
- 
-
-
-
-
         
         var params = {
             title: "Desea continuar ?",
@@ -769,21 +723,7 @@ app.controller('CtrlNotaCreditoDebito', function ($scope, loginServices, $locati
             }
         });
     };
-
-    //$scope.edicionComboDependientes = async function (idZona, idAlmacen ) {
-    //    const consultando = async () => {
-    //        const resAlma = await AlmacenServices.get_almacenesZona(idZona, auxiliarServices.getUserId())
-
-    //        $scope.Lista_Almacen_pedido = [];
-    //        $scope.Lista_Almacen_pedido = resAlma.data;
-    //        $scope.objeto_parametros.id_Almacen = idAlmacen;
-    //        console.log(idAlmacen)
-    //        setTimeout(function () {
-    //            $('#cbo_almacen_pedido').val(String(idAlmacen)).trigger('change.select2');
-    //        }, 1500);
-    //    } 
-    //    consultando();
-    //}
+ 
          
     $scope.Open_Update_Modal = function (obj) {
         $scope.clean();
@@ -932,6 +872,7 @@ app.controller('CtrlNotaCreditoDebito', function ($scope, loginServices, $locati
         total_Factura_Det: '',
         stock: '0',
         nroLote: '',
+        tipoIGV_Sunat : '0'
     };
 
     $scope.clean_detail = function () {
@@ -953,6 +894,7 @@ app.controller('CtrlNotaCreditoDebito', function ($scope, loginServices, $locati
         $scope.objeto_parametros_detalle.total_Factura_Det = '';
         $scope.objeto_parametros_detalle.stock = '0';
         $scope.objeto_parametros_detalle.nroLote = '';
+        $scope.objeto_parametros_detalle.tipoIGV_Sunat = '0';
     };
 
     $scope.Flag_modoEdicion_detalle = false;
@@ -976,6 +918,7 @@ app.controller('CtrlNotaCreditoDebito', function ($scope, loginServices, $locati
         $scope.objeto_parametros_detalle.precioVenta_Factura_Det = '';
         $scope.objeto_parametros_detalle.stock = '';
         $scope.objeto_parametros_detalle.nroLote = '';
+ 
 
         $scope.Calculo_Importe();
 
@@ -1019,6 +962,7 @@ app.controller('CtrlNotaCreditoDebito', function ($scope, loginServices, $locati
                 $scope.objeto_parametros_detalle.precioVenta_Factura_Det = data[0].precioventa_listaprecios;
                 $scope.objeto_parametros_detalle.stock = data[0].Stock;
                 $scope.objeto_parametros_detalle.nroLote = data[0].nroLote;
+ 
 
                 $scope.Flag_movLote = (data[0].movLote == 1) ? true : false;
 
@@ -1094,8 +1038,10 @@ app.controller('CtrlNotaCreditoDebito', function ($scope, loginServices, $locati
                 porcentajeIGV_Factura_Det: 0,
                 precioVenta_Factura_Det: $scope.objeto_parametros_detalle.precioVenta_Factura_Det,
                 stock: 0,
-                total_Factura_Det: $scope.objeto_parametros_detalle.total_Factura_Det
+                total_Factura_Det: $scope.objeto_parametros_detalle.total_Factura_Det,
+                tipoIGV_Sunat: 0
             });
+ 
 
             $scope.CalculoTotales_General_new();
 
@@ -1130,7 +1076,7 @@ app.controller('CtrlNotaCreditoDebito', function ($scope, loginServices, $locati
             }, 500);
 
         }
-    };
+     };
 
     function Existencia_Producto(id_producto) {
         var result = false;
@@ -1148,6 +1094,7 @@ app.controller('CtrlNotaCreditoDebito', function ($scope, loginServices, $locati
         $scope.loader_modal = true;
         NotaCreditoDebitoServices.get_NotasCredito_detalle($scope.objeto_parametros.id_Factura_Cab)
             .then(function (data) {
+                console.log(data);
                  $scope.loader_modal = false;
                 $scope.Lista_DataDetalle = [];
                 $scope.Lista_DataDetalle = data;
@@ -1155,7 +1102,6 @@ app.controller('CtrlNotaCreditoDebito', function ($scope, loginServices, $locati
             }, function (err) {
                 $scope.loader_modal = false;
                 console.log(err);
-                //$scope.CalculoTotales_General();
                 $scope.CalculoTotales_General_new();
             });
     };
@@ -1199,6 +1145,7 @@ app.controller('CtrlNotaCreditoDebito', function ($scope, loginServices, $locati
         $scope.objeto_parametros_detalle.precioVenta_Factura_Det = obj_detalle.precioVenta_Factura_Det;
         $scope.objeto_parametros_detalle.stock = 0;
         $scope.objeto_parametros_detalle.nroLote = obj_detalle.nroLote;
+        $scope.objeto_parametros_detalle.tipoIGV_Sunat = obj_detalle.tipoIGV_Sunat;
 
         $scope.Flag_movLote = (obj_detalle.nroLote) ? true : false;
         $scope.Calculo_Importe();
@@ -1584,12 +1531,12 @@ app.controller('CtrlNotaCreditoDebito', function ($scope, loginServices, $locati
     $scope.generarDocu_Facturacion_Electronica = function (id_tipoDoc, nroDocumento , id_cab_Referencia) {
         //var id_tipoDoc = 15;
         //var nroDocumento = '0007-0009009';
-        $scope.loader_modal = true;
+        $scope.loaderfiltros = true;
         Documentos_MasivosServices.Generar_Documentos_Electronicos_Individual_notas(id_tipoDoc, nroDocumento, id_cab_Referencia)
             .then(function (res) {
                 console.log(res);
 
-                $scope.loader_modal = false;
+                $scope.loaderfiltros = false;
                 if (res.length == 0) {
                     return;
                 }
@@ -1670,7 +1617,7 @@ app.controller('CtrlNotaCreditoDebito', function ($scope, loginServices, $locati
                 console.log('err')
                 console.log(err)
                 $scope.Listando_InformacionPedidos();
-                $scope.loader_modal = false;
+                $scope.loaderfiltros = false;
                 console.log(err);
             });
     };
@@ -5856,8 +5803,8 @@ app.controller('CtrlNotaCreditoDebito', function ($scope, loginServices, $locati
                 }
 
                 var List_codigo = [];
-                List_codigo = ListaMarcoProducto()
-
+                List_codigo = ListaMarcoProducto();
+ 
 
                 $('#btnGuardarCab').attr("disabled", true);
                 $scope.loader_modal = true;
@@ -5918,11 +5865,11 @@ app.controller('CtrlNotaCreditoDebito', function ($scope, loginServices, $locati
         $scope.Objeto_ParametroFiltro.fecha_ini_aux = $scope.Objeto_ParametroFiltro.fecha_ini;
         $scope.Objeto_ParametroFiltro.fecha_fin_aux = $scope.Objeto_ParametroFiltro.fecha_fin;
 
-        $scope.loaderFiltro = true; 
+        $scope.loaderfiltros = true; 
         NotaCreditoDebitoServices.get_resumenProductos_excel($scope.Objeto_ParametroFiltro)
             .then(function (res) {
 
-                $scope.loaderFiltro = false;
+                $scope.loaderfiltros = false;
                 if (res.ok == true) {
                     id_link.href = res.data.replace(/["']/g, "");
                     id_link.click();
@@ -5933,7 +5880,7 @@ app.controller('CtrlNotaCreditoDebito', function ($scope, loginServices, $locati
 
      
             }, function (err) {
-                    $scope.loaderFiltro = false;
+                    $scope.loaderfiltros = false;
                 console.log(err);
             });
     };
@@ -5944,10 +5891,10 @@ app.controller('CtrlNotaCreditoDebito', function ($scope, loginServices, $locati
 
     $scope.Lista_zonasFiltro = [];
     $scope.get_changeAnexoZonasFiltro = function (id_Anexos) {
-        $scope.loaderFiltro = true;
+        $scope.loaderfiltros = true;
         RevisionPedidoServices.get_Zonas_anexos_modulo(id_Anexos, auxiliarServices.getUserId())
             .then(function (res) {
-                $scope.loaderFiltro = false;
+                $scope.loaderfiltros = false;
                 if (res.ok == true) {
                     $scope.Lista_zonasFiltro = [];
                     $scope.Lista_zonasFiltro = res.data;
@@ -5963,7 +5910,7 @@ app.controller('CtrlNotaCreditoDebito', function ($scope, loginServices, $locati
                 }
 
             }, function (err) {
-                $scope.loaderFiltro = false;
+                $scope.loaderfiltros = false;
                 console.log(err);
             });
     };
@@ -5972,9 +5919,9 @@ app.controller('CtrlNotaCreditoDebito', function ($scope, loginServices, $locati
     $scope.lista_anexos = [];
     $scope.lista_anexosModal = [];
     $scope.listados_anexos = function () {
-        $scope.loaderFiltro = true;
+        $scope.loaderfiltros = true;
         RevisionPedidoServices.get_Anexos_Usuario_modulo(auxiliarServices.getUserId()).then(function (res) {
-            $scope.loaderFiltro = false;
+            $scope.loaderfiltros = false;
 
             if (res.ok == true) {
                 $scope.lista_anexos = [];
@@ -5989,7 +5936,7 @@ app.controller('CtrlNotaCreditoDebito', function ($scope, loginServices, $locati
                 alert(res.data);
             }
         }, function (err) {
-            $scope.loaderFiltro = false;
+            $scope.loaderfiltros = false;
             console.log(err);
         });
     };
@@ -5998,7 +5945,7 @@ app.controller('CtrlNotaCreditoDebito', function ($scope, loginServices, $locati
 
     $scope.Lista_Almacen = [];
     $scope.change_anexo_Almacen_filtro = function (idAnexo) {
-        $scope.loaderFiltro = true;
+        $scope.loaderfiltros = true;
         RevisionPedidoServices.get_almacenes_anexos_modulo(idAnexo, auxiliarServices.getUserId())
             .then(function (res) {
                 $scope.loaderfiltros = false;
@@ -6014,7 +5961,7 @@ app.controller('CtrlNotaCreditoDebito', function ($scope, loginServices, $locati
                     alert(res.data);
                 }
             }, function (err) {
-                $scope.loaderFiltro = false;
+                $scope.loaderfiltros = false;
                 console.log(err);
             });
     };

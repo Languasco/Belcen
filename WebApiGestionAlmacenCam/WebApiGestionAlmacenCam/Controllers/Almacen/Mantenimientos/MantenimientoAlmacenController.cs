@@ -1,5 +1,6 @@
 ﻿using Entidades;
 using Negocio.Almacen.Mantenimiento;
+using Negocio.StockAlmacen;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -128,6 +129,29 @@ namespace WebApiGestionAlmacenCam.Controllers.Almacen.Mantenimientos
 
                     Almacen_BL obj_negocio = new Almacen_BL();
                     resul = obj_negocio.get_almacenes_anexo(id_anexo, id_usuario);
+                }
+                else if (opcion == 6)
+                {
+                    string[] parametros = filtro.Split('|');
+
+                    string password =  parametros[0].ToString();
+                    int idUsuario = Convert.ToInt32(parametros[1].ToString());
+
+                    Almacen_BL obj_negocio = new Almacen_BL();
+                    resul = obj_negocio.set_cambiarPassword(password, idUsuario);
+                }
+                else if (opcion == 7)
+                {
+                    string[] parametros = filtro.Split('|');
+
+                    string fecha = parametros[0].ToString();
+                    string fecha_fin = parametros[1].ToString();
+                    int tipo = Convert.ToInt32(parametros[2].ToString());
+                    int local = Convert.ToInt32(parametros[3].ToString());
+                    int almacen = Convert.ToInt32(parametros[4].ToString());
+
+                    GetStockAlmacen_BL obj_negocio = new GetStockAlmacen_BL();
+                    resul = obj_negocio.getKardexValorizado_Todo(fecha, fecha_fin, tipo, local, almacen);
                 }
                 else
                 {

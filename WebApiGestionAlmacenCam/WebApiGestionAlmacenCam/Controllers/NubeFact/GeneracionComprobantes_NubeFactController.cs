@@ -9,7 +9,7 @@ using System.Web.Http;
 using System.Text;
 
 
-namespace WebApiGestionAlmacenCam.Controllers.NubeFact
+namespace WebApi_Ventas.Controllers.NubeFact
 {
     public class GeneracionComprobantes_NubeFactController : ApiController
     {

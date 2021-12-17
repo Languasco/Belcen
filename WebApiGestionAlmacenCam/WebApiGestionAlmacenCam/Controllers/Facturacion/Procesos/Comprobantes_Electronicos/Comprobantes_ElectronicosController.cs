@@ -17,7 +17,7 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using ThoughtWorks.QRCode.Codec;
 
-namespace WebApiGestionAlmacenCam.Controllers.Facturacion.Procesos.Comprobantes_Electronicos
+namespace WebApi_Ventas.Controllers.Facturacion.Procesos.Comprobantes_Electronicos
 {
     [EnableCors("*", "*", "*")]
     public class Comprobantes_ElectronicosController : ApiController

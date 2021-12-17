@@ -190,7 +190,6 @@
         return q.promise;
     };
 
-
     Result.get_reporteEstadosDocumentos = function (obj) {
 
         let idBusqueda = 0;

@@ -48,7 +48,9 @@ namespace WebApiGestionAlmacenCam.Controllers.Mantenimiento
                                  a.RUTA,
                                  a.TOKEN,
                                  a.usuario_creacion,
-                                 a.usuario_edicion
+                                 a.fecha_creacion,
+                                 a.usuario_edicion,
+                                 a.fecha_edicion
 
                              }).ToList().Take(20);
                 }
@@ -74,7 +76,9 @@ namespace WebApiGestionAlmacenCam.Controllers.Mantenimiento
                                      a.RUTA,
                                      a.TOKEN,
                                      a.usuario_creacion,
-                                     a.usuario_edicion
+                                     a.fecha_creacion,
+                                     a.usuario_edicion,
+                                     a.fecha_edicion
 
                                  }).ToList().Take(20);
                     }
@@ -94,7 +98,9 @@ namespace WebApiGestionAlmacenCam.Controllers.Mantenimiento
                                      a.RUTA,
                                      a.TOKEN,
                                      a.usuario_creacion,
-                                     a.usuario_edicion
+                                     a.fecha_creacion,
+                                     a.usuario_edicion,
+                                     a.fecha_edicion
 
                                  }).ToList().Take(20);
                     }

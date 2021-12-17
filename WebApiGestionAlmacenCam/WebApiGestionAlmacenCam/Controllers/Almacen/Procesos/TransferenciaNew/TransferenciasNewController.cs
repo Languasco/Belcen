@@ -121,6 +121,18 @@ namespace WebApiGestionAlmacenCam.Controllers.Almacen.Procesos.TransferenciaNew
                     TransferenciaNew_BL obj_negocio = new TransferenciaNew_BL();
                     resul = obj_negocio.set_reactivar_tranferenciasCab(id_transferenciaCab, flagGuia, id_usuario);
                 }
+                else if (opcion == 9)
+                {
+                    string[] parametros = filtro.Split('|');
+
+                    int origen_id_Local = Convert.ToInt32(parametros[0].ToString());
+                    int origen_id_Almacen = Convert.ToInt32(parametros[1].ToString());
+                    string filtroBusqueda = parametros[2].ToString();
+                    int id_usuario = Convert.ToInt32(parametros[3].ToString());
+
+                    TransferenciaNew_BL obj_negocio = new TransferenciaNew_BL();
+                    resul = obj_negocio.get_buscarProducto_ayudaModal(origen_id_Local, origen_id_Almacen, filtroBusqueda, id_usuario);
+                }
                 else
                 {
                     resul = "Opcion seleccionada invalida";
@@ -132,8 +144,6 @@ namespace WebApiGestionAlmacenCam.Controllers.Almacen.Procesos.TransferenciaNew
             }
             return resul;
         }
-
-
 
         //---- DETALLE
 

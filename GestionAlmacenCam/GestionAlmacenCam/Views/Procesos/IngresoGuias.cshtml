@@ -239,9 +239,10 @@
                                 <td><span class="label label-table label-{{item.colorEstado}}">{{item.desEstado}}</span></td>
                                 <td>
                                     <button type="button" class="btn btn-primary btn-circle " ng-click="fucntionClickOptions(2,item);" data-toggle="tooltip" title="EDITAR"><i class=" ti-pencil-alt"></i></button>
+                                    @*<button type="button" class="btn btn-success btn-circle" ng-click="getAuditorias(item);" data-toggle="tooltip" title="AUDITAR"><i class="fa fa-cog"></i> </button>*@
                                     <button type="button" class="btn btn-warning btn-circle" ng-click="getAnular(item);" style="background-color: #ff6849; border-color: #ff6849;" title="ANULAR"><i class="fa fa-trash"></i> </button>
                                     <button type="button" class="btn btn-primary btn-circle" ng-click="getDataToPdf(item);" data-toggle="tooltip" title="AUDITAR"><i class="ti-cloud-down"></i> </button>
-                                    <button type="button" ng-if=" (idPerfil_Global == '4' &&  item.estado == 5)? true : false "  class="btn btn-success btn-circle" ng-click="getHabilitarGuia(item);"   title="Habilitar Guia"><i class="fa fa-check-square-o"></i> </button>
+                                    <button type="button" ng-if=" (idPerfil_Global == '4' &&  item.estado == 5)? true : false " class="btn btn-success btn-circle" ng-click="getHabilitarGuia(item);" title="Habilitar Guia"><i class="fa fa-check-square-o"></i> </button>
                                 </td>
                             </tr>
                         </tbody>
@@ -269,6 +270,7 @@
                                 <td><span class="label label-table label-{{item.colorEstado}}">{{item.desEstado}}</span></td>
                                 <td>
                                     <button type="button" class="btn btn-primary btn-circle " ng-click="fucntionClickOptions(2,item);" data-toggle="tooltip" title="EDITAR"><i class=" ti-pencil-alt"></i></button>
+                                    @*<button type="button" class="btn btn-success btn-circle" ng-click="getAuditorias(item);" data-toggle="tooltip" title="AUDITAR"><i class="fa fa-cog"></i> </button>*@
                                     <button type="button" class="btn btn-warning btn-circle" ng-click="getAnular(item);" style="background-color: #ff6849; border-color: #ff6849;" title="ANULAR"><i class="fa fa-trash"></i> </button>
                                     <button type="button" class="btn btn-success btn-circle" ng-click="getDataToPdf(item);" data-toggle="tooltip" title="AUDITAR"><i class="ti-cloud-down"></i> </button>
                                 </td>

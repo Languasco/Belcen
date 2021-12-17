@@ -139,6 +139,17 @@ namespace WebApiGestionAlmacenCam.Controllers.Almacen.Procesos.Transferencias
                     AprobarTransferencia_BL obj_negocio = new AprobarTransferencia_BL();
                     resul = obj_negocio.Set_actualizarCantTransferencia(Id_TranfCab, Id_TranfDet, cant, Id_usuario);
                 }
+                else if (opcion == 9)
+                {
+                    string[] parametros = filtro.Split('|');
+                    int id_Local = Convert.ToInt32(parametros[0].ToString());
+                    int id_Almacen = Convert.ToInt32(parametros[1].ToString());
+                    int tipo_reporte = Convert.ToInt32(parametros[2].ToString());
+
+                    AprobarTransferencia_BL obj_negocio = new AprobarTransferencia_BL();
+                    resul = obj_negocio.get_mostrandoTransferencias_porAprobar(id_Local, id_Almacen, tipo_reporte);
+                    
+                }
                 else
                 {
                     resul = "Opcion selecciona invalida";

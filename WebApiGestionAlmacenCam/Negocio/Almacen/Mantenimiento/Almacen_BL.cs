@@ -547,6 +547,32 @@ namespace Negocio.Almacen.Mantenimiento
             return res;
         }
 
-
+        public object set_cambiarPassword(string password,  int idUsuario)
+        {
+            Resul res = new Resul();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(Conexion.bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("SP_U_CAMBIAR_PASSWORD_USUARIO", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@password", SqlDbType.VarChar).Value = password;
+                        cmd.Parameters.Add("@idUser", SqlDbType.Int).Value = idUsuario;
+                        cmd.ExecuteNonQuery();
+                        res.ok = true;
+                        res.data = "OK";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+            return res;
+        }
     }
 }

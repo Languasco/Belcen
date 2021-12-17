@@ -72,9 +72,7 @@
         }
 
 
-        Result.get_reporteCobranza = function (obj) {
-
-   
+        Result.get_reporteCobranza = function (obj) { 
 
             var q = $q.defer();
             var url = urlApi + "CobranzaReporte";

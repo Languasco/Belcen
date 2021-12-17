@@ -211,7 +211,6 @@ namespace Negocio.Almacen.Procesos
             return res;
         }
 
-
         public object Set_actualizarCantTransferencia(int Id_TranfCab, int Id_TranfDet, string cant, int Id_usuario)
         {
             int id_GuiaCab = 0;
@@ -245,7 +244,35 @@ namespace Negocio.Almacen.Procesos
             return res;
         }
 
+        public DataTable get_mostrandoTransferencias_porAprobar(int id_Local, int id_Almacen, int tipo_reporte)
+        {
+            DataTable dt_resultado = new DataTable();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("SP_S_APROBAR_TRANSFERENCIA_LISTADO_CAB", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@id_Local", SqlDbType.Int).Value = id_Local;
+                        cmd.Parameters.Add("@id_Almacen", SqlDbType.Int).Value = id_Almacen;
+                        cmd.Parameters.Add("@tipo_reporte", SqlDbType.Int).Value = tipo_reporte;
 
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt_resultado);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return dt_resultado;
+        }
 
     }
 }

@@ -145,7 +145,6 @@
                                 <option ng-repeat="item in lista_anexos" value="{{item.id}}">{{item.descripcion}}</option>
                             </select>
                         </div>
-
                         <div class="col-sm-6 col-md-3">
                             <label for="cbo_zonasFiltro"> Zona de Venta</label> <span class="help-block"></span>
                             <select class="selectFiltros" id="cbo_zonasFiltro" ng-model="Objeto_ParametroFiltro.id_ZonaVta" ng-change="change_Local_transportista(Objeto_ParametroFiltro.id_ZonaVta)">
@@ -160,8 +159,6 @@
                                 <option ng-repeat="item in Lista_Almacen" value="{{item.id_Almacen}}">{{item.descripcion_Almacen}}</option>
                             </select>
                         </div>
-
-
                         <div class="col-sm-6 col-md-3">
                             <label for="cboTransportista" class="control-label"> Transportista </label> <span class="help-block"></span>
                             <select class="selectFiltros" id="cboTransportista" ng-model="Objeto_ParametroFiltro.id_transportista">
@@ -169,10 +166,7 @@
                                 <option ng-repeat="item in Lista_Transportista " value="{{item.id}}">{{item.descripcion}}</option>
                             </select>
                         </div>
-
                     </div>
-
-
                     <div class="row">
                         <div class="col-sm-6 col-md-3" style=" margin-bottom: -20px;">
                             <div class="form-group">
@@ -216,7 +210,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div style="text-align:center">
-                                    <div class="cssload-speeding-wheel" ng-if="loaderFiltro"></div>
+                                    <div class="cssload-speeding-wheel" ng-if="loaderfiltros"></div>
                                 </div>
                             </div>
                         </div>
@@ -242,7 +236,7 @@
                                 <th>Estado</th>
                                 <th>{{NameDoc}}</th>
  
-                                <th>Imprimir</th>
+                                <th>Acciones</th>
                                 <th>Documento</th>
                             </tr>
                         </thead>
@@ -267,7 +261,10 @@
                                     <button class="btn btn-xs btn-danger" ng-click="anulando_documentos(item)"></button>
 
                                 </td>
-                                <td style="text-align:center"><button type="button" class="btn btn-sm btn-icon btn-pure btn-outline" ng-click="generarVistaPreliminar_Sunat(item.id_TipoDocumento, item.Numero_Documento, item.id_Factura_Cab);"><i class="ti ti-printer"></i></button></td>
+                                <td style="text-align:center">
+                                    <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline" ng-click="generarVistaPreliminar_Sunat(item.id_TipoDocumento, item.Numero_Documento, item.id_Factura_Cab);"><i class="ti ti-printer"></i></button>
+                                    <button type="button" class="btn btn-success btn-circle" ng-click="getAuditorias(item);" data-toggle="tooltip" title="AUDITAR"><i class="fa fa-cog"></i> </button>
+                                </td>
 
                                 <td ng-if="1 == item.id_TipoDocumento || 14 == item.id_TipoDocumento " style="text-align:center"> <span class="label label-primary"> {{item.Descripcion_TipoDocumento}}</span> </td>
                                 <td ng-if="2 == item.id_TipoDocumento || 15 == item.id_TipoDocumento" style="text-align:center"> <span class="label label-default"> {{item.Descripcion_TipoDocumento}}</span> </td>
@@ -428,31 +425,6 @@
                                             <legend></legend>
 
                                             <div class="row {{disablelocalAlmacen}}" style=" margin-bottom: -22px;">
- 
-                                                @*<form class="form-horizontal" role="form">
-                                                <div class="form-group">
-                                                    <div class="col-sm-6 col-md-6">
-                                                        <label for="cbo_local_pedido" style=" margin-top: -11px; text-align:center" class="col-sm-4 control-label"> Zona Venta</label>
-                                                        <div class="col-sm-8">
-                                                            <select class="selectModal" id="cbo_local_pedido" ng-model="objeto_parametros.id_ZonaVta" ng-change="change_Local_Almacen_pedido_new(objeto_parametros.id_ZonaVta,0);">
-                                                                <option value="0">[ ----  SELECCIONE  --- ]</option>
-                                                                <option ng-repeat="item in Lista_Local" value="{{item.id}}">  {{item.descripcion}} </option>
-                                                            </select>
-
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-6 col-md-6">
-                                                        <label for="cbo_almacen_pedido" style=" margin-top: -11px; text-align:center" class="col-sm-2 control-label">Almacen</label>
-                                                        <div class="col-sm-6">
-                                                            <select class="selectModal" id="cbo_almacen_pedido" ng-model="objeto_parametros.id_Almacen"  >
-                                                                <option value="0">[ ----  SELECCIONE  --- ]</option>
-                                                                <option ng-repeat="item in Lista_Almacen_pedido" value="{{item.id_Almacen}}">{{item.descripcion_Almacen}}</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </form>*@
-
                                                 <form class="form-horizontal" role="form">
                                                     <div class="form-group">
                                                         <div class="col-sm-4 col-md-4">
@@ -632,7 +604,7 @@
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <tr ng-repeat="item in Lista_DataDetalle">
+                                                                    <tr ng-repeat="item in Lista_DataDetalle" style="{{item.tipoIGV_Sunat == '6' | iif : 'background-color: rgb(136,241, 0) !important;color:#fff;font-weight: 600;'}}">
                                                                         <td>{{$index+1}}</td>
                                                                         <td>{{item.codigo1_Producto}}  </td>
                                                                         <td>{{item.nombre_Producto}}  </td>

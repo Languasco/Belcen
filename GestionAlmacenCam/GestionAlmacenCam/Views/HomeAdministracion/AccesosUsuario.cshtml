@@ -1,4 +1,38 @@
-﻿
+﻿<style>
+    .tableFixHead {
+        overflow-y: auto;
+        max-height: 400px;
+    }
+
+    .tableFixHead thead th {
+        position: sticky;
+        top: 0;
+    }
+</style>
+
+<script>
+    function doSearch() {
+        var tableReg = document.getElementById('tblUsuarios');
+        var searchText = document.getElementById('searchStr').value.toLowerCase();
+
+        for (var i = 1; i < tableReg.rows.length; i++) {
+            var cellsOfRow = tableReg.rows[i].getElementsByTagName('td');
+            var found = false;
+            for (var j = 0; j < cellsOfRow.length && !found; j++) {
+                var compareWith = cellsOfRow[j].innerHTML.toLowerCase();
+                if (searchText.length == 0 || (compareWith.indexOf(searchText) > -1)) {
+                    found = true;
+                }
+            }
+            if (found) {
+                tableReg.rows[i].style.display = '';
+            } else {
+                tableReg.rows[i].style.display = 'none';
+            }
+        }
+    }
+</script>
+
 <div class="container contentAccesos" ng-init="initAll();">
     <div class="loaderModal" ng-if="showLoader"></div>
     <div class="loaderModal" ng-if="showLoader2"></div>
@@ -10,42 +44,50 @@
         <div class="col-md-6  col-lg-6 ContentFilters">
             <div class="loaderModal" ng-if="loaderSearch"></div>
             <div class="row" style="margin-bottom: 5px">
-                <div class="col-sm-12  "> 
-                    <input id="searchStr" data-ng-model="searchStr" type="text" placeholder="Buscar  usuario..." class="form-control btn-block inputSearch" autocomplete="off"> 
+                <div class="col-sm-12  ">
+                    @* <input id="searchStr" data-ng-model="searchStr" type="text" placeholder="Buscar  usuario..." class="form-control btn-block inputSearch" autocomplete="off">*@
+                    <input id="searchStr" onkeyup="doSearch()"  type="text" placeholder="Buscar  usuario..." class="form-control btn-block inputSearch" autocomplete="off">
                 </div>
             </div>
 
-            <table id="tblUsuarios" class="table toggle-arrow-tiny" data-page-size="10">
-                <thead>
-                    <tr>
-                        <th data-toggle="true">Permiso</th>
-                        <th data-toggle="true">#</th>
-                        <th data-toggle="true">Nro. Doc.</th>
-                        <th data-toggle="true">Nombre</th>
-                        <th data-hide=""> Usuario</th>
-                        <th data-hide=""> Cargo</th>
-                        <th>Asignar</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="item in listUsuarios">
-                        <td style="left:30px;">
-                            <div class="checkbox checkbox-info disabledContent" style="margin:0px">
-                                <input id="checkbox1" type="checkbox" ng-checked="item.check">
-                                <label for="checkbox1" class="estadoModal"></label>
-                            </div>
-                        </td>
-                        <td>{{$index + 1}}</td>
-                        <td>{{item.nrodoc_usuario}}</td>
-                        <td>{{item.nombres_usuario}} {{item.apellidos_usuario}}</td>
-                        <td>{{item.login_usuario}}</td>
-                        <td>Admin</td>
-                        <td>
-                            <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline " ng-click="openModal(item);"><i class="ti-pencil-alt"></i></button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <hr />
+
+            <div class="tableFixHead">
+                <table id="tblUsuarios" class="table toggle-arrow-tiny" data-page-size="10">
+                    <thead>
+                        <tr>
+                            <th data-toggle="true">Permiso</th>
+                            <th data-toggle="true">#</th>
+                            <th data-toggle="true">Nro. Doc.</th>
+                            <th data-toggle="true">Nombre</th>
+                            <th data-hide=""> Usuario</th>
+                            <th data-hide=""> Cargo</th>
+                            <th>Asignar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in listUsuarios">
+                            <td style="left:30px;">
+                                <div class="checkbox checkbox-info disabledContent" style="margin:0px">
+                                    <input id="checkbox1" type="checkbox" ng-checked="item.check">
+                                    <label for="checkbox1" class="estadoModal"></label>
+                                </div>
+                            </td>
+                            <td>{{$index + 1}}</td>
+                            <td>{{item.nrodoc_usuario}}</td>
+                            <td>{{item.nombres_usuario}} {{item.apellidos_usuario}}</td>
+                            <td>{{item.login_usuario}}</td>
+                            <td>Admin</td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline " ng-click="openModal(item);"><i class="ti-pencil-alt"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+
 
 
         </div>

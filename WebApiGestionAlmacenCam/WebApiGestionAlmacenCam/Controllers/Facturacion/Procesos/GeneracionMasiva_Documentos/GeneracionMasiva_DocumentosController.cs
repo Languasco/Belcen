@@ -22,7 +22,7 @@ using System.Web.Http.Cors;
 using System.Xml;
 using ThoughtWorks.QRCode.Codec;
 
-namespace WebApiGestionAlmacenCam.Controllers.Facturacion.Procesos.GeneracionMasiva_Documentos
+namespace WebApi_Ventas.Controllers.Facturacion.Procesos.GeneracionMasiva_Documentos
 {
      [EnableCors("*", "*", "*")]
     public class GeneracionMasiva_DocumentosController : ApiController
@@ -305,6 +305,27 @@ namespace WebApiGestionAlmacenCam.Controllers.Facturacion.Procesos.GeneracionMas
 
                     Documentos_Masivos_BL obj_negocio = new Documentos_Masivos_BL();
                     resul = obj_negocio.getDocumentoImprimir_otrosModulos_guiaRemision_sunat(idGuia);
+                }
+                else if (opcion == 25)
+                {
+                    string[] parametros = filtro.Split('|');
+
+                    int id_local = Convert.ToInt32(parametros[0].ToString());
+                    int id_almacen = Convert.ToInt32(parametros[1].ToString());
+                    int id_vendedor = Convert.ToInt32(parametros[2].ToString());
+                    string fecha = parametros[3].ToString();
+                    int id_TipoDocumento = Convert.ToInt32(parametros[4].ToString());
+                    int usuario = Convert.ToInt32(parametros[5].ToString());
+                    string fecha_Factura = parametros[6].ToString();
+                    string numero_documento = parametros[7].ToString();
+                    string numero_pedido = parametros[8].ToString();
+
+                    int id_Anexos = Convert.ToInt32(parametros[9].ToString());
+                    int id_transportista = Convert.ToInt32(parametros[10].ToString());
+                    int flagEnviarSunat = Convert.ToInt32(parametros[11].ToString());
+
+                    Documentos_Masivos_BL obj_negocio = new Documentos_Masivos_BL();
+                    resul = obj_negocio.Set_GenerarDocumentos_Venta_III(id_local, id_almacen, id_vendedor, fecha, id_TipoDocumento, usuario, fecha_Factura, numero_documento, numero_pedido, id_Anexos, id_transportista, flagEnviarSunat);
                 }
                 else
                 {

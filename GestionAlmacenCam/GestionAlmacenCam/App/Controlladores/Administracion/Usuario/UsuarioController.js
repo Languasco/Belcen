@@ -36,6 +36,8 @@ app.controller('UsuarioController', function ($scope, loginServices, $location, 
         id_estado : 0
     }
 
+
+
     $scope.listStatus = [];
     $scope.get_listStatus = function () {
         $scope.listStatus.push(
@@ -384,5 +386,70 @@ app.controller('UsuarioController', function ($scope, loginServices, $location, 
             }
         });
     }
+
+
+    //REGION DE CAMBIO DE CONTRASEÑA
+    $scope.Objeto_ParametroPassword = {
+        password: '',
+        passwordConfirm: '',
+        idUsuario: auxiliarServices.getUserId()
+    }
+
+    $scope.set_cambiarPassword = function () {
+
+        if ($scope.Objeto_ParametroPassword.password == null || $scope.Objeto_ParametroPassword.password == '' ) {
+            auxiliarServices.NotificationMessage('Sistemas', 'Por favor ingrese en Password', 'error', '#ff6849', 2000);
+            return;
+        }
+        const cantCaracteres = $scope.Objeto_ParametroPassword.password.trim();
+        if (cantCaracteres.length < 5) {
+            auxiliarServices.NotificationMessage('Sistemas', 'La cantidad de caracteres tiene que ser mayor a 5 dígitos', 'error', '#ff6849', 2000);
+            return;
+        }
+
+        if ($scope.Objeto_ParametroPassword.passwordConfirm == null || $scope.Objeto_ParametroPassword.passwordConfirm == '') {
+            auxiliarServices.NotificationMessage('Sistemas', 'Por favor ingrese la Confirmacion del  Password', 'error', '#ff6849', 2000);
+            return;
+        }
+
+        if ($scope.Objeto_ParametroPassword.password.trim() != $scope.Objeto_ParametroPassword.passwordConfirm.trim() ) {
+            auxiliarServices.NotificationMessage('Sistemas', 'Tienen que ser iguales, la Contraseña Nueva con la Confirmacion', 'error', '#ff6849', 2000);
+            return;
+        }
+ 
+
+        var params = {
+            title: "Desea continuar ?",
+            text: 'Esta por Cambiar la Contrasenia.',
+            type: 'confirmationAlert',
+        }
+        auxiliarServices.initSweetAlert(params).then(function (res) {
+            if (res == true) {
+                UsuarioServices.set_cambiandoPassword($scope.Objeto_ParametroPassword)
+                    .then(function (res) {
+                        if (res.ok == true) {
+                            $timeout(function () {
+                                let params = {
+                                    type: 'alert',  title: 'Excelente !', text: 'Proceso de Registro realizado correctamente !'
+                                }
+                                auxiliarServices.initSweetAlert(params).then(function (res) {
+                                });
+                            }, 500)
+
+                            $timeout(function () {
+                                $scope.showLoader = false;
+                                auxiliarServices.closeSession();
+                                $location.path('/Login');
+                            }, 0);
+
+                        } else {
+                            auxiliarServices.NotificationMessage('Sistemas', 'Lo sentimos se produjo un error', 'error', '#ff6849', 2000);
+                            alert(res.data);
+                        } 
+                    })
+            }
+        });
+    }
+
  
 })

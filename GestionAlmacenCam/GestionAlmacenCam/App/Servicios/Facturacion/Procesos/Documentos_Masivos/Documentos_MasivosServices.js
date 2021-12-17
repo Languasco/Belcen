@@ -494,7 +494,6 @@
             opcion: 17,
             filtro: parametros
         };
-        console.log(parameters)
 
         $http({
             method: 'GET',
@@ -515,10 +514,31 @@
         var q = $q.defer();
         var parametros = obj_filtro.id_ZonaVta + '|' + obj_filtro.id_almacen + '|' + obj_filtro.vendedor + '|' + obj_filtro.fecha + '|' + id_TipoDocumento + '|' + usuario + '|' + obj_filtro.fecha_Factura + '|' + obj_filtro.serie + '-' + obj_filtro.num_doc + '|' + obj_filtro.numero_pedido + '|' + obj_filtro.id_Anexos + '|' + obj_filtro.id_transportista;
 
-        console.log(parametros)
- 
         parameters = {
             opcion: 18,
+            filtro: parametros
+        };
+        $http({
+            method: 'GET',
+            url: url,
+            params: parameters
+        }).success(function (result) {
+            q.resolve(result);
+        }).error(function (err) {
+            q.reject(err);
+        })
+        return q.promise;
+    }
+
+    Result.GenerarDocumentosVentas_III = function (obj_filtro, id_TipoDocumento, usuario, flagEnviarSunat) {
+
+        let url = urlApi + 'GeneracionMasiva_Documentos'
+        var parameters;
+        var q = $q.defer();
+        var parametros = obj_filtro.id_ZonaVta + '|' + obj_filtro.id_almacen + '|' + obj_filtro.vendedor + '|' + obj_filtro.fecha + '|' + id_TipoDocumento + '|' + usuario + '|' + obj_filtro.fecha_Factura + '|' + obj_filtro.serie + '-' + obj_filtro.num_doc + '|' + obj_filtro.numero_pedido + '|' + obj_filtro.id_Anexos + '|' + obj_filtro.id_transportista + '|' + flagEnviarSunat;
+ 
+        parameters = {
+            opcion: 25,
             filtro: parametros
         };
         $http({

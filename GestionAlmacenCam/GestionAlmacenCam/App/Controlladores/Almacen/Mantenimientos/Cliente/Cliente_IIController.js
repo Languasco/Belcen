@@ -865,6 +865,8 @@ app.controller('CtrlCliente_II', function ($scope, RevisionPedidoServices, Docum
 
         } else {  //actualizar
 
+            alert('entrooo')
+
             $scope.objeto_parametros_cliente.estado = $scope.objEstados.activo == true ? 1 : 0;
             $scope.loaderSave = true;
             Cliente_IIServices.update_Cliente($scope.objeto_parametros_cliente)
@@ -901,6 +903,7 @@ app.controller('CtrlCliente_II', function ($scope, RevisionPedidoServices, Docum
                     console.log(error);
                 })
         }
+
     }
        
     $scope.GuardarDistribucion = function () {   

@@ -27,6 +27,7 @@
         };
 
         Result.validate_filtros = function (params) {
+
             if (params.fecha_ini === 0 || params.fecha_ini === '0' || params.fecha_ini === null || params.fecha_ini === '') {
                 auxiliarServices.NotificationMessage('Sistemas', 'Por favor seleccione la Fecha Inicial', 'error', '#ff6849', 1500);
                 return false;

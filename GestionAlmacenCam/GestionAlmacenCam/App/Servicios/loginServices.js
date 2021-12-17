@@ -49,7 +49,27 @@
         return q.promise;
     }
 
+    Result.set_recuperarPassword_Email = function (emailRecuperacion) {
+        let url = urlApi + 'UsuarioAccesos'
+        var parameters;
+        var q = $q.defer();
 
+        var parametros = emailRecuperacion
+        parameters = {
+            option: 6,
+            filters: parametros
+        }
+        $http({
+            method: 'GET',
+            url: url,
+            params: parameters
+        }).success(function (result) {
+            q.resolve(result);
+        }).error(function (err) {
+            q.reject(err);
+        })
+        return q.promise;
+    }
 
     return Result;
 });

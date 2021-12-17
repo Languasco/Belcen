@@ -14,7 +14,7 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.Description;
 
-namespace WebApiGestionAlmacenCam.Controllers.Facturacion.Procesos.Pedidos
+namespace WebApi_Ventas.Controllers.Facturacion.Procesos.Pedidos
 {
     [EnableCors("*", "*", "*")]
     public class PedidosController : ApiController
@@ -404,42 +404,11 @@ namespace WebApiGestionAlmacenCam.Controllers.Facturacion.Procesos.Pedidos
                 }
                 else if (opcion == 26)
                 {
-                    //string[] parametros = filtro.Split('|');
-                    //int id_facturaCab = Convert.ToInt32(parametros[0].ToString());
-
-                    //resul = (from c in db.Tbl_Fac_Facturas_Det
-                    //         join p in db.tbl_Alm_Producto on c.id_Producto equals p.id_Producto
-                    //         join u in db.tbl_Alm_UnidadMedida on c.id_UnidadMedida_Venta equals u.id_unidadMedida
-                    //         join m in db.tbl_Alm_ProductoMarca on p.id_marcaProducto equals m.id_marcaProducto
-                    //         where c.id_Factura_Cab == id_facturaCab
-                    //         select new
-                    //         {
-                    //             c.id_Factura_Det,
-                    //             c.id_Factura_Cab,
-                    //             c.item_Factura_Det,
-                    //             c.id_Producto,
-                    //             p.codigo1_Producto,
-                    //             p.nombre_Producto,
-                    //             u.nombre_UnidadMedida,
-                    //             nroLote = c.nroLote,
-                    //             c.precioVenta_Factura_Det,
-                    //             c.porcentajeDescuentoFactura_Det,
-                    //             c.Descuento_Factura_Det,
-                    //             c.cantidad_Factura_Det,
-                    //             c.porcentajeIGV_Factura_Det,
-                    //             c.total_Factura_Det,
-                    //             m.nombre_marcaproducto,
-                    //             stock = 0
-                    //         }).ToList();
-
-
-
                     string[] parametros = filtro.Split('|');
                     int id_facturaCab = Convert.ToInt32(parametros[0].ToString());
 
                     Pedidos_BL obj_negocio = new Pedidos_BL();
                     resul = obj_negocio.get_detalle_boletasFacturas(id_facturaCab);
-
                 }
                 else if (opcion == 27)
                 {
@@ -883,7 +852,7 @@ namespace WebApiGestionAlmacenCam.Controllers.Facturacion.Procesos.Pedidos
             }
 
 
-            Ent_pedidoR.id_Almacen = obj_entidad.id_Almacen;
+            //Ent_pedidoR.id_Almacen = obj_entidad.id_Almacen;
             Ent_pedidoR.id_TipoDocumento = obj_entidad.id_TipoDocumento;
 
             Ent_pedidoR.id_PuntoVenta = obj_entidad.id_PuntoVenta;
@@ -914,10 +883,11 @@ namespace WebApiGestionAlmacenCam.Controllers.Facturacion.Procesos.Pedidos
             Ent_pedidoR.flag_exonerada_igv = obj_entidad.flag_exonerada_igv;
             Ent_pedidoR.flag_tipo_facturacion = obj_entidad.flag_tipo_facturacion;
 
-            Ent_pedidoR.id_Anexos = obj_entidad.id_Anexos;
-            Ent_pedidoR.id_ZonaVta = obj_entidad.id_ZonaVta;
+            //Ent_pedidoR.id_Anexos = obj_entidad.id_Anexos;
+            //Ent_pedidoR.id_ZonaVta = obj_entidad.id_ZonaVta;
             Ent_pedidoR.id_PersonalTransportista = obj_entidad.id_PersonalTransportista;
             Ent_pedidoR.generaGuia = obj_entidad.generaGuia;
+            Ent_pedidoR.flag_DocManual = obj_entidad.flag_DocManual;
 
             Ent_pedidoR.usuario_edicion = obj_entidad.usuario_creacion;
             Ent_pedidoR.fecha_edicion = DateTime.Now;
@@ -944,18 +914,7 @@ namespace WebApiGestionAlmacenCam.Controllers.Facturacion.Procesos.Pedidos
             {
                 return BadRequest(ModelState);
             }
-            ///----obteniendo la numeracion----
-            ////int id_local =  Convert.ToInt32(tbl_Fac_Pedidos_Cab.id_Local);
-            ////int id_tipoDoc = Convert.ToInt32(tbl_Fac_Pedidos_Cab.id_TipoDocumento);
-            ////int id_tipoDoc_Ref = 0;
-
-            ////Pedidos_BL obj_negocio = new Pedidos_BL();
-            ////var resul = obj_negocio.Get_numeroCorrelativo(id_local, id_tipoDoc, id_tipoDoc_Ref);
-            ///////----Fin de obteniendo la numeracion----
-
-            ////tbl_Fac_Pedidos_Cab.Numero_Documento = resul[0].serie_correlativo + "-" + resul[0].numero_correlativo;
-            ///
-
+ 
             tbl_Zonas_Venta tblzonas = db.tbl_Zonas_Venta.Find(tbl_Fac_Pedidos_Cab.id_ZonaVta);
 
             if (string.IsNullOrEmpty(tblzonas.id_Local.ToString()) == false)

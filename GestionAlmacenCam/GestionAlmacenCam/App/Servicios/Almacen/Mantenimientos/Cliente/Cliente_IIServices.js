@@ -55,6 +55,10 @@
 
     Result.update_Cliente = function (object) {
 
+        console.log('update_Cliente')
+        console.log(JSON.stringify(object));
+
+
         let url = urlApi + "TblCliente/" + object.id_cliente;
         var q = $q.defer();
         $http.put(url, object)

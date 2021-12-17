@@ -26,21 +26,27 @@ namespace Negocio.Accesos
             try
             {
 
-                var lista = (from od in db.tbl_Definicion_Opciones
-                             where od.estado == 1 && Parents.Contains(od.parentID.ToString())
-                            
+                var listaAnt = (from od in db.tbl_Definicion_Opciones
+                             orderby od.parentID ascending
+                             where od.estado == 1 && Parents.Contains(od.parentID.ToString())  
                              select new listJsonPermisos
                              {
                                  id_opcion = od.id_Opcion,
                                  page_principal = od.nombre_opcion.ToLower(),
                                  parent_id = od.parentID,
-                                 url = od.urlImagen_Opcion
-                             }).Distinct();
+                                 url = od.urlImagen_Opcion,
+                                 modulo = od.nombreParentID
+                             }).Distinct().ToList();
+
+                var lista  = listaAnt.OrderByDescending(s => s.parent_id).ToList();
+
 
                 listJsonPermisos listaJsonObj = null;
                 foreach (var item in lista)
                 {
                     listaJsonObj = new listJsonPermisos();
+
+                    listaJsonObj.modulo = item.modulo;
                     listaJsonObj.id_opcion = item.id_opcion;
                     listaJsonObj.id_usuarios = item.id_usuarios;
                     listaJsonObj.url = item.url;
@@ -50,6 +56,7 @@ namespace Negocio.Accesos
                                             where od.parentID == item.id_opcion && od.estado == 1
                                             select new listaWebs
                                             {
+                                                modulo = item.modulo,
                                                 nombre_page = od.nombre_opcion.ToLower(),
                                                 url_page = od.url_opcion,
                                                 orden = od.orden_Opcion,
@@ -126,6 +133,40 @@ namespace Negocio.Accesos
                         cmd.Parameters.Add("@buscar", SqlDbType.VarChar).Value = buscar;
                         cmd.Parameters.Add("@acceso", SqlDbType.Int).Value = acceso;
                         cmd.Parameters.Add("@estado", SqlDbType.Int).Value = estado;
+
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt_detalle);
+                        }
+
+                        res.ok = true;
+                        res.data = dt_detalle;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+            return res;
+        }
+
+        public object get_auditoria( int id_usuario, int id_usuario_edicion)
+        {
+            DataTable dt_detalle = new DataTable();
+            Resul res = new Resul();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("SP_S_AUDITORIAS", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@id_usuario", SqlDbType.Int).Value = id_usuario;
+                        cmd.Parameters.Add("@id_usuario_edicion", SqlDbType.Int).Value = id_usuario_edicion;
 
                         using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                         {

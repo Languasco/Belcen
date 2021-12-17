@@ -1,5 +1,5 @@
 ﻿var app = angular.module('appGestion.transferenciasNewController', []);
-app.controller('transferenciasNewController', function ($scope, TransportistaServices, VehiculoServices, ProveedorServices, LocalesServices, IngresoTransferenciasServices, AlmacenServices, $location, $timeout, auxiliarServices, EstadosServices, transferenciasNewServices) {
+app.controller('transferenciasNewController', function ($scope, TransportistaServices, AuditarServices, VehiculoServices, ProveedorServices, LocalesServices, IngresoTransferenciasServices, AlmacenServices, $location, $timeout, auxiliarServices, EstadosServices, transferenciasNewServices) {
 
     $scope.initAll = function () {
         if (!auxiliarServices.validateUserLog()) {
@@ -27,6 +27,38 @@ app.controller('transferenciasNewController', function ($scope, TransportistaSer
             $(".selectModal").select2();
         }, 100);
     }
+
+    $scope.getAuditorias = function (item) {
+
+        console.log(item)
+
+        const uCreacion = (!item.usuario_creacion) ? 0 : item.usuario_creacion;
+        const uEdicion = (!item.usuario_edicion) ? 0 : item.usuario_edicion;
+
+        const fechaCreacion = auxiliarServices.formatDate(item.fecha_creacion);
+        const fechaEdicion = (!item.fecha_edicion) ? '' : auxiliarServices.formatDate(item.fecha_edicion);
+
+        if (uCreacion == 0 && uEdicion ==0 ) {
+            auxiliarServices.NotificationMessage('Sistemas', 'No hay informacion para mostrar', 'success', '#008000', 5000);
+            return;
+        }
+
+        AuditarServices.getAuditoria(uCreacion, uEdicion)
+            .then(function (res) {
+                if (res.ok) { 
+                    let usuarioCreacion = res.data[0].descripcion;
+                    let usuarioEdicion = (res.data.length == 1) ? '' : res.data[1].descripcion;
+
+                    var message = "Fecha Creación : " + fechaCreacion + "</br>" +
+                        "Usuario Creación : " + usuarioCreacion + "</br>" +
+                        "Fecha Edición : " + fechaEdicion + "</br>" +
+                        "Usuario Edición : " + usuarioEdicion + "</br>"
+                    auxiliarServices.NotificationMessage('Sistemas', message, 'success', '#008000', 5000);           
+                }
+            })
+    }
+
+
 
     //--- variables Globales
 
@@ -255,6 +287,8 @@ app.controller('transferenciasNewController', function ($scope, TransportistaSer
         };
         IngresoTransferenciasServices.getTransferencias(params)
             .then(function (res) {
+
+                
                 res.forEach(function (item, index) {
                     if (item.estado === 24) {
                         item['desEstado'] = "Generado";

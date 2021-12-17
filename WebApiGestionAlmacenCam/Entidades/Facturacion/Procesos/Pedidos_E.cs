@@ -78,6 +78,13 @@ namespace Entidades.Facturacion.Procesos
         public string fechaProduccion { get; set; }
         public string fechaVencimiento { get; set; }
 
+        public string flag_DocManual { get; set; }
+
+        public string fecha_creacion { get; set; }
+        public string usuario_edicion { get; set; }
+        public string fecha_edicion { get; set; }
+
+
     }
 
     public class Factura_E
@@ -123,6 +130,11 @@ namespace Entidades.Facturacion.Procesos
         public string id_ZonaVta { get; set; }
         public string id_Anexo { get; set; }
 
+        public string fecha_creacion { get; set; }
+        public string usuario_edicion { get; set; }
+        public string fecha_edicion { get; set; }
+
+
     }
 
     public class Detalle_Factura_E
@@ -133,6 +145,7 @@ namespace Entidades.Facturacion.Procesos
         public decimal total { get; set; }
         public int usuario { get; set; }
         public int id_doc_ref { get; set; }
+        public string tipoIGV_Sunat { get; set; }
     }
 
     public class Stock_Notas_Debito

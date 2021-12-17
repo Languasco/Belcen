@@ -297,8 +297,10 @@
                             </button>
 
                             <button type="button" class="btn btn-warning btn-circle" ng-if="item.estado==25 || item.estado == 37" ng-click="reactivarTransferencia(item);" style="background-color: #00c292; border-color: #00c292; " title="Reactivar">
-                                <i class="fa fa-reply"></i> 
+                                <i class="fa fa-reply"></i>
                             </button>
+
+                            <button type="button" class="btn btn-success btn-circle" ng-click="getAuditorias(item);" data-toggle="tooltip" title="AUDITAR"><i class="fa fa-cog"></i> </button>
 
                             @*<button type="button" class="btn btn-success btn-circle" ng-click="getDataToPdf(item);" data-toggle="tooltip" title="AUDITAR"><i class="ti-cloud-down"></i> </button>*@
                         </td>

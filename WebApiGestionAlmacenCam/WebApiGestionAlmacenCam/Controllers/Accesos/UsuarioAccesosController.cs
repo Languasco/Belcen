@@ -8,7 +8,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 
-namespace WebApiGestionAlmacenCam.Controllers.Accesos
+namespace WebApi_Ventas.Controllers.Accesos
 {
       [EnableCors("*", "*", "*")]
     public class UsuarioAccesosController : ApiController
@@ -60,9 +60,14 @@ namespace WebApiGestionAlmacenCam.Controllers.Accesos
 
                     LogInAccess_bl = new LogInAccess_BL();
                     result = LogInAccess_bl.set_ActivandoDesactivandoSesion(idUsuario, estado);
-
                 }
+                else if (option == 6)
+                {
+                    string email =  arrayFilters[0].ToString();
 
+                    LogInAccess_bl = new LogInAccess_BL();
+                    result = LogInAccess_bl.set_envioCorreo_recuperarContrasenia(email);
+                }
             }
             catch (Exception ex)
             {

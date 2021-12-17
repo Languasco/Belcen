@@ -52,9 +52,10 @@ namespace WebApiGestionAlmacenCam.Controllers.Facturacion.Procesos.Promociones
                 {
                     string[] parametros = filtro.Split('|');
                     int idPromocion = Convert.ToInt32(parametros[0].ToString());
+                    int idCanasta = Convert.ToInt32(parametros[1].ToString());
 
                     Promociones_BL obj_negocio = new Promociones_BL();
-                    resul = obj_negocio.get_configuracionDetalle(idPromocion);
+                    resul = obj_negocio.get_configuracionDetalle(idPromocion,idCanasta);
                 }
                 else if (opcion == 5)
                 {
@@ -111,7 +112,7 @@ namespace WebApiGestionAlmacenCam.Controllers.Facturacion.Procesos.Promociones
         [Route("api/Promociones/Posttbl_Promocion_Productos")]
         public object Posttbl_Promocion_Productos(tbl_Promocion_Productos tbl_Promocion_Productos)
         {
-            Resultado res = new Resultado();
+            Resul res = new Resul();
             try
             {
                 tbl_Promocion_Productos.fecha_creacion = DateTime.Now;
@@ -148,7 +149,7 @@ namespace WebApiGestionAlmacenCam.Controllers.Facturacion.Procesos.Promociones
         [Route("api/Promociones/Puttbl_Promocion_Productos")]
         public object Puttbl_Promocion_Productos(int id, tbl_Promocion_Productos tbl_Promocion_Productos)
         {
-            Resultado res = new Resultado();
+            Resul res = new Resul();
 
             tbl_Promocion_Productos objReemplazar;
             objReemplazar = db.tbl_Promocion_Productos.Where(u => u.id_Promocion == id).FirstOrDefault<tbl_Promocion_Productos>();
@@ -191,7 +192,7 @@ namespace WebApiGestionAlmacenCam.Controllers.Facturacion.Procesos.Promociones
         [Route("api/Promociones/Posttbl_Promocion_Productos_Configuracion")]
         public object Posttbl_Promocion_Productos_Configuracion(tbl_Promocion_Productos_Configuracion tbl_Promocion_Productos_Configuracion)
         {
-            Resultado res = new Resultado();
+            Resul res = new Resul();
             try
             {
                 tbl_Promocion_Productos_Configuracion.fecha_creacion = DateTime.Now;
@@ -213,7 +214,7 @@ namespace WebApiGestionAlmacenCam.Controllers.Facturacion.Procesos.Promociones
         [Route("api/Promociones/Puttbl_Promocion_Productos_Configuracion")]
         public object Puttbl_Promocion_Productos_Configuracion(int id, tbl_Promocion_Productos_Configuracion tbl_Promocion_Productos_Configuracion)
         {
-            Resultado res = new Resultado();
+            Resul res = new Resul();
 
             tbl_Promocion_Productos_Configuracion objReemplazar;
             objReemplazar = db.tbl_Promocion_Productos_Configuracion.Where(u => u.id_Productos_Configuracion == id).FirstOrDefault<tbl_Promocion_Productos_Configuracion>();
@@ -249,7 +250,7 @@ namespace WebApiGestionAlmacenCam.Controllers.Facturacion.Procesos.Promociones
         [Route("api/Promociones/Posttbl_Promocion_ProductosCanastas")]
         public object Posttbl_Promocion_ProductosCanastas(tbl_Promocion_Canasta tbl_Promocion_Canasta)
         {
-            Resultado res = new Resultado();
+            Resul res = new Resul();
             try
             {
                 tbl_Promocion_Canasta.fecha_creacion = DateTime.Now;
@@ -271,7 +272,7 @@ namespace WebApiGestionAlmacenCam.Controllers.Facturacion.Procesos.Promociones
         [Route("api/Promociones/Putttbl_Promocion_ProductosCanastas")]
         public object Putttbl_Promocion_ProductosCanastas(int id, tbl_Promocion_Canasta tbl_Promocion_Canasta)
         {
-            Resultado res = new Resultado();
+            Resul res = new Resul();
 
             tbl_Promocion_Canasta objReemplazar;
             objReemplazar = db.tbl_Promocion_Canasta.Where(u => u.id_Canasta == id).FirstOrDefault<tbl_Promocion_Canasta>();
@@ -305,7 +306,7 @@ namespace WebApiGestionAlmacenCam.Controllers.Facturacion.Procesos.Promociones
         [Route("api/Promociones/Posttbl_Promocion_ProductosCanastas_det")]
         public object Posttbl_Promocion_ProductosCanastas_det(tbl_Promocion_Canasta_Det tbl_Promocion_Canasta_Det)
         {
-            Resultado res = new Resultado();
+            Resul res = new Resul();
             try
             {
                 tbl_Promocion_Canasta_Det.fecha_creacion = DateTime.Now;
@@ -327,7 +328,7 @@ namespace WebApiGestionAlmacenCam.Controllers.Facturacion.Procesos.Promociones
         [Route("api/Promociones/Putttbl_Promocion_ProductosCanastas_det")]
         public object Putttbl_Promocion_ProductosCanastas_det(int id, tbl_Promocion_Canasta_Det tbl_Promocion_Canasta_Det)
         {
-            Resultado res = new Resultado();
+            Resul res = new Resul();
 
             tbl_Promocion_Canasta_Det objReemplazar;
             objReemplazar = db.tbl_Promocion_Canasta_Det.Where(u => u.id_CanastaDet == id).FirstOrDefault<tbl_Promocion_Canasta_Det>();                

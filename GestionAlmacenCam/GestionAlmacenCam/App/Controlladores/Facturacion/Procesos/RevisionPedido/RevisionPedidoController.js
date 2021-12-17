@@ -1,6 +1,6 @@
 ﻿var app = angular.module('appGestion.RevisionPedidoController', [])
-
-app.controller('CtrlRevisionPedido', function ($scope, $location, $timeout, auxiliarServices, Documentos_MasivosServices, PedidosServices, NotaCreditoDebitoServices, VehiculoServices , TipoDocumentoServices, AlmacenServices, PersonalServices, RevisionPedidoServices, GrupoDetServices) {
+ 
+app.controller('CtrlRevisionPedido', function ($scope, $location, $timeout, auxiliarServices, AuditarServices , PedidosServices, NotaCreditoDebitoServices, AuditarServices , TipoDocumentoServices, AlmacenServices, PersonalServices, RevisionPedidoServices, GrupoDetServices) {
     
     $scope.initAll = function () {
         if (!auxiliarServices.validateUserLog()) {
@@ -27,6 +27,36 @@ app.controller('CtrlRevisionPedido', function ($scope, $location, $timeout, auxi
             $(".selectFiltros").select2();
             $(".selectModal").select2();
         }, 100);
+    }
+
+    $scope.getAuditorias = function (item) {
+
+        console.log(item)
+
+        const uCreacion = (!item.usuario_creacion) ? 0 : item.usuario_creacion;
+        const uEdicion = (!item.usuario_edicion) ? 0 : item.usuario_edicion;
+
+        const fechaCreacion = auxiliarServices.formatDate(item.fecha_creacion);
+        const fechaEdicion = (!item.fecha_edicion) ? '' : auxiliarServices.formatDate(item.fecha_edicion);
+
+        if (uCreacion == 0 && uEdicion == 0) {
+            auxiliarServices.NotificationMessage('Sistemas', 'No hay informacion para mostrar', 'success', '#008000', 5000);
+            return;
+        }
+
+        AuditarServices.getAuditoria(uCreacion, uEdicion)
+            .then(function (res) {
+                if (res.ok) {
+                    let usuarioCreacion = res.data[0].descripcion;
+                    let usuarioEdicion = (res.data.length == 1) ? '' : res.data[1].descripcion;
+
+                    var message = "Fecha Creación : " + fechaCreacion + "</br>" +
+                        "Usuario Creación : " + usuarioCreacion + "</br>" +
+                        "Fecha Edición : " + fechaEdicion + "</br>" +
+                        "Usuario Edición : " + usuarioEdicion + "</br>"
+                    auxiliarServices.NotificationMessage('Sistemas', message, 'success', '#008000', 5000);
+                }
+            })
     }
 
     //----- variables Globales
@@ -250,11 +280,25 @@ app.controller('CtrlRevisionPedido', function ($scope, $location, $timeout, auxi
         var listPedidos = [];
         var flag_marco_user = false;
 
+        if ($scope.Objeto_ParametroFiltro.id_Anexos == 0) {
+            auxiliarServices.NotificationMessage('Sistemas', 'Por favor seleccione un Anexo', 'error', '#ff6849', 1500);
+            return;
+        }
+        if ($scope.Objeto_ParametroFiltro.id_ZonaVta == 0) {
+            auxiliarServices.NotificationMessage('Sistemas', 'Por favor seleccione una Zona', 'error', '#ff6849', 1500);
+            return;
+        }
+        if ($scope.Objeto_ParametroFiltro.id_almacen == 0) {
+            auxiliarServices.NotificationMessage('Sistemas', 'Por favor seleccione un Almacen', 'error', '#ff6849', 1500);
+            return;
+        }
+
         flag_marco_user = MarcoCheck();
         if (flag_marco_user == false) {
             auxiliarServices.NotificationMessage('Sistemas', 'Por favor marque al menos un Item', 'error', '#ff6849', 1500);
             return;
         }
+
         listPedidos = ListaMarcoCheck();    
         var params = {
             title: "Desea continuar ?",
@@ -264,7 +308,7 @@ app.controller('CtrlRevisionPedido', function ($scope, $location, $timeout, auxi
         auxiliarServices.initSweetAlert(params).then(function (res) {
             if (res == true) {
          $scope.loaderFiltro = true;
-        RevisionPedidoServices.get_aprobarRevisionPedidos(listPedidos, auxiliarServices.getUserId()).then(function (res) {
+                RevisionPedidoServices.get_aprobarRevisionPedidos(listPedidos, auxiliarServices.getUserId(), $scope.Objeto_ParametroFiltro).then(function (res) {
             $scope.loaderFiltro = false;
             if (res.ok == true) {
 

@@ -109,10 +109,29 @@
     }
 
 
-    Result.anular_Personal = function (id) {
+        Result.set_cambiandoPassword = function ({ password, idUsuario}) {
 
- 
-    }
+            let url = urlApi + 'MantenimientoAlmacen'
+            var parameters;
+            var q = $q.defer();
+            var parametros = password + '|'  + idUsuario;
+
+            parameters = {
+                opcion: 6,
+                filtro: parametros
+            }
+
+            $http({
+                method: 'GET',
+                url: url,
+                params: parameters
+            }).success(function (result) {
+                q.resolve(result);
+            }).error(function (err) {
+                q.reject(err);
+            })
+            return q.promise;
+        }
 
 
     return Result;

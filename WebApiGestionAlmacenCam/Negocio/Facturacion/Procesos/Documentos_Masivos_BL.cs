@@ -1946,6 +1946,45 @@ namespace Negocio.Facturacion.Procesos
         }
 
 
+        public string Set_GenerarDocumentos_Venta_III(int id_local, int id_almacen, int id_vendedor, string fecha, int id_TipoDocumento, int usuario, string fecha_Factura, string numero_documento, string numero_pedido, int id_Anexos, int id_transportista, int flagEnviarSunat)
+        {
+            string resultado = "";
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("SP_S_DOCUMENTO_VENTA_FACTURACION_NEW", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@id_local", SqlDbType.Int).Value = id_local;
+                        cmd.Parameters.Add("@id_almacen", SqlDbType.Int).Value = id_almacen;
+                        cmd.Parameters.Add("@id_vendedor", SqlDbType.Int).Value = id_vendedor;
+
+                        cmd.Parameters.Add("@fecha", SqlDbType.VarChar).Value = fecha;
+                        cmd.Parameters.Add("@id_tipoDoc", SqlDbType.Int).Value = id_TipoDocumento;
+                        cmd.Parameters.Add("@id_usuario", SqlDbType.VarChar).Value = usuario;
+                        cmd.Parameters.Add("@fecha_Factura", SqlDbType.VarChar).Value = fecha_Factura;
+
+                        cmd.Parameters.Add("@numero_documento", SqlDbType.VarChar).Value = numero_documento;
+                        cmd.Parameters.Add("@numero_pedido", SqlDbType.VarChar).Value = numero_pedido;
+
+                        cmd.Parameters.Add("@id_Anexos", SqlDbType.Int).Value = id_Anexos;
+                        cmd.Parameters.Add("@id_transportista", SqlDbType.Int).Value = id_transportista;
+                        cmd.Parameters.Add("@flag_EnviarSunat", SqlDbType.Int).Value = flagEnviarSunat;                        
+
+                        cmd.ExecuteNonQuery();
+                        resultado = "OK";
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                resultado = e.Message;
+            }
+            return resultado;
+        }
 
     }
 }

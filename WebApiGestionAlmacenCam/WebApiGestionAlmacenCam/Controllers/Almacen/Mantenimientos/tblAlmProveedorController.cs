@@ -15,7 +15,7 @@ using System.Web.Http.Cors;
 using System.Threading.Tasks;
 
 
-namespace WebApiGestionAlmacenCam.Controllers.Almacen.Mantenimientos
+namespace WebApi_Ventas.Controllers.Almacen.Mantenimientos
 {
      [EnableCors("*", "*", "*")]
     public class tblAlmProveedorController : ApiController

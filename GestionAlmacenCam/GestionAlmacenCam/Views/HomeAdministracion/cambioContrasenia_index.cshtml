@@ -1,0 +1,204 @@
+﻿
+
+
+
+<style>
+    #listMenu span, a {
+        text-align: left !important;
+    }
+
+    .contentRegistro fieldset legend {
+        text-align: left !important;
+    }
+
+    .jq-toast-wrap {
+        width: 300px !important;
+    }
+
+    .floating-labels label {
+        top: -6px;
+    }
+
+    .contentRegistro .select2-container {
+        margin-left: 0px;
+        margin-top: 2px;
+    }
+
+    #paddin-lef {
+        padding-left: 40px !important;
+    }
+
+    .contentCombo .select2-container {
+        margin-left: 0px;
+        /*margin-top: -20px;*/
+        width: 95% !important;
+    }
+
+    .ContentFilters .table {
+        display: table;
+    }
+
+    .contentRegistro label {
+        font-size: 11px;
+        font-family: tahoma;
+        color: #2c4d6d;
+        font-weight: 600;
+    }
+
+    .contentRegistro {
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .ModalBorderSombra .modal-content {
+        box-shadow: inset 0px 0px 7px rgba(0,0,0,.5), 1px 1px 5px #fff;
+    }
+
+
+
+    .resaltado {
+        color: #ff94a7 !important;
+    }
+
+    .text-right {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    @@media (min-width: 1200px) {
+        .modal-xlg {
+            width: 95%;
+        }
+    }
+
+    @@media (min-width: 768px) {
+        .modal-xlg {
+            width: 95%;
+        }
+    }
+
+    .form-horizontal .form-group {
+        margin-bottom: 3px;
+    }
+
+    .flex-container {
+        display: flex;
+        /* flex-direction: column;    establece la posicion de los elementos como columna o fila  */
+        /* flex-wrap: wrap; la posicion lo estable una deacuerdo al espacion y nueva fila */
+        /* flex-flow: row wrap; une ambas propiedades anteriores */
+        /* justify-content: center;  se alinean al centro */
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: aqua;
+        padding: 10px;
+    }
+
+    .flex-container-item {
+        width: 100px;
+        margin: 10px;
+        text-align: center;
+        line-height: 75px;
+        font-size: 30px;
+        border: 2px solid red
+    }
+
+    .form-group {
+        margin-bottom: 3px;
+    }
+
+    .montosFichaMonedas {
+        display: flex;
+        flex-direction: row-reverse;
+        align-content: end;
+    }
+
+    .tableArqueo {
+        width: 100%;
+        max-height: 300px;
+    }
+
+    .modal-header {
+        background-color: #025025d4;
+    }
+
+    .modal-footer {
+        background-color: #025025d4;
+    }
+
+ 
+ 
+</style>
+
+<style>
+
+
+    .ModalBorderSombra {
+        box-shadow: inset 0px 0px 7px rgba(0,0,0,.5), 1px 1px 5px #fff;
+    }
+
+
+
+    .titulo {
+        font-family: tahoma;
+        color: #2c4d6d;
+        font-weight: 600;
+    }
+</style>
+
+<div class="container" ng-init="initAll();">
+    <div class="panel-body    ">
+        <div class="row">
+            <div class="col-sm-12 col-md-3 col-lg-3">
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="well  contentRegistro contentCombo ContentFilters" style="background-color:#dfe4ea;padding-bottom:0px;padding-top:0px">
+                    <br />
+                    <center> <h3 class="titulo">Contraseña </h3> </center>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12">
+                            <label class="control-label"> Contraseña Nueva </label>
+                            <input type="password" ng-model="Objeto_ParametroPassword.password" class="form-control input-sm" placeholder="" autocomplete="off">
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12">
+                            <label class="control-label" style="color: #f75b36;"> (La contraseña debe tener entre 5 y 50 caracteres de longitud y contener, como mínimo, 1 número) </label>
+ 
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12">
+                            <label class="control-label"> Confirme la Contraseña Nueva  </label>
+                            <input type="password" ng-model="Objeto_ParametroPassword.passwordConfirm" class="form-control input-sm" placeholder="" autocomplete="off">
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <button id="btn-material" class="btn btn-outline btn-primary btn-sm m-l-10" ng-click="set_cambiarPassword();"> <i class="glyphicon glyphicon-refresh"></i> Cambiar la Contraseña  </button>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-3 col-lg-3">
+            </div>
+        </div>
+        <br />
+        <div class="form-inline ">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div style="text-align:center">
+                        <div class="cssload-speeding-wheel" ng-if="loader"></div>
+                    </div>
+                </div>
+            </div>
+            <a id="id_link" href="" download style="display:none">link</a>
+        </div>
+
+    </div>
+</div>
+

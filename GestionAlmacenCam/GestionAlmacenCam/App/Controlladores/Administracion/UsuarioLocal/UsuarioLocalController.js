@@ -9,6 +9,7 @@ app.controller('ctrlUsuarioLocal', function ($scope, loginServices, $location, $
             return;
         }
         auxiliarServices.menuHideShow(2);
+ 
 
         $scope.loader = true;
         auxiliarServices.changeTitle("Usuario Local");

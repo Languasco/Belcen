@@ -252,6 +252,7 @@
     <Compile Include="Controllers\Almacen\Mantenimientos\TblGrupoTabla_CabController.cs" />
     <Compile Include="Controllers\Almacen\Mantenimientos\TblGrupoTabla_DetController.cs" />
     <Compile Include="Controllers\Almacen\Procesos\TransferenciaNew\TransferenciasNewController.cs" />
+    <Compile Include="Controllers\Almacen\Procesos\TransformacionProductos\TransformacionProductosController.cs" />
     <Compile Include="Controllers\Almacen\Reportes\ConsultaTransacciones\ConsultaTransaccionesController.cs" />
     <Compile Include="Controllers\Cobranza\CobranzaReporteController.cs" />
     <Compile Include="Controllers\Cobranza\CobranzaManualController.cs" />

@@ -15,6 +15,7 @@ using System.Data.SqlClient;
 using Negocio.Conexion;
 using static Negocio.Accesos.LogInAccess_BL;
 using Entidades.Mantenimiento.usuarios;
+using Negocio.Resultado;
 
 namespace WebApiGestionAlmacenCam.Controllers.Almacen.Mantenimientos
 {
@@ -70,7 +71,7 @@ namespace WebApiGestionAlmacenCam.Controllers.Almacen.Mantenimientos
         [ResponseType(typeof(Usuario))]
         public object Posttbl_Usuarios(Usuario obj)
         {
-            Resultado res = new Resultado();
+            Resul res = new Resul();
             SqlConnection cn = new SqlConnection(bdConexion.cadenaBDcx());
             SqlCommand cmd = new SqlCommand();
 
@@ -129,7 +130,7 @@ namespace WebApiGestionAlmacenCam.Controllers.Almacen.Mantenimientos
         [ResponseType(typeof(Usuario))]
         public object Puttbl_Usuarios(Usuario obj)
         {
-            Resultado res = new Resultado();
+            Resul res = new Resul();
             SqlConnection cn = new SqlConnection(bdConexion.cadenaBDcx());
             SqlCommand cmd = new SqlCommand();
 
@@ -184,16 +185,19 @@ namespace WebApiGestionAlmacenCam.Controllers.Almacen.Mantenimientos
         }
 
         [HttpDelete]
-        public object Deletetbl_Usuarios(string nro_doc, int userId)
+        public object Deletetbl_Usuarios(string nro_doc, int userId, int idRegistro, string tipoAcceso)
         {
-            Resultado res = new Resultado();
+            Resul res = new Resul();
             SqlConnection cn = new SqlConnection(bdConexion.cadenaBDcx());
             SqlCommand cmd = new SqlCommand();
 
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = "PROC_W_USUARIOS_V2_ANULAR";
-            cmd.Parameters.Add("@nro_doc", SqlDbType.VarChar).Value = nro_doc;
+            //cmd.Parameters.Add("@nro_doc", SqlDbType.VarChar).Value = nro_doc;
             cmd.Parameters.Add("@usuario_edicion", SqlDbType.Int).Value = userId;
+            cmd.Parameters.Add("@idRegistro", SqlDbType.Int).Value = idRegistro;
+            cmd.Parameters.Add("@tipoAcceso", SqlDbType.VarChar).Value = tipoAcceso;
+
             cmd.Connection = cn;
             try
             {

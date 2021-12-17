@@ -62,8 +62,13 @@ namespace WebApiGestionAlmacenCam.Controllers.Almacen.Procesos.Transferencias
                                 nro_transaccion =  (cab.origen_id_Local == cab.destino_id_Local) ? cab.nro_Transferencia : cab.NroDocumento_Alm_Guias_Ingreso,
                                 cab.obs_TranferenciaCab,
                                 cab.usuario_creacion,
+                                cab.fecha_creacion,
                                 cab.estado,
-                                cab.NroDocumento_Alm_Guias_Ingreso
+                                cab.NroDocumento_Alm_Guias_Ingreso,
+
+                                cab.usuario_edicion,
+                                cab.fecha_edicion
+
 
                             }).ToList();
             }

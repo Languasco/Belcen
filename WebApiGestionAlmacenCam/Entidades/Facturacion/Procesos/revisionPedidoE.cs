@@ -26,7 +26,16 @@ namespace Entidades.Facturacion.Procesos
         public string transportista { get; set; }
         public string estado { get; set; }
         public string descripcionEstado { get; set; }
- 
+
+        public string usuario_creacion { get; set; }
+
+        public string fecha_creacion { get; set; }
+
+        public string usuario_edicion { get; set; }
+
+        public string fecha_edicion { get; set; }
+
+
     }
 
     public class FacturasE

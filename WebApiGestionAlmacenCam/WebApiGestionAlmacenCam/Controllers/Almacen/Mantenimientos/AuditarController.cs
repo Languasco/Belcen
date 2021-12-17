@@ -1,4 +1,5 @@
 ﻿using Entidades;
+using Negocio.Accesos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,6 +54,35 @@ namespace webApiFacturacion.Controllers.Mantenimientos
             }
 
         }
+
+
+        public object GetAuditoria(int opcion, string filtro)
+        {
+            object resul = null;
+            try
+            {
+                if (opcion == 1)
+                {
+                    string[] parametros = filtro.Split('|');
+                    int id_usuario = Convert.ToInt32(parametros[0].ToString());
+                    int id_usuario_edicion = Convert.ToInt32(parametros[1].ToString());
+
+
+                    AccesosUsuario_BL obj_negocio = new AccesosUsuario_BL();
+                    resul = obj_negocio.get_auditoria( id_usuario, id_usuario_edicion);
+                }                 
+                else
+                {
+                    resul = "Opcion selecciona invalida";
+                }
+            }
+            catch (Exception ex)
+            {
+                resul = ex.Message;
+            }
+            return resul;
+        }
+
 
     }
 }

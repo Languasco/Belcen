@@ -61,7 +61,28 @@ namespace WebApiGestionAlmacenCam.Controllers.Reparto.Procesos
                     resul = obj_negocio.set_activarUsuario_sesion(opcionElegido, id_login, id_usuario);
 
                 }
+                else if (opcion == 4)
+                {
+                    string[] parametros = filtro.Split('|');
+                    int id_usuario = Convert.ToInt32(parametros[0].ToString());
 
+                    EntregaPedido_BL obj_negocio = new EntregaPedido_BL();
+                    resul = obj_negocio.get_tiposMovimientos(id_usuario);
+                }
+                else if (opcion == 5)
+                {
+                    string[] parametros = filtro.Split('|');
+                    int id_usuario = Convert.ToInt32(parametros[0].ToString());
+                    int idLocal = Convert.ToInt32(parametros[1].ToString());
+                    int idAlmacen = Convert.ToInt32(parametros[2].ToString());
+                    string fecha = parametros[3].ToString();
+                    int idMovimiento = Convert.ToInt32(parametros[4].ToString());
+                    string nroDoc = parametros[5].ToString();
+
+                    EntregaPedido_BL obj_negocio = new EntregaPedido_BL();
+                    resul = obj_negocio.set_almacenando_ajusteInventario(id_usuario, idLocal, idAlmacen, fecha, idMovimiento, nroDoc);
+
+                }
                 else
                 {
                     resul = "Opcion selecciona invalida";
@@ -215,6 +236,73 @@ namespace WebApiGestionAlmacenCam.Controllers.Reparto.Procesos
 
             return res;
         }
+
+
+
+        [HttpPost]
+        [Route("api/ImportarPedido/post_archivoExcel_ajusteInventario")]
+        public object post_archivoExcel_ajusteInventario(int idUsuario)
+        {
+            resul res = new resul();
+            string nombreFile = "";
+            string nombreExcel= "";
+            try
+            {
+                //-----generando clave unica---
+                var guid = Guid.NewGuid();
+                var guidB = guid.ToString("B");
+                nombreFile = idUsuario + "_Importacion_AjusteInventario_" + Guid.Parse(guidB);
+
+                string path = System.Web.Hosting.HostingEnvironment.MapPath("~/ArchivosExcel/" + nombreFile + ".xlsx");
+                System.Web.HttpFileCollection files = System.Web.HttpContext.Current.Request.Files;
+
+                for (int i = 0; i < files.Count; i++)
+                {
+                    System.Web.HttpPostedFile file = files[i];
+                    nombreExcel = file.FileName;
+
+                    if (file.ContentLength > 0)
+                    {
+                        if (File.Exists(path))
+                        {
+                            File.Delete(path);
+                        }
+                        file.SaveAs(path);
+                    }
+                }
+                //------suspendemos el hilo, y esperamos ..
+                System.Threading.Thread.Sleep(1000);
+
+                if (File.Exists(path))
+                {
+                    EntregaPedido_BL obj_negocio = new EntregaPedido_BL();
+                    string valor = obj_negocio.setAlmacenandoFile_Excel_ajusteInventario(path, nombreExcel, idUsuario);
+                    if (valor == "OK")
+                    {
+                        res.ok = true;
+                        res.data = obj_negocio.get_datosCargados_ajusteInventario(idUsuario);
+                    }
+                }
+                else
+                {
+                    res.ok = false;
+                    res.data = "No se pudo almacenar el archivo en el servidor";
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+
+            return res;
+        }
+
+
+ 
+
 
 
     }

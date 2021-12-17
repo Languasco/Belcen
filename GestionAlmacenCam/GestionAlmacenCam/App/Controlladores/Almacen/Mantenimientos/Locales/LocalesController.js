@@ -325,6 +325,35 @@ app.controller('CtrlLocal', function ($scope, loginServices, $location, $timeout
         })      
     }
 
+
+    $scope.getAuditorias = function (item) {
+        const uCreacion = (!item.usuario_Creacion) ? 0 : item.usuario_Creacion ;
+        const uEdicion = (!item.usuario_Edicion) ? 0 : item.usuario_Edicion;
+
+        const fechaCreacion = auxiliarServices.formatDate(item.fecha_Creacion);
+        const fechaEdicion = (!item.fecha_Edicion) ? '' : auxiliarServices.formatDate(item.fecha_Edicion);
+
+        if (uCreacion == 0 && uEdicion == 0) {
+            auxiliarServices.NotificationMessage('Sistemas', 'No hay informacion para mostrar', 'success', '#008000', 5000);
+            return;
+        }
+
+        AuditarServices.getAuditoria(uCreacion, uEdicion)
+            .then(function (res) {
+
+                if (res.ok) {
+                    let usuarioCreacion = res.data[0].descripcion;
+                    let usuarioEdicion = ( res.data.length == 1) ? '' : res.data[1].descripcion ;
+
+                    var message = "Fecha Creación : " + fechaCreacion + "</br>" +
+                        "Usuario Creación : " + usuarioCreacion + "</br>" +
+                        "Fecha Edición : " + fechaEdicion + "</br>" +
+                        "Usuario Edición : " + usuarioEdicion + "</br>"
+                    auxiliarServices.NotificationMessage('Sistemas', message, 'success', '#008000', 5000);
+                }
+            })
+    }
+
     
 
     $scope.estados = '0';

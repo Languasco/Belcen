@@ -101,6 +101,11 @@ namespace Negocio.Facturacion.Procesos
                                 Entidad.estado = dr["estado"].ToString();
                                 Entidad.descripcionEstado = dr["descripcionEstado"].ToString();
 
+                                Entidad.usuario_creacion = dr["usuario_creacion"].ToString();
+                                Entidad.fecha_creacion = dr["fecha_creacion"].ToString();
+                                Entidad.usuario_edicion = dr["usuario_edicion"].ToString();
+                                Entidad.fecha_edicion = dr["fecha_edicion"].ToString();
+
                                 obj_List.Add(Entidad);
 
                             }
@@ -121,7 +126,7 @@ namespace Negocio.Facturacion.Procesos
             return res;
         }
         
-        public object set_grabar_asignacionTecnico(string idOTs, int idusuario)
+        public object set_grabar_asignacionTecnico(string idOTs, int idusuario, int idanexo, int id_ZonaVta, int id_almacen)
         {
             Resul res = new Resul();
             try
@@ -135,6 +140,10 @@ namespace Negocio.Facturacion.Procesos
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("@idPedidosMasivos", SqlDbType.VarChar).Value = idOTs;
                         cmd.Parameters.Add("@idUsuario", SqlDbType.Int).Value = idusuario;
+                        cmd.Parameters.Add("@idAnexo", SqlDbType.Int).Value = idanexo;
+                        cmd.Parameters.Add("@idZonaVta", SqlDbType.Int).Value = id_ZonaVta;
+                        cmd.Parameters.Add("@idAlmacen", SqlDbType.Int).Value = id_almacen;
+
                         cmd.ExecuteNonQuery();
 
                         res.ok = true;
@@ -811,7 +820,6 @@ namespace Negocio.Facturacion.Procesos
             }
             return res;
         }
-
 
         public object get_anexosZona(int idZona)
         {

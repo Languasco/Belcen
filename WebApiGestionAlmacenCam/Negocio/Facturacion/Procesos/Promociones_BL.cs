@@ -109,7 +109,7 @@ namespace Negocio.Facturacion.Procesos
             return res;
         }
         
-        public object get_configuracionDetalle(int idPromocion)
+        public object get_configuracionDetalle(int idPromocion, int idCanasta)
         {
             DataTable dt_detalle = new DataTable();
             Resul res = new Resul();
@@ -118,11 +118,12 @@ namespace Negocio.Facturacion.Procesos
                 using (SqlConnection cn = new SqlConnection(Conexion.bdConexion.cadenaBDcx()))
                 {
                     cn.Open();
-                    using (SqlCommand cmd = new SqlCommand("PROC_S_PROMOCIONES_CONFIGURACION_DETALLE", cn))
+                    using (SqlCommand cmd = new SqlCommand("PROC_S_PROMOCIONES_CONFIGURACION_DETALLE_NEW", cn))
                     {
                         cmd.CommandTimeout = 0;
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("@idPromocion", SqlDbType.Int).Value = idPromocion;
+                        cmd.Parameters.Add("@idCanasta", SqlDbType.Int).Value = idCanasta;
 
                         using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                         {

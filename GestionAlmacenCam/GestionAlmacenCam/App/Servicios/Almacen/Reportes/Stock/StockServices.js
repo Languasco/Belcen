@@ -123,7 +123,6 @@
         return q.promise;
     }
 
-
     Result.getKardexReporte_todo = function (obj_data) {
         let url = urlApi + 'Kardex'
         var parameters;
@@ -144,6 +143,84 @@
         }).success(function (result) {
             q.resolve(result);
         }).error(function (err) {
+            q.reject(err);
+        })
+        return q.promise;
+    }
+
+    Result.get_ReporteValorizado_Todo = function (obj_data) {
+
+ 
+        let url = urlApi + 'Kardex'
+        var parameters;
+        var q = $q.defer();
+        parameters = {
+            fechaini: obj_data.fecha,
+            fechafin: obj_data.fecha_fin,
+            tipo: obj_data.tipo,
+            local: obj_data.local,
+            almacen: obj_data.almacen,
+        }
+        console.log(parameters);
+        $http({
+            method: 'GET',
+            url: url,
+            params: parameters
+        }).success(function (result) {
+            q.resolve(result);
+        }).error(function (err) {
+            q.reject(err);
+        })
+        return q.promise;
+    }
+
+    Result.get_ReporteValorizado_Todo = function ({ fecha, fecha_fin, tipo, local, almacen }) {
+
+ 
+
+        let url = urlApi + 'MantenimientoAlmacen'
+        var parameters;
+        var q = $q.defer();
+
+        var parametros = fecha + '|' + fecha_fin + '|' + tipo + '|' + local + '|' + almacen;
+
+        parameters = {
+            opcion: 7,
+            filtro: parametros
+        }
+        console.log(parameters);
+        $http({
+            method: 'GET',
+            url: url,
+            params: parameters
+        }).success(function (result) {
+            q.resolve(result);
+        }).error(function (err) {
+            q.reject(err);
+        })
+        return q.promise;
+    }
+
+    Result.get_buscarProducto_AyudaModal = function (origen_id_Local, origen_id_Almacen, filtroBusqueda, id_usuario) {
+
+        let url = urlApi + 'TransferenciasNew'
+        var parameters;
+        var q = $q.defer();
+
+        var parametros = origen_id_Local + '|' + origen_id_Almacen + '|' + filtroBusqueda + '|' + id_usuario;
+        parameters = {
+            opcion: 9,
+            filtro: parametros
+        }
+
+        $http({
+            method: 'GET',
+            url: url,
+            params: parameters
+        }).success(function (result) {
+            q.resolve(result);
+        }).error(function (err) {
+
             q.reject(err);
         })
         return q.promise;

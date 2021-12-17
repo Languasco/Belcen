@@ -420,8 +420,6 @@ app.controller('ctrlProductosAlmacen', function ($scope, loginServices, $locatio
         $scope.objeto_parametros.RangoCaja_Horizontal = '';
         $scope.objeto_parametros.RangoCaja_Mayorista = '';
         
-        $scope.objeto_parametros.factorMultiplicacion_Alm = '';
-        $scope.objeto_parametros.factorDivisor_Alm = '';
         $scope.objeto_parametros.factorMultiplicacion_Vta = '';
         $scope.objeto_parametros.factorDivisor_Vta = '';
         $scope.objeto_parametros.id_unidadMedida = '0';

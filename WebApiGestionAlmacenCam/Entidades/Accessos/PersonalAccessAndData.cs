@@ -8,7 +8,7 @@ namespace Entidades
 {
     public class listaWebs
     {
-
+        public string modulo { get; set; }
         public Nullable<int> id_opcion { get; set; }
         public string eventos { get; set; }
         public string nombre_page { get; set; }
@@ -19,6 +19,7 @@ namespace Entidades
     public class listJsonPermisos
     {
 
+        public string modulo { get; set; }
         public Nullable<int> id_opcion { get; set; }
         public Nullable<int> id_usuarios { get; set; }
         public string page_principal { get; set; }

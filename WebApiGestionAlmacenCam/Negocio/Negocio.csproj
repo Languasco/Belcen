@@ -64,6 +64,7 @@
     <Compile Include="Almacen\Procesos\AprobarTransferencia_BL.cs" />
     <Compile Include="Almacen\Procesos\IngresoFacturas_BL.cs" />
     <Compile Include="Almacen\Procesos\TransferenciaNew_BL.cs" />
+    <Compile Include="Almacen\Procesos\TransformacionProductos_BL.cs" />
     <Compile Include="Almacen\Reportes\ConsultaTransacciones_BL.cs" />
     <Compile Include="Almacen\Reportes\ReporteStock_BL.cs" />
     <Compile Include="Class1.cs" />

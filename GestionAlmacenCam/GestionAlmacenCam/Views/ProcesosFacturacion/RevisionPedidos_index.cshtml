@@ -128,7 +128,6 @@
                     <option ng-repeat="item in lista_anexos" value="{{item.id}}">{{item.descripcion}}</option>
                 </select>
             </div>
-
             <div class="col-sm-2">
                 <label for="cbo_zonasFiltro"> Zona de Venta</label> <span class="help-block"></span>
                 <select class="selectFiltros" id="cbo_zonasFiltro" ng-model="Objeto_ParametroFiltro.id_ZonaVta" ng-change="change_Local_vendedor(Objeto_ParametroFiltro.id_ZonaVta); change_Local_transportista(Objeto_ParametroFiltro.id_ZonaVta)">
@@ -143,7 +142,6 @@
                     <option ng-repeat="item in Lista_Almacen" value="{{item.id_Almacen}}">{{item.descripcion_Almacen}}</option>
                 </select>
             </div>
-
             <div class="col-sm-6 col-md-3">
                 <label for="cbo_vendedor">Vendedor</label> <span class="help-block"></span>
                 <select class="selectFiltros" id="cbo_vendedor" ng-model="Objeto_ParametroFiltro.id_vendedor">
@@ -220,7 +218,7 @@
 
 
                         </th>
-                        <th colspan="2">Acciones</th>
+                        <th  >Acciones</th>
                         <th> Nro Pedido</th>
                         <th> Fecha</th>
                         <th> Cliente</th>
@@ -244,8 +242,7 @@
                         </td>
                         <td>
                             <span class="label label-primary" style="cursor:pointer" ng-if="item.estado != 12" ng-click="Open_Update_Modal(item)"> Editar </span>
-                        </td>
-                        <td>
+                            <button type="button" class="btn btn-success btn-circle" style="margin-left: 5px"  ng-click="getAuditorias(item);" data-toggle="tooltip" title="AUDITAR"><i class="fa fa-cog"></i> </button>
                             <span class="label label-danger" style="cursor:pointer" ng-if="item.estado != 12" ng-click="Rechazar_Pedido(item)">Anular</span>
                         </td>
 
@@ -276,7 +273,7 @@
         <div class="row">
             <div class="col-md-4 text-center">
                 <br />
-                <button id="btn-material" class="btn btn-outline btn-success btn-sm m-l-10" ng-click="aprobarPedidos(1);">
+                <button id="btn-material" class="btn btn-outline btn-success btn-sm m-l-10" ng-click="aprobarPedidos();">
                     <i class="glyphicon glyphicon-refresh"></i> Aprobar
                 </button>
                 <button id="btn-material" class="btn btn-outline btn-warning btn-sm m-l-10" ng-click="reporteDespacho();">

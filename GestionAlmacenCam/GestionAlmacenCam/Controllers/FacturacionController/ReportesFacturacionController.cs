@@ -32,7 +32,15 @@ namespace GestionAlmacenCam.Controllers.FacturacionController
             return View();
         }
 
+        public ActionResult HistoricoFacturacion_index()
+        {
+            return View();
+        }
 
+        public ActionResult ventaAcumulada_index()
+        {
+            return View();
+        }
 
 
     }

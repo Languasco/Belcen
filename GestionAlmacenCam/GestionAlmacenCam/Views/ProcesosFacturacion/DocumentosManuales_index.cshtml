@@ -425,7 +425,10 @@
                                     <!-- -->
                                     <button type="button" class="btn btn-warning btn-circle" ng-click="Rechazar_Pedido(item);" style="background-color: #ff6849; border-color: #ff6849;" title="RECHAZAR"><i class="fa fa-close"></i> </button>
                                     <button type="button" class="btn btn-success btn-circle" ng-click="generarVistaPreliminar_Sunat(item.id_TipoDocumento, item.Numero_Documento);" data-toggle="tooltip" title="IMPRIMIR"><i class="ti-printer"></i> </button>
-                                   </th>
+
+                                    <button type="button" class="btn btn-success btn-circle" ng-click="getAuditorias(item);" data-toggle="tooltip" title="AUDITAR"><i class="fa fa-cog"></i> </button>
+
+                                </th>
                             </tr>
                         </tbody>
                     </table>
@@ -494,7 +497,7 @@
 
                                                         <div class="form-group" style="margin-top: -10px;">
                                                             <div class="col-xs-12 col-sm-4 col-md-5 col-lg-4 " style="margin-top: -18px;">
-                                                             <label for="ejemplo" class="control-label">Cliente</label>
+                                                                <label for="ejemplo" class="control-label">Cliente</label>
                                                                 <br />
                                                                 <div class="input-group">
                                                                     <input type="text" id="txt_cod_cliente" class="form-control" ng-enter="Buscar_Cliente();" autocomplete="off" style="background-color: beige" ng-model="objeto_parametros.nrodoc_cliente" placeholder="Nro. Doc">
@@ -553,68 +556,54 @@
                                                         <option ng-repeat="item in Lista_TipoDoc" value="{{item.id_TipoDocumento}}">{{item.Descripcion_TipoDocumento}}</option>
                                                     </select>
                                                 </div>
-                                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 selected-element animate-show-hide" ng-show="objeto_parametros.id_TipoDocumento == 3">
-                                                    <label for="cbo_TipoDoc" class="control-label">Transporte</label> <span class="help-block"></span>
-                                                    <div class="input-group col-xs-12 col-sm-12">
-                                                        <input id="chk_transporrte" type="checkbox" ng-model="checkboxModel.value2" ng-true-value="'1'" ng-false-value="'0'" ng-change="change_transporte(checkboxModel.value2);">
-                                                    </div>
-                                                </div>
-
-                                                <div class=" col-xs-12 col-sm-12 col-md-6 col-lg-4">
+                                                <div class=" col-xs-12 col-sm-12 col-md-6 col-lg-5">
                                                     <label for="cbo_TipoDoc" class="control-label">Nro Docum.</label> <span class="help-block"></span>
                                                     <div class="input-group col-xs-12 col-sm-12">
-                                                        <input type="text" class="form-control" id="txt_serie" disabled onkeypress="return filterFloat(event,this);" ng-enter="enterFocus(1,'txt_num_doc')" maxlength="5" ng-model="objeto_parametros.serie"   autocomplete="off" style="margin-top: -12px; width:52px;background-color: beige" placeholder="Serie">
-                                                        <input type="text" class="form-control" id="txt_num_doc" onkeypress="return filterFloat(event,this);" ng-enter="enterFocus(1,'dtp_doc')" maxlength="15" ng-model="objeto_parametros.num_doc"  autocomplete="off" style="margin-top: -12px;width:90px;background-color: beige" placeholder="Nro.Doc">
+                                                        <input type="text" class="form-control" id="txt_serie"  disabled   ng-enter="enterFocus(1,'txt_num_doc')" maxlength="5" ng-model="objeto_parametros.serie" autocomplete="off" style="margin-top: -12px; width:60px;background-color: beige" placeholder="Serie">
+                                                        <input type="text" class="form-control" id="txt_num_doc" onkeypress="return filterFloat(event,this);" ng-enter="enterFocus(1,'dtp_doc')" maxlength="15" ng-model="objeto_parametros.num_doc" autocomplete="off" style="margin-top: -12px;width:100px;background-color: beige" placeholder="Nro.Doc">
                                                     </div>
                                                 </div>
-                                                <div class="col-xs-12  col-sm-12 col-md-6 col-lg-4">
+                                                <div class="col-xs-12  col-sm-12 col-md-12 col-lg-3">
                                                     <label class="col-sm-12 control-label" style="text-align :left">Fecha Doc.</label>
                                                     <div class="input-group col-xs-12 col-sm-12">
-                                                        <span class="input-group-addon"><i class="icon-calender"></i></span>
                                                         <input ng-model="objeto_parametros.fechaEmision_Pedido_Cab" ng-enter="enterFocus(1,'txt_observaciones')" id="dtp_doc" type="text" class="form-control datepicker ng-pristine ng-untouched ng-valid" autocomplete="off" placeholder="dia/mes/año">
                                                     </div>
                                                 </div>
                                             </div>
                                             <br />
-                                            <div class="row">
+                                             <div class="row">
                                                 <div class="col-sm-12">
-                                                    <form class="form-horizontal" role="form">
-                                                        <div class="form-group">
-                                                            <div class="col-sm-12">
-                                                                <label for="cbo_vehiculo" style="margin-top: -11px;" class="col-sm-4 control-label"> Transportista</label>
-                                                                <div class="col-sm-8">
-                                                                    <select class="selectFiltros" id="cbo_vehiculo" ng-model="objeto_parametros.id_PersonalTransportista">
-                                                                        <option value="0">[ ----  TODOS  --- ]</option>
-                                                                        <option ng-repeat="item in Lista_Transportista_pedido " value="{{item.id}}">{{item.descripcion}}</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <div class="col-sm-12" style=" margin-bottom: -13px;">
-
-                                                                <div class="selected-element animate-show-hide" ng-show="objeto_parametros.id_TipoDocumento != 1">
-                                                                    <label for="txt_observaciones" style="margin-top: -11px;" class=" col-xs-12 col-sm-4 col-md-3  control-label">Observaciones</label>
-                                                                    <div class="col-xs-12 col-sm-8 col-md-9">
-                                                                        <input type="text" class="form-control" ng-enter="enterFocus(1,'btnGuardarCab')" ng-model="objeto_parametros.observaciones_Pedido_Cab" style="margin-top: -12px;" placeholder="Observaciones / Comentarios">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="selected-element animate-show-hide" ng-show="objeto_parametros.id_TipoDocumento == 1">
-                                                                    <label for="txt_observaciones" style="margin-top: -11px;" class=" col-xs-12 col-sm-4 col-md-3  control-label">Observaciones</label>
-                                                                    <div class="col-xs-12 col-sm-8 col-md-9">
-                                                                        <input type="text" class="form-control" ng-enter="enterFocus(1,'btnGuardarCab')" ng-model="objeto_parametros.observaciones_Pedido_Cab" style="margin-top: -12px;" placeholder="Observaciones / Comentarios /Nro Guia de remision(opcional)">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </form>
+                                                    <label for="cbo_vehiculo" style="margin-top: -11px;" class="control-label"> Transportista</label>
+                                                    <select class="selectFiltros" id="cbo_vehiculo" ng-model="objeto_parametros.id_PersonalTransportista">
+                                                        <option value="0">[ ----  TODOS  --- ]</option>
+                                                        <option ng-repeat="item in Lista_Transportista_pedido " value="{{item.id}}">{{item.descripcion}}</option>
+                                                    </select>
                                                 </div>
                                             </div>
 
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="checkGuia">
+                                                        <input type="checkbox" id="chk_guia" ng-model="objeto_parametros.afectaStock" />
+                                                        <label for="chk_guia" style="font-size: 21px !important;color: red;text-decoration: underline;font-family: monospace;"> Afecto a Stock ?</label>
+                                                    </div>
 
+                                                </div>
+                                            </div>
                                         </fieldset>
                                     </div>
                                 </div>
+
+                                <br />
+
+                                <form class="form-horizontal">
+                                    <div class="form-group" style=" margin-bottom: 5px;">
+                                        <label class="control-label col-sm-2 titleObservation" for="email"> Observaciones</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" ng-enter="enterFocus(1,'btnGuardarCab')" ng-model="objeto_parametros.observaciones_Pedido_Cab"  placeholder="Observaciones / Comentarios">
+                                        </div>
+                                    </div>
+                                </form>
 
                             </div>
                             <div class="col-sm-1">

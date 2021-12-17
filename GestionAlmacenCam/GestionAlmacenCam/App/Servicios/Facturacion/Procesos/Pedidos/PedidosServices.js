@@ -9,12 +9,13 @@
             var q = $q.defer();
 
             var parametros = obj_data.id_ZonaVta + '|' + obj_data.id_almacen + '|' + obj_data.fecha_ini_aux + '|' + obj_data.fecha_fin_aux + '|' + obj_data.id_Vendedor + '|' + obj_data.id_estado + '|' + obj_data.id_Anexos;
+
+            console.log(parametros)
+
             parameters = {
                 opcion: 1,
                 filtro: parametros
             };
-
-            console.log(parametros)
  
             $http({
                 method: 'GET',
@@ -150,8 +151,8 @@
 
         Result.update_Pedido = function (object) {
 
-            console.log('update_Pedido')
-            console.log(object)
+            console.log('update_Pedido');
+            console.log(object);
 
             let url = urlApi + "Pedidos/" + object.id_Pedido_Cab;
             var q = $q.defer();
@@ -189,7 +190,6 @@
             return q.promise;
         };
 
-
         Result.get_Search_Producto_pasaje = function (id_Almacen, cod_producto, id_usuario) {
             let url = urlApi + 'Pedidos';
             var parameters;
@@ -213,8 +213,6 @@
             });
             return q.promise;
         };
-
-
 
         Result.get_Search_Producto_manual = function (id_Almacen, cod_producto, id_usuario) {
             let url = urlApi + 'Pedidos';
@@ -420,7 +418,6 @@
             return q.promise;
         };
 
-
         Result.get_Ayuda_Buscar_Producto_pasaje = function (id_Almacen, Consulta, id_usuario) {
             let url = urlApi + 'Pedidos';
             var parameters;
@@ -443,8 +440,6 @@
             });
             return q.promise;
         };
-
-
 
         Result.get_Ayuda_Buscar_Producto_Manual = function (id_Almacen, Consulta, id_usuario) {
             let url = urlApi + 'Pedidos';

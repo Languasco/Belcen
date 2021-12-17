@@ -15,7 +15,7 @@ using System.IO;
 using Negocio.Almacen.Mantenimiento;
 using System.Configuration;
 
-namespace WebApiGestionAlmacenCam.Controllers.Almacen.Mantenimientos
+namespace WebApi_Ventas.Controllers.Almacen.Mantenimientos
 {
     [EnableCors("*", "*", "*")]
     public class tbl_Alm_ProductoController : ApiController

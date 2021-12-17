@@ -6,6 +6,10 @@ app.controller('CtrlIngresoGuiasOrdenCompraController', function ($scope, $q, Ti
 
     $scope.flagLote_Global = false;
 
+
+
+
+
     $scope.objSaveGuias = {
         id_GuiaCab: 0,
         id_Empresa: 1,

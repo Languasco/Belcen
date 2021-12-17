@@ -14,7 +14,6 @@ app.controller('ctrlDocumentos_Masivos', function ($scope, $q, $location, $timeo
         $scope.disabledContent = "";
         $scope.loaderSave = false;
     }
-
     $('document').ready(function () {
         $timeout(function () {
             $('.datepicker').datepicker({
@@ -49,6 +48,7 @@ app.controller('ctrlDocumentos_Masivos', function ($scope, $q, $location, $timeo
         id_Anexos: '0',
         id_transportista: '0',
         usuario: auxiliarServices.getUserId(),
+        enviarSunat: true
     }
 
     $scope.Lista_TipoDocumento = [];
@@ -4105,81 +4105,6 @@ app.controller('ctrlDocumentos_Masivos', function ($scope, $q, $location, $timeo
 
     }
        
-    //$scope.Lista_Local = [];
-    //$scope.get_Listando_Locales = function () {
-    //    $scope.loaderfiltros = true;
-    //    Documentos_MasivosServices.get_zonasUsuario(auxiliarServices.getUserId())
-    //        .then(function (res) {
-    //           $scope.loaderfiltros = false;
-    //            if (res.ok == true) { 
-    //                $scope.Lista_Local = [];
-    //                $scope.Lista_Local = res.data;
-    //                $timeout(function () {
-    //                    $scope.Objeto_ParametroFiltro.id_local = '0';
-    //                    $('#cbo_local').val("0").trigger('change.select2');
-    //                })
-    //            } else {
-    //                auxiliarServices.NotificationMessage('Sistemas', 'Lo sentimos se produjo un error', 'error', '#ff6849', 2000);
-    //                alert(res.data);
-    //            }
-    //        }, function (err) {
-    //            console.log(err);
-    //        });
-    //};
-
-    //$scope.Lista_Almacen = [];
-    //$scope.change_Local_Almacen = function (idlocal) {
-    //    $scope.loaderfiltros = true;
-    //    AlmacenServices.get_almacenesZona(idlocal, auxiliarServices.getUserId())
-    //        .then(function (res) {
-    //            $scope.loaderfiltros = false;
-
-    //            if (res.ok == true) {
-    //                $scope.Lista_Almacen = [];
-    //                $scope.Lista_Almacen = res.data;
-
-    //                $scope.Objeto_ParametroFiltro.id_almacen = '0';
-    //                $scope.Objeto_ParametroFiltro.id_Anexos = '0';
-
-    //                setTimeout(function () {
-    //                    $('#cbo_almacen').val('0').trigger('change.select2');
-    //                    $scope.lista_anexos = [];
-    //                    $('#cbo_anexo').val('0').trigger('change.select2');
-    //                }, 0);
-    //            } else {
-    //                auxiliarServices.NotificationMessage('Sistemas', 'Lo sentimos se produjo un error', 'error', '#ff6849', 2000);
-    //                alert(res.data);
-    //            }
-
-    //        }, function (err) {
-    //            console.log(err);
-    //        });
-    //};
-
-    //$scope.lista_anexos = [];
-    //$scope.change_almacen_anexo = function (idAlmacen) {
-    //    $scope.loaderFiltro = true;
-    //    RevisionPedidoServices.get_Anexos_Almacen(idAlmacen).then(function (res) {
-    //        $scope.loaderFiltro = false;
-    //        if (res.ok == true) {
-    //            $scope.lista_anexos = [];
-    //            $scope.lista_anexos = res.data;
-    //            $timeout(function () {
-    //                $('#cbo_anexo').val('0').trigger('change.select2');
-    //            })
-
-    //        } else {
-    //            auxiliarServices.NotificationMessage('Sistemas', 'Lo sentimos se produjo un error', 'error', '#ff6849', 2000);
-    //            alert(res.data);
-    //        }
-    //    }, function (err) {
-    //        $scope.loaderFiltro = false;
-    //        console.log(err);
-    //    });
-    //};
-
-
-
     $scope.listando_documentos_movil = function () {
         if (Documentos_MasivosServices.validate_II($scope.Objeto_ParametroFiltro) == false) {
             return;
@@ -4232,7 +4157,8 @@ app.controller('ctrlDocumentos_Masivos', function ($scope, $q, $location, $timeo
     ////-----------------------------------------------------------/////
 
  
-    $scope.GeneracionDocumento_new = function () { 
+    $scope.GeneracionDocumento_new = function () {      
+
         if ($scope.listGeneracionDocu == null || $scope.listGeneracionDocu.length == 0) {
             auxiliarServices.NotificationMessage('Sistemas', 'No hay Documentos para Generar..', 'error', '#ff6849', 1500);
             return;
@@ -4277,112 +4203,145 @@ app.controller('ctrlDocumentos_Masivos', function ($scope, $q, $location, $timeo
 
         $scope.Objeto_ParametroFiltro.numero_pedido = getCodUniq();
 
-        var params = {
-            title: "Desea continuar ?",
-            text: 'Esta generar los Documentos de Venta.',
-            type: 'confirmationAlert',
-        }
-        auxiliarServices.initSweetAlert(params).then(function (res) {
-            if (res == true) {
-                var CantDocumentosGlobal = $scope.listGeneracionDocu.length;
-                var id_tipoDoc = 0;
 
-                if (flag_guia == true) {
-                    PedidosServices.validar_NroDocumento_Pedido($scope.Objeto_ParametroFiltro.serie + '-' + $scope.Objeto_ParametroFiltro.num_doc, 3)
-                        .then((res) => {
+        const flagEnviarSunat = $scope.Objeto_ParametroFiltro.enviarSunat == true ? 1 : 0;
 
-                            if (res !== 0) {
-                                auxiliarServices.NotificationMessage('Sistemas', 'El nro de Documento de la GUIA ya se encuentra registrado en el sistema, verifique', 'error', '#ff6849', 3000);
-                                return;
-                            } else {
-                                var GenerarDocumentosVentas = function (index) {
-                                    if (CantDocumentosGlobal == index) {
-                                        $scope.NombreTipoDocumento = '';
-                                        $scope.loaderSave = false;
-                                        return;
-                                    }
 
-                                    id_tipoDoc = $scope.listGeneracionDocu[index].id_TipoDocumento,
-                                    $scope.NombreTipoDocumento = 'Generando ' + $scope.listGeneracionDocu[index].des_tipo_factura;
-                                    console.log($scope.NombreTipoDocumento)
+        let generandoEnvioDocumentos = () => {
 
-                                    if (id_tipoDoc == 14) { ///---tipo de documento real
-                                        id_tipoDoc = 3;
-                                    }
+            var CantDocumentosGlobal = $scope.listGeneracionDocu.length;
+            var id_tipoDoc = 0;
 
-                                    $scope.loaderSave = true;
-                                    Documentos_MasivosServices.GenerarDocumentosVentas_II($scope.Objeto_ParametroFiltro, id_tipoDoc, auxiliarServices.getUserId())
-                                        .then(function (data) {
-                                            1
-                                            $scope.loaderSave = false;
-                                            if (data == "OK") {
-                                                GenerarDocumentosVentas(index + 1);
-                                            } else {
-                                                auxiliarServices.NotificationMessage('Sistemas', 'Se produjo un error al Generar los Archivos : ' + $scope.NombreTipoDocumento, 'error', '#ff6849', 3000);
-                                                $scope.NombreTipoDocumento = '';
-                                                GenerarDocumentosVentas(index + 1);
-                                                return;
-                                            }
-                                        }, function (error) {
-                                            $scope.loaderSave = false;
-                                            console.log(error);
-                                            GenerarDocumentosVentas(index + 1);
-                                        })
-                                }
+            if (flag_guia == true) {
+                PedidosServices.validar_NroDocumento_Pedido($scope.Objeto_ParametroFiltro.serie + '-' + $scope.Objeto_ParametroFiltro.num_doc, 3)
+                    .then((res) => {
 
-                                $('#btn_generarDoc').attr("disabled", true);
-
-                                ///-----Gnerando los Doc Masivamente--
-                                GenerarDocumentosVentas(0);
-                            }
-                        }, (error) => {
-                            console.log(error)
-                        })
-                }
-                else {
-                    var GenerarDocumentosVentas = function (index) {
-                        if (CantDocumentosGlobal == index) {
-                            $scope.NombreTipoDocumento = '';
-                            $scope.loaderSave = false;
-                            ///-----Gnerando la Facturacion electronica masivamente --------------                
-                               $scope.generarFacturacion_boletasFacturas();
-                            ///-----fin de Gnerando la Facturacion electronica masivamente --------------  
+                        if (res !== 0) {
+                            auxiliarServices.NotificationMessage('Sistemas', 'El nro de Documento de la GUIA ya se encuentra registrado en el sistema, verifique', 'error', '#ff6849', 3000);
                             return;
-                        }
-
-                        id_tipoDoc = $scope.listGeneracionDocu[index].id_TipoDocumento,
-                            $scope.NombreTipoDocumento = 'Generando el Documento ' + $scope.listGeneracionDocu[index].des_tipo_factura;
-
-                        if (id_tipoDoc == 14) { ///---tipo de documento real
-                            id_tipoDoc = 3;
-                        }
-
-                        $scope.loaderSave = true;
-                        Documentos_MasivosServices.GenerarDocumentosVentas_II($scope.Objeto_ParametroFiltro, id_tipoDoc, auxiliarServices.getUserId())
-                            .then(function (data) {
-                                $scope.loaderSave = false;
-                                if (data == "OK") {
-                                    GenerarDocumentosVentas(index + 1);
-                                } else {
-                                    auxiliarServices.NotificationMessage('Sistemas', 'Se produjo un error al Generar el Documento : ' + $scope.NombreTipoDocumento, 'error', '#ff6849', 3000);
+                        } else {
+                            var GenerarDocumentosVentas = function (index) {
+                                if (CantDocumentosGlobal == index) {
                                     $scope.NombreTipoDocumento = '';
-                                    GenerarDocumentosVentas(index + 1);
+                                    $scope.loaderSave = false;
                                     return;
                                 }
-                            }, function (error) {
-                                $scope.loaderSave = false;
-                                console.log(error);
-                                GenerarDocumentosVentas(index + 1);
-                            })
+
+                                id_tipoDoc = $scope.listGeneracionDocu[index].id_TipoDocumento,
+                                    $scope.NombreTipoDocumento = 'Generando ' + $scope.listGeneracionDocu[index].des_tipo_factura;
+                                console.log($scope.NombreTipoDocumento)
+
+                                if (id_tipoDoc == 14) { ///---tipo de documento real
+                                    id_tipoDoc = 3;
+                                }
+
+                                $scope.loaderSave = true;
+                                Documentos_MasivosServices.GenerarDocumentosVentas_II($scope.Objeto_ParametroFiltro, id_tipoDoc, auxiliarServices.getUserId())
+                                    .then(function (data) {
+                                        1
+                                        $scope.loaderSave = false;
+                                        if (data == "OK") {
+                                            GenerarDocumentosVentas(index + 1);
+                                        } else {
+                                            auxiliarServices.NotificationMessage('Sistemas', 'Se produjo un error al Generar los Archivos : ' + $scope.NombreTipoDocumento, 'error', '#ff6849', 3000);
+                                            $scope.NombreTipoDocumento = '';
+                                            GenerarDocumentosVentas(index + 1);
+                                            return;
+                                        }
+                                    }, function (error) {
+                                        $scope.loaderSave = false;
+                                        console.log(error);
+                                        GenerarDocumentosVentas(index + 1);
+                                    })
+                            }
+
+                            $('#btn_generarDoc').attr("disabled", true);
+
+                            ///-----Gnerando los Doc Masivamente--
+                            GenerarDocumentosVentas(0);
+                        }
+                    }, (error) => {
+                        console.log(error)
+                    })
+            }
+            else {
+                var GenerarDocumentosVentas = function (index) {
+                    if (CantDocumentosGlobal == index) {
+                        $scope.NombreTipoDocumento = '';
+                        $scope.loaderSave = false;
+
+                        ///-----Gnerando la Facturacion electronica masivamente NubeFact ------------
+                        if (flagEnviarSunat == 1) {
+                            $scope.generarFacturacion_boletasFacturas();
+                        }          
+                        ///-----fin de Gnerando la Facturacion electronica masivamente --------------  
+                        return;
                     }
 
-                    $('#btn_generarDoc').attr("disabled", true);
+                    id_tipoDoc = $scope.listGeneracionDocu[index].id_TipoDocumento,
+                        $scope.NombreTipoDocumento = 'Generando el Documento ' + $scope.listGeneracionDocu[index].des_tipo_factura;
 
-                    ///-----Gnerando los Doc Masivamente--
-                    GenerarDocumentosVentas(0);
+                    if (id_tipoDoc == 14) { ///---tipo de documento real
+                        id_tipoDoc = 3;
+                    }
+
+                    $scope.loaderSave = true;
+                    Documentos_MasivosServices.GenerarDocumentosVentas_III($scope.Objeto_ParametroFiltro, id_tipoDoc, auxiliarServices.getUserId(), flagEnviarSunat)
+                        .then(function (data) {
+                            $scope.loaderSave = false;
+                            if (data == "OK") {
+                                GenerarDocumentosVentas(index + 1);
+                            } else {
+                                auxiliarServices.NotificationMessage('Sistemas', 'Se produjo un error al Generar el Documento : ' + $scope.NombreTipoDocumento, 'error', '#ff6849', 3000);
+                                $scope.NombreTipoDocumento = '';
+                                GenerarDocumentosVentas(index + 1);
+                                return;
+                            }
+                        }, function (error) {
+                            $scope.loaderSave = false;
+                            console.log(error);
+                            GenerarDocumentosVentas(index + 1);
+                        })
                 }
+
+                $('#btn_generarDoc').attr("disabled", true);
+
+                ///-----Gnerando los Doc Masivamente--
+                GenerarDocumentosVentas(0);
             }
-        });
+
+        }
+
+
+
+        if (flagEnviarSunat == 0) {
+            var params = {
+                title: "Desea continuar ?",
+                text: 'Esta desactivado la opcion Enviar a la Sunat',
+                type: 'confirmationAlert',
+            }
+            auxiliarServices.initSweetAlert(params).then(function (res) {
+                if (res == true) {
+                    generandoEnvioDocumentos();
+                }
+            });
+        } else {
+            var params = {
+                title: "Desea continuar ?",
+                text: 'Esta generar los Documentos de Venta.',
+                type: 'confirmationAlert',
+            }
+            auxiliarServices.initSweetAlert(params).then(function (res) {
+                if (res == true) {
+                    generandoEnvioDocumentos();
+                }
+            });
+        }
+
+
+
+
+
     }
          
     $scope.generarDocu_Facturacion_Electronica_moderno_new = function () {
@@ -4442,9 +4401,13 @@ app.controller('ctrlDocumentos_Masivos', function ($scope, $q, $location, $timeo
         });     
     }
 
-
-
     $scope.generarFacturacion_boletasFacturas = function () {
+
+        const flagEnviarSunat = $scope.Objeto_ParametroFiltro.enviarSunat == true ? 1 : 0;
+        if (flagEnviarSunat == 0) {
+            auxiliarServices.NotificationMessage('Sistemas', 'No se puede re-enviar a la sunat , ya que no tiene marcado el Check enviar Sunat ', 'error', '#ff6849', 3000);
+            return;
+        }
 
         const generar_Json_Facturacion_Electronica_new = async (idUsuario) => {
             let res = await Documentos_MasivosServices.generarFacturacion_boletasFacturas_masivas(idUsuario);

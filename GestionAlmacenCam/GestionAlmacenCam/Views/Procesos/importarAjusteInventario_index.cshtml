@@ -1,0 +1,248 @@
+﻿
+
+
+<style>
+     .control-label {
+        font-size: 11px;
+        font-family: tahoma;
+        color: #2c5ca9;
+        font-weight: 600;
+    }
+
+    .form-control {
+        /*font-size: 11px;*/
+        height: 30px;
+    }
+
+    .contentCombo .select2-container {
+        margin-left: 0px;
+        margin-top: -10px;
+        width: 98% !important;
+    }
+
+    .ModalBorderSombra .modal-content {
+        box-shadow: inset 0px 0px 7px rgba(0,0,0,.5), 1px 1px 5px #fff;
+    }
+
+    .contenedorGrupo legend {
+        font-size: 12px !important;
+        font-family: GillSans, Calibri, Trebuchet, sans-serif;
+        color: #2c5ca9;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+
+    .contenedorGrupo fieldset {
+        padding-left: 20px;
+        padding-right: 20px;
+        border: 1px solid #2c4d6d;
+        padding-bottom: 10px;
+        border-radius: 4px;
+    }
+
+    .ContentFilters .select2-container .select2-choice, label {
+        font-size: 13px;
+    }
+
+    .input-group-btn .btn {
+        padding: 8px 12px;
+        height: 30px;
+    }
+
+    .jq-toast-wrap.top-right {
+        top: 20px;
+        right: 40px;
+        width: 300px;
+    }
+
+    .pagination > li > a, .pagination > li > span {
+        padding: 1px !important;
+        color: #337ab7 !important;
+    }
+
+
+    .btn.active span.glyphicon {
+        opacity: 1;
+    }
+
+    .card {
+        /* Add shadows to create the "card" effect */
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+    }
+
+        /* On mouse-over, add a deeper shadow */
+        .card:hover {
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+        }
+
+    #upload_button {
+        display: inline-block;
+    }
+
+    #upload_button input[type=file] {
+        display: none;
+    }
+
+    .panel-body {
+        padding: 10px !important;
+        background-color: white;
+    }
+
+    .tableFixHead {
+        overflow-y: auto;
+        max-height: 400px;
+    }
+
+    .tableFixHead thead th {
+        position: sticky;
+        top: 0;
+    }
+
+    .tableFixHead table thead th {
+        background-color: #162737;
+        color: white;
+        text-transform: uppercase;
+        font-size: 10px;
+        font-weight: 600;
+    }
+
+
+</style>
+
+
+<div ng-init="initAll(); ">
+
+
+    <div class=" container-fluid" ng-init="initAll();">
+        <div class="panel-body  contentRegistro contentCombo ContentFilters ">
+            <div class="row" style="margin-top: 10px;">
+                <div class="col-sm-4  col-md-4">
+                    <label for="selectLocales" class="control-label"> Local </label>
+                    <br />
+                    <select class="selectFiltros" id="selectLocales" ng-model="Objeto_Parametro_Filtro.idLocal" data-width="35%" ng-change="changeSelect('locales',Objeto_Parametro_Filtro.idLocal)" data-style=" btn-default">
+                        <option value="0">[ ----  SELECCIONE  --- ]</option>
+                        <option ng-repeat="item in listLocales" value="{{item.id_Local}}">{{item.nombre_Local}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-4  col-md-4">
+                    <label for="selectAlmacen" class="control-label"> Almacen </label>
+                    <select class="selectFiltros" id="selectAlmacen" data-width="35%" ng-model="Objeto_Parametro_Filtro.idAlmacen" data-style="btn-default">
+                        <option value="0">[ ----  SELECCIONE  --- ]</option>
+                        <option ng-repeat="item in listAlmacenes" value="{{item.id_Almacen}}">{{item.descripcion_Almacen}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-4  col-md-3">
+                    <label for="selectAlmacen" class="control-label"> Fecha </label>
+                    <div style="margin-top: -5px">
+                        <input ng-model="Objeto_Parametro_Filtro.fecha" id="dtp_fechaIni" type="text" class="form-control input-sm   datepicker" placeholder="dia/mes/año">
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-4  col-md-4">
+                    <label class="control-label"> Movimientos  </label>
+                    <div style="margin-top: 10px;">
+                        <select class="selectFiltros" id="cboMovimiento" ng-model="Objeto_Parametro_Filtro.idMovimiento">
+                            <option value="0">[ ----  SELECCIONE  --- ]</option>
+                            <option ng-repeat="item in tiposMovimientos" value="{{item.id_Movimiento}}">{{item.descripcion_Movimiento}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-4  col-md-3">
+                    <label class="control-label "> Nro Documento</label>
+                    <input type="text" class="form-control input-sm" ng-model="Objeto_Parametro_Filtro.nroDoc" placeholder="Nro Documento">
+                </div>
+                <div class="col-sm-4  col-md-4">
+
+                </div>
+            </div>
+
+            <div class="card" style="background-color: #2b4c6c;padding-bottom: 0px; padding-top: 0px;color: #fff;">
+                <hr style="margin-bottom:-5px" />
+                <div class="row">
+                    <form class="form-inline" style="padding: 5px;text-align: center;">
+                        <br />
+                        <div class="form-group">
+                            <div id="upload_button">
+                                <label>
+                                    <input type="file" ng-model="file" class="form-control" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" on-file-change="onFilesSelected">
+                                    <span class="btn btn-danger">Seleccionar Archivos</span>
+                                </label>
+                                <b id="txt_archivo" style="font-size: 12px; letter-spacing: normal; font-family: tahoma; color:white;"> {{NameArchivo}}</b>
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-left: 10px;">
+                            <button id="btnSubir" class="btn btn-success" ng-click="uploadFile()"><span class="glyphicon glyphicon-open"></span> Subir</button>
+                            <button class="btn btn-warning" onclick="window.location.reload(true)"><span class="glyphicon glyphicon-plus"></span> Nuevo</button>
+                            <button class="btn btn-info" ng-click="downloadFormat()" style=" margin-top: 0px;  margin-bottom: 0px;"><span class="glyphicon glyphicon-plus"></span> Formato</button>
+                        </div>
+                    </form>
+                </div>
+            </div>       
+        </div>
+        <br />
+        <div class="contentRegistro  tableFixHead">
+            <table id="tablaArqueoCab" class="table m-b-0 toggle-arrow-tiny table-bordered table-hover" data-page-size="10">
+                <thead>
+                    <tr>
+                        <th> ITEM </th>
+                        <th> PRODUCTO </th>
+                        <th> DESCRIPCION </th>
+                        <th> STOCK</th>
+                        <th> UM  </th>
+                        <th> FACTOR  </th>
+                        <th> NRO LOTE  </th>
+                        <th> F PRODUCCION</th>
+                        <th> F VENCIMIENTO</th>
+                        <th> MENSAJE </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in list_ajusteInventario "  style="{{item.idError == 1 | iif : 'background-color: rgb(230, 115, 115) !important;color:#fff;font-weight: 600;'}}">
+                        <td>{{$index+1}}</td>
+                        <td>{{item.Producto}}</td>
+                        <td>{{item.Descripcion}}</td>
+                        <td>{{item.Stock}}</td>
+                        <td>{{item.UM}}</td>
+                        <td>{{item.Factor}}</td>
+
+                        <td>{{item.NroLote}}</td>
+                        <td>{{item.FProduccion}}</td>
+                        <td>{{item.FVencimiento}}</td>
+                        <td>{{item.mensaje}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <br />
+        <div class="text-center" ng-if="list_ajusteInventario.length > 0 ? true:false">
+            <button id="btnGrabar" class="btn btn-primary" ng-if=" (flagError) ? false:true" ng-click="guardar_informacionAjusteInventario()"><span class="glyphicon glyphicon-save"></span> Grabar </button> 
+        </div>
+    </div>
+
+ 
+
+    <section id="cabeceras" style="margin-bottom: -30px;">
+        <div class="panel-body ContentFilters contentCombo">
+            <div class="form-inline ">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div style="text-align:center">
+                            <div class="cssload-speeding-wheel" ng-if="loaderfiltros"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div style="padding-left: 45%;" ng-if="showLoaderSave">
+        <p class="loader">
+        </p>
+    </div>
+
+</div>
+
+

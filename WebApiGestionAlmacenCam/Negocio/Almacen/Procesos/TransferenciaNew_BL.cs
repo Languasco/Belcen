@@ -327,6 +327,41 @@ namespace Negocio.Almacen.Procesos
             return res;
         }
 
+        public object get_buscarProducto_ayudaModal(int origen_id_Local, int origen_id_Almacen, string filtroBusqueda, int id_usuario)
+        {
+            DataTable dt_detalle = new DataTable();
+            Resul res = new Resul();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(Conexion.bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("PROC_S_LISTADO_PRODUCTOS_MODAL_AYUDA", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@id_Local", SqlDbType.Int).Value = origen_id_Local;
+                        cmd.Parameters.Add("@id_Almacen", SqlDbType.Int).Value = origen_id_Almacen;
+                        cmd.Parameters.Add("@filtroBusqueda", SqlDbType.VarChar).Value = filtroBusqueda;
+                        cmd.Parameters.Add("@id_usuario", SqlDbType.Int).Value = id_usuario;
+
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt_detalle);
+                        }
+
+                        res.ok = true;
+                        res.data = dt_detalle;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+            return res;
+        }
 
 
     }

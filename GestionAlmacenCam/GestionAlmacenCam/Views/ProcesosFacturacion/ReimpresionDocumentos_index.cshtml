@@ -114,30 +114,6 @@
         <div class="white-box">
 
             <div class="row">
-                @*<div class="col-sm-6 col-md-3">
-            <label for="cbo_local">Zona de Venta</label> <span class="help-block"></span>
-            <select class="selectFiltros" id="cbo_local" ng-model="Objeto_ParametroFiltro.id_zona" ng-change="change_Local_Almacen(Objeto_ParametroFiltro.id_zona);change_Local_vendedor(Objeto_ParametroFiltro.id_zona); change_Local_transportista(Objeto_ParametroFiltro.id_zona)">
-                <option value="0">[ ----  SELECCIONE  --- ]</option>
-                <option ng-repeat="item in Lista_Zona" value="{{item.id}}">  {{item.descripcion}} </option>
-            </select>
-        </div>
-
-        <div class="col-sm-6 col-md-3">
-            <label for="cbo_almacen">Almacen</label> <span class="help-block"></span>
-            <select class="selectFiltros" id="cbo_almacen" ng-model="Objeto_ParametroFiltro.id_almacen" ng-change="change_almacen_anexo(Objeto_ParametroFiltro.id_almacen);">
-                <option value="0">[ ----  SELECCIONE  --- ]</option>
-                <option ng-repeat="item in Lista_Almacen" value="{{item.id_Almacen}}">{{item.descripcion_Almacen}}</option>
-            </select>
-        </div>
-
-        <div class="col-sm-6 col-md-3">
-            <label for="cbo_anexo" class="control-label"> Anexo </label> <span class="help-block"></span>
-            <select class="selectFiltros" id="cbo_anexo" style="width:95%;" data-style="btn-default" ng-model="Objeto_ParametroFiltro.id_Anexos">
-                <option value="0">[ ----  SELECCIONE  --- ]</option>
-                <option ng-repeat="item in lista_anexos" value="{{item.id}}">{{item.descripcion}}</option>
-            </select>
-        </div>*@
-
                 <div class="col-sm-6 col-md-3">
                     <label for="cbo_anexo"> Anexo </label> <span class="help-block"></span>
                     <select class="selectFiltros" id="cbo_anexo" style="width:95%;" data-style="btn-default" ng-model="Objeto_ParametroFiltro.id_Anexos" ng-change="get_changeAnexoZonasFiltro(Objeto_ParametroFiltro.id_Anexos); change_anexo_Almacen_filtro(Objeto_ParametroFiltro.id_Anexos)">

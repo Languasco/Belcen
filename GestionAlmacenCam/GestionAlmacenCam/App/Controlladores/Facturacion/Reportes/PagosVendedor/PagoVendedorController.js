@@ -86,13 +86,12 @@ app.controller('ctrlPagoVendedor', function ($scope, loginServices, $location, $
 
         if ($scope.Objeto_ParametroFiltro.opcion === 1 || $scope.Objeto_ParametroFiltro.opcion === '1') {
 
-            if ($scope.Objeto_ParametroFiltro.id_cliente === 0 || $scope.Objeto_ParametroFiltro.id_cliente === '0') {
-                auxiliarServices.NotificationMessage('Sistemas', 'Por favor seleccione un cliente', 'error', '#ff6849', 1500);
-                return false;
-            }
+            //if ($scope.Objeto_ParametroFiltro.id_cliente === 0 || $scope.Objeto_ParametroFiltro.id_cliente === '0') {
+            //    auxiliarServices.NotificationMessage('Sistemas', 'Por favor seleccione un cliente', 'error', '#ff6849', 1500);
+            //    return false;
+            //}
             $scope.Objeto_ParametroFiltro.fecha_ini_aux = '';
             $scope.Objeto_ParametroFiltro.fecha_fin_aux = '';
-            //$scope.Objeto_ParametroFiltro.fecha_ini_aux = auxiliarServices.changeFormatDate(2, $scope.Objeto_ParametroFiltro.fecha_ini);
             $scope.Objeto_ParametroFiltro.fecha_ini_aux = $scope.Objeto_ParametroFiltro.fechaInicio;
             $scope.Objeto_ParametroFiltro.fecha_fin_aux = $scope.Objeto_ParametroFiltro.fechaFin;
 

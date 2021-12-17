@@ -1,10 +1,103 @@
 ﻿var app = angular.module('appGestion.IngresoGuiasController', []);
 
-app.controller('CtrlIngresoGuias', function ($scope, $routeParams, LocalesServices, EstadosServices, IngresoGuiasServices, AlmacenServices, $location, $timeout, auxiliarServices, productosServices) {
+app.controller('CtrlIngresoGuias', function ($scope, $routeParams, LocalesServices, EstadosServices, IngresoGuiasServices, AlmacenServices, $location, $timeout, auxiliarServices, AuditarServices) {
 
 
     var idUsuario_Global = 0;
-    $scope.idPerfil_Global  = 0;
+    $scope.idPerfil_Global = 0;
+
+
+    let json = {
+        "squadName": "Super hero squad",
+        "homeTown": "Metro City",
+        "formed": 2016,
+        "secretBase": "Super tower",
+        "active": true,
+        "members": [
+            {
+                "name": "Molecule Man",
+                "age": 29,
+                "secretIdentity": "Dan Jukes",
+                "powers": [
+                    "Radiation resistance",
+                    "Turning tiny",
+                    "Radiation blast"
+                ]
+            },
+            {
+                "name": "Madame Uppercut",
+                "age": 39,
+                "secretIdentity": "Jane Wilson",
+                "powers": [{ name:"Million tonne punch", age:"50"},
+                    { name: "Immortality  punch", age: "70" },
+                    { name: "Teleportation tonne ", age: "80" }
+                ]
+            },
+            {
+                "name": "Eternal Flame",
+                "age": 1000000,
+                "secretIdentity": "Unknown",
+                "powers": [
+                    "Immortality",
+                    "Heat Immunity",
+                    "Inferno",
+                    "Teleportation",
+                    "Interdimensional travel"
+                ]
+            }
+        ]
+    }
+
+    console.log(json)
+
+/*    console.log(json.members[2].powers[4])*/
+
+    const actualizarJson = () => {
+        let Madame = json.members[1].powers;
+        madame.push('Rafel tito')
+
+
+        json.members[1].powers = Madame;
+
+        console.log(json.members[1].powers);
+
+    }
+ 
+
+
+    $scope.getAuditorias = function (item) {
+
+        let Madame = json.members[1].powers;
+/*        Madame.push('Rafel tito')*/
+
+        json.members[1].powers = [...json.members[1].powers, { name: "Rafael", age: "2" }, { name: "Aaron", age: "20" }];
+
+        console.log(json );
+
+        return;
+
+        const uCreacion = (!item.usuario_creacion) ? 0 : item.usuario_creacion;
+        const uEdicion = (!item.usuario_Edicion) ? 0 : item.usuario_Edicion;
+
+        const fechaCreacion = auxiliarServices.formatDate(item.fecha_creacion);
+        const fechaEdicion = (!item.fecha_Edicion) ? '' : auxiliarServices.formatDate(item.fecha_Edicion);
+
+        AuditarServices.getAuditoria(uCreacion, uEdicion)
+            .then(function (res) {
+
+                if (res.ok) {
+                    let usuarioCreacion = res.data[0].descripcion;
+                    let usuarioEdicion = (res.data.length = 1) ? '' : res.data[1].descripcion;
+
+                    var message = "Fecha Creación : " + fechaCreacion + "</br>" +
+                        "Usuario Creación : " + usuarioCreacion + "</br>" +
+                        "Fecha Edición : " + fechaEdicion + "</br>" +
+                        "Usuario Edición : " + usuarioEdicion + "</br>"
+                    auxiliarServices.NotificationMessage('Sistemas', message, 'success', '#008000', 5000);
+                }
+            })
+    }
+
 
     $scope.initAll = function () {     
 
@@ -145,6 +238,7 @@ app.controller('CtrlIngresoGuias', function ($scope, $routeParams, LocalesServic
             });
         }, 500);
     });
+
     var oTable;
     $scope.getGuiasOrdenCompra = function () {
         var p = $scope.objFilter;

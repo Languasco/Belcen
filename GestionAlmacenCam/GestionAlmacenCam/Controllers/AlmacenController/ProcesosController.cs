@@ -38,5 +38,14 @@ namespace GestionAlmacenCam.Controllers.AlmacenController
             return View();
         }
 
+        public ActionResult transformacionProductos_index()
+        {
+            return View();
+        }
+        public ActionResult importarAjusteInventario_index()
+        {
+            return View();
+        }
+
     }
 }

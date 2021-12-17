@@ -43,7 +43,32 @@
                 opcion: 2,
                 filtro: parametros
             }
- 
+            $http({
+                method: 'GET',
+                url: url,
+                params: parameters
+            }).success(function (result) {
+                q.resolve(result);
+            }).error(function (err) {
+
+                q.reject(err);
+            })
+            return q.promise;
+        }
+
+        Result.get_buscarProducto_codigoNew = function (origen_id_Local, origen_id_Almacen, codigo_Producto, id_usuario, opcionBusc) {
+
+            let url = urlApi + 'TransferenciasNew'
+            var parameters;
+            var q = $q.defer();
+
+            var parametros = origen_id_Local + '|' + origen_id_Almacen + '|' + codigo_Producto + '|' + id_usuario;
+
+            parameters = {
+                opcion: (opcionBusc ==='ORIGEN') ? 2 : 9,
+                filtro: parametros
+            }
+            console.log(parameters)
 
             $http({
                 method: 'GET',
@@ -56,7 +81,9 @@
                 q.reject(err);
             })
             return q.promise;
-            }
+        }
+
+
 
         Result.get_buscarProducto_todos = function (origen_id_Local, origen_id_Almacen, filtroBusqueda , id_usuario) {
 
@@ -83,6 +110,36 @@
             })
             return q.promise;
         }
+
+
+
+        Result.get_buscarProducto_todosNew = function (origen_id_Local, origen_id_Almacen, filtroBusqueda, id_usuario, opcionBusc) {
+
+            let url = urlApi + 'TransferenciasNew'
+            var parameters;
+            var q = $q.defer();
+
+            var parametros = origen_id_Local + '|' + origen_id_Almacen + '|' + filtroBusqueda + '|' + id_usuario;
+            parameters = {
+                opcion: (opcionBusc === 'ORIGEN') ? 3 : 9,
+                filtro: parametros
+            }
+            console.log(parameters)
+
+            $http({
+                method: 'GET',
+                url: url,
+                params: parameters
+            }).success(function (result) {
+                q.resolve(result);
+            }).error(function (err) {
+                 
+                q.reject(err);
+            })
+            return q.promise;
+        }
+
+
 
         Result.save_transferenciasDet = function (params) {
 

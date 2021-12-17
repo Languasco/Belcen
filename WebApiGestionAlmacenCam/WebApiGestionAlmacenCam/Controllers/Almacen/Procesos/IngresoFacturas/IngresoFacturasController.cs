@@ -159,6 +159,18 @@ namespace WebApiGestionAlmacenCam.Controllers.Almacen.Procesos.IngresoFacturas
                         resul = obj_negocio.ExportarExcel_reporteContableCompras(id_anexo, fecha_ini, fecha_fin, opcion_reporte, id_usuario);
                     }
                 }
+                else if (opcion == 13)
+                {
+                    string[] parametros = filtro.Split('|');
+
+                    int id_anexo = Convert.ToInt32(parametros[0].ToString());
+                    string fecha_ini = parametros[1].ToString();
+                    string fecha_fin = parametros[2].ToString();
+                    int id_usuario = Convert.ToInt32(parametros[3].ToString());
+
+                    IngresoFacturas_BL obj_negocio = new IngresoFacturas_BL();
+                    resul = obj_negocio.ExportarExcel_ventaAcumulada(id_anexo, fecha_ini, fecha_fin,  id_usuario);
+                }
                 else
                 {
                     resul = "Opcion selecciona invalida";

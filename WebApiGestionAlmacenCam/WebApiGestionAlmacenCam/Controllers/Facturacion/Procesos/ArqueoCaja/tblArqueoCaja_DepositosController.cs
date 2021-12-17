@@ -14,7 +14,7 @@ using Entidades;
 using Negocio.Facturacion.Procesos;
 using Negocio.Resultado;
 
-namespace WebApiGestionAlmacenCam.Controllers.Facturacion.Procesos.ArqueoCaja
+namespace WebApi_Ventas.Controllers.Facturacion.Procesos.ArqueoCaja
 {
     [EnableCors("*", "*", "*")]
     public class tblArqueoCaja_DepositosController : ApiController

@@ -1,5 +1,5 @@
 ﻿var app = angular.module('appGestion.DocumentosManualesController', []);
-app.controller('DocumentosManualesController', function ($scope, $location, $timeout, auxiliarServices, $q, PedidosServices, umServices, EstadosServices, RevisionPedidoServices, Cliente_IIServices, GrupoDetServices, Documentos_MasivosServices, NotaCreditoDebitoServices, VehiculoServices, AlmacenServices, TipoDocumentoServices, PersonalServices, PuntoVentaServices, DocumentosManualesServices) {
+app.controller('DocumentosManualesController', function ($scope, $location, $timeout, auxiliarServices, $q, PedidosServices, AuditarServices, EstadosServices, RevisionPedidoServices, Cliente_IIServices, GrupoDetServices, Documentos_MasivosServices, NotaCreditoDebitoServices, VehiculoServices, AlmacenServices, TipoDocumentoServices, PersonalServices, PuntoVentaServices, DocumentosManualesServices) {
 
     $scope.loaderfiltros = false;
     $scope.initAll = function () {
@@ -16,7 +16,41 @@ app.controller('DocumentosManualesController', function ($scope, $location, $tim
         }, 0);
     };
 
-    $scope.Flag_movLote =false;
+    $scope.Flag_movLote = false;
+
+
+
+    $scope.getAuditorias = function (item) {
+
+        console.log(item)
+
+        const uCreacion = (!item.usuario_creacion) ? 0 : item.usuario_creacion;
+        const uEdicion = (!item.usuario_edicion) ? 0 : item.usuario_edicion;
+
+        const fechaCreacion =  item.fecha_creacion;
+        const fechaEdicion =  item.fecha_edicion;
+
+        if (uCreacion == 0 && uEdicion == 0) {
+            auxiliarServices.NotificationMessage('Sistemas', 'No hay informacion para mostrar', 'success', '#008000', 5000);
+            return;
+        }
+
+        AuditarServices.getAuditoria(uCreacion, uEdicion)
+            .then(function (res) {
+                if (res.ok) {
+                    let usuarioCreacion = res.data[0].descripcion;
+                    let usuarioEdicion = (res.data.length == 1) ? '' : res.data[1].descripcion;
+
+                    var message = "Fecha Creación : " + fechaCreacion + "</br>" +
+                        "Usuario Creación : " + usuarioCreacion + "</br>" +
+                        "Fecha Edición : " + fechaEdicion + "</br>" +
+                        "Usuario Edición : " + usuarioEdicion + "</br>"
+                    auxiliarServices.NotificationMessage('Sistemas', message, 'success', '#008000', 5000);
+                }
+            })
+    }
+
+
 
     $scope.Objeto_ParametroFiltro = {
         id_ZonaVta: '0',
@@ -273,7 +307,7 @@ app.controller('DocumentosManualesController', function ($scope, $location, $tim
                 $scope.loaderfiltros = false;
                 $scope.Lista_TipoDoc = [];
                 for (var i = 0; i < data.length; i++) {
-                    if (data[i].id_TipoDocumento == 1 || data[i].id_TipoDocumento == 2) {
+                    if (data[i].id_TipoDocumento == 1 || data[i].id_TipoDocumento == 2 || data[i].id_TipoDocumento == 3 || data[i].id_TipoDocumento == 13 || data[i].id_TipoDocumento == 18) {
                         console.log(data[i].id_TipoDocumento);
                         $scope.Lista_TipoDoc.push(data[i]);
                     }
@@ -699,6 +733,7 @@ app.controller('DocumentosManualesController', function ($scope, $location, $tim
         id_ZonaVta: '0',
         id_PersonalTransportista: '0',
         flag_DocManual: '1',
+        afectaStock: false
     };
 
     $scope.clean = function () {
@@ -747,7 +782,8 @@ app.controller('DocumentosManualesController', function ($scope, $location, $tim
         $scope.objeto_parametros.id_Anexos = '0';
         $scope.objeto_parametros.id_ZonaVta = '0';
         $scope.objeto_parametros.id_PersonalTransportista = '0'; 
-        $scope.objeto_parametros.flag_DocManual = '1'; 
+        $scope.objeto_parametros.flag_DocManual = '1';
+        $scope.objeto_parametros.afectaStock = false;
 
         $scope.Lista_zonasModal = [];
         $scope.Lista_Almacen_pedido = [];
@@ -921,72 +957,76 @@ app.controller('DocumentosManualesController', function ($scope, $location, $tim
             $scope.objeto_parametros.flag_exonerada_igv = '';
         }
 
+        const afectaStock = $scope.objeto_parametros.afectaStock;
+        $scope.objeto_parametros.flag_DocManual = (afectaStock == true) ? 4 : 1;
+ 
+
+
         if ($scope.Flag_modoEdicion == false) { // nuevo registroo
 
-            //$scope.objeto_parametros.Numero_Pedido = getCodUniq();
+
             $scope.objeto_parametros.Numero_Pedido = '';
+            //if ($scope.objeto_parametros.id_TipoDocumento == "3") {
+            //    var chk_transporrte = document.getElementById('chk_transporrte');
 
-            if ($scope.objeto_parametros.id_TipoDocumento == "3") {
-                var chk_transporrte = document.getElementById('chk_transporrte');
+            //    if (chk_transporrte.checked == true) {
+            //        $scope.objeto_parametros.TipoGuiaRemision = '1';
 
-                if (chk_transporrte.checked == true) {
-                    $scope.objeto_parametros.TipoGuiaRemision = '1';
+            //    } else {
+            //        $scope.objeto_parametros.TipoGuiaRemision = '0';
+            //    }
 
-                } else {
-                    $scope.objeto_parametros.TipoGuiaRemision = '0';
-                }
+            //    $scope.objeto_parametros.fechaEmision_Pedido_Cab = auxiliarServices.changeFormatDate(2, fechaOrigen);
+            //    $scope.objeto_parametros.fechaEntrega_Pedido_Cab = auxiliarServices.changeFormatDate(2, fechaOrigen);
+            //    $scope.objeto_parametros.fechaFactura_Pedido_Cab = auxiliarServices.changeFormatDate(2, fechaOrigen);
 
-                $scope.objeto_parametros.fechaEmision_Pedido_Cab = auxiliarServices.changeFormatDate(2, fechaOrigen);
-                $scope.objeto_parametros.fechaEntrega_Pedido_Cab = auxiliarServices.changeFormatDate(2, fechaOrigen);
-                $scope.objeto_parametros.fechaFactura_Pedido_Cab = auxiliarServices.changeFormatDate(2, fechaOrigen);
+            //    $scope.objeto_parametros.serie = auxiliarServices.Formatear_CerosIzquierda(parseInt($scope.objeto_parametros.serie), 4);
+            //    $scope.objeto_parametros.num_doc = auxiliarServices.Formatear_CerosIzquierda(parseInt($scope.objeto_parametros.num_doc), 7);
+            //    $scope.objeto_parametros.Numero_Documento = $scope.objeto_parametros.serie + '-' + $scope.objeto_parametros.num_doc;
 
-                $scope.objeto_parametros.serie = auxiliarServices.Formatear_CerosIzquierda(parseInt($scope.objeto_parametros.serie), 4);
-                $scope.objeto_parametros.num_doc = auxiliarServices.Formatear_CerosIzquierda(parseInt($scope.objeto_parametros.num_doc), 7);
-                $scope.objeto_parametros.Numero_Documento = $scope.objeto_parametros.serie + '-' + $scope.objeto_parametros.num_doc;
+            //    let generandoDocumento = async () => {
+            //        let res = await PedidosServices.validar_NroDocumento_Pedido($scope.objeto_parametros.Numero_Documento, $scope.objeto_parametros.id_TipoDocumento)
 
-                let generandoDocumento = async () => {
-                    let res = await PedidosServices.validar_NroDocumento_Pedido($scope.objeto_parametros.Numero_Documento, $scope.objeto_parametros.id_TipoDocumento)
+            //        if (res !== 0) {
+            //            auxiliarServices.NotificationMessage('Sistemas', 'El nro de Documento ya se encuentra registrado en el sistema, verifique', 'error', '#ff6849', 1500);
+            //            return;
+            //        } else {
+            //            $scope.loader_modal = true;
+            //            $('#btnGuardarCab').attr("disabled", true);
 
-                    if (res !== 0) {
-                        auxiliarServices.NotificationMessage('Sistemas', 'El nro de Documento ya se encuentra registrado en el sistema, verifique', 'error', '#ff6849', 1500);
-                        return;
-                    } else {
-                        $scope.loader_modal = true;
-                        $('#btnGuardarCab').attr("disabled", true);
+            //            let res_save = await PedidosServices.save_Pedido($scope.objeto_parametros);
 
-                        let res_save = await PedidosServices.save_Pedido($scope.objeto_parametros);
+            //            $scope.disabledDetalle = "";
+            //            $scope.Lista_DataCabecera.push(res_save);
+            //            $scope.objeto_parametros.id_Pedido_Cab = res_save.id_Pedido_Cab;
 
-                        $scope.disabledDetalle = "";
-                        $scope.Lista_DataCabecera.push(res_save);
-                        $scope.objeto_parametros.id_Pedido_Cab = res_save.id_Pedido_Cab;
+            //            $("#cbo_TipoDoc").prop('disabled', true);
 
-                        $("#cbo_TipoDoc").prop('disabled', true);
+            //            $scope.objeto_parametros.fechaEmision_Pedido_Cab = fechaOrigen;
+            //            $scope.Flag_modoEdicion = true;
+            //            objAux = res_save;
+            //            $timeout(function () {
+            //                $('#btnGuardarCab').attr("disabled", false);
+            //                let params = {
+            //                    type: 'alert',
+            //                    title: 'Excelente !',
+            //                    text: 'Proceso de Registro realizado correctamente !'
+            //                };
+            //                auxiliarServices.initSweetAlert(params).then(function (res) {
 
-                        $scope.objeto_parametros.fechaEmision_Pedido_Cab = fechaOrigen;
-                        $scope.Flag_modoEdicion = true;
-                        objAux = res_save;
-                        $timeout(function () {
-                            $('#btnGuardarCab').attr("disabled", false);
-                            let params = {
-                                type: 'alert',
-                                title: 'Excelente !',
-                                text: 'Proceso de Registro realizado correctamente !'
-                            };
-                            auxiliarServices.initSweetAlert(params).then(function (res) {
+            //                });
+            //                $scope.loader_modal = false;
+            //            }, 500);
+            //        }
+            //    }
 
-                            });
-                            $scope.loader_modal = false;
-                        }, 500);
-                    }
-                }
-
-                ///----ejecutando proceso---
-                generandoDocumento()
-                    .catch((error) => {
-                        alert(error);
-                    })
-            }
-            else {                
+            //    ///----ejecutando proceso---
+            //    generandoDocumento()
+            //        .catch((error) => {
+            //            alert(error);
+            //        })
+            //}
+            //else {                
                                              
                 ////-----guardando el pedido----
                 $scope.loader_modal = true;
@@ -1007,6 +1047,7 @@ app.controller('DocumentosManualesController', function ($scope, $location, $tim
                                 $('#btnGuardarCab').attr("disabled", true);
                                 PedidosServices.save_Pedido($scope.objeto_parametros)
                                     .then(function (data) {
+ 
                                         $scope.disabledDetalle = "";
                                         $scope.Lista_DataCabecera.push(data);
                                         $scope.objeto_parametros.id_Pedido_Cab = data.id_Pedido_Cab;
@@ -1030,6 +1071,7 @@ app.controller('DocumentosManualesController', function ($scope, $location, $tim
                                         }, 500);
 
                                     }, function (error) {
+         
                                         $timeout(function () {
                                             let paramsErr = {
                                                 type: 'error',
@@ -1044,7 +1086,7 @@ app.controller('DocumentosManualesController', function ($scope, $location, $tim
                                         }, 500);
                                     });
                             } else {      
-                                
+ 
                                 auxiliarServices.NotificationMessage('Sistemas', 'El número de documento ya esta registrada, verifique por favor ', 'error', '#ff6849', 1500);
                                 return false;                              
                             }
@@ -1057,7 +1099,7 @@ app.controller('DocumentosManualesController', function ($scope, $location, $tim
                         }, 500);
                     });
 
-            }
+            //}
         } else {  //actualizar
             $scope.loader_modal = true;
             $scope.objeto_parametros.Numero_Documento = $scope.objeto_parametros.serie + '-' + $scope.objeto_parametros.num_doc;
@@ -1069,6 +1111,7 @@ app.controller('DocumentosManualesController', function ($scope, $location, $tim
             PedidosServices.update_Pedido($scope.objeto_parametros)
                 .then(function (data) {
                     $scope.loader_modal = false;
+
                     if (data == "OK") {
                         var indexList = $scope.Lista_DataCabecera.indexOf(objAux);
 
@@ -1108,6 +1151,7 @@ app.controller('DocumentosManualesController', function ($scope, $location, $tim
                         $scope.Lista_DataCabecera[indexList].id_Anexos = $scope.objeto_parametros.id_Anexos;
                         $scope.Lista_DataCabecera[indexList].id_ZonaVta = $scope.objeto_parametros.id_ZonaVta;
                         $scope.Lista_DataCabecera[indexList].id_PersonalTransportista = $scope.objeto_parametros.id_PersonalTransportista;
+                        $scope.Lista_DataCabecera[indexList].flag_DocManual = ($scope.objeto_parametros.afectaStock == true) ? 4 : 1;
 
 
                         $timeout(function () {
@@ -1162,6 +1206,8 @@ app.controller('DocumentosManualesController', function ($scope, $location, $tim
 
 
     $scope.EdicionRegistros = function (obj) {
+
+        console.log(obj)
         objAux = '';
         objAux = obj;
         var chk_transporrte = document.getElementById('chk_transporrte');
@@ -1228,7 +1274,11 @@ app.controller('DocumentosManualesController', function ($scope, $location, $tim
         $scope.objeto_parametros.id_ZonaVta = obj.id_ZonaVta;;
         $scope.objeto_parametros.id_PersonalTransportista = obj.id_PersonalTransportista;; 
         
-        $scope.objeto_parametros.flag_tipo_facturacion = (obj.flag_tipo_facturacion == '' || obj.flag_tipo_facturacion == null ) ? '1' : obj.flag_tipo_facturacion;
+        $scope.objeto_parametros.flag_tipo_facturacion = (obj.flag_tipo_facturacion == '' || obj.flag_tipo_facturacion == null) ? '1' : obj.flag_tipo_facturacion;
+
+        $scope.objeto_parametros.flag_DocManual = obj.flag_DocManual;
+        $scope.objeto_parametros.afectaStock = (obj.flag_DocManual == 4) ? true : false;
+
  
         $timeout(function () {
             if (obj.flag_exonerada_igv == "S") {
@@ -1997,25 +2047,25 @@ app.controller('DocumentosManualesController', function ($scope, $location, $tim
                             if ($scope.objeto_parametros.id_TipoDocumento == 1 || $scope.objeto_parametros.id_TipoDocumento == '1' || $scope.objeto_parametros.id_TipoDocumento == 2 || $scope.objeto_parametros.id_TipoDocumento == '2') {
                                       //----modal de cancelaciones----
                                 setTimeout(function () {
-
                                     $scope.id_Pedido_Cab_Global = $scope.objeto_parametros.id_Pedido_Cab;
                                     //$scope.AbrirModal_Pagos();
                                     //$scope.generarVistaPreliminar_Sunat($scope.objeto_parametros.id_TipoDocumento, $scope.objeto_parametros.Numero_Documento)
                                 }, 100);
-                            } else if ($scope.objeto_parametros.id_TipoDocumento == 3 || $scope.objeto_parametros.id_TipoDocumento == '3') {                                
-                                var chk_transporrte = document.getElementById('chk_transporrte');
-                                
-                                //---generando la impresion de la factura              
-                                $scope.generarVistaPreliminar_Sunat($scope.objeto_parametros.id_TipoDocumento, $scope.objeto_parametros.Numero_Documento)
-                
-                                if (chk_transporrte.checked == true) {
- 
-                                } else {
-                                    setTimeout(function () {
-                                        $scope.AbrirModal_Pagos();
-                                    }, 2000);
-                                }
                             }
+                            //else if ($scope.objeto_parametros.id_TipoDocumento == 3 || $scope.objeto_parametros.id_TipoDocumento == '3') {
+                            //    var chk_transporrte = document.getElementById('chk_transporrte');
+                                
+                            //    //---generando la impresion de la factura              
+                            //    $scope.generarVistaPreliminar_Sunat($scope.objeto_parametros.id_TipoDocumento, $scope.objeto_parametros.Numero_Documento)
+                
+                            //    if (chk_transporrte.checked == true) {
+ 
+                            //    } else {
+                            //        setTimeout(function () {
+                            //            $scope.AbrirModal_Pagos();
+                            //        }, 2000);
+                            //    }
+                            //}
                             //------actualizando la informacion de los pedidos
                             $scope.Listando_InformacionPedidos();
                         } else {
@@ -6375,7 +6425,7 @@ app.controller('DocumentosManualesController', function ($scope, $location, $tim
 
     $scope.Rechazar_Pedido = function (obj) {
 
-        if (auxiliarServices.getAnularDoc() === 1) {
+/*        if (auxiliarServices.getAnularDoc() === 1) {*/
             if (parseInt(obj.estado) === 27 || parseInt(obj.estado) === 12) {
                 return;
             }
@@ -6416,9 +6466,9 @@ app.controller('DocumentosManualesController', function ($scope, $location, $tim
                         });
                 }
             });
-        } else {
-            auxiliarServices.NotificationMessage('Sistemas', 'No tienes permiso para rechazar el pedido', 'error', '#ff6849', 2000);
-        }
+        //} else {
+        //    auxiliarServices.NotificationMessage('Sistemas', 'No tienes permiso para rechazar el pedido', 'error', '#ff6849', 2000);
+        //}
 
     };
 
@@ -7262,22 +7312,16 @@ app.controller('DocumentosManualesController', function ($scope, $location, $tim
 
     $scope.tituloProceso = 'Generar Cancelacion';
     $scope.Change_TipoDoc_Numeracion = function () {
+
+        const txt_serie = document.getElementById('txt_serie');
+
         $scope.objeto_parametros.Numero_Documento = '';
         $scope.objeto_parametros.serie = '';
         $scope.objeto_parametros.num_doc = '';
-         
-        if ($scope.objeto_parametros.id_TipoDocumento == 3 || $scope.objeto_parametros.id_TipoDocumento == '3') {
-            //$("#txt_serie").prop('disabled', false);
-            //$("#txt_num_doc").prop('disabled', false);
 
-            var chk_transporrte = document.getElementById('chk_transporrte');
-            if (chk_transporrte.checked == true) {
-                $scope.tituloProceso = 'Generar Documento';
-            } else {
-                $scope.tituloProceso = 'Generar Cancelacion';
-            } 
 
-        } else {
+        if ($scope.objeto_parametros.id_TipoDocumento == 1 || $scope.objeto_parametros.id_TipoDocumento == '1' || $scope.objeto_parametros.id_TipoDocumento == 2 || $scope.objeto_parametros.id_TipoDocumento == '2') {
+
             if ($scope.objeto_parametros.id_Anexos == 0 || $scope.objeto_parametros.id_Anexos == '0') {
                 auxiliarServices.NotificationMessage('Sistemas', 'Es necesario que seleccione un Anexo para obtener la numeracion, verifique', 'error', '#ff6849', 2000);
                 return;
@@ -7285,11 +7329,15 @@ app.controller('DocumentosManualesController', function ($scope, $location, $tim
             if ($scope.objeto_parametros.id_TipoDocumento == 0 || $scope.objeto_parametros.id_TipoDocumento == '0') {
                 return;
             }
-            //$("#txt_serie").prop('disabled', true);
-            //$("#txt_num_doc").prop('disabled', true);
+
+            setTimeout(function () {
+                console.log('entroo id_TipoDocumento == 1 ')
+                txt_serie.disabled = true;
+            }, 500);
+
             $scope.loaderfiltros = true;
             NotaCreditoDebitoServices.get_NumeracionAutomatica($scope.objeto_parametros.id_Anexos, $scope.objeto_parametros.id_TipoDocumento, 0)
-                .then(function (data) { 
+                .then(function (data) {
 
                     $scope.loaderfiltros = false;
                     if (data.length == 0) {
@@ -7302,6 +7350,13 @@ app.controller('DocumentosManualesController', function ($scope, $location, $tim
                     $scope.loaderfiltros = false;
                     console.log(err);
                 });
+
+        } 
+        else {
+            setTimeout(function () {
+                console.log('entroo id_TipoDocumento  ' + $scope.objeto_parametros.id_TipoDocumento  )
+                txt_serie.disabled = false;
+            }, 500);
         }
     };
 

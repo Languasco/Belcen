@@ -15,6 +15,31 @@
         });
         return q.promise;
     }
+
+    Result.getTransferencias_new = function (id_Local, id_Almacen, opcion) {
+        let url = urlApi + 'AprobarTransferencia'
+        var parameters;
+        var q = $q.defer();
+
+        var parametros = id_Local + '|' + id_Almacen + '|' + opcion;
+        parameters = {
+            opcion: 9,
+            filtro: parametros
+        }
+        $http({
+            method: 'GET',
+            url: url,
+            params: parameters
+        }).success(function (result) {
+            q.resolve(result);
+        }).error(function (err) {
+
+            q.reject(err);
+        })
+        return q.promise;
+    }
+
+
     
     Result.ValidacionGeneral = function (objeto_parametros) {
         if (objeto_parametros.serie == 0 || objeto_parametros.serie == '0' || objeto_parametros.serie == null || objeto_parametros.serie == '') {
