@@ -66,6 +66,15 @@ namespace Entidades
         public Nullable<decimal> total_Exonerada_Cab { get; set; }
         public Nullable<decimal> total_Inafecta_Cab { get; set; }
         public Nullable<decimal> total_Gratuita_Cab { get; set; }
+        public Nullable<int> id_TipoOrden { get; set; }
+        public Nullable<int> id_anexos { get; set; }
+        public Nullable<decimal> porDetraccion { get; set; }
+        public Nullable<decimal> TotalDetraccion { get; set; }
+        public Nullable<decimal> porRetencion { get; set; }
+        public Nullable<decimal> TotalRetencion { get; set; }
+        public string ExoneradaIGV { get; set; }
+        public string nombreArchivo_Adjunto { get; set; }
+        public string nombreArchivoServidor { get; set; }
     
         public virtual tbl_Alm_Almacen tbl_Alm_Almacen { get; set; }
         public virtual tbl_Alm_Movimientos tbl_Alm_Movimientos { get; set; }

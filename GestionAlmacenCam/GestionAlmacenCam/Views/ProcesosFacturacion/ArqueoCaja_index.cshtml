@@ -131,20 +131,20 @@
         width: 98%;
     }
 
-    .botonFile .btn {
-        border: 2px solid gray;
-        color: gray;
-        background-color: white;
-        padding: 8px 20px;
-        border-radius: 8px;
-        font-size: 10px;
-        font-weight: bold;
-    }
+        .botonFile .btn {
+            border: 2px solid gray;
+            color: gray;
+            background-color: white;
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: bold;
+        }
 
     .tabsMenuArqueo {
-      font-size: 13px;
-      text-align: center;
-      border: 0.5px solid #999;
+        font-size: 13px;
+        text-align: center;
+        border: 0.5px solid #999;
     }
 
     .tableFixHead {
@@ -152,16 +152,28 @@
         max-height: 400px;
     }
 
-    .tableFixHead thead th {
-        position: sticky;
-        top: 0;
-    }
+        .tableFixHead thead th {
+            position: sticky;
+            top: 0;
+        }
 
     .ContentFilters table thead th {
         color: white;
         background-color: #008efa;
     }
 
+
+
+    #resultado, #existente {
+        background-color: red;
+        color: white;
+        font-weight: bold;
+        margin-top: -5px;
+    }
+
+        #resultado.ok, #existente.ok {
+            background-color: green;
+        }
 </style>
 
 <script type="text/javascript">
@@ -220,7 +232,7 @@
 
 
         <div class="loaderModal" ng-if="loaderSaveD"></div>
-        <div class="loaderModal" ng-if="loaderCD" ></div>
+        <div class="loaderModal" ng-if="loaderCD"></div>
         <a id="id_link" href="" download style="display:none">link</a>
 
 
@@ -263,23 +275,23 @@
                             <fieldset>
                                 <legend>Filtros</legend>
                                 <div class="row">
-                                    <div class="col-sm-4  col-md-4   ">
+                                    <div class="col-sm-6  col-md-6  ">
                                         <label for="cboEstado" class="control-label"> Anexo </label>
-                                        <select class="selectFiltros" id="cbo_anexoFiltro" style="width:95%;" data-style="btn-default" ng-model="Objeto_Parametro_filtro.id_Anexo" ng-change="listados_changeAnexoZonasFiltro(Objeto_Parametro_filtro.id_Anexo)">
+                                        <select class="selectFiltros" id="cbo_anexoFiltro" style="width:95%;" data-style="btn-default" ng-model="Objeto_Parametro_filtro.id_Anexo" ng-change="listados_changeCentroCosto_anexosFiltro(Objeto_Parametro_filtro.id_Anexo)">
                                             <option value="0">[ ----  SELECCIONE  --- ]</option>
                                             <option ng-repeat="item in lista_anexos" value="{{item.id}}">{{item.descripcion}}</option>
                                         </select>
                                     </div>
 
-                                    <div class="col-sm-4  col-md-4">
+                                    @*<div class="col-sm-4  col-md-4">
                                         <label for="cbo_zonasFiltro" class="control-label"> Zona de Venta </label>
                                         <select class="selectFiltros" id="cbo_zonasFiltro" ng-model="Objeto_Parametro_filtro.id_ZonaVta">
                                             <option value="0">[ ----  SELECCIONE  --- ]</option>
                                             <option ng-repeat="item in Lista_zonasFiltro" value="{{item.id}}">  {{item.descripcion}} </option>
                                         </select>
-                                    </div>
+                                    </div>*@
 
-                                    <div class=" col-sm-4  col-md-4">
+                                    <div class="col-sm-6  col-md-6  ">
                                         <label for="cbo_centroCostoFiltro" class="control-label"> Centro de Costo </label>
                                         <select class="selectFiltros" id="cbo_centroCostoFiltro" data-style="btn-default" ng-model="Objeto_Parametro_filtro.id_CC">
                                             <option value="0">[ ----  SELECCIONE  --- ]</option>
@@ -358,9 +370,6 @@
                             </fieldset>
                         </div>
                     </div>
-
-
-
                 </div>
 
                 @*---------- Generar Arqueo Caja --------------*@
@@ -372,14 +381,14 @@
                                 <div class="row {{disabledContent}} ">
                                     <div class="col-sm-4  col-md-4   ">
                                         <label for="cbo_anexo" class="control-label"> Anexo </label>
-                                        <select class="selectFiltros" id="cbo_anexo" style="width:95%;" data-style="btn-default" ng-model="Objeto_Parametro_arqueoCaja.id_Anexo" ng-change="listados_changeAnexoZonas(Objeto_Parametro_arqueoCaja.id_Anexo,'0','0')">
+                                        <select class="selectFiltros" id="cbo_anexo" style="width:95%;" data-style="btn-default" ng-model="Objeto_Parametro_arqueoCaja.id_Anexo" ng-change="listados_changeAnexoZonas(Objeto_Parametro_arqueoCaja.id_Anexo,'0','0'); listados_changeAnexoZonasArqueo()   ">
                                             <option value="0">[ ----  SELECCIONE  --- ]</option>
                                             <option ng-repeat="item in lista_anexos" value="{{item.id}}">{{item.descripcion}}</option>
                                         </select>
                                     </div>
 
-                                    <div class="col-sm-4  col-md-4">
-                                        <label for="cbo_zonas" class="control-label"> Zona de Venta </label>
+                                    <div class="col-sm-4  col-md-4" ng-show="false">
+                                        <label for="cbo_zonas" class="control-label"> Zona de Venta x</label>
                                         <select class="selectFiltros" id="cbo_zonas" ng-model="Objeto_Parametro_arqueoCaja.id_ZonaVta">
                                             <option value="0">[ ----  SELECCIONE  --- ]</option>
                                             <option ng-repeat="item in Lista_zonas" value="{{item.id}}">  {{item.descripcion}} </option>
@@ -471,13 +480,13 @@
                                     </div>
                                     <div class="col-sm-4  col-md-4 ">
                                         <label class="control-label"> Importe </label>
-                                        <input type="text" ng-model="Objeto_Parametro_arqueoCaja.importeSaldoInicial" onkeypress="return isNumberKey(event)" class="form-control input-sm" style="background-color: beige" placeholder="">
+                                        <input type="text" ng-model="Objeto_Parametro_arqueoCaja.importeSaldoInicial" onkeypress="return isNumberKey(event)" class="form-control input-sm text-right" style="background-color: beige" placeholder="">
                                     </div>
                                     <div class="col-sm-4  col-md-4 text-center">
                                         <br />
                                         @*<button id="btn-material" class="btn btn-warning btn-sm m-l-10" ng-click="mostrandoInformacion_ingresoFacturas();">
-                                            <i class="glyphicon glyphicon-refresh"></i> Traer Saldos
-                                        </button>*@
+                                                <i class="glyphicon glyphicon-refresh"></i> Traer Saldos
+                                            </button>*@
                                     </div>
                                 </div>
                             </fieldset>
@@ -500,10 +509,21 @@
                         <div class="col-md-6">
                             <fieldset>
                                 <legend> Reparto </legend>
-                                <div class="row" ng-if="lista_billeteReparto.length> 0">
+
+                                <div class="row">
+                                    <div class="col-sm-12  col-md-12">
+                                        <label for="cbo_zonasFiltro" class="control-label"> Zona de Venta </label>
+                                        <select class="selectFiltros" id="cbo_zonasFiltro" ng-model="Objeto_Parametro_filtro.id_ZonaVta" ng-change="mostrar_arqueoCajaCab_billetesMonedas_edicion()">
+                                            <option value="0">[ ----  SELECCIONE  --- ]</option>
+                                            <option ng-repeat="item in Lista_zonasFiltro" value="{{item.id}}"> {{item.descripcion}} </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row" ng-if="lista_billeteReparto.length> 0 ">
                                     <div class=" col-sm-12 col-md-12 ">
                                         <h4>Billetes</h4>
-                                        <div class="tableArqueo">
+                                        <div class="tableArqueo" ng-show="Objeto_Parametro_filtro.id_ZonaVta > 0">
                                             <table id="tableBilleteReparto" class="table table-bordered table-hover">
                                                 <thead>
                                                     <tr>
@@ -536,7 +556,7 @@
                                 <div class="row" ng-if="lista_monedasReparto.length> 0">
                                     <div class=" col-sm-12 col-md-12 ">
                                         <h4>Monedas</h4>
-                                        <div class="tableArqueo">
+                                        <div class="tableArqueo" ng-show="Objeto_Parametro_filtro.id_ZonaVta > 0">
                                             <table id="tableMonedaReparto" class="table table-bordered table-hover">
                                                 <thead>
                                                     <tr>
@@ -833,7 +853,7 @@
                                                 <td>{{item.fecha_Deposito  | date:'dd/MM/yyyy' }}</td>
                                                 <td>{{item.descripcionBanco}}</td>
                                                 <td>{{item.nroOperario}}</td>
-                                                <td class="text-right">{{item.importe_Deposito}}</td>
+                                                <td class="text-right">{{item.importe_Deposito | number }}</td>
 
                                                 <td>Deposito</td>
                                                 <td>{{item.observaciones}}</td>
@@ -845,7 +865,32 @@
                                         </tbody>
                                     </table>
                                 </div>
-
+                                <hr />
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="tableFixHead">
+                                            <table id="tablaDepositos" class="table m-b-0 toggle-arrow-tiny table-bordered table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th colspan="2" class="text-center"> RESUMEN</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th> Banco </th>
+                                                        <th> Deposito </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="item in ResumenDepositos">
+                                                        <td ng-if="item.banco == 'SUMATORIA'"><strong>{{item.banco}}</strong>  </td>
+                                                        <td ng-if="item.banco != 'SUMATORIA'">{{item.banco}}</td>
+                                                        <td ng-if="item.banco == 'SUMATORIA'" class="text-right"><b>{{item.importe | number}}</b>  </td>
+                                                        <td ng-if="item.banco != 'SUMATORIA'" class="text-right">{{item.importe | number}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                             </fieldset>
                         </div>
                     </div>
@@ -923,7 +968,7 @@
                                         <thead>
                                             <tr>
                                                 <th> Tipo Egreso </th>
-                                                <th> Item</th>
+                                                <th> Zona </th>
                                                 <th> Fecha </th>
                                                 <th> Documento </th>
                                                 <th> Serie-Numero </th>
@@ -938,26 +983,129 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr ng-repeat="item in egresos">
-                                                <td>{{item.descripciontipoEgreso}}</td>
-                                                <td>{{$index + 1}}</td>
-                                                <td>{{item.fecha_Registro  | date:'dd/MM/yyyy' }}</td>
-                                                <td>{{item.tipoDocumento}}</td>
-                                                <td>{{item.serieDocumento}} -  {{item.numeroDocumento}} </td>
+                                            <tr ng-repeat="item in egresos">                   
 
+                                                <td>
+                                                    <div ng-if="item.grupo==0">
+                                                        {{item.descripciontipoEgreso}}
+                                                    </div>
+                                                    <div ng-if="item.grupo==1">
 
-                                                <td>{{item.rucProveedor}}</td>
-                                                <td>{{item.razonsocialProveedor}}</td>
-                                                <td class="text-right">{{item.importe_Egreso}}</td>
+                                                    </div>
+                                                </td>
+                                                <td>
+                          
+                                                    <div ng-if="item.grupo==0">
+                                                        {{item.zona}}
+                                                    </div>
+                                                    <div ng-if="item.grupo==1">
 
-                                                <td>{{item.descripcionEgreso}}</td>
-                                                <td>{{item.tipoDocumento2}}</td>
+                                                    </div>
+                                                </td>
+                                                <td>                                       
+                                                    <div ng-if="item.grupo==0">
+                                                        {{item.fecha_Registro  | date:'dd/MM/yyyy' }}
+                                                    </div>
+                                                    <div ng-if="item.grupo==1">
+
+                                                    </div>
+                                                </td>
+                                                <td>                                                   
+                                                    <div ng-if="item.grupo==0">
+                                                        {{item.tipoDocumento}}
+                                                    </div>
+                                                    <div ng-if="item.grupo==1">
+
+                                                    </div>
+                                                </td>
+                                                <td>                                                   
+                                                    <div ng-if="item.grupo==0">
+                                                        {{item.serieDocumento}} -  {{item.numeroDocumento}}
+                                                    </div>
+                                                    <div ng-if="item.grupo==1">
+
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div ng-if="item.grupo==0">
+                                                        {{item.rucProveedor}}  
+                                                    </div>
+                                                    <div ng-if="item.grupo==1">
+
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div ng-if="item.grupo==0">
+                                                        {{item.razonsocialProveedor}}
+                                                    </div>
+                                                    <div ng-if="item.grupo==1" class="text-center">
+                                                            <strong>TOTAL</strong>
+                                                    </div>
+                                                </td>
+                                                <td class="text-right">
+                
+                                                    <div ng-if="item.grupo==0">
+                                                        {{item.importe_Egreso | number }}
+                                                    </div>
+                                                    <div ng-if="item.grupo==1">                                     
+                                                        <strong>  {{item.importe_Egreso | number }} </strong>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <div ng-if="item.grupo==0">
+                                                        {{item.descripcionEgreso}}
+                                                    </div>
+                                                    <div ng-if="item.grupo==1">
+
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div ng-if="item.grupo==0">
+                                                        {{item.tipoDocumento2}}
+                                                    </div>
+                                                    <div ng-if="item.grupo==1">
+
+                                                    </div>
+                                                </td>
                                                 <td class="text-center">
-                                                    <button type="button" class="btn btn-primary btn-circle " ng-click="EdicionRegistros_egresos(item);" data-toggle="tooltip" title="EDITAR"><i class=" ti-pencil-alt"></i></button>
+                                                    <div ng-if="item.grupo==0">
+                                                        <button type="button" class="btn btn-primary btn-circle " ng-click="EdicionRegistros_egresos(item);" data-toggle="tooltip" title="EDITAR"><i class=" ti-pencil-alt"></i></button>
+                                                    </div>
+                                                    <div ng-if="item.grupo==1">
+
+                                                    </div>
                                                 </td>
                                             </tr>
                                         </tbody>
                                     </table>
+                                </div>
+                                <hr />
+ 
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="tableFixHead">
+                                            <table id="tablaDepositos" class="table m-b-0 toggle-arrow-tiny table-bordered table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th colspan="2" class="text-center"> COMPROBANTES </th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th> Documento </th>
+                                                        <th> Total </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="item in ResumenEgresos">
+                                                        <td ng-if="item.tipoDocumento == 'SUMATORIA'"><strong>{{item.tipoDocumento}}</strong>  </td>
+                                                        <td ng-if="item.tipoDocumento != 'SUMATORIA'">{{item.tipoDocumento}}</td>
+                                                        <td ng-if="item.tipoDocumento == 'SUMATORIA'" class="text-right"><b>{{item.importe | number}}</b>  </td>
+                                                        <td ng-if="item.tipoDocumento != 'SUMATORIA'" class="text-right">{{item.importe | number}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
 
                             </fieldset>
@@ -973,53 +1121,153 @@
                             <fieldset>
                                 <legend>. </legend>
 
-                                <div class="row" style="margin-top: 5px;">
+                                @*<div class="row" style="margin-top: 5px;">
                                     <div class="col-md-12 text-center">
-                                        <button id="btn-material" class="btn btn-danger btn-sm m-l-10" ng-click="mostrandoInformacion_cobranzasDevoluciones();"> <i class="glyphicon glyphicon-refresh"></i> Actualizar </button>
+                                        <button id="btn-material" class="btn btn-danger btn-sm m-l-10" ng-click="mostrandoInformacion_cobranzas();"> <i class="glyphicon glyphicon-refresh"></i> Actualizar </button>
                                         <button id="btn-material" class="btn btn-success btn-sm m-l-10" ng-click="guardarInformacion_cobranzasDevoluciones();"> <i class="glyphicon glyphicon-floppy-saved"></i> Guardar  </button>
+                                    </div>
+                                </div>*@
+
+                                <div class="row m-b-10" style="margin-top: -10px;">
+                                    <div class="col-md-4">
+                                        <button id="btn-material" class="btn btn-warning btn-sm  " ng-click="openModal_cobranzas();"> <i class="glyphicon glyphicon-plus"></i> Nuevo  </button>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-12">
-
-                                        <h2 style="text-decoration: underline;">Cobranzas</h2>
                                         <div class="tableFixHead">
                                             <table id="tablaCobranzas" class="table m-b-0 toggle-arrow-tiny table-bordered table-hover">
                                                 <thead>
                                                     <tr>
-                                                        <th> Item   </th>
+                                                        <th> zona   </th>
                                                         <th> Fecha</th>
                                                         <th> Documento </th>
                                                         <th> Serie-Numero </th>
                                                         <th> Importe </th>
 
                                                         <th> Medio Pago </th>
-                                                        <th> Destino </th>
+                                                        <th> Banco </th>
                                                         <th> Observacion </th>
-
+                                                        <th> Recibo de Cobranza </th>
+                                                        <th> Acciones </th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr ng-repeat="item in cobranzas">
-                                                        <td>{{$index + 1}}</td>
-                                                        <td>{{item.fecha}}</td>
-                                                        <td>{{item.documento}}</td>
-                                                        <td>{{item.serieNumero}}</td>
-                                                        <td class="text-right">{{item.importe}}</td>
-                                                        <td>{{item.medioPago}}</td>
-                                                        <td>{{item.destino}}</td>
-                                                        <td>{{item.observacion}}</td>
+                                                        <td>                                                 
+                                                            <div ng-if="item.grupo==0">
+                                                                {{item.zona}}
+                                                            </div>
+                                                            <div ng-if="item.grupo==1">
+                                
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div ng-if="item.grupo==0">
+                                                                {{item.fecha}}
+                                                            </div>
+                                                            <div ng-if="item.grupo==1">
+
+                                                            </div>
+                                                        </td>
+                                                        <td>                              
+                                                            <div ng-if="item.grupo==0">
+                                                                {{item.documento}}
+                                                            </div>
+                                                            <div ng-if="item.grupo==1">
+
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div ng-if="item.grupo==0">
+                                                                {{item.serieNumero}}
+                                                            </div>
+                                                            <div ng-if="item.grupo==1" class="text-center">
+                                                                <strong>TOTAL</strong>
+                                                            </div>
+                                                        </td>
+                                                        <td class="text-right">
+                  
+                                                            <div ng-if="item.grupo==0">
+                                                                {{item.importe | number  }}
+                                                            </div>
+                                                            <div ng-if="item.grupo==1">
+                                                                <strong> {{item.importe | number  }} </strong>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div ng-if="item.grupo==0">
+                                                                {{item.medioPago}}
+                                                            </div>
+                                                            <div ng-if="item.grupo==1">
+
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div ng-if="item.grupo==0">
+                                                                {{item.banco}}
+                                                            </div>
+                                                            <div ng-if="item.grupo==1">
+
+                                                            </div>
+                                                        </td>
+                                                        <td>    
+                                                            <div ng-if="item.grupo==0">
+                                                                {{item.observacion}}
+                                                            </div>
+                                                            <div ng-if="item.grupo==1">
+                         
+                                                            </div>
+                                                        </td>
+                                                        <td>                                 
+                                                            <div ng-if="item.grupo==0">
+                                                                {{item.reciboCobranza}}
+                                                            </div>
+                                                            <div ng-if="item.grupo==1">
+ 
+                                                            </div>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <div ng-if="item.grupo==0">
+                                                                <button type="button" class="btn btn-primary btn-circle " ng-click="EdicionRegistros_cobranzas(item);" data-toggle="tooltip" title="EDITAR"><i class=" ti-pencil-alt"></i></button>
+                                                            </div>
+                                                            <div ng-if="item.grupo==1">
+                           
+                                                            </div>                    
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div> 
+                                    </div>
+                                </div>
+                                 
+                                <hr />
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="tableFixHead">
+                                            <table id="tablaCobranzasII" class="table m-b-0 toggle-arrow-tiny table-bordered table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th> Banco </th>
+                                                        <th> Deposito </th>
+                                                        <th> Transferencia </th>
+                                                        <th> Al Contado </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="item in cobranzas_resumen">
+                                                        <td>{{item.banco}}</td>
+                                                        <td class="text-right">{{item.deposito | number }}</td>
+                                                        <td class="text-right">{{item.transferencia | number }}</td>
+                                                        <td class="text-right">{{item.contado | number }}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <div class="montosFichaMonedas">
-                                            <div class="input-group input-group-sm">
-                                                <label class="control-label"> Total Cobranzas </label>
-                                                <input type="text" ng-model="totalCobranzas" readonly class="form-control input-sm text-right" style=" font-size: 15px !important; font-weight: 800;" placeholder="">
-                                            </div>
-                                        </div>
+
 
                                     </div>
                                 </div>
@@ -1048,12 +1296,12 @@
 
                                 <div class="row" style="margin-top: 5px;">
                                     <div class="col-md-12">
-                                        <h2 style="text-decoration: underline;"> Devoluciones </h2>
+                                        @*<h2 style="text-decoration: underline;"> Devoluciones Norte No 1 </h2>*@
                                         <div class="tableFixHead">
                                             <table id="tablaBoletasVentas" class="table m-b-0 toggle-arrow-tiny table-bordered table-hover" data-page-size="10">
                                                 <thead>
                                                     <tr>
-                                                        <th> Item   </th>
+                                                        <th> Zona   </th>
                                                         <th> Fecha</th>
                                                         <th> Documento </th>
                                                         <th> Serie-Numero </th>
@@ -1066,27 +1314,82 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr ng-repeat="item in devoluciones">
-                                                        <td>{{$index + 1}}</td>
-                                                        <td>{{item.fecha}}</td>
-                                                        <td>{{item.documento}}</td>
-                                                        <td>{{item.serieNumero}}</td>
-                                                        <td class="text-right">{{item.importe}}</td>
+                                                        <td>                                              
+                                                            <div ng-if="item.grupo==0">
+                                                                {{item.zona}}
+                                                            </div>
+                                                            <div ng-if="item.grupo==1">
 
-                                                        <td>{{item.motivo}}</td>
-                                                        <td>{{item.vendedor}}</td>
-                                                        <td>{{item.nroNotaCredito}}</td>
+                                                            </div>
+                                                        </td>
+                                                        <td>                                                     
+                                                            <div ng-if="item.grupo==0">
+                                                                {{item.fecha}}
+                                                            </div>
+                                                            <div ng-if="item.grupo==1">
+
+                                                            </div>
+                                                        </td>
+                                                        <td>                                       
+                                                            <div ng-if="item.grupo==0">
+                                                                {{item.documento}}
+                                                            </div>
+                                                            <div ng-if="item.grupo==1">
+
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div ng-if="item.grupo==0">
+                                                                {{item.serieNumero}}
+                                                            </div>
+                                                            <div ng-if="item.grupo==1" class="text-center">
+                                                                <strong>TOTAL</strong>
+                                                            </div>
+                                                        </td>
+                                                        <td class="text-right">
+                                                  
+                                                            <div ng-if="item.grupo==0">
+                                                                {{item.importe | number}}
+                                                            </div>
+                                                            <div ng-if="item.grupo==1">
+                                                                <strong> {{item.importe | number  }} </strong>
+                                                            </div>
+                                                        </td>
+
+                                                        <td>
+                                               
+                                                            <div ng-if="item.grupo==0">
+                                                                {{item.motivo}}
+                                                            </div>
+                                                            <div ng-if="item.grupo==1">
+
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                     
+                                                            <div ng-if="item.grupo==0">
+                                                                {{item.vendedor}}
+                                                            </div>
+                                                            <div ng-if="item.grupo==1">
+
+                                                            </div>
+                                                        </td>
+                                                        <td>                                                    
+                                                            <div ng-if="item.grupo==0">
+                                                                {{item.nroNotaCredito}}
+                                                            </div>
+                                                            <div ng-if="item.grupo==1">
+
+                                                            </div>
+                                                        </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <div class="montosFichaMonedas">
-                                            <div class="input-group input-group-sm">
-                                                <label class="control-label"> Total Devoluciones </label>
-                                                <input type="text" ng-model="totalDevoluciones" readonly class="form-control input-sm text-right" style=" font-size: 15px !important; font-weight: 800;" placeholder="">
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
+ 
+
                             </fieldset>
 
                         </div>
@@ -1234,13 +1537,12 @@
 
                 <div class="row  ">
                     <div class="col-md-12 ">
-                        <label class="control-label"> Medio Pago </label>    
+                        <label class="control-label"> Medio Pago </label>
                         <select class="selectModal" id="cbo_medioPago" ng-model="Objeto_Parametro_pagos.id_MedioPago" ng-change="change_medioPago(Objeto_Parametro_pagos.id_MedioPago)">
                             <option value="1"> EFECTIVO </option>
                             <option value="2"> DEPOSITO </option>
                             @*<option ng-repeat="item in Lista_CondicionFact" value="{{item.id_detalleTabla}}">{{item.descripcion_grupoTabla}}</option>*@
                         </select>
-
                     </div>
                 </div>
 
@@ -1254,16 +1556,17 @@
                     </div>
                 </div>
 
-                <div class="row" ng-show="showDeposit" >
+                <div class="row" ng-show="showDeposit">
                     <div class="col-xs-6 col-sm-6 col-md-6 ">
                         <label class="control-label"> Nro Operacion</label>
                         <input type="text" ng-model="Objeto_Parametro_pagos.nroOperario" class="form-control input-sm" style="background-color: beige;  " placeholder="">
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="col-xs-6 col-sm-6 col-md-6 ">
                         <label class="control-label"> Importe </label>
-                        <input type="text" onkeypress="return filterFloat(event,this);" ng-model="Objeto_Parametro_pagos.importe_Deposito" class="form-control input-sm"   placeholder="">
+                        <input type="text" onkeypress="return filterFloat(event,this);" ng-model="Objeto_Parametro_pagos.importe_Deposito" class="form-control input-sm" placeholder="">
                     </div>
                 </div>
                 <div class="row" ng-show="showDeposit">
@@ -1296,7 +1599,7 @@
                 <div class="row">
                     <div class="col-xs-6 col-sm-6 col-md-6 ">
                         <label class="control-label"> Nro Doc Referencia</label>
-                        <input type="text" ng-model="Objeto_Parametro_pagos.documentoReferencia" class="form-control input-sm"  placeholder="">
+                        <input type="text" ng-model="Objeto_Parametro_pagos.documentoReferencia" class="form-control input-sm" placeholder="">
                     </div>
                 </div>
 
@@ -1316,7 +1619,6 @@
         </div>
     </div>
 </div>
-
 
 <div id="modalEgresos" class="modal fade bd-example-modal-lg ModalBorderSombra  " tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -1342,7 +1644,19 @@
                             <option ng-repeat="item in tiposEgresos" value="{{item.id}}">{{item.descripcion}}</option>
                         </select>
                     </div>
+                </div> 
+
+                <div class="row" ng-show="Objeto_Parametro_egresos.id_TipoEgreso == '452'">
+                    <div class="col-sm-12  col-md-12">
+                        <label for="cbo_zonaEgreso" class="control-label"> Zona de Venta </label>
+                        <select class="selectFiltros" id="cbo_zonaEgreso" ng-model="Objeto_Parametro_egresos.id_ZonaEgreso" >
+                            <option value="0">[ ----  SELECCIONE  --- ]</option>
+                            <option ng-repeat="item in Lista_zonasFiltro" value="{{item.id}}"> {{item.descripcion}} </option>
+                        </select>
+                    </div>
                 </div>
+
+
                 <div class="row">
                     <div class="col-xs-6 col-sm-3 col-md-3 ">
                         <label class="control-label"> Fecha </label>
@@ -1374,7 +1688,7 @@
                 <div class="row">
                     <div class="col-md-12 ">
                         <label class="control-label"> Tipo Documento </label>
-                        <select id="cbo_tipoDocumento"  class="selectFiltros" data-style="btn-default" ng-model="Objeto_Parametro_egresos.id_TipoDocumento">
+                        <select id="cbo_tipoDocumento" class="selectFiltros" data-style="btn-default" ng-model="Objeto_Parametro_egresos.id_TipoDocumento">
                             <option value="0">[ ----  SELECCIONE  --- ]</option>
                             <option ng-repeat="item in tiposDocumentos" value="{{item.id}}">{{item.descripcion}}</option>
                         </select>
@@ -1394,11 +1708,16 @@
                 <div class="row">
                     <div class="col-xs-6 col-sm-3 col-md-3 ">
                         <label class="control-label"> Nro Ruc</label>
-                        <input type="text" ng-model="Objeto_Parametro_egresos.rucProveedor" ng-enter="consultarRuc(Objeto_Parametro_egresos.rucProveedor)" class="form-control input-sm" style="background-color: beige;" placeholder="">
+                        <div class="input-group">
+                            <input type="text" ng-model="Objeto_Parametro_egresos.rucProveedor" ng-enter="consultarRuc(Objeto_Parametro_egresos.rucProveedor)" class="form-control input-sm" style=" margin-top: 2px; background-color: beige;" placeholder="Nro Ruc">
+                            <div class="input-group-btn">
+                                <button class="btn btn-xs btn-default" title="Agregar Nuevo Proveedor" type="submit" ng-click="Open_New_ModalProveedor();">  <i class="glyphicon glyphicon-plus"></i> </button>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-xs-6 col-sm-9 col-md-9 ">
                         <label class="control-label"> Proveedor</label>
-                        <input type="text" readonly ng-model="Objeto_Parametro_egresos.razonsocialProveedor" class="form-control input-sm"   placeholder="">
+                        <input type="text" readonly ng-model="Objeto_Parametro_egresos.razonsocialProveedor" class="form-control input-sm" placeholder="">
                     </div>
                 </div>
                 <div class="row">
@@ -1429,7 +1748,7 @@
                     </div>
                 </div>
 
-                <div class="row" >
+                <div class="row">
                     <div class="col-md-12">
                         <label for="txt_nroOperacion" class="control-label"> {{titleFile}}  </label>
                         <div class="botonFile">
@@ -1459,6 +1778,292 @@
             </div>
             <div class="modal-footer ">
                 <button id="btn-material" class="btn btn-success btn-sm m-l-10" ng-click="guardarInformacion_egresos();"> <i class="glyphicon glyphicon-floppy-saved"></i> Guardar</button>
+                <a class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-sign"></span> Cerrar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalProveedores" class="modal fade bd-example-modal-lg " tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background:#47a9da;  padding: 15px; border-bottom: 2px solid #ef0752; color:#ffffff">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myLargeModalLabel" style="color: #fcfdff !important;">Nuevo Proveedor </h4>
+            </div>
+            <div class="modal-body">
+                <div class="loaderModal" ng-if="loaderSave"></div>
+                <div class="contentRegistro floating-labels form-inline">
+                    <fieldset>
+                        <legend>Ingreso de Datos del Proveedor </legend>
+                        <div class="row">
+                            <div class="col-sm-6 col-md-5">
+                                <input type="text" class="form-control disabledContent" style="font-size: 17px !important;font-weight: 800;background-color: beige;" id="txtnumero_doc" onkeypress="return filterFloat(event,this);" ng-change="validarRuc(objeto_Parametros.nroDocumento_Proveedor)" ng-model="objeto_Parametros.nroDocumento_Proveedor" maxlength="11"><span class="highlight"></span> <span class="bar"></span>
+                                <label for="txtnumero_doc">N° Documento </label> <span class="help-block"></span>
+                            </div>
+                            <div class="col-sm-6  col-md-7">
+                                <pre id="resultado" style="width:250px"></pre>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" id="txtrzon_soc" ng-model="objeto_Parametros.razonSocial_Proveedor"><span class="highlight"></span> <span class="bar"></span>
+                                <label for="txtrzon_soc">Razon Social del Proveedor </label> <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="text" class="form-control" id="txtdireccion" ng-model="objeto_Parametros.direccion_Proveedor"><span class="highlight"></span> <span class="bar"></span>
+                                <label for="txtdireccion">Direccion del Proveedor </label> <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="txtcel_pro" ng-model="objeto_Parametros.telefono1_Proveedor"><span class="highlight"></span> <span class="bar"></span>
+                                <label for="txtcel_pro">Telefono/Celular</label> <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" id="txtcel_pro" ng-model="objeto_Parametros.email_Proveedor"><span class="highlight"></span> <span class="bar"></span>
+                                <label for="txtcel_pro">Correo</label> <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="text" class="form-control" id="txtcontac" ng-model="objeto_Parametros.contacto_Proveedor"><span class="highlight"></span> <span class="bar"></span>
+                                <label for="txtcontac">Contacto de Proveedor</label> <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="cbo_cond_facturacion" style="top: -5px !important; color: #2c5ca9;font-weight: 600; letter-spacing: 1px;">Condición Pago</label> <span class="help-block"></span>
+                                <select class="selectModal" id="cbo_cond_facturacion" ng-model="objeto_Parametros.id_CondicionPago">
+                                    <option value="0">[ ----  SELECCIONE  --- ]</option>
+                                    <option ng-repeat="item in Lista_CondicionFact" value="{{item.id_detalleTabla}}">{{item.descripcion_grupoTabla}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </fieldset>
+
+
+                    <fieldset>
+                        <legend>Cuenta Bancaria</legend>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <label for="cbo_bancoProveedor" style="top: -5px !important; color: #2c5ca9;font-weight: 600; letter-spacing: 1px;">Banco</label> <span class="help-block"></span>
+                                <select class="selectModal" id="cbo_bancoProveedor" ng-model="objeto_Parametros.id_Banco">
+                                    <option value="0">[ -SELECCIONE- ]</option>
+                                    <option ng-repeat="item in Lista_Bancos" value="{{item.id_detalleTabla}}">{{item.descripcion_grupoTabla}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-8">
+                                <label for="cboMoneda" style="top: -5px !important; color: #2c5ca9;font-weight: 600; letter-spacing: 1px;">Moneda</label> <span class="help-block"></span>
+                                <select class="selectModal" id="cboMoneda" ng-model="objeto_Parametros.id_Moneda">
+                                    <option value="1"> Soles</option>
+                                    <option value="2"> Dolares</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-10">
+                                <label for="txt_nroCuenta" class="control-label" style="top: -5px !important; color: #2c5ca9;font-weight: 600; letter-spacing: 1px;">Nro de Cuenta.</label> <span class="help-block"></span>
+                                <input type="text" class="form-control" id="txt_nroCuenta" maxlength="50" ng-model="objeto_Parametros.nroCuenta" style="margin-top: -12px;">
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-10">
+                                <label for="txt_cci" class="control-label" style="top: -5px !important; color: #2c5ca9;font-weight: 600; letter-spacing: 1px;"> CCI Nro.</label> <span class="help-block"></span>
+                                <input type="text" class="form-control" id="txt_cci" maxlength="50" ng-model="objeto_Parametros.CCINro" style="margin-top: -12px;">
+                            </div>
+                        </div>
+
+                    </fieldset>
+
+
+                </div>
+
+                <div class="contentRegistro floating-labels form-inline">
+                    <div>
+                        <div class="row ">
+                            <div class="col-sm-6">
+                                <fieldset>
+                                    <legend>Estado</legend>
+                                    <div class="row " style=" margin-top: -10px;">
+                                        <div class="col-sm-6 ">
+                                            <div class="form-group">
+                                                <div class="checkbox checkbox-success">
+                                                    <input id="checkbox1" type="checkbox" ng-model="objEstados.activo" ng-change="changeStatus(objEstados.activo);">
+                                                    <label for="checkbox1" class="estadoModal" style="color : {{objEstados.colorText}}">{{objEstados.text}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer " style="background: #47a9da;">
+                <a class="btn btn-primary" ng-click="GuardarRegistro();" id="btn-save"> <span class="glyphicon glyphicon-floppy-disk"></span> Guardar</a>
+                <a class="btn btn-danger" data-dismiss="modal" id="btn-close"><span class="glyphicon glyphicon-remove-sign"></span> Cerrar</a>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+
+<div id="modalCobranzas" class="modal fade bd-example-modal-lg ModalBorderSombra  " tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h2 class="modal-title" id="myLargeModalLabel" style="color:white !important"> Cobranzas </h2>
+            </div>
+            <div class="modal-body contentRegistro contentCombo ContentFilters ">
+                <div class="loaderModal" ng-if="loaderSaveD"></div>
+
+                <div class="row">
+                    <div class="col-xs-6 col-sm-3 col-md-3 ">
+                        <label class="control-label"> Correlativo</label>
+                        <input type="text" ng-model="Objeto_Parametro_cobranzas.id_ArqueoCaja_Cobranza" class="form-control input-sm" style="background-color: beige;  " placeholder="">
+                    </div>
+                </div>
+
+
+                <fieldset style=" background-color: aliceblue;">
+                    <legend> Informacion del Documento </legend>
+
+                    <div style=" margin-top: -10px;">
+
+                        <div class="row">
+                            <div class="col-md-12 ">
+                                <label class="control-label"> Zona de Venta </label>
+                                <select class="selectFiltros" id="cbo_zonaCobranza" ng-model="Objeto_Parametro_filtro.id_ZonaVta">
+                                    <option value="0">[ ----  SELECCIONE  --- ]</option>
+                                    <option ng-repeat="item in Lista_zonasFiltro" value="{{item.id}}"> {{item.descripcion}} </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-3 col-md-4 ">
+                                <label class="control-label"> Tipo Documento </label>
+                                <select id="cbo_tipoDocumentoCobranza" class="selectFiltros " data-style="btn-default" ng-model="Objeto_Parametro_cobranzas.id_TipoDocumento">
+                                    <option value="0">[ ----  SELECCIONE  --- ]</option>
+                                    <option ng-repeat="item in tiposDocumentos" value="{{item.id}}">{{item.descripcion}}</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-6 col-sm-3 col-md-2 ">
+                                <label class="control-label"> Serie Doc.</label>
+                                <input type="text" ng-model="Objeto_Parametro_cobranzas.serie_Documento" maxlength="4" class="form-control input-sm" placeholder="">
+                            </div>
+                            <div class="col-xs-6 col-sm-4 col-md-3 ">
+                                <label class="control-label"> Nro Documento</label>
+                                <input type="text" ng-model="Objeto_Parametro_cobranzas.numero_Documento" maxlength="8" class="form-control input-sm" x placeholder="" title="Presione la tecla Enter para Buscar" ng-enter="buscarDocumentoCobranza();">
+                            </div>
+                            <div class="col-xs-6 col-sm-4 col-md-3 ">
+                                <label class="control-label"> Importe Total</label>
+                                <input type="text" onkeypress="return filterFloat(event,this);" ng-model="Objeto_Parametro_cobranzas.importe_Documento" class="form-control input-sm text-right" readonly placeholder="">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 ">
+                                <label class="control-label"> Cliente</label>
+                                <input type="text" ng-model="Objeto_Parametro_cobranzas.cliente_Documento" class="form-control input-sm" readonly placeholder="">
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <div ng-show="Objeto_Parametro_cobranzas.id_Factura_Cab >0">
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-3 col-md-3 ">
+                            <label class="control-label"> Fecha </label>
+                            <input id="dtp_fechaCobranza" ng-model="Objeto_Parametro_cobranzas.fecha_cobranza" type="text" class="form-control datepicker input-sm" placeholder="dia/mes/año">
+                        </div>
+                    </div>
+
+                    <div class="row  ">
+                        <div class="col-md-12 ">
+                            <label class="control-label"> Medio Pago </label>
+                            <select class="selectFiltros" id="cbo_medioPagoCobranza" ng-model="Objeto_Parametro_cobranzas.id_MedidoPago" ng-change="change_medioPagoCobranza(Objeto_Parametro_cobranzas.id_MedidoPago)">
+                                <option value="1"> EFECTIVO </option>
+                                <option value="2"> DEPOSITO </option>
+                            </select>
+                        </div>
+                    </div>
+                    <br />
+                    <div ng-show="Objeto_Parametro_cobranzas.id_MedidoPago == 2" style=" background-color: beige; padding: 5px;">
+                        <div class="row">
+                            <div class="col-md-12 ">
+                                <label class="control-label"> Banco </label>
+                                <select id="cbo_bancoCobranza" class="selectFiltros" data-style="btn-default" ng-model="Objeto_Parametro_cobranzas.id_Banco">
+                                    <option value="0">[ -SELECCIONE- ]</option>
+                                    <option ng-repeat="item in Lista_Bancos" value="{{item.id_detalleTabla}}">{{item.descripcion_grupoTabla}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-6 ">
+                                <label class="control-label"> Nro Operacion</label>
+                                <input type="text" ng-model="Objeto_Parametro_cobranzas.nro_operacionBanco" class="form-control input-sm" placeholder="">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="inputFileOpenCobranza" class="control-label"> {{titleFile}}  </label>
+                                <div class="botonFile">
+                                    <input type="file" id="inputFileOpenCobranza" class="form-control-file btn" formControlName="file" accept=".jpg, .jpeg, .png" onchange="angular.element(this).scope().changeImagen_cobranza(event)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" ng-if="showFileName">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-8 text-center">
+                                <label class="control-label">  Archivo Cargado : </label><br />
+                                <label class="control-label" style="font-size: 15px;color: red; cursor:pointer"> {{Objeto_Parametro_cobranzas.adjuntarArchivoBanco}}</label>
+                            </div>
+                            <div class="col-sm-2"></div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-3 col-md-3 ">
+                            <label class="control-label"> Importe </label>
+                            <input type="text" onkeypress="return filterFloat(event,this);" ng-model="Objeto_Parametro_cobranzas.importePago" class="form-control input-sm text-right" placeholder="">
+                        </div>
+                        <div class="col-xs-12  col-sm-9 col-md-9 ">
+                            <div style=" text-align: center; margin-top: 20px; margin-bottom: -20px;">
+                                <div class="cssload-speeding-wheel" ng-if="loader"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 ">
+                            <label class="control-label"> Observaciones  </label>
+                            <input type="text" ng-model="Objeto_Parametro_cobranzas.observaciones" class="form-control input-sm" placeholder="">
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer ">
+                <button id="btn-material" ng-show="Objeto_Parametro_cobranzas.id_Factura_Cab >0" class="btn btn-success btn-sm m-l-10" ng-click="guardarInformacion_cobranzas();"> <i class="glyphicon glyphicon-floppy-saved"></i> Guardar</button>
                 <a class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-sign"></span> Cerrar</a>
             </div>
         </div>

@@ -42,8 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.BulkInsert, Version=6.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -54,8 +53,7 @@
       <HintPath>..\packages\EntityFramework.MappingAPI.6.1.0.9\lib\net45\EntityFramework.MappingAPI.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -257,6 +255,7 @@
     <Compile Include="Controllers\Cobranza\CobranzaReporteController.cs" />
     <Compile Include="Controllers\Cobranza\CobranzaManualController.cs" />
     <Compile Include="Controllers\Facturacion\Procesos\ArqueoCaja\tblArqueoCaja_CabController.cs" />
+    <Compile Include="Controllers\Facturacion\Procesos\ArqueoCaja\tblArqueoCaja_CobranzaController.cs" />
     <Compile Include="Controllers\Facturacion\Procesos\ArqueoCaja\tblArqueoCaja_DepositosController.cs" />
     <Compile Include="Controllers\Facturacion\Procesos\ArqueoCaja\tblArqueoCaja_EgresosController.cs" />
     <Compile Include="Controllers\Facturacion\Procesos\ArqueoCaja\tblArqueoCaja_PagoProveedorController.cs" />

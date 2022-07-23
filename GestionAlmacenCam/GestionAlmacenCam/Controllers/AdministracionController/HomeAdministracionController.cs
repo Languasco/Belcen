@@ -33,5 +33,10 @@ namespace GestionAlmacenCam.Controllers.AdministracionController
             return View();
         }
 
+        public ActionResult UsuarioZonaVenta_index()
+        {
+            return View();
+        }
+
     }
 }

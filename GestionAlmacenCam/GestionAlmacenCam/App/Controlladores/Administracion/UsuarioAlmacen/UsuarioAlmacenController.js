@@ -19,18 +19,26 @@ app.controller('ctrlUsuarioAlmacen', function ($scope, loginServices, $location,
     
 
     $scope.Lista_Usuarios = [];
+    var oTable_user;
     $scope.get_Listando_Usuarios = function () { 
         $scope.loader = true;
         UsuarioAlmacenServices.get_Usuarios()
             .then(function (res) {
-
-                console.log(res)
-
                 $scope.Lista_Usuarios = res;
                 $scope.loader = false;
-                $timeout(function () {
-                    auxiliarServices.initFooTable('tbl_usuarios', 'inputSearch_user');
-                }, 500)
+                //$timeout(function () {
+                //    auxiliarServices.initFooTable('tbl_usuarios', 'inputSearch_user');
+                //}, 500)
+
+                //if (oTable_user == null) {
+                //    oTable_user = 'data';
+                //    auxiliarServices.initFooTable('tbl_usuarios', 'inputSearch_user');
+                //} else {
+                //    ///---- limpiando el filtrooo en la ayuda ---
+                //    $('#tbl_usuarios').trigger('footable_filter', {
+                //        filter: $("#inputSearch_user").val()
+                //    });
+                //}
             }, function (err) {
                 console.log(err);
             });     
@@ -44,9 +52,9 @@ app.controller('ctrlUsuarioAlmacen', function ($scope, loginServices, $location,
                 .then(function (res) {
                     $scope.Lista_Almacenes = res;
                     $scope.loader = false;
-                    $timeout(function () {
-                        auxiliarServices.initFooTable('tbl_almacen', 'inputSearch_almacen');
-                    }, 500)
+                    //$timeout(function () {
+                    //    auxiliarServices.initFooTable('tbl_almacen', 'inputSearch_almacen');
+                    //}, 500)
                 }, function (err) {
                     console.log(err);
                 });
@@ -140,6 +148,38 @@ app.controller('ctrlUsuarioAlmacen', function ($scope, loginServices, $location,
             console.log(error)
         })
 
+    }
+
+    $scope.doSearch = function (tipo) {
+
+        let tableReg = null;
+        let searchText = null;
+
+        if (tipo =='usuario') {
+              tableReg = document.getElementById('tbl_usuarios');
+              searchText = document.getElementById('inputSearch_user').value.toLowerCase();
+        }
+        if (tipo == 'almacen') {
+              tableReg = document.getElementById('tbl_almacen');
+              searchText = document.getElementById('inputSearch_almacen').value.toLowerCase();
+        }
+
+
+        for (var i = 1; i < tableReg.rows.length; i++) {
+            var cellsOfRow = tableReg.rows[i].getElementsByTagName('td');
+            var found = false;
+            for (var j = 0; j < cellsOfRow.length && !found; j++) {
+                var compareWith = cellsOfRow[j].innerHTML.toLowerCase();
+                if (searchText.length == 0 || (compareWith.indexOf(searchText) > -1)) {
+                    found = true;
+                }
+            }
+            if (found) {
+                tableReg.rows[i].style.display = '';
+            } else {
+                tableReg.rows[i].style.display = 'none';
+            }
+        }
     }
 
         

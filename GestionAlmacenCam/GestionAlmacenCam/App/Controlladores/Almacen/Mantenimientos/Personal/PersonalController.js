@@ -103,11 +103,11 @@ app.controller('ctrlPersonal', function ($scope, loginServices, $location, $time
     $scope.get_Listando_TipoPersonal = function () {
         $scope.Lista_TipoPersonal.push({
             id: '1',
-            des: 'PROPIO'
+            des: 'COBERTURA'
         })
         $scope.Lista_TipoPersonal.push({
             id: '2',
-            des: 'CONTRATA'
+            des: 'MAYORISTA'
         })
         $timeout(function () {
             $(".select_modalss").select2();
@@ -316,7 +316,7 @@ app.controller('ctrlPersonal', function ($scope, loginServices, $location, $time
         $scope.objeto_parametros.apellidos_personal = obj.apellidos_personal;
         $scope.objeto_parametros.nombres_personal = obj.nombres_personal;
 
-        $scope.objeto_parametros.tip_personal = obj.tip_personal;
+        $scope.objeto_parametros.tip_personal = String(obj.tip_personal);
         $scope.objeto_parametros.id_cargo_personal = obj.id_cargo_personal;
         $scope.objeto_parametros.fotoUrl_personal = obj.fotoUrl_personal;
         $scope.objeto_parametros.nroCelular_personal = obj.nroCelular_personal;
@@ -356,7 +356,7 @@ app.controller('ctrlPersonal', function ($scope, loginServices, $location, $time
             nroDoc_personal.disabled = true;
             $('#cbo_tipoDoc_personal').val(obj.tipoDoc_personal).trigger('change.select2');
             $('#cbo_id_cargo_personal').val(obj.id_cargo_personal).trigger('change.select2');
-            $('#cbo_tip_personal').val(obj.tip_personal).trigger('change.select2');
+            $('#cbo_tip_personal').val(String(obj.tip_personal)).trigger('change.select2');
             $('#cbo_id_perfil').val(obj.id_perfil).trigger('change.select2');
         }, 100); 
     }

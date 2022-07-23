@@ -63,6 +63,7 @@ namespace Entidades
         public Nullable<int> id_ZonaVta { get; set; }
         public Nullable<int> id_Anexo { get; set; }
         public string guia_Facturado { get; set; }
+        public Nullable<int> id_tipoDocumentoG { get; set; }
     
         public virtual tbl_Alm_Almacen tbl_Alm_Almacen { get; set; }
         public virtual tbl_Alm_Movimientos tbl_Alm_Movimientos { get; set; }

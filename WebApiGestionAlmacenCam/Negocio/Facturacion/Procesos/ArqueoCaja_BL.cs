@@ -148,7 +148,7 @@ namespace Negocio.Facturacion.Procesos
             return res;
         }
 
-        public object set_guardar_billetesMonedasArqueo(int id_ArqueoCaja, int id_Tipo, int id_BilleteMoneda, string cantidad_Billete, string valor_Billete, string total_Billete, int idUsuario)
+        public object set_guardar_billetesMonedasArqueo(int id_ArqueoCaja, int id_Tipo, int id_BilleteMoneda, string cantidad_Billete, string valor_Billete, string total_Billete, int idUsuario, int idZona )
         {
             Resul res = new Resul();
             try
@@ -169,8 +169,9 @@ namespace Negocio.Facturacion.Procesos
                         cmd.Parameters.Add("@total_Billete", SqlDbType.VarChar).Value = total_Billete;
 
                         cmd.Parameters.Add("@idUsuario", SqlDbType.Int).Value = idUsuario;
-                        cmd.ExecuteNonQuery();
+                        cmd.Parameters.Add("@idZona", SqlDbType.Int).Value = idZona;
 
+                        cmd.ExecuteNonQuery();
 
                         res.ok = true;
                         res.data = "OK";
@@ -642,9 +643,12 @@ namespace Negocio.Facturacion.Procesos
             return res;
         }
 
-        public object get_informacionVentas_cobranzasDevoluciones(int id_Anexo, int id_ZonaVta, int id_CC, string fechaArqueoCaja, int idUsuario)
+        public object get_informacionVentas_cobranzas(int id_Anexo, int id_ZonaVta, int id_CC, string fechaArqueoCaja, int idUsuario)
         {
             DataTable dt_detalleCobranzas = new DataTable();
+            DataTable dt_detalleCobranzasII = new DataTable();
+            DataTable dt_resumenCobranzas = new DataTable();
+
             Resul res = new Resul();
             try
             {
@@ -666,10 +670,44 @@ namespace Negocio.Facturacion.Procesos
                             da.Fill(dt_detalleCobranzas);
                         }
                     }
+                    using (SqlCommand cmd = new SqlCommand("PROC_S_ARQUEO_CAJA_COBRANZAS_NRO_2_LISTADO", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@id_Anexo", SqlDbType.Int).Value = id_Anexo;
+                        cmd.Parameters.Add("@id_ZonaVta", SqlDbType.Int).Value = id_ZonaVta;
+                        cmd.Parameters.Add("@id_CC", SqlDbType.Int).Value = id_CC;
+                        cmd.Parameters.Add("@fechaArqueoCaja", SqlDbType.VarChar).Value = fechaArqueoCaja;
+                        cmd.Parameters.Add("@idUsuario", SqlDbType.Int).Value = idUsuario;
+
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt_detalleCobranzasII);
+                        }
+                    }
+
+                    using (SqlCommand cmd = new SqlCommand("PROC_S_ARQUEO_CAJA_COBRANZAS_RESUMEN", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@id_Anexo", SqlDbType.Int).Value = id_Anexo;
+                        cmd.Parameters.Add("@id_ZonaVta", SqlDbType.Int).Value = id_ZonaVta;
+                        cmd.Parameters.Add("@id_CC", SqlDbType.Int).Value = id_CC;
+                        cmd.Parameters.Add("@fechaArqueoCaja", SqlDbType.VarChar).Value = fechaArqueoCaja;
+                        cmd.Parameters.Add("@idUsuario", SqlDbType.Int).Value = idUsuario;
+
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt_resumenCobranzas);
+                        }
+                    }
+
 
                     var listadosCab = new
                     {
-                        cobranzas = dt_detalleCobranzas
+                        cobranzas = dt_detalleCobranzas,
+                        cobranzas_II = dt_detalleCobranzasII,
+                        cobranzas_resumen = dt_resumenCobranzas
                     };
 
                     res.ok = true;
@@ -1422,7 +1460,7 @@ namespace Negocio.Facturacion.Procesos
 
         public object get_informacionVentas_Devoluciones(int id_Anexo, int id_ZonaVta, int id_CC, string fechaArqueoCaja, int idUsuario)
         {
-            DataTable dt_detalleDevoluciones = new DataTable();
+            DataTable dt_detalleDevoluciones = new DataTable(); 
 
             Resul res = new Resul();
             try
@@ -1445,7 +1483,7 @@ namespace Negocio.Facturacion.Procesos
                             da.Fill(dt_detalleDevoluciones);
                         }
                     }
-
+      
                     var listadosCab = new
                     {
                         Devoluciones = dt_detalleDevoluciones
@@ -1603,7 +1641,7 @@ namespace Negocio.Facturacion.Procesos
             return res;
         }
 
-        public object get_arqueoCajaCab_billetesMonedas_edicion(int idArqueoCaja, int idUsuario)
+        public object get_arqueoCajaCab_billetesMonedas_edicion(int idArqueoCaja, int idUsuario, int idZona)
         {
             DataTable dt_detalle = new DataTable();
             Resul res = new Resul();
@@ -1617,6 +1655,7 @@ namespace Negocio.Facturacion.Procesos
                         cmd.CommandTimeout = 0;
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("@idArqueoCaja", SqlDbType.Int).Value = idArqueoCaja;
+                        cmd.Parameters.Add("@idZona", SqlDbType.Int).Value = idZona;
 
                         using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                         {
@@ -1673,6 +1712,8 @@ namespace Negocio.Facturacion.Procesos
         public object get_arqueoCajaCab_cobranzas_edicion(int idArqueoCaja , int idUsuario)
         {
             DataTable dt_detalleCobranzas = new DataTable();
+             DataTable dt_resumenCobranzas = new DataTable();
+
             Resul res = new Resul();
             try
             {
@@ -1691,9 +1732,21 @@ namespace Negocio.Facturacion.Procesos
                         }
                     }
 
+                    using (SqlCommand cmd = new SqlCommand("PROC_S_ARQUEO_CAJA_COBRANZAS_RESUMEN_EDICION", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@idArqueoCaja", SqlDbType.Int).Value = idArqueoCaja;
+
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt_resumenCobranzas);
+                        }
+                    }
                     var listadosCab = new
                     {
-                        cobranzas = dt_detalleCobranzas
+                        cobranzas = dt_detalleCobranzas,
+                        cobranzas_resumen = dt_resumenCobranzas
                     };
 
                     res.ok = true;
@@ -1711,7 +1764,6 @@ namespace Negocio.Facturacion.Procesos
         public object get_arqueoCajaCab_devoluciones_edicion(int idArqueoCaja, int idUsuario)
         {
             DataTable dt_detalleDevoluciones = new DataTable();
-
             Resul res = new Resul();
             try
             {
@@ -1728,7 +1780,7 @@ namespace Negocio.Facturacion.Procesos
                         {
                             da.Fill(dt_detalleDevoluciones);
                         }
-                    }
+                    } 
 
                     var listadosCab = new
                     {
@@ -1792,6 +1844,175 @@ namespace Negocio.Facturacion.Procesos
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("@id_zona", SqlDbType.Int).Value = id_zona;
                         cmd.Parameters.Add("@id_supervisor", SqlDbType.Int).Value = id_supervisor;
+                        cmd.Parameters.Add("@id_estado", SqlDbType.Int).Value = id_estado;
+                        cmd.Parameters.Add("@buscar", SqlDbType.VarChar).Value = buscar;
+
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt_detalle);
+                        }
+
+                        res.ok = true;
+                        res.data = dt_detalle;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+            return res;
+        }
+
+        public object get_tiposEgresos_usuario(int idUsuario)
+        {
+            DataTable dt_detalle = new DataTable();
+            Resul res = new Resul();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(Conexion.bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("PROC_S_ARQUEO_CAJA_COMBO_TIPO_EGRESO_X_USUARIO", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@idUsuario", SqlDbType.Int).Value = idUsuario;
+
+
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt_detalle);
+                        }
+
+                        res.ok = true;
+                        res.data = dt_detalle;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+            return res;
+        }
+
+        public string Set_Actualizar_imagenComprobanteCobranza(int id_ArqueoCaja_Cobranza, string nombreFile, string nombreFileServer)
+        {
+            string resultado = "";
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(Conexion.bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("PROC_S_ARQUEO_CAJA_GRABAR_IMAGEN_COBRANZA", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@id_ArqueoCajaCobranza", SqlDbType.Int).Value = id_ArqueoCaja_Cobranza;
+                        cmd.Parameters.Add("@nombreFile", SqlDbType.VarChar).Value = nombreFile;
+                        cmd.Parameters.Add("@nombreFileServer", SqlDbType.VarChar).Value = nombreFileServer;
+
+                        cmd.ExecuteNonQuery();
+                        resultado = "OK";
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                resultado = e.Message;
+            }
+            return resultado;
+        }
+
+        public object get_buscarDocumento_cobranzas(int id_zona, int id_TipoDocumento, string serie_Documento,string numero_Documento, int idUsuario)
+        {
+            DataTable dt_detalle = new DataTable();
+            Resul res = new Resul();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(Conexion.bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("PROC_S_ARQUEO_CAJA_COBRANZAS_BUSCAR_DOCUMENTO", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@id_zona", SqlDbType.Int).Value = id_zona;
+                        cmd.Parameters.Add("@id_TipoDocumento", SqlDbType.Int).Value = id_TipoDocumento;
+                        cmd.Parameters.Add("@serie_Documento", SqlDbType.VarChar).Value = serie_Documento;
+                        cmd.Parameters.Add("@numero_Documento", SqlDbType.VarChar).Value = numero_Documento;
+                        cmd.Parameters.Add("@idUsuario", SqlDbType.Int).Value = idUsuario;
+                        
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt_detalle);
+                        }
+                    }
+
+                    res.ok = true;
+                    res.data = dt_detalle;
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+            return res;
+        }
+
+        public object get_cobranzas_edicion(int id_ArqueoCaja_Cobranza, int id_usuario)
+        {
+            DataTable dt_detalle = new DataTable();
+            Resul res = new Resul();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(Conexion.bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("PROC_S_ARQUEO_CAJA_COBRANZAS_EDICION_REGISTRO", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@id_ArqueoCaja_Cobranza", SqlDbType.Int).Value = id_ArqueoCaja_Cobranza;
+                        cmd.Parameters.Add("@id_usuario", SqlDbType.Int).Value = id_usuario;
+
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt_detalle);
+                        }
+                    }
+
+                    res.ok = true;
+                    res.data = dt_detalle;
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+            return res;
+        }
+                 
+        public object get_listadoMantenimiento_zonasVentas(int id_local, int id_anexo, int id_estado, string buscar)
+        {
+            DataTable dt_detalle = new DataTable();
+            Resul res = new Resul();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(Conexion.bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("PROC_S_MANT_ZONAS_VENTA_CAB", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@id_local", SqlDbType.Int).Value = id_local;
+                        cmd.Parameters.Add("@id_anexo", SqlDbType.Int).Value = id_anexo;
                         cmd.Parameters.Add("@id_estado", SqlDbType.Int).Value = id_estado;
                         cmd.Parameters.Add("@buscar", SqlDbType.VarChar).Value = buscar;
 

@@ -1261,6 +1261,27 @@ app.controller('transferenciasNewController', function ($scope, TransportistaSer
 
     //---metodos de la  Guia
 
+
+    $scope.Lista_TipoDocumentoGuia = [];
+    $scope.Listando_TipoDocumentoGuia= function () {
+        transferenciasNewServices.get_tipoDocumentoGuia().then(function (res) {
+            $scope.Lista_TipoDocumentoGuia = [];
+            if (res.ok == true) {
+                $scope.Lista_TipoDocumentoGuia = res.data;
+            } else {
+                $scope.loader_modal = false;
+                alert(JSON.stringify(res.data));
+            }
+
+
+
+        }, function (err) {
+            console.log(err);
+        })
+    };
+    $scope.Listando_TipoDocumentoGuia();
+
+
     $scope.Lista_Transportista = [];
     $scope.Listando_Transportista = function () {
         TransportistaServices.getTransportista().then(function (data) {
@@ -1313,6 +1334,7 @@ app.controller('transferenciasNewController', function ($scope, TransportistaSer
 
 
     $scope.objeto_parametros = {
+        id_tipoDocumento: '3',
         serie: '',
         nroDocumento: '',
         fecha_emision: '',
@@ -1329,6 +1351,7 @@ app.controller('transferenciasNewController', function ($scope, TransportistaSer
 
     $scope.clean = function () {
 
+        $scope.objeto_parametros.id_tipoDocumento = '3';
         $scope.objeto_parametros.serie = '';
         $scope.objeto_parametros.nroDocumento = '';
         $scope.objeto_parametros.fecha_emision = '';
@@ -1343,6 +1366,8 @@ app.controller('transferenciasNewController', function ($scope, TransportistaSer
         $scope.objeto_parametros.fecha_trasladoAux = '';
 
         setTimeout(function () {
+
+            $('#cbo_tipoDocGuia').val("3").trigger('change.select2');
             $('#cbo_transportista').val("0").trigger('change.select2');
             $('#cbo_vehiculo').val("0").trigger('change.select2');
             $('#cbo_proveedor').val("0").trigger('change.select2');
@@ -1351,7 +1376,7 @@ app.controller('transferenciasNewController', function ($scope, TransportistaSer
 
 
     $scope.Generate_GuiaRemision = function () {
-        if (IngresoTransferenciasServices.ValidacionGeneral($scope.objeto_parametros) == false) {
+        if (IngresoTransferenciasServices.ValidacionGeneral_new($scope.objeto_parametros) == false) {
             return;
         }
         var params = {
@@ -1367,7 +1392,7 @@ app.controller('transferenciasNewController', function ($scope, TransportistaSer
                     $scope.objeto_parametros.fecha_emisionAux = auxiliarServices.changeFormatDate(2, $scope.objeto_parametros.fecha_emision);
                     $scope.objeto_parametros.fecha_trasladoAux = auxiliarServices.changeFormatDate(2, $scope.objeto_parametros.fecha_traslado);
 
-                    IngresoTransferenciasServices.get_generar_Guia_transferencia( $scope.id_TranferenciaCab_Global, $scope.id_usuario_Global, $scope.objeto_parametros)
+                    IngresoTransferenciasServices.get_generar_Guia_transferencia_new( $scope.id_TranferenciaCab_Global, $scope.id_usuario_Global, $scope.objeto_parametros)
                         .then(function (res) {
                             $scope.loaderSave = false;
                             $scope.loaderCab = false;

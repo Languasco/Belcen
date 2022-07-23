@@ -30,10 +30,7 @@ namespace WebApiGestionAlmacenCam.Controllers.Almacen.Mantenimientos
         public object GetTbl_Clientes(int opcion, string filtro)
         {
             db.Configuration.ProxyCreationEnabled = false;
-
             object resul = null;
-
-
             try
             {
                 if (opcion == 1)
@@ -141,6 +138,33 @@ namespace WebApiGestionAlmacenCam.Controllers.Almacen.Mantenimientos
 
                     Almacen_BL obj_negocio = new Almacen_BL();
                     resul = obj_negocio.get_listaPrecio(idProducto);
+                }
+                else if (opcion == 12)
+                {
+                    string[] parametros = filtro.Split('|');
+                    int idProducto = Convert.ToInt32(parametros[0].ToString());
+
+                    Almacen_BL obj_negocio = new Almacen_BL();
+                    resul = obj_negocio.get_UnidadMedidaVenta(idProducto);
+                }
+                else if (opcion == 13)
+                {
+                    string[] parametros = filtro.Split('|');
+                    int idProducto = Convert.ToInt32(parametros[0].ToString());
+                    int idUnidadMedida = Convert.ToInt32(parametros[1].ToString());
+                    string factor = parametros[2].ToString();
+                    int idUsuario = Convert.ToInt32(parametros[3].ToString());
+
+                    Almacen_BL obj_negocio = new Almacen_BL();
+                    resul = obj_negocio.save_UnidadMedidaVenta(idProducto, idUnidadMedida, factor, idUsuario);
+                }
+                else if (opcion == 14)
+                {
+                    string[] parametros = filtro.Split('|');
+                    int id_UnidadMedida_Venta = Convert.ToInt32(parametros[0].ToString());
+
+                    Almacen_BL obj_negocio = new Almacen_BL();
+                    resul = obj_negocio.eliminar_UnidadMedidaVenta(id_UnidadMedida_Venta);
                 }
                 else
                 {

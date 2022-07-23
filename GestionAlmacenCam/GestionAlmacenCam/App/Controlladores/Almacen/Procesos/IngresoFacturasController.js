@@ -47,10 +47,7 @@ app.controller('IngresoFacturasController', function ($scope, LocalesServices, $
     };
 
 
-    $scope.getAuditorias = function (item) {
-
-
-        console.log(item)
+    $scope.getAuditorias = function (item) { 
 
         const uCreacion = (!item.usuario_creacion) ? 0 : item.usuario_creacion;
         const uEdicion = (!item.usuario_edicion) ? 0 : item.usuario_edicion;
@@ -62,8 +59,7 @@ app.controller('IngresoFacturasController', function ($scope, LocalesServices, $
             .then(function (res) {
 
                 if (res.ok) {
-
-                    alert(res.data.length )
+ 
 
                     let usuarioCreacion = res.data[0].descripcion;
                     let usuarioEdicion = (res.data.length == 1) ? '' : res.data[1].descripcion;

@@ -85,6 +85,7 @@ app.controller('ctrlStock', function ($scope, loginServices, $location, $timeout
 
 
     $scope.GenerarReporte = function (value) {
+ 
 
         if (StockServices.validate($scope.Objeto_ParametroFiltro) === false) {
             return;

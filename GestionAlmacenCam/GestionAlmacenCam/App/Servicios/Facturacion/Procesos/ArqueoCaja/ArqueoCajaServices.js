@@ -195,13 +195,13 @@
             return q.promise;
         }
 
-        Result.save_billetesMonedasArqueo = function (id_ArqueoCaja, id_Tipo, id_BilleteMoneda, cantidad_Billete, valor_Billete, total_Billete , idUsuario) {
+        Result.save_billetesMonedasArqueo = function (id_ArqueoCaja, id_Tipo, id_BilleteMoneda, cantidad_Billete, valor_Billete, total_Billete, idUsuario, idZona) {
 
             let url = urlApi + 'tblArqueoCaja_Cab'
             var parameters;
             var q = $q.defer();
 
-            var parametros = id_ArqueoCaja + '|' + id_Tipo + '|' + id_BilleteMoneda + '|' + cantidad_Billete + '|' + valor_Billete + '|' + total_Billete + '|' + idUsuario;
+            var parametros = id_ArqueoCaja + '|' + id_Tipo + '|' + id_BilleteMoneda + '|' + cantidad_Billete + '|' + valor_Billete + '|' + total_Billete + '|' + idUsuario + '|' + idZona;
             parameters = {
                 opcion: 5,
                 filtro: parametros
@@ -617,7 +617,7 @@
             return q.promise;
         }
 
-        Result.get_informacionVentas_cobranzasDevoluciones = function (id_Anexo, id_ZonaVta, id_CC, fechaArqueoCaja, idUsuario) {
+        Result.get_informacionVentas_cobranzas = function (id_Anexo, id_ZonaVta, id_CC, fechaArqueoCaja, idUsuario) {
 
             let url = urlApi + 'tblArqueoCaja_Cab'
             var parameters;
@@ -807,13 +807,13 @@
             return q.promise;
         }
 
-        Result.get_arqueoCaja_monedasBilletes_edicion = function (id_ArqueoCaja, idUsuario) {
+        Result.get_arqueoCaja_monedasBilletes_edicion = function (id_ArqueoCaja, idUsuario, idZona) {
 
             let url = urlApi + 'tblArqueoCaja_Cab'
             var parameters;
             var q = $q.defer();
 
-            var parametros = id_ArqueoCaja + '|' + idUsuario;
+            var parametros = id_ArqueoCaja + '|' + idUsuario + '|' + idZona;
             parameters = {
                 opcion: 28,
                 filtro: parametros
@@ -866,6 +866,9 @@
                 opcion: 30,
                 filtro: parametros
             }
+
+            console.log(parametros)
+
             $http({
                 method: 'GET',
                 url: url,
@@ -912,6 +915,130 @@
             var parametros = id_ArqueoCaja + '|' + idUsuario;
             parameters = {
                 opcion: 32,
+                filtro: parametros
+            }
+            $http({
+                method: 'GET',
+                url: url,
+                params: parameters
+            }).success(function (result) {
+                q.resolve(result);
+            }).error(function (err) {
+
+                q.reject(err);
+            })
+            return q.promise;
+        }
+
+        Result.get_tiposEgresos_Usuario = function (idUsuario) {
+
+            let url = urlApi + 'tblArqueoCaja_Cab'
+            var parameters;
+            var q = $q.defer();
+
+            var parametros = idUsuario
+            parameters = {
+                opcion: 33,
+                filtro: parametros
+            }
+            $http({
+                method: 'GET',
+                url: url,
+                params: parameters
+            }).success(function (result) {
+                q.resolve(result);
+            }).error(function (err) {
+
+                q.reject(err);
+            })
+            return q.promise;
+        }
+
+        Result.save_cobranzasArqueo = function (params) {
+
+            let url = urlApi + 'tbl_ArqueoCaja_Cobranza/Posttbl_ArqueoCaja_Cobranza'
+            var q = $q.defer();
+            $http.post(url, params)
+                .success(function (res) {
+                    q.resolve(res);
+                })
+                .error(function (err) {
+                    q.reject(err);
+                })
+            return q.promise;
+        }
+
+        Result.update_cobranzaArqueo = function (object) {
+
+            let url = urlApi + "tbl_ArqueoCaja_Cobranza/Puttbl_ArqueoCaja_Cobranza?id=" + object.id_ArqueoCaja_Cobranza
+            var q = $q.defer();
+            $http.put(url, object)
+                .success(function (result) {
+                    q.resolve(result);
+                })
+                .error(function (err) {
+                    q.reject(err);
+                });
+            return q.promise;
+        };
+
+        Result.uploadFile_imageComprobanteCobranza = function (files, id_ArqueoCajaCobranza, usuario) {
+
+            var uploadUrl = urlApi + 'tbl_ArqueoCaja_Cobranza/UploadImageVoucherCobranza';
+            var q = $q.defer();
+            $upload.upload({
+                url: uploadUrl,
+                method: "POST",
+                params: {
+                    id_ArqueoCaja_Cobranza: id_ArqueoCajaCobranza,
+                    idUsuario: usuario,
+                },
+                file: files
+            }).success(function (data, status, headers, config) {
+                q.resolve(data);
+            }).error(function (data, status, headers, config) {
+                q.reject(data);
+            }).progress(function (evt) {
+                var progressn = parseInt(100.0 * evt.loaded / evt.total);
+                q.notify(progressn);
+            });
+
+            return q.promise;
+        };
+
+        Result.set_arqueoCaja_cobranzaBuscarDocumento = function ({ id_zona, id_TipoDocumento, serie_Documento, numero_Documento}, idUsuario) {
+
+            let url = urlApi + 'tblArqueoCaja_Cab'
+            var parameters;
+            var q = $q.defer();
+
+            var parametros = id_zona + '|' + id_TipoDocumento + '|' + String(serie_Documento).trim() + '|' + String(numero_Documento).trim() + '|' + idUsuario;
+            parameters = {
+                opcion: 34,
+                filtro: parametros
+            }
+            $http({
+                method: 'GET',
+                url: url,
+                params: parameters
+            }).success(function (result) {
+                q.resolve(result);
+            }).error(function (err) {
+
+                q.reject(err);
+            })
+            return q.promise;
+        }
+
+        Result.set_arqueoCaja_cobranzaEdicion = function (id_ArqueoCaja_Cobranza, id_usuario) {
+
+            let url = urlApi + 'tblArqueoCaja_Cab'
+            var parameters;
+            var q = $q.defer();
+
+            var parametros = id_ArqueoCaja_Cobranza + '|' + id_usuario;
+            parameters = {
+                opcion: 35,
                 filtro: parametros
             }
             $http({

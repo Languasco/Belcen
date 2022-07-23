@@ -78,14 +78,14 @@
                 <div class="col-md-4">
                     <label for="filtro_zona_venta">Local</label> <span class="help-block"></span>
                     <select class="select_modal" id="filtro_zona_venta" data-style="btn-default" ng-model="Objeto_ParametroFiltro.id_local">
-                        <option value="">[ ----   Seleccione  --- ]</option>
+                        <option value="0">[ ----   TODOS  --- ]</option>
                         <option ng-repeat="item in ListaLocales" value="{{item.id}}">{{item.descripcion}}</option>
                     </select>
                 </div>
                 <div class="col-md-4">
                     <label for="filtro_personal_supérvisor">Anexos</label> <span class="help-block"></span>
                     <select class="select_modal" id="filtro_personal_supérvisor" data-style="btn-default" ng-model="Objeto_ParametroFiltro.id_anexo">
-                        <option value="">[ ----   Seleccione  --- ]</option>
+                        <option value="0">[ ----   TODOS  --- ]</option>
                         <option ng-repeat="item in ListaAnexos" value="{{item.id}}">{{item.descripcion}}</option>
                     </select>
                 </div>

@@ -1,0 +1,385 @@
+﻿
+
+<style>
+
+    @@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;1,100&display=swap');
+
+
+    #listMenu span, a {
+        text-align: left !important;
+    }
+
+    .contentRegistro fieldset legend {
+        text-align: left !important;
+    }
+
+    .jq-toast-wrap {
+        width: 300px !important;
+    }
+
+    .floating-labels label {
+        top: -6px;
+    }
+
+    .contentRegistro .select2-container {
+        margin-left: 0px;
+        margin-top: 2px;
+    }
+
+    #paddin-lef {
+        padding-left: 40px !important;
+    }
+
+    .contentCombo .select2-container {
+        margin-left: 0px;
+        /*margin-top: -20px;*/
+        width: 95% !important;
+    }
+
+    .ContentFilters .table {
+        display: table;
+    }
+
+    .contentRegistro label {
+        font-size: 11px;
+        font-family: tahoma;
+        color: #2c5ca9;
+        font-weight: 600;
+    }
+
+    .contentRegistro {
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .ModalBorderSombra .modal-content {
+        box-shadow: inset 0px 0px 7px rgba(0,0,0,.5), 1px 1px 5px #fff;
+    }
+
+
+
+    .resaltado {
+        color: #ff94a7 !important;
+    }
+
+    .text-right {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    @@media (min-width: 1200px) {
+        .modal-xlg {
+            width: 95%;
+        }
+    }
+
+    @@media (min-width: 768px) {
+        .modal-xlg {
+            width: 95%;
+        }
+    }
+
+    .form-horizontal .form-group {
+        margin-bottom: 3px;
+    }
+
+    .flex-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: aqua;
+        padding: 10px;
+    }
+
+    .flex-container-item {
+        width: 100px;
+        margin: 10px;
+        text-align: center;
+        line-height: 75px;
+        font-size: 30px;
+        border: 2px solid red
+    }
+
+    .botonFile {
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+        width: 98%;
+    }
+
+        .botonFile .btn {
+            border: 2px solid gray;
+            color: gray;
+            background-color: white;
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+    .contentRegistro input.highlightAmounts {
+        text-align: right;
+        font-size: 17px !important;
+        font-weight: 700 !important;
+    }
+
+    .select2-results .select2-result-label {
+        font-size: 13px !important;
+    }
+
+    #form_detalle {
+        height: 385px;
+    }
+
+    #tbl_detalle {
+        width: 95% !important;
+    }
+
+    .contenedorGrupo legend {
+        font-size: 12px !important;
+        font-family: GillSans, Calibri, Trebuchet, sans-serif;
+        color: #2c5ca9;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+
+    .contenedorGrupo fieldset {
+        padding-left: 20px;
+        padding-right: 20px;
+        border: 1px solid #2c4d6d;
+        padding-bottom: 10px;
+        border-radius: 4px;
+    }
+
+    .contentCombo .select2-container {
+        margin-top: 0px;
+    }
+
+    label.control-label {
+        font-size: 12px !important;
+        font-family: GillSans, Calibri, Trebuchet, sans-serif;
+        color: #2c5ca9;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+
+    .box {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .tableFixHead {
+        overflow-y: auto;
+        max-height: 400px;
+    }
+
+        .tableFixHead thead th {
+            position: sticky;
+            top: 0;
+        }
+
+    .table > thead > tr > th {
+        vertical-align: bottom;
+        border-bottom: 1px solid #e4e7ea;
+        background-color: aquamarine;
+        font-size: 13px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .ContentFilters table thead th {
+        font-size: 11px;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: bold;
+    }
+
+    .ContentFilters table tbody td {
+        font-size: 13px;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+
+    .contentRegistro label {
+        font-family: 'Montserrat', sans-serif;
+    }
+
+</style>
+
+<script type="text/javascript">
+
+    function filterFloat(evt, input) {
+        var key = window.Event ? evt.which : evt.keyCode;
+        var chark = String.fromCharCode(key);
+        var tempValue = input.value + chark;
+        if (key >= 48 && key <= 57) {
+            if (filter(tempValue) === false) {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            if (key == 8 || key == 13 || key == 0) {
+                return true;
+            } else if (key == 46) {
+                if (filter(tempValue) === false) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } else {
+                return false;
+            }
+        }
+    }
+    function filter(__val__) {
+        var preg = /^([0-9]+\.?[0-9]{0,3})$/;
+        if (preg.test(__val__) === true) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+</script>
+
+
+
+<div class=" container-fluid" ng-init="initAll();">
+    <div class="panel-body  contentRegistro contentCombo ContentFilters ">
+
+        <div class="white-box">
+
+            <a id="id_link" href="" download style="display:none">link</a>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="radio">
+                        <input id="radio1_Opt1" type="radio" ng-model="Objeto_Parametro_Filtro.tipoReporte" value="1" checked ng-change="change_TipoReporte()">
+                        <label for="radio1_Opt1" style="font-size: 11px; color: green;  font-weight: 600;">Por Proveedor </label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="radio">
+                        <input id="radio1_Opt2" type="radio" ng-model="Objeto_Parametro_Filtro.tipoReporte" value="2" checked ng-change="change_TipoReporte()">
+                        <label for="radio1_Opt2" style="font-size: 11px; color: green;  font-weight: 600;">Todos los Proveedores </label>
+                    </div>
+                </div>
+            </div>
+
+
+ 
+                <div class="row {{disabledContent}}"  >
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4  ">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label class="control-label">Proveedor</label>
+                                <input type="text" ng-enter="getProveedorByDoc();" ng-model="Objeto_Parametro_Filtro.nroDocumento_Proveedor" class="form-control input-sm" style="background-color: beige" placeholder="Codigo">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 " style=" margin-bottom: 10px;">
+                        <br />
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button class="btn btn-sm btn-primary" ng-click="ModalSearch(1)"><span class="glyphicon glyphicon-zoom-in"></span></button>
+                            </span>
+                            <input type="text" style="height: 36px;" ng-model="Objeto_Parametro_Filtro.razonSocial_Proveedor" class="form-control input-sm" placeholder="Descripcion del Proveedor" disabled>
+                        </div>
+                    </div>
+                </div>
+      
+
+
+
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="radio">
+                        <input id="radio1_Opt3" type="radio" ng-model="Objeto_Parametro_Filtro.tipoDocumentos" value="1" checked ng-change="changeTipoResponsable()">
+                        <label for="radio1_Opt3" style="font-size: 11px; color: green;  font-weight: 600;"> Ver todas las Facturas </label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="radio">
+                        <input id="radio1_Opt4" type="radio" ng-model="Objeto_Parametro_Filtro.tipoDocumentos" value="2" checked ng-change="changeTipoResponsable()">
+                        <label for="radio1_Opt4" style="font-size: 11px; color: green;  font-weight: 600;"> Ver Pendiente de Pagos </label>
+                    </div>
+                </div>
+                <div class=" col-md-6 text-center">
+                    <button id="btn-material" class="btn btn-primary btn-sm m-l-10" ng-click="descargar_reportePagoProveedores();">
+                        <i class="glyphicon glyphicon-download"></i> Descargar
+                    </button>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="loaderModal" ng-if="loaderFiltro"></div>
+        <a id="id_link" href="" download style="display:none">link</a>
+
+
+
+    </div>
+</div>
+
+<div class="modal fade bs-example-modal-lg" id="ModalSearch" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myLargeModalLabel">{{titleModal}}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="cssload-speeding-wheel" ng-if="loaderModal"></div>
+                <div ng-show="!loaderModal">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input type="text" class="form-control" id="inputSearch" style="background-color: beige;font-size:11px;" placeholder="Busqueda general" />
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row  Mtop-45 ">
+                        <div class="col-lg-12">
+                            <div class="white-box ContentFilters ">
+                                <table id="tblFiltro" class="table m-b-0 toggle-arrow-tiny table-bordered table-hover" data-page-size="10">
+                                    <thead>
+                                        <tr>
+                                            <th data-toggle="true">#</th>
+                                            <th data-toggle="true" style="width:80px;text-align:center;">Ruc</th>
+                                            <th data-hide="" style="width:400px;"> Razon Social</th>
+                                            <th style="text-align:center">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in listBusqueda">
+                                            <td>{{$index + 1}}</td>
+                                            <td>{{item.codigo}}</td>
+                                            <td>{{item.descripcion}}</td>
+                                            <td>
+                                                <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline " ng-click="selectId(item,1);"><i class=" ti-arrow-right"></i></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="text-center">
+                                    <ul class="pagination pagination-split m-t-30"></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-default " data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

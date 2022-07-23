@@ -31,8 +31,8 @@ namespace Entidades
         public Nullable<int> usuario_Edicion { get; set; }
         public Nullable<System.DateTime> fecha_Edicion { get; set; }
     
+        public virtual ICollection<tbl_Alm_Producto> tbl_Alm_Producto { get; set; }
         public virtual tbl_Alm_ProductoCategoria tbl_Alm_ProductoCategoria { get; set; }
         public virtual tbl_Alm_ProductoLinea tbl_Alm_ProductoLinea { get; set; }
-        public virtual ICollection<tbl_Alm_Producto> tbl_Alm_Producto { get; set; }
     }
 }

@@ -178,7 +178,7 @@ namespace WebApi_Ventas.Controllers.Facturacion.Procesos.Comprobantes_Electronic
                     //Console.ReadKey();
 
                     ////----creando el Codigo QR
-                    byte[] obj_codQR = GeneraCodigoQR(leer_respuesta.codigo_de_barras);
+                    byte[] obj_codQR = GeneraCodigoQR(leer_respuesta.cadena_para_codigo_qr);
                     using (FileStream Writer = new System.IO.FileStream(rutaQR + ".gif", FileMode.Create, FileAccess.Write))
                     {
                         Writer.Write(obj_codQR, 0, obj_codQR.Length);

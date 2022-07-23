@@ -274,5 +274,51 @@ namespace Negocio.Almacen.Procesos
             return dt_resultado;
         }
 
+        public object Set_generarTransferencia_ConGuia_new(int Id_AlmTranCab, int id_usuario, string serie, string nroDocumento, string fecha_emision, int id_Transportista, int id_vehiculo, int id_Proveedor, string fecha_traslado, int id_tipoDocumento)
+        {
+
+            int id_GuiaCab = 0;
+            Resul res = new Resul();
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("PROC_S_TRANFERENCIAS_GENERAR_GUIA", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@Id_AlmTranCab", SqlDbType.Int).Value = Id_AlmTranCab;
+                        cmd.Parameters.Add("@Id_usuario", SqlDbType.Int).Value = id_usuario;
+
+                        cmd.Parameters.Add("@serie", SqlDbType.VarChar).Value = serie;
+                        cmd.Parameters.Add("@nroDocumento", SqlDbType.VarChar).Value = nroDocumento;
+                        cmd.Parameters.Add("@fecha_emision", SqlDbType.VarChar).Value = fecha_emision;
+
+                        cmd.Parameters.Add("@id_Transportista", SqlDbType.Int).Value = id_Transportista;
+                        cmd.Parameters.Add("@id_vehiculo", SqlDbType.Int).Value = id_vehiculo;
+                        cmd.Parameters.Add("@id_Proveedor", SqlDbType.Int).Value = id_Proveedor;
+                        cmd.Parameters.Add("@fecha_traslado", SqlDbType.VarChar).Value = fecha_traslado;
+                        cmd.Parameters.Add("@id_tipoDocumento", SqlDbType.Int).Value = id_tipoDocumento;
+
+                        cmd.Parameters.Add("@id_GuiaCab", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                        cmd.ExecuteNonQuery();
+                        id_GuiaCab = Convert.ToInt32(cmd.Parameters["@id_GuiaCab"].Value.ToString());
+
+                        res.ok = true;
+                        res.data = id_GuiaCab;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                res.ok = false;
+                res.data = e.Message;
+            }
+            return res;
+        }
+
     }
 }

@@ -35,8 +35,6 @@
 
             var parametros = idPedido + '|' + usuario + '|' + flag_tipo_facturacion;
 
-            console.log(parametros)
-
             parameters = {
                 opcion: 39,
                 filtro: parametros

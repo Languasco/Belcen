@@ -634,12 +634,24 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title" id="myLargeModalLabel">REGISTRO DE LA GUIA</h4>
+                <h4 class="modal-title" id="myLargeModalLabel">REGISTRO DE DOCUMENTO DE TRANSACCION</h4>
             </div>
             <div class="modal-body">
 
                 <div class="loaderModal" ng-if="loaderSave"></div>
                 <div class="contentRegistro contentCombo floating-labels form-inline">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="cbo_tipoDocGuia">Tipo Documento</label>
+                            <br />
+                            <select class="selectModal" id="cbo_tipoDocGuia" style="width:95%;" data-style="btn-default" ng-model="objeto_parametros.id_tipoDocumento">
+                                <option value="0">[ ----   Seleccione  --- ]</option>
+                                <option ng-repeat="item in Lista_TipoDocumentoGuia" value="{{item.id}}">{{item.descripcion}} </option>
+                            </select>
+                        </div>
+                    </div>
+
 
                     <div class="row">
                         <div class="col-md-6">

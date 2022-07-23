@@ -86,6 +86,7 @@ app.controller('ctrlRutasVentas', function ($scope, loginServices, $location, $t
     }
 
     $scope.search_rutasVentas = function () {
+ 
         $scope.loader = true;
         RutasVentasServices.searchRutasVentas($scope.Objeto_ParametroFiltro)
             .then(function (res) {

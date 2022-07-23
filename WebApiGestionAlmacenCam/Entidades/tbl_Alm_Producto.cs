@@ -16,13 +16,13 @@ namespace Entidades
     {
         public tbl_Alm_Producto()
         {
-            this.Tbl_Com_Pedidos_Det = new HashSet<Tbl_Com_Pedidos_Det>();
-            this.Tbl_Fac_Facturas_Det = new HashSet<Tbl_Fac_Facturas_Det>();
-            this.Tbl_Fac_Facturas_Compras_det = new HashSet<Tbl_Fac_Facturas_Compras_det>();
-            this.Tbl_Fac_Facturas_Compras_det1 = new HashSet<Tbl_Fac_Facturas_Compras_det>();
             this.tbl_Alm_Guias_Det = new HashSet<tbl_Alm_Guias_Det>();
             this.tbl_Alm_Guias_Det1 = new HashSet<tbl_Alm_Guias_Det>();
+            this.Tbl_Com_Pedidos_Det = new HashSet<Tbl_Com_Pedidos_Det>();
+            this.Tbl_Fac_Facturas_Det = new HashSet<Tbl_Fac_Facturas_Det>();
             this.Tbl_Fac_Pedidos_Det = new HashSet<Tbl_Fac_Pedidos_Det>();
+            this.Tbl_Fac_Facturas_Compras_det = new HashSet<Tbl_Fac_Facturas_Compras_det>();
+            this.Tbl_Fac_Facturas_Compras_det1 = new HashSet<Tbl_Fac_Facturas_Compras_det>();
         }
     
         public int id_Producto { get; set; }
@@ -48,6 +48,13 @@ namespace Entidades
         public Nullable<decimal> factorDivisor_Alm { get; set; }
         public Nullable<decimal> factorMultiplicacion_Vta { get; set; }
         public Nullable<decimal> factorDivisor_Vta { get; set; }
+        public Nullable<int> afectoIGV { get; set; }
+        public Nullable<int> afectoISC { get; set; }
+        public Nullable<int> aplicaDetraccion { get; set; }
+        public Nullable<int> aplicaPercepcion { get; set; }
+        public Nullable<int> movLote { get; set; }
+        public Nullable<int> aplicaFecVence { get; set; }
+        public Nullable<decimal> stockMinimo { get; set; }
         public Nullable<int> estado { get; set; }
         public string usuario_Creacion { get; set; }
         public Nullable<System.DateTime> fecha_Creacion { get; set; }
@@ -57,18 +64,13 @@ namespace Entidades
         public Nullable<decimal> precioMay_Mayor { get; set; }
         public Nullable<decimal> RangoCaja_Horizontal { get; set; }
         public Nullable<decimal> RangoCaja_Mayorista { get; set; }
-        public Nullable<int> afectoIGV { get; set; }
-        public Nullable<int> afectoISC { get; set; }
-        public Nullable<int> aplicaDetraccion { get; set; }
-        public Nullable<int> aplicaPercepcion { get; set; }
-        public Nullable<int> movLote { get; set; }
-        public Nullable<int> aplicaFecVence { get; set; }
-        public Nullable<decimal> stockMinimo { get; set; }
         public Nullable<int> id_unidadMedida_Cobertura { get; set; }
         public Nullable<int> id_unidadMedida_Mayorista { get; set; }
         public Nullable<int> id_unidadMedida_General { get; set; }
         public Nullable<decimal> RangoCaja_Mayorista2 { get; set; }
     
+        public virtual ICollection<tbl_Alm_Guias_Det> tbl_Alm_Guias_Det { get; set; }
+        public virtual ICollection<tbl_Alm_Guias_Det> tbl_Alm_Guias_Det1 { get; set; }
         public virtual tbl_Alm_ProductoCategoria tbl_Alm_ProductoCategoria { get; set; }
         public virtual tbl_Alm_ProductoLinea tbl_Alm_ProductoLinea { get; set; }
         public virtual tbl_Alm_ProductoMarca tbl_Alm_ProductoMarca { get; set; }
@@ -77,10 +79,8 @@ namespace Entidades
         public virtual tbl_Alm_UnidadMedida tbl_Alm_UnidadMedida { get; set; }
         public virtual ICollection<Tbl_Com_Pedidos_Det> Tbl_Com_Pedidos_Det { get; set; }
         public virtual ICollection<Tbl_Fac_Facturas_Det> Tbl_Fac_Facturas_Det { get; set; }
+        public virtual ICollection<Tbl_Fac_Pedidos_Det> Tbl_Fac_Pedidos_Det { get; set; }
         public virtual ICollection<Tbl_Fac_Facturas_Compras_det> Tbl_Fac_Facturas_Compras_det { get; set; }
         public virtual ICollection<Tbl_Fac_Facturas_Compras_det> Tbl_Fac_Facturas_Compras_det1 { get; set; }
-        public virtual ICollection<tbl_Alm_Guias_Det> tbl_Alm_Guias_Det { get; set; }
-        public virtual ICollection<tbl_Alm_Guias_Det> tbl_Alm_Guias_Det1 { get; set; }
-        public virtual ICollection<Tbl_Fac_Pedidos_Det> Tbl_Fac_Pedidos_Det { get; set; }
     }
 }

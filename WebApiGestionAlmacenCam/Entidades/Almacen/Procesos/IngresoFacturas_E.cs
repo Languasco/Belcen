@@ -9,6 +9,10 @@ namespace Entidades.Almacen.Procesos
     public class IngresoFacturas_E
     {
         public int id_GuiaCab { get; set; }
+
+        public string tipoOC { get; set; }
+
+        public string tipoDoc { get; set; }
         public string nroDoc { get; set; }
         public string nroGuia { get; set; }
         public string nroCompra { get; set; }

@@ -175,7 +175,6 @@
             return q.promise;
         }
 
-
         Result.ValidacionGeneral = function (objeto_parametros) {
             if (objeto_parametros.id_Anexo == 0) {
                 auxiliarServices.NotificationMessage('Sistemas', 'Seleccione un anexo', 'error', '#ff6849', 1500);
@@ -202,7 +201,6 @@
                 return false;
             }
         }
-
 
         Result.set_anularNumero = function ({ id_ZonaVta, fechaIni, fechaFin, serie, numero, usuario_creacion}) {
             let url = urlApi + 'Cancelacion_masiva_doc';

@@ -27,15 +27,34 @@ namespace Entidades
     
         public virtual DbSet<tbl_Alm_Almacen> tbl_Alm_Almacen { get; set; }
         public virtual DbSet<tbl_Alm_DetalleVentas> tbl_Alm_DetalleVentas { get; set; }
+        public virtual DbSet<tbl_Alm_Guias_Cab> tbl_Alm_Guias_Cab { get; set; }
+        public virtual DbSet<tbl_Alm_Guias_Det> tbl_Alm_Guias_Det { get; set; }
         public virtual DbSet<tbl_Alm_Movimientos> tbl_Alm_Movimientos { get; set; }
+        public virtual DbSet<tbl_Alm_Producto> tbl_Alm_Producto { get; set; }
+        public virtual DbSet<tbl_Alm_Producto_UnidadMedida_Venta> tbl_Alm_Producto_UnidadMedida_Venta { get; set; }
         public virtual DbSet<tbl_Alm_ProductoCategoria> tbl_Alm_ProductoCategoria { get; set; }
         public virtual DbSet<tbl_Alm_ProductoLinea> tbl_Alm_ProductoLinea { get; set; }
         public virtual DbSet<tbl_Alm_ProductoMarca> tbl_Alm_ProductoMarca { get; set; }
         public virtual DbSet<tbl_Alm_ProductoModeloMarca> tbl_Alm_ProductoModeloMarca { get; set; }
         public virtual DbSet<tbl_Alm_ProductoSubLinea> tbl_Alm_ProductoSubLinea { get; set; }
+        public virtual DbSet<tbl_Alm_Proveedor> tbl_Alm_Proveedor { get; set; }
         public virtual DbSet<tbl_Alm_Transferencia_Cab> tbl_Alm_Transferencia_Cab { get; set; }
+        public virtual DbSet<tbl_Alm_Transferencia_Det> tbl_Alm_Transferencia_Det { get; set; }
         public virtual DbSet<tbl_Alm_UnidadMedida> tbl_Alm_UnidadMedida { get; set; }
+        public virtual DbSet<tbl_Anexos> tbl_Anexos { get; set; }
+        public virtual DbSet<tbl_Anexos_SerieDocumentos> tbl_Anexos_SerieDocumentos { get; set; }
+        public virtual DbSet<tbl_ArqueoCaja_Cab> tbl_ArqueoCaja_Cab { get; set; }
+        public virtual DbSet<tbl_ArqueoCaja_Cobranza> tbl_ArqueoCaja_Cobranza { get; set; }
+        public virtual DbSet<tbl_ArqueoCaja_Depositos> tbl_ArqueoCaja_Depositos { get; set; }
+        public virtual DbSet<tbl_ArqueoCaja_Devolucion> tbl_ArqueoCaja_Devolucion { get; set; }
+        public virtual DbSet<tbl_ArqueoCaja_Moneda> tbl_ArqueoCaja_Moneda { get; set; }
+        public virtual DbSet<tbl_ArqueoCaja_PagoProveedor> tbl_ArqueoCaja_PagoProveedor { get; set; }
+        public virtual DbSet<tbl_ArqueoCaja_Ventas> tbl_ArqueoCaja_Ventas { get; set; }
+        public virtual DbSet<Tbl_Bancos> Tbl_Bancos { get; set; }
+        public virtual DbSet<tbl_BilleteMoneda> tbl_BilleteMoneda { get; set; }
         public virtual DbSet<Tbl_Cargo> Tbl_Cargo { get; set; }
+        public virtual DbSet<Tbl_CentroCostos> Tbl_CentroCostos { get; set; }
+        public virtual DbSet<Tbl_Clientes> Tbl_Clientes { get; set; }
         public virtual DbSet<Tbl_Clientes_Fotos> Tbl_Clientes_Fotos { get; set; }
         public virtual DbSet<Tbl_Clientes_Programados> Tbl_Clientes_Programados { get; set; }
         public virtual DbSet<tbl_Com_Canales_Negocio> tbl_Com_Canales_Negocio { get; set; }
@@ -43,6 +62,7 @@ namespace Entidades
         public virtual DbSet<tbl_Com_Cliente_Credito> tbl_Com_Cliente_Credito { get; set; }
         public virtual DbSet<tbl_Com_CondicionFacturacion> tbl_Com_CondicionFacturacion { get; set; }
         public virtual DbSet<Tbl_Com_Facturas_Cab> Tbl_Com_Facturas_Cab { get; set; }
+        public virtual DbSet<Tbl_Com_Facturas_Cancelacion_Cab> Tbl_Com_Facturas_Cancelacion_Cab { get; set; }
         public virtual DbSet<tbl_Com_FormaPago> tbl_Com_FormaPago { get; set; }
         public virtual DbSet<tbl_Com_Giros_Negocio> tbl_Com_Giros_Negocio { get; set; }
         public virtual DbSet<tbl_Com_Pedidos_Cab> tbl_Com_Pedidos_Cab { get; set; }
@@ -56,9 +76,13 @@ namespace Entidades
         public virtual DbSet<tbl_Empresas> tbl_Empresas { get; set; }
         public virtual DbSet<TBL_EstadoCelular> TBL_EstadoCelular { get; set; }
         public virtual DbSet<tbl_Estados> tbl_Estados { get; set; }
+        public virtual DbSet<tbl_Fac_Cobranzas_Correlativo> tbl_Fac_Cobranzas_Correlativo { get; set; }
+        public virtual DbSet<Tbl_Fac_Facturas_Cab> Tbl_Fac_Facturas_Cab { get; set; }
         public virtual DbSet<Tbl_Fac_Facturas_Det> Tbl_Fac_Facturas_Det { get; set; }
         public virtual DbSet<Tbl_Fac_FormaPago> Tbl_Fac_FormaPago { get; set; }
         public virtual DbSet<tbl_Fac_ListaPrecios> tbl_Fac_ListaPrecios { get; set; }
+        public virtual DbSet<Tbl_Fac_Pedidos_Cab> Tbl_Fac_Pedidos_Cab { get; set; }
+        public virtual DbSet<Tbl_Fac_Pedidos_Det> Tbl_Fac_Pedidos_Det { get; set; }
         public virtual DbSet<Tbl_Fac_PuntosVenta> Tbl_Fac_PuntosVenta { get; set; }
         public virtual DbSet<Tbl_Fac_PuntosVenta_Series> Tbl_Fac_PuntosVenta_Series { get; set; }
         public virtual DbSet<tbl_fac_tipo_NC_ND_electronico> tbl_fac_tipo_NC_ND_electronico { get; set; }
@@ -72,50 +96,118 @@ namespace Entidades
         public virtual DbSet<TBL_Operarios_RegistroGPS> TBL_Operarios_RegistroGPS { get; set; }
         public virtual DbSet<TBL_Parametros> TBL_Parametros { get; set; }
         public virtual DbSet<tbl_Personal> tbl_Personal { get; set; }
+        public virtual DbSet<Tbl_Promocion_Actividad> Tbl_Promocion_Actividad { get; set; }
+        public virtual DbSet<tbl_Promocion_Canasta> tbl_Promocion_Canasta { get; set; }
+        public virtual DbSet<tbl_Promocion_Canasta_Det> tbl_Promocion_Canasta_Det { get; set; }
+        public virtual DbSet<tbl_Promocion_Productos> tbl_Promocion_Productos { get; set; }
+        public virtual DbSet<tbl_Promocion_Productos_Configuracion> tbl_Promocion_Productos_Configuracion { get; set; }
+        public virtual DbSet<tbl_Ruta_Venta> tbl_Ruta_Venta { get; set; }
         public virtual DbSet<tbl_serie_local> tbl_serie_local { get; set; }
+        public virtual DbSet<tbl_Stock_Producto> tbl_Stock_Producto { get; set; }
         public virtual DbSet<tbl_TipoCambio> tbl_TipoCambio { get; set; }
         public virtual DbSet<Tbl_TipoDocumentos> Tbl_TipoDocumentos { get; set; }
+        public virtual DbSet<tbl_Transportista> tbl_Transportista { get; set; }
         public virtual DbSet<tbl_Ubigeos> tbl_Ubigeos { get; set; }
+        public virtual DbSet<tbl_Usuario_ZonaVenta> tbl_Usuario_ZonaVenta { get; set; }
         public virtual DbSet<tbl_Usuarios> tbl_Usuarios { get; set; }
         public virtual DbSet<tbl_Vehiculo> tbl_Vehiculo { get; set; }
         public virtual DbSet<tbl_vendedor> tbl_vendedor { get; set; }
         public virtual DbSet<tbl_Web_Aceesos> tbl_Web_Aceesos { get; set; }
+        public virtual DbSet<tbl_Zonas_Venta> tbl_Zonas_Venta { get; set; }
         public virtual DbSet<Versiones> Versiones { get; set; }
+        public virtual DbSet<ALM_ARTICULOALMACENVALORIZADO> ALM_ARTICULOALMACENVALORIZADO { get; set; }
+        public virtual DbSet<asd> asd { get; set; }
+        public virtual DbSet<back_producto2007> back_producto2007 { get; set; }
+        public virtual DbSet<bk_boletas_carabayllo> bk_boletas_carabayllo { get; set; }
+        public virtual DbSet<bk_cajamarquilla> bk_cajamarquilla { get; set; }
+        public virtual DbSet<bk_cobranzas_1> bk_cobranzas_1 { get; set; }
+        public virtual DbSet<bk_cobranzas_2> bk_cobranzas_2 { get; set; }
+        public virtual DbSet<bk_guias_1> bk_guias_1 { get; set; }
+        public virtual DbSet<bk_guias_2> bk_guias_2 { get; set; }
+        public virtual DbSet<bk_guias_cab> bk_guias_cab { get; set; }
+        public virtual DbSet<bk_guias_det> bk_guias_det { get; set; }
+        public virtual DbSet<bk_jun_jul> bk_jun_jul { get; set; }
+        public virtual DbSet<bk_Mayorista2007> bk_Mayorista2007 { get; set; }
+        public virtual DbSet<bk_tbl_Alm_Producto_0809> bk_tbl_Alm_Producto_0809 { get; set; }
+        public virtual DbSet<bk_transferencias_cab> bk_transferencias_cab { get; set; }
+        public virtual DbSet<bk_transferencias_det> bk_transferencias_det { get; set; }
+        public virtual DbSet<borrar_vidma_0106> borrar_vidma_0106 { get; set; }
+        public virtual DbSet<borrar_vidma_0106_DET> borrar_vidma_0106_DET { get; set; }
+        public virtual DbSet<correlativo_carabayllo> correlativo_carabayllo { get; set; }
+        public virtual DbSet<detalle_bk_2805> detalle_bk_2805 { get; set; }
+        public virtual DbSet<distritos_jhonny> distritos_jhonny { get; set; }
+        public virtual DbSet<jhonny_reemplazar> jhonny_reemplazar { get; set; }
+        public virtual DbSet<producto_BK> producto_BK { get; set; }
+        public virtual DbSet<prueba> prueba { get; set; }
+        public virtual DbSet<Pub_Rango_Impresion> Pub_Rango_Impresion { get; set; }
+        public virtual DbSet<qwe> qwe { get; set; }
+        public virtual DbSet<reporte_cobranza> reporte_cobranza { get; set; }
+        public virtual DbSet<tbl_Alm_Producto_111> tbl_Alm_Producto_111 { get; set; }
+        public virtual DbSet<tbl_Alm_Producto_back_0912> tbl_Alm_Producto_back_0912 { get; set; }
+        public virtual DbSet<Tbl_Com_Facturas_Cancelacion_Cab_bACK> Tbl_Com_Facturas_Cancelacion_Cab_bACK { get; set; }
         public virtual DbSet<Tbl_Com_Facturas_Det> Tbl_Com_Facturas_Det { get; set; }
+        public virtual DbSet<tbl_fac_pedidos> tbl_fac_pedidos { get; set; }
+        public virtual DbSet<tbl_fac_pedidos_detalle> tbl_fac_pedidos_detalle { get; set; }
+        public virtual DbSet<tbl_fac_tipo_NC_ND_electronico_OLD> tbl_fac_tipo_NC_ND_electronico_OLD { get; set; }
         public virtual DbSet<tbl_numero_correlativo> tbl_numero_correlativo { get; set; }
         public virtual DbSet<tbl_Perfil> tbl_Perfil { get; set; }
+        public virtual DbSet<TBL_Personal_2> TBL_Personal_2 { get; set; }
+        public virtual DbSet<tbl_Stock_Producto_B1> tbl_Stock_Producto_B1 { get; set; }
+        public virtual DbSet<Tbl_tipodocumentos_OLD> Tbl_tipodocumentos_OLD { get; set; }
         public virtual DbSet<tbl_Ubigeo> tbl_Ubigeo { get; set; }
+        public virtual DbSet<tbl_ubigeos_back> tbl_ubigeos_back { get; set; }
         public virtual DbSet<tbl_Usuarios_Almacen> tbl_Usuarios_Almacen { get; set; }
         public virtual DbSet<tbl_Usuarios_Locales> tbl_Usuarios_Locales { get; set; }
-        public virtual DbSet<tbl_Alm_Producto> tbl_Alm_Producto { get; set; }
-        public virtual DbSet<Tbl_Clientes> Tbl_Clientes { get; set; }
-        public virtual DbSet<tbl_Promocion_Productos> tbl_Promocion_Productos { get; set; }
-        public virtual DbSet<tbl_Promocion_Productos_Configuracion> tbl_Promocion_Productos_Configuracion { get; set; }
-        public virtual DbSet<tbl_Anexos> tbl_Anexos { get; set; }
-        public virtual DbSet<tbl_Zonas_Venta> tbl_Zonas_Venta { get; set; }
-        public virtual DbSet<tbl_Transportista> tbl_Transportista { get; set; }
-        public virtual DbSet<tbl_Promocion_Canasta> tbl_Promocion_Canasta { get; set; }
-        public virtual DbSet<tbl_Promocion_Canasta_Det> tbl_Promocion_Canasta_Det { get; set; }
-        public virtual DbSet<tbl_Alm_Proveedor> tbl_Alm_Proveedor { get; set; }
-        public virtual DbSet<Tbl_Fac_Facturas_Compras_det> Tbl_Fac_Facturas_Compras_det { get; set; }
-        public virtual DbSet<Tbl_Com_Facturas_Cancelacion_Cab> Tbl_Com_Facturas_Cancelacion_Cab { get; set; }
-        public virtual DbSet<tbl_Ruta_Venta> tbl_Ruta_Venta { get; set; }
-        public virtual DbSet<Tbl_Fac_Facturas_Cab> Tbl_Fac_Facturas_Cab { get; set; }
-        public virtual DbSet<Tbl_Fac_Pedidos_Cab> Tbl_Fac_Pedidos_Cab { get; set; }
-        public virtual DbSet<tbl_Alm_Guias_Det> tbl_Alm_Guias_Det { get; set; }
-        public virtual DbSet<tbl_Alm_Guias_Cab> tbl_Alm_Guias_Cab { get; set; }
-        public virtual DbSet<Tbl_Bancos> Tbl_Bancos { get; set; }
-        public virtual DbSet<tbl_ArqueoCaja_Cab> tbl_ArqueoCaja_Cab { get; set; }
-        public virtual DbSet<tbl_ArqueoCaja_Cobranza> tbl_ArqueoCaja_Cobranza { get; set; }
-        public virtual DbSet<tbl_ArqueoCaja_Devolucion> tbl_ArqueoCaja_Devolucion { get; set; }
-        public virtual DbSet<tbl_ArqueoCaja_Moneda> tbl_ArqueoCaja_Moneda { get; set; }
-        public virtual DbSet<tbl_ArqueoCaja_Ventas> tbl_ArqueoCaja_Ventas { get; set; }
-        public virtual DbSet<tbl_BilleteMoneda> tbl_BilleteMoneda { get; set; }
-        public virtual DbSet<Tbl_Fac_Pedidos_Det> Tbl_Fac_Pedidos_Det { get; set; }
-        public virtual DbSet<tbl_ArqueoCaja_Depositos> tbl_ArqueoCaja_Depositos { get; set; }
-        public virtual DbSet<tbl_ArqueoCaja_PagoProveedor> tbl_ArqueoCaja_PagoProveedor { get; set; }
+        public virtual DbSet<tbl_Visita> tbl_Visita { get; set; }
+        public virtual DbSet<tbl_Web_Aceesos_Back> tbl_Web_Aceesos_Back { get; set; }
+        public virtual DbSet<temp_stock_0704> temp_stock_0704 { get; set; }
+        public virtual DbSet<vidma_borrar_0106_2> vidma_borrar_0106_2 { get; set; }
+        public virtual DbSet<vidma_borrar_0106_DET_2> vidma_borrar_0106_DET_2 { get; set; }
+        public virtual DbSet<w_tbl_Alm_Almacen> w_tbl_Alm_Almacen { get; set; }
+        public virtual DbSet<w_tbl_Alm_Producto> w_tbl_Alm_Producto { get; set; }
+        public virtual DbSet<w_tbl_Alm_ProductoCategoria> w_tbl_Alm_ProductoCategoria { get; set; }
+        public virtual DbSet<w_tbl_Alm_ProductoLinea> w_tbl_Alm_ProductoLinea { get; set; }
+        public virtual DbSet<w_tbl_Alm_ProductoMarca> w_tbl_Alm_ProductoMarca { get; set; }
+        public virtual DbSet<w_tbl_Alm_ProductoModeloMarca> w_tbl_Alm_ProductoModeloMarca { get; set; }
+        public virtual DbSet<w_tbl_Alm_ProductoSubLinea> w_tbl_Alm_ProductoSubLinea { get; set; }
+        public virtual DbSet<w_tbl_Alm_UnidadMedida> w_tbl_Alm_UnidadMedida { get; set; }
+        public virtual DbSet<w_tbl_Anexos> w_tbl_Anexos { get; set; }
+        public virtual DbSet<w_tbl_Anexos_SerieDocumentos> w_tbl_Anexos_SerieDocumentos { get; set; }
+        public virtual DbSet<w_Tbl_Cargo> w_Tbl_Cargo { get; set; }
+        public virtual DbSet<w_Tbl_Clientes> w_Tbl_Clientes { get; set; }
+        public virtual DbSet<w_tbl_Com_Canales_Negocio> w_tbl_Com_Canales_Negocio { get; set; }
+        public virtual DbSet<w_tbl_Com_TipoDocumento> w_tbl_Com_TipoDocumento { get; set; }
+        public virtual DbSet<w_tbl_Definicion_Opciones> w_tbl_Definicion_Opciones { get; set; }
+        public virtual DbSet<w_Tbl_Distritos> w_Tbl_Distritos { get; set; }
+        public virtual DbSet<w_tbl_Empresas> w_tbl_Empresas { get; set; }
+        public virtual DbSet<w_tbl_Estados> w_tbl_Estados { get; set; }
+        public virtual DbSet<w_Tbl_Fac_FormaPago> w_Tbl_Fac_FormaPago { get; set; }
+        public virtual DbSet<w_Tbl_Fac_PuntosVenta> w_Tbl_Fac_PuntosVenta { get; set; }
+        public virtual DbSet<w_tbl_GiroNegocio> w_tbl_GiroNegocio { get; set; }
+        public virtual DbSet<w_Tbl_GrupoTabla_Cab> w_Tbl_GrupoTabla_Cab { get; set; }
+        public virtual DbSet<w_Tbl_GrupoTabla_Det> w_Tbl_GrupoTabla_Det { get; set; }
+        public virtual DbSet<w_tbl_Locales> w_tbl_Locales { get; set; }
+        public virtual DbSet<w_tbl_Moneda> w_tbl_Moneda { get; set; }
+        public virtual DbSet<w_tbl_MotivosAnulacion> w_tbl_MotivosAnulacion { get; set; }
+        public virtual DbSet<w_tbl_numero_correlativo> w_tbl_numero_correlativo { get; set; }
+        public virtual DbSet<w_TBL_Parametros> w_TBL_Parametros { get; set; }
+        public virtual DbSet<w_tbl_Perfil> w_tbl_Perfil { get; set; }
+        public virtual DbSet<w_tbl_Personal> w_tbl_Personal { get; set; }
+        public virtual DbSet<w_tbl_Ruta_Venta> w_tbl_Ruta_Venta { get; set; }
+        public virtual DbSet<w_tbl_Stock_Producto> w_tbl_Stock_Producto { get; set; }
+        public virtual DbSet<w_Tbl_TipoDocumentos> w_Tbl_TipoDocumentos { get; set; }
+        public virtual DbSet<w_tbl_Transportista> w_tbl_Transportista { get; set; }
+        public virtual DbSet<w_tbl_Ubigeo> w_tbl_Ubigeo { get; set; }
+        public virtual DbSet<w_tbl_Ubigeos> w_tbl_Ubigeos { get; set; }
+        public virtual DbSet<w_tbl_Usuarios> w_tbl_Usuarios { get; set; }
+        public virtual DbSet<w_tbl_Usuarios_Almacen> w_tbl_Usuarios_Almacen { get; set; }
+        public virtual DbSet<w_tbl_Usuarios_Locales> w_tbl_Usuarios_Locales { get; set; }
+        public virtual DbSet<w_tbl_Vehiculo> w_tbl_Vehiculo { get; set; }
+        public virtual DbSet<w_tbl_Web_Aceesos> w_tbl_Web_Aceesos { get; set; }
+        public virtual DbSet<w_tbl_Zonas_Venta> w_tbl_Zonas_Venta { get; set; }
         public virtual DbSet<tbl_ArqueoCaja_Egresos> tbl_ArqueoCaja_Egresos { get; set; }
         public virtual DbSet<Tbl_Fac_Facturas_Compras_cab> Tbl_Fac_Facturas_Compras_cab { get; set; }
-        public virtual DbSet<tbl_Alm_Transferencia_Det> tbl_Alm_Transferencia_Det { get; set; }
+        public virtual DbSet<Tbl_Fac_Facturas_Compras_det> Tbl_Fac_Facturas_Compras_det { get; set; }
+        public virtual DbSet<Tbl_Fac_Compras_Cancelacion_Cab> Tbl_Fac_Compras_Cancelacion_Cab { get; set; }
     }
 }

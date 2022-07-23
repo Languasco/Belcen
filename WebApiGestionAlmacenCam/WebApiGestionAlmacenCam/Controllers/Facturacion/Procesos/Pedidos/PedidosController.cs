@@ -808,6 +808,12 @@ namespace WebApi_Ventas.Controllers.Facturacion.Procesos.Pedidos
                     Pedidos_BL obj_negocio = new Pedidos_BL();
                     obj_negocio.GenerarComprobanteElectronico_GuiaRemision_nubeFact(17355, 1, "0001-0000039", 1);
                 }
+                else if (opcion == 1001)
+                { //// PRUEBAS GENERANDO CODIGO QR PROPIOS
+
+                    Pedidos_BL obj_negocio = new Pedidos_BL();
+                    obj_negocio.get_generarCodigoQRmanual();
+                }
                 else
                 {
                     resul = "Opcion selecciona invalida";

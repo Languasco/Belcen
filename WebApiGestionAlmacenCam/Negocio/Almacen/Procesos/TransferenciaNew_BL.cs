@@ -364,5 +364,38 @@ namespace Negocio.Almacen.Procesos
         }
 
 
+        public object get_tipoDocumento_Guia()
+        {
+            DataTable dt_detalle = new DataTable();
+            Resul res = new Resul();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(Conexion.bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("PROC_S_TRANFERENCIAS_COMBO_TIPO_DOCUMENTO_GUIA", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt_detalle);
+                        }
+
+                        res.ok = true;
+                        res.data = dt_detalle;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+            return res;
+        }
+
+
     }
 }

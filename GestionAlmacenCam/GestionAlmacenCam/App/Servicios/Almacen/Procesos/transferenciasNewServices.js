@@ -84,7 +84,6 @@
         }
 
 
-
         Result.get_buscarProducto_todos = function (origen_id_Local, origen_id_Almacen, filtroBusqueda , id_usuario) {
 
             let url = urlApi + 'TransferenciasNew'
@@ -290,7 +289,29 @@
             return q.promise;
         }
 
+        Result.get_tipoDocumentoGuia = function () {
 
+            let url = urlApi + 'TransferenciasNew'
+            var parameters;
+            var q = $q.defer();
+
+            var parametros = '';
+            parameters = {
+                opcion: 10,
+                filtro: parametros
+            }
+            $http({
+                method: 'GET',
+                url: url,
+                params: parameters
+            }).success(function (result) {
+                q.resolve(result);
+            }).error(function (err) {
+
+                q.reject(err);
+            })
+            return q.promise;
+        }
 
 
     return Result;

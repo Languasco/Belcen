@@ -150,6 +150,26 @@ namespace WebApiGestionAlmacenCam.Controllers.Almacen.Procesos.Transferencias
                     resul = obj_negocio.get_mostrandoTransferencias_porAprobar(id_Local, id_Almacen, tipo_reporte);
                     
                 }
+                else if (opcion == 10)
+                {
+                    string[] parametros = filtro.Split('|');
+                    int Id_AlmTranCab = Convert.ToInt32(parametros[0].ToString());
+                    int id_usuario = Convert.ToInt32(parametros[1].ToString());
+
+                    string serie = parametros[2].ToString();
+                    string nroDocumento = parametros[3].ToString();
+                    string fecha_emision = parametros[4].ToString();
+
+                    int id_Transportista = Convert.ToInt32(parametros[5].ToString());
+                    int id_vehiculo = Convert.ToInt32(parametros[6].ToString());
+                    int id_Proveedor = Convert.ToInt32(parametros[7].ToString());
+
+                    string fecha_traslado = parametros[8].ToString();
+                    int id_tipoDocumento = Convert.ToInt32(parametros[9].ToString());
+
+                    AprobarTransferencia_BL obj_negocio = new AprobarTransferencia_BL();
+                    resul = obj_negocio.Set_generarTransferencia_ConGuia_new(Id_AlmTranCab, id_usuario, serie, nroDocumento, fecha_emision, id_Transportista, id_vehiculo, id_Proveedor, fecha_traslado, id_tipoDocumento);
+                }
                 else
                 {
                     resul = "Opcion selecciona invalida";

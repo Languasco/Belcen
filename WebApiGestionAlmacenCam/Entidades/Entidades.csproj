@@ -52,11 +52,75 @@
     <Compile Include="Accessos\Usuario_Almacen_E.cs" />
     <Compile Include="Accessos\Usuario_Local_E.cs" />
     <Compile Include="Almacen\Procesos\IngresoFacturas_E.cs" />
+    <Compile Include="Almacen\Procesos\PagoProveedor_E.cs" />
     <Compile Include="Almacen\Procesos\TransformacionProducto_E.cs" />
+    <Compile Include="ALM_ARTICULOALMACENVALORIZADO.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="asd.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="back_producto2007.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bk_boletas_carabayllo.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bk_cajamarquilla.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bk_cobranzas_1.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bk_cobranzas_2.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bk_guias_1.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bk_guias_2.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bk_guias_cab.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bk_guias_det.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bk_jun_jul.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bk_Mayorista2007.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bk_tbl_Alm_Producto_0809.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bk_transferencias_cab.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="bk_transferencias_det.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="borrar_vidma_0106.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="borrar_vidma_0106_DET.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
     <Compile Include="Cobranzas\CancelacionMasiva_doc_E.cs" />
     <Compile Include="Cobranzas\CobranzaManual.cs" />
     <Compile Include="Cobranzas\detalle_cancelaciones_E.cs" />
     <Compile Include="Cobranzas\CobranzaReporte_E.cs" />
+    <Compile Include="correlativo_carabayllo.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="detalle_bk_2805.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="distritos_jhonny.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
     <Compile Include="EntityGestionAlmacenCam.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -83,14 +147,32 @@
     <Compile Include="Facturacion\Procesos\revisionPedidoE.cs" />
     <Compile Include="Facturacion\Reporte\Registro_ventas.cs" />
     <Compile Include="Facturacion\Reporte\PagosVendedor_E.cs" />
+    <Compile Include="jhonny_reemplazar.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
     <Compile Include="Mantenimiento\Proceso\ListaPrecio.cs" />
     <Compile Include="Mantenimiento\Proceso\PersonalNew.cs" />
     <Compile Include="Mantenimiento\Reportes\ReporteStock_E.cs" />
     <Compile Include="Mantenimiento\usuarios\Usuario.cs" />
     <Compile Include="Procesos\Movil\Ent_FacturacionCancelacion.cs" />
     <Compile Include="Procesos\Movil\ENT_stockAlmacen.cs" />
+    <Compile Include="producto_BK.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="prueba.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Pub_Rango_Impresion.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="qwe.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
     <Compile Include="Reparto\Reporte\ReporteStock_Reparto_E.cs" />
+    <Compile Include="reporte_cobranza.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
     <Compile Include="StockAlmacen\StockAlmacen_Ent.cs" />
     <Compile Include="tbl_Alm_Almacen.cs">
       <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
@@ -125,6 +207,15 @@
     <Compile Include="tbl_Alm_ProductoSubLinea.cs">
       <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
     </Compile>
+    <Compile Include="tbl_Alm_Producto_111.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Alm_Producto_back_0912.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Alm_Producto_UnidadMedida_Venta.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
     <Compile Include="tbl_Alm_Proveedor.cs">
       <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
     </Compile>
@@ -138,6 +229,9 @@
       <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
     </Compile>
     <Compile Include="tbl_Anexos.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Anexos_SerieDocumentos.cs">
       <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
     </Compile>
     <Compile Include="tbl_ArqueoCaja_Cab.cs">
@@ -173,6 +267,9 @@
     <Compile Include="Tbl_Cargo.cs">
       <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
     </Compile>
+    <Compile Include="Tbl_CentroCostos.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
     <Compile Include="Tbl_Clientes.cs">
       <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
     </Compile>
@@ -198,6 +295,9 @@
       <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
     </Compile>
     <Compile Include="Tbl_Com_Facturas_Cancelacion_Cab.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tbl_Com_Facturas_Cancelacion_Cab_bACK.cs">
       <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
     </Compile>
     <Compile Include="Tbl_Com_Facturas_Det.cs">
@@ -242,6 +342,12 @@
     <Compile Include="tbl_Estados.cs">
       <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
     </Compile>
+    <Compile Include="tbl_Fac_Cobranzas_Correlativo.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tbl_Fac_Compras_Cancelacion_Cab.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
     <Compile Include="Tbl_Fac_Facturas_Cab.cs">
       <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
     </Compile>
@@ -260,10 +366,16 @@
     <Compile Include="tbl_Fac_ListaPrecios.cs">
       <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
     </Compile>
+    <Compile Include="tbl_fac_pedidos.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
     <Compile Include="Tbl_Fac_Pedidos_Cab.cs">
       <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
     </Compile>
     <Compile Include="Tbl_Fac_Pedidos_Det.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_fac_pedidos_detalle.cs">
       <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
     </Compile>
     <Compile Include="Tbl_Fac_PuntosVenta.cs">
@@ -273,6 +385,9 @@
       <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
     </Compile>
     <Compile Include="tbl_fac_tipo_NC_ND_electronico.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_fac_tipo_NC_ND_electronico_OLD.cs">
       <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
     </Compile>
     <Compile Include="tbl_GiroNegocio.cs">
@@ -311,6 +426,12 @@
     <Compile Include="tbl_Personal.cs">
       <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
     </Compile>
+    <Compile Include="TBL_Personal_2.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tbl_Promocion_Actividad.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
     <Compile Include="tbl_Promocion_Canasta.cs">
       <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
     </Compile>
@@ -329,10 +450,19 @@
     <Compile Include="tbl_serie_local.cs">
       <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
     </Compile>
+    <Compile Include="tbl_Stock_Producto.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Stock_Producto_B1.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
     <Compile Include="tbl_TipoCambio.cs">
       <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
     </Compile>
     <Compile Include="Tbl_TipoDocumentos.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tbl_tipodocumentos_OLD.cs">
       <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
     </Compile>
     <Compile Include="tbl_Transportista.cs">
@@ -344,6 +474,9 @@
     <Compile Include="tbl_Ubigeos.cs">
       <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
     </Compile>
+    <Compile Include="tbl_ubigeos_back.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
     <Compile Include="tbl_Usuarios.cs">
       <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
     </Compile>
@@ -353,19 +486,163 @@
     <Compile Include="tbl_Usuarios_Locales.cs">
       <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
     </Compile>
+    <Compile Include="tbl_Usuario_ZonaVenta.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
     <Compile Include="tbl_Vehiculo.cs">
       <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
     </Compile>
     <Compile Include="tbl_vendedor.cs">
       <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
     </Compile>
+    <Compile Include="tbl_Visita.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
     <Compile Include="tbl_Web_Aceesos.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_Web_Aceesos_Back.cs">
       <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
     </Compile>
     <Compile Include="tbl_Zonas_Venta.cs">
       <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
     </Compile>
+    <Compile Include="temp_stock_0704.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
     <Compile Include="Versiones.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vidma_borrar_0106_2.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vidma_borrar_0106_DET_2.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_tbl_Alm_Almacen.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_tbl_Alm_Producto.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_tbl_Alm_ProductoCategoria.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_tbl_Alm_ProductoLinea.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_tbl_Alm_ProductoMarca.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_tbl_Alm_ProductoModeloMarca.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_tbl_Alm_ProductoSubLinea.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_tbl_Alm_UnidadMedida.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_tbl_Anexos.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_tbl_Anexos_SerieDocumentos.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_Tbl_Cargo.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_Tbl_Clientes.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_tbl_Com_Canales_Negocio.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_tbl_Com_TipoDocumento.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_tbl_Definicion_Opciones.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_Tbl_Distritos.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_tbl_Empresas.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_tbl_Estados.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_Tbl_Fac_FormaPago.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_Tbl_Fac_PuntosVenta.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_tbl_GiroNegocio.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_Tbl_GrupoTabla_Cab.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_Tbl_GrupoTabla_Det.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_tbl_Locales.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_tbl_Moneda.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_tbl_MotivosAnulacion.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_tbl_numero_correlativo.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_TBL_Parametros.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_tbl_Perfil.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_tbl_Personal.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_tbl_Ruta_Venta.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_tbl_Stock_Producto.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_Tbl_TipoDocumentos.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_tbl_Transportista.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_tbl_Ubigeo.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_tbl_Ubigeos.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_tbl_Usuarios.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_tbl_Usuarios_Almacen.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_tbl_Usuarios_Locales.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_tbl_Vehiculo.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_tbl_Web_Aceesos.cs">
+      <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
+    </Compile>
+    <Compile Include="w_tbl_Zonas_Venta.cs">
       <DependentUpon>EntityGestionAlmacenCam.tt</DependentUpon>
     </Compile>
   </ItemGroup>

@@ -63,6 +63,7 @@
                             <th data-hide=""> Usuario</th>
                             <th data-hide=""> Cargo</th>
                             <th>Asignar</th>
+                            <th>Quitar</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -79,7 +80,10 @@
                             <td>{{item.login_usuario}}</td>
                             <td>Admin</td>
                             <td>
-                                <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline " ng-click="openModal(item);"><i class="ti-pencil-alt"></i></button>
+                                <button  type="button" class="btn btn-sm btn-icon btn-pure btn-outline " ng-click="openModal(item);"><i class="ti-pencil-alt"></i></button>
+                            </td>
+                            <td>
+                                <button   type="button" class="btn btn-warning btn-circle" ng-click="set_quitarAcceso(item);" style="background-color: #ff6849; border-color: #ff6849;" title="Quitar acceso"><i class="fa fa-trash"></i> </button>
                             </td>
                         </tr>
                     </tbody>

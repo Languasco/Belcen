@@ -79,7 +79,10 @@ var app = angular.module('appGestion',
         'appGestion.HistoricoFacturacionController', 'appGestion.HistoricoFacturacionServices',
         'appGestion.importarAjusteInventarioController', 'appGestion.importarAjusteInventarioServices',
         'appGestion.VentaAcumuladaController', 'appGestion.VentaAcumuladaServices',
-
+        'appGestion.IngresoCompraServicioController', 'appGestion.IngresoCompraServicioServices',
+        'appGestion.PagoProveedoresController', 'appGestion.PagoProveedoresServices',        
+        'appGestion.reportePagoProveedoresController',
+        'appGestion.UsuarioZonaVentaController', 'appGestion.UsuarioZonaVentaServices',
     ])
     .constant('urlApi', 'http://192.168.0.109:8083/api/')
 
@@ -589,6 +592,22 @@ var app = angular.module('appGestion',
             .when('/ventaAcumulada', {
                 templateUrl: '/ReportesFacturacion/ventaAcumulada_index',
                 controller: 'VentaAcumuladaController'
+            })
+            .when('/IngresoCompraServicio', {
+                templateUrl: '/Procesos/IngresoCompra_index',
+                controller: 'IngresoCompraServicioController'
+            })
+            .when('/PagoProveedores', {
+                templateUrl: '/Procesos/PagoProveedores_index',
+                controller: 'PagoProveedoresController'
+            })
+            .when('/reportePagoProveedores', {
+                templateUrl: '/ReportesAlmacen/reportePagoProveedores',
+                controller: 'reportePagoProveedoresController'
+            })
+            .when('/UsuarioZonaVenta', {
+                templateUrl: '/HomeAdministracion/UsuarioZonaVenta_index',
+                controller: 'UsuarioZonaVentaController'
             })
             .otherwise({
                 redirectTo: '/Login'

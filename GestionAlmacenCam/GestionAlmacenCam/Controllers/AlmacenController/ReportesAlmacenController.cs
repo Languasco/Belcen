@@ -21,5 +21,9 @@ namespace GestionAlmacenCam.Controllers.AlmacenController
         {
             return View();
         }
+        public ActionResult reportePagoProveedores()
+        {
+            return View();
+        }
     }
 }

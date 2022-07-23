@@ -16,8 +16,8 @@ namespace Entidades
     {
         public tbl_Usuarios()
         {
-            this.tbl_Usuarios_Locales = new HashSet<tbl_Usuarios_Locales>();
             this.tbl_Usuarios_Almacen = new HashSet<tbl_Usuarios_Almacen>();
+            this.tbl_Usuarios_Locales = new HashSet<tbl_Usuarios_Locales>();
             this.tbl_Web_Aceesos = new HashSet<tbl_Web_Aceesos>();
         }
     
@@ -48,8 +48,8 @@ namespace Entidades
         public Nullable<System.DateTime> fecha_conectado { get; set; }
         public string origen_conectado { get; set; }
     
-        public virtual ICollection<tbl_Usuarios_Locales> tbl_Usuarios_Locales { get; set; }
         public virtual ICollection<tbl_Usuarios_Almacen> tbl_Usuarios_Almacen { get; set; }
+        public virtual ICollection<tbl_Usuarios_Locales> tbl_Usuarios_Locales { get; set; }
         public virtual ICollection<tbl_Web_Aceesos> tbl_Web_Aceesos { get; set; }
     }
 }

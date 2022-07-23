@@ -17,6 +17,7 @@ namespace Entidades
         public int id_ArqueoCaja_Egresos { get; set; }
         public Nullable<int> id_ArqueoCaja { get; set; }
         public Nullable<int> id_TipoEgreso { get; set; }
+        public Nullable<int> id_ZonaEgreso { get; set; }
         public Nullable<System.DateTime> fecha_Registro { get; set; }
         public Nullable<int> id_Anexo_Destino { get; set; }
         public Nullable<int> id_CC_Destino { get; set; }

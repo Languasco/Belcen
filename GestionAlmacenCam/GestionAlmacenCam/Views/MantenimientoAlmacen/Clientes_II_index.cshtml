@@ -87,127 +87,127 @@
 </script>
 
 <div class=" container-fluid" ng-init="initAll();">
- 
-        <div class="contentRegistro ContentFilters contentCombo " style="background-color:white; padding: 5px; margin-top: 5px;">
-            <div class="row">
-                <div class="col-sm-6 col-md-3">
-                    <label for="cbo_tipocliente" class="control-label">Tipo de Cliente.</label>  
-                    <select class="selectFiltros" id="cbo_tipocliente" ng-model="Objeto_Parametro_Filtro.id_TipoCliente">
-                        <option value="0">[ --- TODOS --- ]</option>
-                        <option ng-repeat="item in Lista_TipoCliente" value="{{item.id_detalleTabla}}">{{item.descripcion_grupoTabla}}</option>
-                    </select>
-                </div>
-                <div class="col-sm-6 col-md-3"> 
-                    <label  class="control-label"> Doc Identidad</label> <span class="help-block"></span>   
-                    <input type="text" class="form-control form-control input-sm " onkeypress="return isNumberKey(event)"  ng-model="Objeto_Parametro_Filtro.doc_identidad" style="margin-top: -12px;text-align:left; font-size: 11px;">
-                </div>
-                <div class="col-sm-6 col-md-6">
-                    <label   class="control-label"> Nombre Razon Social </label>  <span class="help-block"></span>
-                    <input type="text" class="form-control form-control input-sm " ng-model="Objeto_Parametro_Filtro.razon_social" style="margin-top: -12px;text-align:left; font-size: 11px;">
-                </div> 
+
+    <div class="contentRegistro ContentFilters contentCombo " style="background-color:white; padding: 5px; margin-top: 5px;">
+        <div class="row">
+            <div class="col-sm-6 col-md-3">
+                <label for="cbo_tipocliente" class="control-label">Tipo de Cliente.</label>
+                <select class="selectFiltros" id="cbo_tipocliente" ng-model="Objeto_Parametro_Filtro.id_TipoCliente">
+                    <option value="0">[ --- TODOS --- ]</option>
+                    <option ng-repeat="item in Lista_TipoCliente" value="{{item.id_detalleTabla}}">{{item.descripcion_grupoTabla}}</option>
+                </select>
             </div>
-
-            <div class="row">
-                <div class="col-sm-6 col-md-3">
-                    <label for="cbo_zona" class="control-label">Zona Venta</label>
-                    <select class="selectFiltros" id="cbo_zona" ng-model="Objeto_Parametro_Filtro.id_zona" ng-change="change_Zona_vendedor(Objeto_Parametro_Filtro.id_zona)">
-                        <option value="0">[ ----  TODOS  --- ]</option>
-                        <option ng-repeat="item in Lista_Zona" value="{{item.id}}">{{item.descripcion}}</option>
-                    </select>
-                </div>
-                <div class="col-sm-6 col-md-3">
-                    <label for="cbo_vendedor">Vendedor</label>
-                    <select class="selectFiltros" id="cbo_vendedor" ng-model="Objeto_Parametro_Filtro.id_vendedor">
-                        <option value="0">[ ----  TODOS  --- ]</option>
-                        <option ng-repeat="item in Lista_VendedorFiltro" value="{{item.id}}">{{item.descripcion}}  </option>
-                    </select>
-                </div>
-                <div class="col-sm-6 col-md-3">
-                    <label for="cbo_condPago" class="control-label"> Condicion Pago </label>
-                    <select class="selectModal" id="cbo_condPago" ng-model="Objeto_Parametro_Filtro.id_condicionPago">
-                        <option value="0">[ ----  TODOS  --- ]</option>
-                        <option ng-repeat="item in Lista_CondicionFact" value="{{item.id_detalleTabla}}">{{item.descripcion_grupoTabla}}</option>
-                    </select>
-
-                </div>
-                <div class="col-sm-6 col-md-3">
-                    <label class="control-label" style="text-align :left">Direccion Entrega </label> <span class="help-block"></span>
-                    <input type="text" class="form-control form-control input-sm " ng-model="Objeto_Parametro_Filtro.direccion_entrega" style="margin-top: -12px;text-align:left; font-size: 11px;">
-                </div>
+            <div class="col-sm-6 col-md-3">
+                <label class="control-label"> Doc Identidad</label> <span class="help-block"></span>
+                <input type="text" class="form-control form-control input-sm " onkeypress="return isNumberKey(event)" ng-model="Objeto_Parametro_Filtro.doc_identidad" style="margin-top: -12px;text-align:left; font-size: 11px;">
             </div>
-
-            <div class="row">
-                <div class="col-sm-6 col-md-3">
-                    <label for="cboestadoFilter" class="control-label"> Estados </label>
-                    <select class="selectFiltros" id="cboestadoFilter" ng-model="Objeto_Parametro_Filtro.id_estado"  data-style="btn-default"  style=" font-size: 15px;   color: #0e0e0e;">
-                        <option ng-repeat="item in listStatus" value="{{item.id}}">{{item.descripcion}}</option>
-                    </select>
-                </div>
-
-                <div class="col-sm-6 col-md-6">
-                    <div class="form-group" style="margin-top: 22px; margin-bottom: 0px;">
-                        <button class="btn btn-primary" style="font-family: tahoma; font-size: 13px;" ng-click="get_Listando_Clientes();"><span class="glyphicon glyphicon-refresh"></span> Actualizar</button>
-
-                        <button id="btn-material"   class="btn btn-warning btn-sm m-l-10" ng-click="Open_New_Modal();">
-                            <i class="glyphicon glyphicon-plus"></i> Nuevo
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <br />
-       
-        <div class="form-inline ">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div style="text-align:center">
-                        <div class="cssload-speeding-wheel" ng-if="loader"></div>
-                    </div>
-                </div>
+            <div class="col-sm-6 col-md-6">
+                <label class="control-label"> Nombre Razon Social </label>  <span class="help-block"></span>
+                <input type="text" class="form-control form-control input-sm " ng-model="Objeto_Parametro_Filtro.razon_social" style="margin-top: -12px;text-align:left; font-size: 11px;">
             </div>
         </div>
 
         <div class="row">
-            <div class="col-lg-12">
-                <div class="white-box">
-                    <table id="tbl_clientes" class="table m-b-0 toggle-arrow-tiny table-bordered table-hover" data-page-size="10">
-                        <thead>
-                            <tr>
-                                <th data-toggle="true">#</th>
-                                <th data-toggle="true">TIPO DE CLIENTE</th>
-                                <th data-toggle="true">NRO DOC</th>
-                                <th data-hide=""> CLIENTE</th>
-                                <th data-hide=""> DIRECCION</th>
-                                <th data-hide=""> ESTADO</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="item in Lista_Clientes | filter : search" style="{{item.estado == 0 | iif : 'background-color: rgb(230, 115, 115) !important;color:#fff;font-weight: 600;'}}">
-                                <td>{{$index + 1}}</td>
-                                <td>{{item.tipoCliente}}</td>
-                                <td>{{item.nroDoc_Cliente}}</td>
-                                <td>{{item.nombres_Cliente}}</td>
-                                <td>{{item.direccion_referencia}}</td>
-                                <td>{{item.estado == 0 | iif : "Anulado" : "Activado"}}</td>
-                                <td>
-                                    <button type="button" class="btn btn-primary btn-circle " ng-click="Open_Update_Modal(item);" data-toggle="tooltip" title="EDITAR"><i class=" ti-pencil-alt"></i></button>
-                                    <button type="button" class="btn btn-success btn-circle" ng-click="getAuditoria(item)"><i class="fa fa-cog"></i> </button>
-                                    <button type="button" class="btn btn-warning btn-circle" ng-click="getAnular(item);" style="background-color: #ff6849; border-color: #ff6849;" title="ANULAR"><i class="fa fa-trash"></i> </button>
+            <div class="col-sm-6 col-md-3">
+                <label for="cbo_zona" class="control-label">Zona Venta</label>
+                <select class="selectFiltros" id="cbo_zona" ng-model="Objeto_Parametro_Filtro.id_zona" ng-change="change_Zona_vendedor(Objeto_Parametro_Filtro.id_zona)">
+                    <option value="0">[ ----  TODOS  --- ]</option>
+                    <option ng-repeat="item in Lista_Zona" value="{{item.id}}">{{item.descripcion}}</option>
+                </select>
+            </div>
+            <div class="col-sm-6 col-md-3">
+                <label for="cbo_vendedor">Vendedor</label>
+                <select class="selectFiltros" id="cbo_vendedor" ng-model="Objeto_Parametro_Filtro.id_vendedor">
+                    <option value="0">[ ----  TODOS  --- ]</option>
+                    <option ng-repeat="item in Lista_VendedorFiltro" value="{{item.id}}">{{item.descripcion}}  </option>
+                </select>
+            </div>
+            <div class="col-sm-6 col-md-3">
+                <label for="cbo_condPago" class="control-label"> Condicion Pago </label>
+                <select class="selectModal" id="cbo_condPago" ng-model="Objeto_Parametro_Filtro.id_condicionPago">
+                    <option value="0">[ ----  TODOS  --- ]</option>
+                    <option ng-repeat="item in Lista_CondicionFact" value="{{item.id_detalleTabla}}">{{item.descripcion_grupoTabla}}</option>
+                </select>
 
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+            </div>
+            <div class="col-sm-6 col-md-3">
+                <label class="control-label" style="text-align :left">Direccion Entrega </label> <span class="help-block"></span>
+                <input type="text" class="form-control form-control input-sm " ng-model="Objeto_Parametro_Filtro.direccion_entrega" style="margin-top: -12px;text-align:left; font-size: 11px;">
+            </div>
+        </div>
 
-                    <div class="text-center">
-                        <ul class="pagination pagination-split m-t-30"></ul>
-                    </div>
+        <div class="row">
+            <div class="col-sm-6 col-md-3">
+                <label for="cboestadoFilter" class="control-label"> Estados </label>
+                <select class="selectFiltros" id="cboestadoFilter" ng-model="Objeto_Parametro_Filtro.id_estado" data-style="btn-default" style=" font-size: 15px;   color: #0e0e0e;">
+                    <option ng-repeat="item in listStatus" value="{{item.id}}">{{item.descripcion}}</option>
+                </select>
+            </div>
+
+            <div class="col-sm-6 col-md-6">
+                <div class="form-group" style="margin-top: 22px; margin-bottom: 0px;">
+                    <button class="btn btn-primary" style="font-family: tahoma; font-size: 13px;" ng-click="get_Listando_Clientes();"><span class="glyphicon glyphicon-refresh"></span> Actualizar</button>
+                    <button id="btn-material" class="btn btn-warning btn-sm m-l-10" ng-click="Open_New_Modal();">  <i class="glyphicon glyphicon-plus"></i> Nuevo </button>
+                    <button  ng-if="idPerfilGeneral == 3 || idPerfilGeneral == 4 || idPerfilGeneral == 5"  class="btn btn-success m-l-10" style="font-family: tahoma; font-size: 13px;" ng-click="descargarGrilla();"><span class="glyphicon glyphicon-download"></span> Exportar</button>
                 </div>
             </div>
         </div>
- 
+
+    </div>
+    <br />
+
+    <a id="id_link" href="" download style="display:none">link</a>
+
+    <div class="form-inline ">
+        <div class="row">
+            <div class="col-sm-12">
+                <div style="text-align:center">
+                    <div class="cssload-speeding-wheel" ng-if="loader"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="white-box">
+                <table id="tbl_clientes" class="table m-b-0 toggle-arrow-tiny table-bordered table-hover" data-page-size="10">
+                    <thead>
+                        <tr>
+                            <th data-toggle="true">#</th>
+                            <th data-toggle="true">TIPO DE CLIENTE</th>
+                            <th data-toggle="true">NRO DOC</th>
+                            <th data-hide=""> CLIENTE</th>
+                            <th data-hide=""> DIRECCION</th>
+                            <th data-hide=""> ESTADO</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in Lista_Clientes | filter : search" style="{{item.estado == 0 | iif : 'background-color: rgb(230, 115, 115) !important;color:#fff;font-weight: 600;'}}">
+                            <td>{{$index + 1}}</td>
+                            <td>{{item.tipoCliente}}</td>
+                            <td>{{item.nroDoc_Cliente}}</td>
+                            <td>{{item.nombres_Cliente}}</td>
+                            <td>{{item.direccion_referencia}}</td>
+                            <td>{{item.estado == 0 | iif : "Anulado" : "Activado"}}</td>
+                            <td>
+                                <button type="button" class="btn btn-primary btn-circle " ng-click="Open_Update_Modal(item);" data-toggle="tooltip" title="EDITAR"><i class=" ti-pencil-alt"></i></button>
+                                <button type="button" class="btn btn-success btn-circle" ng-click="getAuditoria(item)"><i class="fa fa-cog"></i> </button>
+                                <button type="button" class="btn btn-warning btn-circle" ng-click="getAnular(item);" style="background-color: #ff6849; border-color: #ff6849;" title="ANULAR"><i class="fa fa-trash"></i> </button>
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="text-center">
+                    <ul class="pagination pagination-split m-t-30"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <div id="modalMantenimiento" class="modal fade bd-example-modal-lg ModalBorderSombra  " tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myLargeModalLabel" aria-hidden="true">

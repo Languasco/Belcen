@@ -47,5 +47,15 @@ namespace GestionAlmacenCam.Controllers.AlmacenController
             return View();
         }
 
+        public ActionResult IngresoCompra_index()
+        {
+            return View();
+        }
+
+        public ActionResult PagoProveedores_index()
+        {
+            return View();
+        }
+
     }
 }

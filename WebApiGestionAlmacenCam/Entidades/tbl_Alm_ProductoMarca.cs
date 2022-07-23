@@ -16,8 +16,8 @@ namespace Entidades
     {
         public tbl_Alm_ProductoMarca()
         {
-            this.tbl_Alm_ProductoModeloMarca = new HashSet<tbl_Alm_ProductoModeloMarca>();
             this.tbl_Alm_Producto = new HashSet<tbl_Alm_Producto>();
+            this.tbl_Alm_ProductoModeloMarca = new HashSet<tbl_Alm_ProductoModeloMarca>();
         }
     
         public int id_marcaProducto { get; set; }
@@ -30,7 +30,7 @@ namespace Entidades
         public Nullable<int> usuario_Edicion { get; set; }
         public Nullable<System.DateTime> fecha_Edicion { get; set; }
     
-        public virtual ICollection<tbl_Alm_ProductoModeloMarca> tbl_Alm_ProductoModeloMarca { get; set; }
         public virtual ICollection<tbl_Alm_Producto> tbl_Alm_Producto { get; set; }
+        public virtual ICollection<tbl_Alm_ProductoModeloMarca> tbl_Alm_ProductoModeloMarca { get; set; }
     }
 }

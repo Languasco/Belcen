@@ -1027,29 +1027,28 @@ app.controller('transformacionProductosController', function ($scope, PedidosSer
 
         $scope.Objeto_Parametro_Detalle.id_GuiaCab = $scope.id_GuiaCab_Global;
 
-        const fechaProduccionOrigen = $scope.Objeto_Parametro_Detalle.fechaProduccionOrigen;
-        const fechaVencimientoOrigen = $scope.Objeto_Parametro_Detalle.fechaVencimientoOrigen;
+        //const fechaProduccionOrigen = $scope.Objeto_Parametro_Detalle.fechaProduccionOrigen;
+        //const fechaVencimientoOrigen = $scope.Objeto_Parametro_Detalle.fechaVencimientoOrigen;
 
-        const fechaProduccionDestino = $scope.Objeto_Parametro_Detalle.fechaProduccionDestino;
-        const fechaVencimientoDestino = $scope.Objeto_Parametro_Detalle.fechaVencimientoDestino;
+        //const fechaProduccionDestino = $scope.Objeto_Parametro_Detalle.fechaProduccionDestino;
+        //const fechaVencimientoDestino = $scope.Objeto_Parametro_Detalle.fechaVencimientoDestino;
 
-        $scope.Objeto_Parametro_Detalle.fechaProduccionOrigen = (fechaProduccionOrigen == null) ? null : auxiliarServices.changeFormatDate(2, fechaProduccionOrigen);
-        $scope.Objeto_Parametro_Detalle.fechaVencimientoOrigen = (fechaVencimientoOrigen == null) ? null : auxiliarServices.changeFormatDate(2, fechaVencimientoOrigen);
+        //$scope.Objeto_Parametro_Detalle.fechaProduccionOrigen = (fechaProduccionOrigen == null) ? null : auxiliarServices.changeFormatDate(2, fechaProduccionOrigen);
+        //$scope.Objeto_Parametro_Detalle.fechaVencimientoOrigen = (fechaVencimientoOrigen == null) ? null : auxiliarServices.changeFormatDate(2, fechaVencimientoOrigen);
 
-        $scope.Objeto_Parametro_Detalle.fechaProduccionDestino = (fechaProduccionDestino == null) ? null : auxiliarServices.changeFormatDate(2, fechaProduccionDestino);
-        $scope.Objeto_Parametro_Detalle.fechaVencimientoDestino = (fechaVencimientoDestino == null) ? null : auxiliarServices.changeFormatDate(2, fechaVencimientoDestino);
-
-  
+        //$scope.Objeto_Parametro_Detalle.fechaProduccionDestino = (fechaProduccionDestino == null) ? null : auxiliarServices.changeFormatDate(2, fechaProduccionDestino);
+        //$scope.Objeto_Parametro_Detalle.fechaVencimientoDestino = (fechaVencimientoDestino == null) ? null : auxiliarServices.changeFormatDate(2, fechaVencimientoDestino);
+          
         $scope.loaderSave = true;
         transformacionProductosServices.save_update_transformacionProductoDet($scope.Objeto_Parametro_Detalle )
         .then(function (res) {
 
             $scope.loaderSave = false;
-            $scope.Objeto_Parametro_Detalle.fechaProduccionOrigen = fechaProduccionOrigen;
-            $scope.Objeto_Parametro_Detalle.fechaVencimientoOrigen = fechaVencimientoOrigen;
+            //$scope.Objeto_Parametro_Detalle.fechaProduccionOrigen = fechaProduccionOrigen;
+            //$scope.Objeto_Parametro_Detalle.fechaVencimientoOrigen = fechaVencimientoOrigen;
 
-            $scope.Objeto_Parametro_Detalle.fechaProduccionDestino = fechaProduccionDestino;
-            $scope.Objeto_Parametro_Detalle.fechaVencimientoDestino = fechaVencimientoDestino;
+            //$scope.Objeto_Parametro_Detalle.fechaProduccionDestino = fechaProduccionDestino;
+            //$scope.Objeto_Parametro_Detalle.fechaVencimientoDestino = fechaVencimientoDestino;
 
             if (res.ok == true) {
                 $scope.nuevoTransformacionDet();

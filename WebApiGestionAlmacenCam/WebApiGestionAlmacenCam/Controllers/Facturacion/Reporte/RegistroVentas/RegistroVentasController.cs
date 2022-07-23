@@ -85,6 +85,26 @@ namespace WebApiGestionAlmacenCam.Controllers.Facturacion.Reporte.RegistroVentas
                     Registro_ventas_BL obj_negocio = new Registro_ventas_BL();
                     resul = obj_negocio.generarReporte_detalleArticulos(id_Anexos, id_local, id_almacen, id_zona, fechaIni, fechaFin, id_tipoDoc, id_usuario);
                 }
+                else if (opcion == 5)
+                {
+                    string[] parametros = filtro.Split('|');
+
+                    int id_TipoCliente = Convert.ToInt32(parametros[0].ToString());
+                    string doc_identidad = parametros[1].ToString();
+                    string razon_social = parametros[2].ToString();
+
+                    int id_zona = Convert.ToInt32(parametros[3].ToString());
+                    int id_vendedor = Convert.ToInt32(parametros[4].ToString());
+                    int id_condicionPago = Convert.ToInt32(parametros[5].ToString());
+
+                    string direccion_entrega = parametros[6].ToString();
+                    int id_estado = Convert.ToInt32(parametros[7].ToString());
+                    int id_usuario = Convert.ToInt32(parametros[8].ToString());
+
+                    Registro_ventas_BL obj_negocio = new Registro_ventas_BL();
+                    resul = obj_negocio.generarReporte_detalleClientes(id_TipoCliente, doc_identidad, razon_social, id_zona, id_vendedor, id_condicionPago, direccion_entrega, id_estado, id_usuario);
+                }
+
                 else
                 {
                     resul = "Opcion seleccionada invalida";

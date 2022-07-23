@@ -15,13 +15,9 @@ app.controller('ctrlAccesosUsuarios', function ($scope, auxiliarServices, Acceso
     }
 
     $scope.getAllAccesos = function () {
-
-
         const onlyUnique = (value, index, self)=> {
             return self.indexOf(value) === index;
         }
-
-
 
         var params = {
             option: 2,
@@ -261,6 +257,12 @@ app.controller('ctrlAccesosUsuarios', function ($scope, auxiliarServices, Acceso
     var eventosAux;    
     var itemUserAux;
     $scope.openModal = function (itemUser) {
+
+        if (!idParentAux) {
+            auxiliarServices.NotificationMessage('Sistemas', 'Por favor seleccione un item del Menu del sistema', 'error', '#008000', 5000);
+            return;
+        }
+
         itemUserAux = itemUser;
         eventosAux = null;        
         allPermissonUsuarioByOption.forEach(function (item) {
@@ -272,6 +274,7 @@ app.controller('ctrlAccesosUsuarios', function ($scope, auxiliarServices, Acceso
         $scope.showBodyModal = false;
         $('#ModalPermisos').modal('show');
     };
+
     $('#ModalPermisos').on('shown.bs.modal', function (e) {
         $scope.listPermisosWeb.forEach(function (itemc) {
             itemc.check = false;
@@ -353,5 +356,51 @@ app.controller('ctrlAccesosUsuarios', function ($scope, auxiliarServices, Acceso
         console.log(item);
     }
 
+
+    $scope.set_quitarAcceso = function (item) {
+
+        if (!idParentAux) {
+            auxiliarServices.NotificationMessage('Sistemas', 'Por favor seleccione un item del Menu del sistema', 'error', '#008000', 5000);
+            return;
+        }
+
+        var params = {
+            title: "Desea continuar ?",
+            text: 'Esta por eliminar el acceso del usuario.',
+            type: 'confirmationAlert',
+        }
+        auxiliarServices.initSweetAlert(params).then(function (res) {
+            if (res == true) {
+
+                $scope.showLoader2 = true;
+                const idUsuarioTrans = item.id_Usuario;
+
+                AccesosServices.set_quitarAccesoMenu(idParentAux, idUsuarioTrans)
+                    .then(function (res) {
+                        $scope.showLoader2 = false;
+                        console.log('set_quitarAccesoMenu');
+                        console.log(res);
+
+                        if (res.ok == true) {
+                            auxiliarServices.NotificationMessage('Sistemas', 'Se quito el acceso, correctamente.', 'success', '#008000', 5000);
+                        } else {
+                            alert(JSON.stringify(res.data))
+                        }
+                         
+                        $scope.listUsuarios.forEach(function (itemusu) {
+                            if (itemusu.id_Usuario == idUsuarioTrans) {
+                                itemusu.check = false;
+                            }
+                        });
+         
+ 
+                    }, function (err) {
+                        $scope.showLoader2 = false;
+
+                    console.log(err);
+                })
+            }
+        });
+    }
 
 })

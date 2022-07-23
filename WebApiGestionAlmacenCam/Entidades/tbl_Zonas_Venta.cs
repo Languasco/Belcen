@@ -15,8 +15,11 @@ namespace Entidades
     public partial class tbl_Zonas_Venta
     {
         public int id_ZonaVta { get; set; }
+        public Nullable<int> id_Local { get; set; }
+        public Nullable<int> ID_ANEXOS { get; set; }
         public string nombreZonaVta { get; set; }
         public Nullable<int> id_Personal_Supervisor { get; set; }
+        public Nullable<int> id_Transportista { get; set; }
         public Nullable<int> id_CanalNegocio { get; set; }
         public Nullable<decimal> obj_dropsize { get; set; }
         public Nullable<decimal> obj_efectividad { get; set; }
@@ -26,8 +29,6 @@ namespace Entidades
         public Nullable<System.DateTime> fecha_creacion { get; set; }
         public Nullable<int> usuario_edicion { get; set; }
         public Nullable<System.DateTime> fecha_edicion { get; set; }
-        public Nullable<int> id_Transportista { get; set; }
-        public Nullable<int> id_Local { get; set; }
-        public Nullable<int> ID_ANEXOS { get; set; }
+        public string flag_Cobranza { get; set; }
     }
 }

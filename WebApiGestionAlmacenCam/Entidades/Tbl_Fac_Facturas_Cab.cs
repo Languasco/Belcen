@@ -81,6 +81,8 @@ namespace Entidades
         public string DesDocu_Asunat { get; set; }
         public Nullable<int> generaGuia { get; set; }
         public Nullable<int> aceptada_por_sunat { get; set; }
+        public Nullable<decimal> total_NotaDebito_Factura_Cab { get; set; }
+        public Nullable<int> flag_EnviarSunat { get; set; }
     
         public virtual ICollection<Tbl_Fac_Facturas_Det> Tbl_Fac_Facturas_Det { get; set; }
     }

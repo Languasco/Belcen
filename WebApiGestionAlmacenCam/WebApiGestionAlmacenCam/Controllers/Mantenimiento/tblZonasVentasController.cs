@@ -1,4 +1,5 @@
 ﻿using Entidades;
+using Negocio.Facturacion.Procesos;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -66,40 +67,15 @@ namespace WebApiGestionAlmacenCam.Controllers.Mantenimiento
                 }
                 else if (opcion == 2)
                 {
+ 
                     string[] parametros = filtro.Split('|');
-                    string id_local = parametros[0].ToString();
-                    string id_anexo = parametros[1].ToString();
+                    int id_local = Convert.ToInt32(parametros[0].ToString());
+                    int id_anexo = Convert.ToInt32(parametros[1].ToString());
                     int id_estado = Convert.ToInt32(parametros[2].ToString());
                     string buscar = parametros[3].ToString();
 
-                    resul = (from a in db.tbl_Zonas_Venta
-                             join b in db.tbl_Locales on a.id_Local equals b.id_Local
-                             join c in db.tbl_Anexos on a.ID_ANEXOS equals c.id_Anexos
-                             join d in db.tbl_Personal on a.id_Personal_Supervisor equals d.id_personal
-                             join e in db.tbl_Transportista on a.id_Transportista equals e.id_Transportista
-                             where a.estado == id_estado && a.id_Local.ToString().StartsWith(id_local) && a.ID_ANEXOS.ToString().StartsWith(id_local) && a.nombreZonaVta.StartsWith(buscar) 
-                             select new
-                             {
-                                 a.id_ZonaVta,
-                                 a.id_Local,
-                                 b.nombre_Local,
-                                 a.ID_ANEXOS,
-                                 c.nombreAnexo,
-                                 a.nombreZonaVta,
-                                 a.id_Personal_Supervisor,
-                                 personal_supervisor = d.nombres_personal + " " + d.apellidos_personal,
-                                 a.id_Transportista,
-                                 e.nombre_Transportista,
-                                 a.id_CanalNegocio,
-                                 a.obj_dropsize,
-                                 a.obj_efectividad,
-                                 a.obj_distribucion,
-                                 a.estado,
-                                 a.usuario_creacion,
-                                 a.fecha_creacion,
-                                 a.usuario_edicion,
-                                 a.fecha_edicion
-                             }).ToList().Take(20);
+                    ArqueoCaja_BL obj_negocio = new ArqueoCaja_BL();
+                    resul = obj_negocio.get_listadoMantenimiento_zonasVentas(id_local, id_anexo, id_estado, buscar);
 
                 }
                 else if (opcion == 3)
@@ -178,10 +154,10 @@ namespace WebApiGestionAlmacenCam.Controllers.Mantenimiento
                 return BadRequest(ModelState);
             }
 
-            if (id != data.id_Local)
-            {
-                return BadRequest();
-            }
+            //if (id != data.id_Local)
+            //{
+            //    return BadRequest();
+            //}
 
             tbl_Zonas_Venta obj;
             obj = db.tbl_Zonas_Venta.Where(g => g.id_ZonaVta == data.id_ZonaVta).FirstOrDefault<tbl_Zonas_Venta>();

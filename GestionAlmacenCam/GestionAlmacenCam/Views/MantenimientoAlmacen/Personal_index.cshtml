@@ -80,9 +80,9 @@
                         <button id="btn-material" style="background-color: #357c55;" class="btn btn-outline btn-primary btn-sm m-l-10" ng-click=" ExportarToExcel();">
                             <i class="glyphicon glyphicon-save"></i>Exportar
                         </button>
-                        <button id="btn-material" style="background-color: #357c55;" class="btn btn-outline btn-primary btn-sm m-l-10" ng-click=" open_new_modal();">
+                        @*<button id="btn-material" style="background-color: #357c55;" class="btn btn-outline btn-primary btn-sm m-l-10" ng-click=" open_new_modal();">
                             <i class="glyphicon glyphicon-floppy-disk"></i>Importar
-                        </button>
+                        </button>*@
                     </div>
                 </div>
             </div>
@@ -194,7 +194,7 @@
                             <div class="col-md-6">
                                 <label for="cbo_tip_personal">Tipo de Personal</label> <span class="help-block"></span>
                                 <select class="select_modalss" id="cbo_tip_personal" style="width:95%;" data-style="btn-default" ng-model="objeto_parametros.tip_personal">
-                                    <option value="0">[ ----   Seleccione  --- ]</option>
+                                    <option value="0">[ ----   SELECCIONE  --- ]</option>
                                     <option ng-repeat="item in Lista_TipoPersonal" value="{{item.id}}">{{item.des}}</option>
                                 </select>
                             </div>
@@ -214,7 +214,7 @@
                         <div class="col-md-12">
                             <fieldset>
                                 <legend>Loggin Acceso</legend>
-                                <div class="row" style="margin-bottom: 20px;">
+                                @*<div class="row" style="margin-bottom: 20px;">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <div class="checkbox checkbox-success">
@@ -231,7 +231,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div>*@
                                 <div class="row">
                                     <div class="col-md-8">
                                         <input type="text" class="form-control" id="email_personal" maxlength="100" ng-model="objeto_parametros.email_personal"><span class="highlight"></span> <span class="bar"></span>

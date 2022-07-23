@@ -31,9 +31,15 @@ namespace Entidades
         public Nullable<decimal> PrecioPromedio_GuiaDet { get; set; }
         public Nullable<int> id_UnidadMedida_Ingreso { get; set; }
         public Nullable<int> id_Factura_det_origen { get; set; }
+        public Nullable<int> id_Producto_OrigenTransf { get; set; }
+        public string nroLote_Origen { get; set; }
+        public Nullable<System.DateTime> fechaProduccion_Origen { get; set; }
+        public Nullable<System.DateTime> fechaVencimiento_Origen { get; set; }
+        public Nullable<int> id_unidadMedida_origen { get; set; }
+        public Nullable<decimal> factor_multi_origen { get; set; }
     
+        public virtual tbl_Alm_Guias_Cab tbl_Alm_Guias_Cab { get; set; }
         public virtual tbl_Alm_Producto tbl_Alm_Producto { get; set; }
         public virtual tbl_Alm_Producto tbl_Alm_Producto1 { get; set; }
-        public virtual tbl_Alm_Guias_Cab tbl_Alm_Guias_Cab { get; set; }
     }
 }

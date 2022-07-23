@@ -18,6 +18,7 @@ namespace Entidades
         public Nullable<int> id_Factura_Cab { get; set; }
         public Nullable<int> item_Factura_Det { get; set; }
         public Nullable<int> id_Producto { get; set; }
+        public string nroLote { get; set; }
         public Nullable<decimal> precioVenta_Factura_Det { get; set; }
         public Nullable<decimal> porcentajeDescuentoFactura_Det { get; set; }
         public Nullable<decimal> Descuento_Factura_Det { get; set; }
@@ -30,13 +31,14 @@ namespace Entidades
         public Nullable<int> usuario_edicion { get; set; }
         public Nullable<System.DateTime> fecha_edicion { get; set; }
         public Nullable<decimal> precioPromedio { get; set; }
-        public string nroLote { get; set; }
         public Nullable<int> id_UnidadMedida_Venta { get; set; }
         public Nullable<int> factorMultiplicacion_Venta { get; set; }
         public Nullable<decimal> valor_Unitario_Factura_Det { get; set; }
         public Nullable<decimal> tot_Igv_Factura_Det { get; set; }
         public Nullable<decimal> subTotal_Factura_Det { get; set; }
         public string tipoIGV_Sunat { get; set; }
+        public Nullable<System.DateTime> fechaProduccion { get; set; }
+        public Nullable<System.DateTime> fechaVencimiento { get; set; }
     
         public virtual tbl_Alm_Producto tbl_Alm_Producto { get; set; }
         public virtual Tbl_Fac_Facturas_Cab Tbl_Fac_Facturas_Cab { get; set; }

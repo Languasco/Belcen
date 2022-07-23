@@ -574,5 +574,109 @@ namespace Negocio.Almacen.Mantenimiento
             }
             return res;
         }
+
+
+        public object get_UnidadMedidaVenta(int idProducto)
+        {
+            DataTable dt_detalle = new DataTable();
+            Resul res = new Resul();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(Conexion.bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("SP_S_MANT_PRODUCTO_LISTA_UNIDAD_VENTA", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@idProducto", SqlDbType.Int).Value = idProducto;
+
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt_detalle);
+                        }
+
+                        res.ok = true;
+                        res.data = dt_detalle;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+            return res;
+        }
+
+        public object save_UnidadMedidaVenta(int idProducto, int idUnidadMedida, string factor, int idUsuario)
+        {
+            DataTable dt_detalle = new DataTable();
+            Resul res = new Resul();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(Conexion.bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("SP_S_MANT_PRODUCTO_GRABAR_UNIDAD_VENTA", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@idProducto", SqlDbType.Int).Value = idProducto;
+                        cmd.Parameters.Add("@idUnidadMedida", SqlDbType.Int).Value = idUnidadMedida;
+                        cmd.Parameters.Add("@factor", SqlDbType.VarChar).Value = factor;
+                        cmd.Parameters.Add("@idUsuario", SqlDbType.Int).Value = idUsuario;
+
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt_detalle);
+                        }
+                        res.ok = true;
+                        res.data = dt_detalle;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+            return res;
+        }
+
+
+        public object eliminar_UnidadMedidaVenta(int id_UnidadMedida_Venta)
+        {
+            DataTable dt_detalle = new DataTable();
+            Resul res = new Resul();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(Conexion.bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("SP_S_MANT_PRODUCTO_ELIMINAR_UNIDAD_VENTA", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@idUnidadMedida_Venta", SqlDbType.Int).Value = id_UnidadMedida_Venta;
+                        cmd.ExecuteNonQuery();   
+
+                        res.ok = true;
+                        res.data = "OK";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+            return res;
+        }
+
+
     }
+
+
+
 }

@@ -81,9 +81,10 @@ namespace WebApiGestionAlmacenCam.Controllers.Facturacion.Procesos.ArqueoCaja
                     string valor_Billete = parametros[4].ToString();
                     string total_Billete = parametros[5].ToString();
                     int idUsuario = Convert.ToInt32(parametros[6].ToString());
+                    int idZona = Convert.ToInt32(parametros[7].ToString());
 
                     ArqueoCaja_BL obj_negocio = new ArqueoCaja_BL();
-                    resul = obj_negocio.set_guardar_billetesMonedasArqueo(id_ArqueoCaja, id_Tipo, id_BilleteMoneda, cantidad_Billete, valor_Billete, total_Billete, idUsuario);
+                    resul = obj_negocio.set_guardar_billetesMonedasArqueo(id_ArqueoCaja, id_Tipo, id_BilleteMoneda, cantidad_Billete, valor_Billete, total_Billete, idUsuario, idZona);
                 }
                 else if (opcion == 6)
                 {
@@ -197,7 +198,7 @@ namespace WebApiGestionAlmacenCam.Controllers.Facturacion.Procesos.ArqueoCaja
                     int idUsuario = Convert.ToInt32(parametros[4].ToString());
 
                     ArqueoCaja_BL obj_negocio = new ArqueoCaja_BL();
-                    resul = obj_negocio.get_informacionVentas_cobranzasDevoluciones(id_Anexo, id_ZonaVta, id_CC, fechaArqueoCaja, idUsuario);
+                    resul = obj_negocio.get_informacionVentas_cobranzas(id_Anexo, id_ZonaVta, id_CC, fechaArqueoCaja, idUsuario);
 
                 }
                 else if (opcion == 20)
@@ -302,9 +303,10 @@ namespace WebApiGestionAlmacenCam.Controllers.Facturacion.Procesos.ArqueoCaja
                     string[] parametros = filtro.Split('|');
                     int id_ArqueoCaja = Convert.ToInt32(parametros[0].ToString());
                     int idUsuario = Convert.ToInt32(parametros[1].ToString());
+                    int idZona = Convert.ToInt32(parametros[2].ToString());
 
                     ArqueoCaja_BL obj_negocio = new ArqueoCaja_BL();
-                    resul = obj_negocio.get_arqueoCajaCab_billetesMonedas_edicion(id_ArqueoCaja, idUsuario);
+                    resul = obj_negocio.get_arqueoCajaCab_billetesMonedas_edicion(id_ArqueoCaja, idUsuario, idZona);
                 }
                 else if (opcion == 29)
                 {
@@ -341,6 +343,36 @@ namespace WebApiGestionAlmacenCam.Controllers.Facturacion.Procesos.ArqueoCaja
 
                     ArqueoCaja_BL obj_negocio = new ArqueoCaja_BL();
                     resul = obj_negocio.set_anularArqueoCaja(id_ArqueoCaja, idUsuario);
+                }
+                else if (opcion == 33)
+                {
+                    string[] parametros = filtro.Split('|');
+                    int idUsuario = Convert.ToInt32(parametros[0].ToString());
+
+                    ArqueoCaja_BL obj_negocio = new ArqueoCaja_BL();
+                    resul = obj_negocio.get_tiposEgresos_usuario(idUsuario);
+                }
+                else if (opcion == 34)
+                {
+                    string[] parametros = filtro.Split('|');
+                    int id_zona = Convert.ToInt32(parametros[0].ToString());
+                    int id_TipoDocumento = Convert.ToInt32(parametros[1].ToString());
+
+                    string serie_Documento = parametros[2].ToString();
+                    string numero_Documento = parametros[3].ToString();
+                    int idUsuario = Convert.ToInt32(parametros[4].ToString());
+
+                    ArqueoCaja_BL obj_negocio = new ArqueoCaja_BL();
+                    resul = obj_negocio.get_buscarDocumento_cobranzas(id_zona, id_TipoDocumento, serie_Documento, numero_Documento, idUsuario);
+                }
+                else if (opcion == 35)
+                {
+                    string[] parametros = filtro.Split('|');
+                    int id_ArqueoCaja_Cobranza = Convert.ToInt32(parametros[0].ToString()); 
+                    int id_usuario = Convert.ToInt32(parametros[1].ToString());
+
+                    ArqueoCaja_BL obj_negocio = new ArqueoCaja_BL();
+                    resul = obj_negocio.get_cobranzas_edicion(id_ArqueoCaja_Cobranza, id_usuario);
                 }
                 else
                 {

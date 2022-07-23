@@ -28,10 +28,22 @@ app.controller('ctrlProductosAlmacen', function ($scope, loginServices, $locatio
         $scope.get_listStatus();
         setTimeout(function () {
             $(".select_modal").select2();
+            $(".selectFiltros").select2();
             $scope.estados = '1';
             $('#cboestadoFilter').val(String('1')).trigger('change.select2');
         }, 200);
     };
+
+    /// Configuracion Tabcontrl Enfoque
+    $scope.tab = 1;
+    $scope.setTab = function (newTab) {
+        $scope.tab = newTab;
+    };
+
+    $scope.isSet = function (tabNum) {
+        return $scope.tab === tabNum;
+    };
+    //-----------------------
 
 
     $scope.Producto = [];
@@ -127,7 +139,7 @@ app.controller('ctrlProductosAlmacen', function ($scope, loginServices, $locatio
                 $scope.ListaMarca = [];
                 $scope.ListaMarca = res;
                 $timeout(function () {
-                    $(".selectFiltros").select2();
+
                     $('#cbo_categoria').val("0").trigger('change.select2');
                     $('#cbo_unidad').val("0").trigger('change.select2');
                     $('#cbo_marca').val("0").trigger('change.select2');
@@ -185,7 +197,6 @@ app.controller('ctrlProductosAlmacen', function ($scope, loginServices, $locatio
                 $scope.ListaMarcaModal = [];
                 $scope.ListaMarcaModal = res;
                 $timeout(function () {
-                    $(".selectFiltros").select2();
                     $('#cbo_marcaModal').val("0").trigger('change.select2');
                 });
             }, function (err) {
@@ -311,7 +322,9 @@ app.controller('ctrlProductosAlmacen', function ($scope, loginServices, $locatio
     $scope.Open_New_Modal = function () {
         $scope.clean();
         $scope.Flag_modoEdicion = false;
-        $scope.idProducto_Global = 0 
+        $scope.idProducto_Global = 0
+        $scope.ListaUnidadMedidaVenta = [];
+        $scope.tab = 1;
         $('#ModalProducto').modal('show');
 
     };
@@ -319,6 +332,7 @@ app.controller('ctrlProductosAlmacen', function ($scope, loginServices, $locatio
     $scope.Open_Update_Modal = function (obj) {
         $scope.clean();
         $scope.Flag_modoEdicion = true;
+        $scope.tab = 1;
         $scope.EdicionRegistros(obj);
         $('#ModalProducto').modal('show');
 
@@ -401,6 +415,9 @@ app.controller('ctrlProductosAlmacen', function ($scope, loginServices, $locatio
 
         id_unidadMedida_Cobertura: '0',
         id_unidadMedida_Mayorista: '0',
+
+        idUMVenta: '0',
+        factorUMVenta: ''
     };
 
 
@@ -452,6 +469,9 @@ app.controller('ctrlProductosAlmacen', function ($scope, loginServices, $locatio
         $scope.objeto_parametros.id_unidadMedida_Cobertura = '0';
         $scope.objeto_parametros.id_unidadMedida_Mayorista = '0';
 
+        $scope.objeto_parametros.idUMVenta = '0';
+        $scope.objeto_parametros.factorUMVenta = '';
+
 
         $('.selectModal').val("0").trigger('change.select2');
         $scope.objEstados.activo = true;
@@ -471,7 +491,7 @@ app.controller('ctrlProductosAlmacen', function ($scope, loginServices, $locatio
 
             $('#cbo_cobertura').val("0").trigger('change.select2');
             $('#cbo_mayorista').val("0").trigger('change.select2');
-
+            $('#cboUM').val("0").trigger('change.select2');
 
         }, 100);
 
@@ -610,6 +630,8 @@ app.controller('ctrlProductosAlmacen', function ($scope, loginServices, $locatio
         $scope.changeSelect('categorias', $scope.objeto_parametros.id_categoriaProducto);
         $scope.changeSelects('marca', $scope.objeto_parametros.id_marcaProducto);
         //$scope.changeSelectsUnidad('unidad', $scope.objeto_parametros.id_unidadMedida);
+
+        $scope.Listando_UnidadMedidaVenta($scope.idProducto_Global)
 
 
         $scope.imgProducto = obj.url_foto_Producto;
@@ -864,8 +886,10 @@ app.controller('ctrlProductosAlmacen', function ($scope, loginServices, $locatio
     };
 
     $scope.getAuditoria = function (item) {
-        var usuario_edicion = auxiliarServices.formatDate(item.usuario_Edicion);
-        var usuario_creacion = auxiliarServices.formatDate(item.usuario_Creacion);
+
+        var usuario_edicion = auxiliarServices.formatDate(item.fecha_Creacion);
+        var usuario_creacion = auxiliarServices.formatDate(item.fecha_Edicion);
+
         var usuedicion = "";
         var usucreacion = "";
         AuditarServices.getAuditar(item.usuario_Edicion).then(function (data) {
@@ -1035,6 +1059,115 @@ app.controller('ctrlProductosAlmacen', function ($scope, loginServices, $locatio
                 console.log(err);
             })
     }
+
+
+
+    $scope.ListaUnidadMedidaVenta = [];
+    $scope.Listando_UnidadMedidaVenta = function (idProducto) {
+        $scope.loader = true;
+        productosServices.get_UnidadMedidaVenta(idProducto)
+            .then(function (res) {
+                console.log(res)
+                $scope.loader = false;
+                if (res.ok == true) {
+                    $scope.ListaUnidadMedidaVenta = [];
+                    $scope.ListaUnidadMedidaVenta = res.data;
+                } else {
+                    auxiliarServices.NotificationMessage('Sistemas', 'Lo sentimos se produjo un error', 'error', '#ff6849', 2000);
+                    alert(res.data);
+                }
+            }, function (err) {
+                $scope.loader = false;
+                console.log(err);
+            })
+    }
+
+    $scope.guardar_UnidadMedidaVenta = function () {
+ 
+        if ($scope.objeto_parametros.idUMVenta == '0' || $scope.objeto_parametros.idUMVenta == 0 ) {
+            auxiliarServices.NotificationMessage('Sistemas', 'Por favor seleccione la Unidad de Medida', 'error', '#ff6849', 2000);
+            return;
+        }
+        if ($scope.objeto_parametros.factorUMVenta == '' || $scope.objeto_parametros.factorUMVenta == null) {
+            auxiliarServices.NotificationMessage('Sistemas', 'Por favor ingrese el Factor', 'error', '#ff6849', 2000);
+            return;
+        }
+
+        if ($scope.verificarUnidadMedidaYacargado($scope.objeto_parametros.idUMVenta) == true) {
+            auxiliarServices.NotificationMessage('Sistemas', 'Ya se cargo la Unidad de Medida, verifique..', 'error', '#ff6849', 2000);
+            return;
+        }
+
+        $scope.loaderSave = true;
+        productosServices.save_UnidadMedidaVenta($scope.idProducto_Global, $scope.objeto_parametros.idUMVenta, $scope.objeto_parametros.factorUMVenta, auxiliarServices.getUserId())
+            .then(function (res) {
+                console.log(res)
+                $scope.loaderSave = false;
+                if (res.ok == true) {
+                    auxiliarServices.NotificationMessage('Sistemas', 'Se agregó correctamente..', 'success', '#ff6849', 2000);
+                    $scope.limpiar_unidadMedidaVenta();
+                    $scope.Listando_UnidadMedidaVenta($scope.idProducto_Global);
+                } else {
+                    auxiliarServices.NotificationMessage('Sistemas', 'Lo sentimos se produjo un error', 'error', '#ff6849', 2000);
+                    alert(res.data);
+                }
+            }, function (err) {
+                $scope.loaderSave = false;
+                console.log(err);
+            })
+    }
+
+    $scope.verificarUnidadMedidaYacargado = function (idUMVenta) {
+        var flagRepetida = false;
+        for (const obj of this.ListaUnidadMedidaVenta) {
+            if (obj.id_unidadMedida == idUMVenta) {
+                flagRepetida = true;
+                break;
+            }
+        }
+        return flagRepetida;
+    }
+
+
+    $scope.limpiar_unidadMedidaVenta = function () {
+        $scope.objeto_parametros.idUMVenta = '0';
+        $scope.objeto_parametros.factorUMVenta = '';
+        setTimeout(function () {
+            $('#cboUM').val("0").trigger('change.select2');
+        }, 0);
+    }
+
+
+    $scope.eliminar_UnidadMedidaVenta = function (item) { 
+
+        var params = {
+            title: "Desea continuar ?",
+            text: 'Esta por eliminar el registro..',
+            type: 'confirmationAlert'
+        };
+        auxiliarServices.initSweetAlert(params).then(function (res) {
+            if (res === true) {
+                $scope.loader = true;
+                productosServices.eliminar_UnidadMedidaVenta(item.id_UnidadMedida_Venta)
+                    .then(function (res) {
+                        $scope.loader = false;
+                        if (res.ok == true) {
+                            var index = $scope.ListaUnidadMedidaVenta.indexOf(item);
+                            $scope.ListaUnidadMedidaVenta.splice(index, 1);
+                        } else {
+                            auxiliarServices.NotificationMessage('Sistemas', 'Lo sentimos se produjo un error', 'error', '#ff6849', 2000);
+                            alert(res.data);
+                        }
+                    }, function (err) {
+                        $scope.loader = false;
+                        console.log(err);
+                    })
+            }
+        });
+    };
+
+
+
   
 
 });

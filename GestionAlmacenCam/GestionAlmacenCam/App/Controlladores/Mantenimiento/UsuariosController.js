@@ -57,10 +57,10 @@ app.controller('ctrlUsuarios', function ($scope, loginServices, $location, $time
     $scope.listAccess = [];
     $scope.getListAcceso = function () {
         $scope.listAccess.push(
-            { id: 1, descripcion: 'Web' },
-            { id: 2, descripcion: 'Movil' }
+            { id: '1', descripcion: 'Web' },
+/*            { id: 2, descripcion: 'Movil' }*/
         )
-        $scope.Objeto_ParametroFiltro.id_estado = '1';
+        $scope.Objeto_ParametroFiltro.acceso = String('1');
         setTimeout(function () {
             $('#cboaccesoFilter').val(String('1')).trigger('change.select2');
         }, 100);

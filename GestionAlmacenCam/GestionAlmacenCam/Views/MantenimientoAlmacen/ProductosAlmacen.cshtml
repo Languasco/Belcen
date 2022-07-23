@@ -113,6 +113,12 @@
      width: 100%;
     }
 
+    .Cancelacion_masiva_stilos {
+        background-color: #36752D;
+        color: white;
+        text-align: center
+    } 
+
 </style>
 
 <div ng-init="initAll();">
@@ -282,314 +288,366 @@
                 </div>
                 <div class="modal-body">
                     <div class="loaderModal" ng-if="loaderSave"></div>
-
                     <div class="contentRegistro floating-labels form-inline">
-                        <fieldset>
-                            <legend>INGRESO DE DATOS GENERALES DEL PRODUCTO</legend>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <input type="text" class="form-control" id="txtcod_1" ng-model="objeto_parametros.codigo1_Producto" ng-keydown="ValidationEnterFocus($event,'txtnombre_pro');" maxlength="20"><span class="highlight"></span> <span class="bar"></span>
-                                    <label for="txtcod_1">CODIGO 1</label> <span class="help-block"></span>
-                                </div>
-                                <div class="col-md-4">
-                                    <input type="text" class="form-control" id="txtcod_2" ng-model="objeto_parametros.codigo2_Producto" maxlength="20"><span class="highlight"></span> <span class="bar"></span>
-                                    <label for="txtcod_2">CODIGO 2</label> <span class="help-block"></span>
-                                </div>
-                                <div class="col-md-4">
-                                    <input type="text" class="form-control" id="txtcod_b" ng-model="objeto_parametros.CodigoBarra_Producto" maxlength="30"><span class="highlight"></span> <span class="bar"></span>
-                                    <label for="txtcod_b">CODIGO DE BARRA</label> <span class="help-block"></span>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <input type="text" class="form-control" id="txtnombre_pro" ng-model="objeto_parametros.nombre_Producto" ng-keydown="ValidationEnterFocus($event,'txtDes_pro');" maxlength="250"><span class="highlight"></span> <span class="bar"></span>
-                                    <label for="txtnombre_pro">NOMBRE DEL PRODUCTO</label> <span class="help-block"></span>
-                                </div>
-                                <div class="col-md-5">
-                                    <input type="text" class="form-control" id="txtDes_pro" ng-model="objeto_parametros.descripcion_producto" ng-keydown="ValidationEnterFocus($event,'txtAbr_pro');" maxlength="200" @*onkeyup="this.value=this.value.toUpperCase();"*@><span class="highlight"></span> <span class="bar"></span>
-                                    <label for="txtDes_pro">DESCRIPCION DEL PRODUCTO</label> <span class="help-block"></span>
-                                </div>
-                                <div class="col-md-3">
-                                    <input type="text" class="form-control" id="txtAbr_pro" ng-model="objeto_parametros.abreviatura_Producto" ng-keydown="ValidationEnterFocus($event,'cbo_marcaModal');" maxlength="200" @*onkeyup="this.value=this.value.toUpperCase();"*@><span class="highlight"></span> <span class="bar"></span>
-                                    <label for="txtAbr_pro">ABREVIATURA DEL PRODUCTO</label> <span class="help-block"></span>
-                                </div>
-                            </div>
 
 
-                            <div class="row">
-                                <fieldset>
-                                    <legend> Información de Impuestos </legend>
-                                    <div class="row  ">
-                                        <div class="col-md-3">
-                                            <div class="checkbox checkbox-primary" style="position: initial;">
-                                                <input id="chkAfecto" type="checkbox" ng-model="objeto_parametros.afectoIGV">
-                                                <label for="chkAfecto" style="cursor:pointer"> Afecto IGV</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-5">
-                                            <div class="checkbox checkbox-primary" style="position: initial;">
-                                                <input id="chkDetraccion" type="checkbox" ng-model="objeto_parametros.aplicaDetraccion">
-                                                <label for="chkDetraccion" style="cursor:pointer"> Aplica Detracción </label>
-                                            </div>
+                        <div class="row contenedorGrupo">
+
+                            <ul class="nav nav-pills">
+                                <li ng-class="{ active: isSet(1) }">
+                                    <a href="" ng-click="setTab(1)" style="font-size: 15px; text-align :center">DATOS GENERALES</a>
+                                </li>
+                                <li ng-class="{ active: isSet(2) }">
+                                    <a href="" ng-click="setTab(2)" style="font-size: 15px;  text-align :center"> UNIDAD MEDIDA VENTA </a>
+                                </li>
+                            </ul>
+                            @*---------- Datos Generales --------------*@
+                            <div ng-show="isSet(1)">
+                                <fieldset style="margin-top: 5px;">
+                                    <legend>INGRESO DE DATOS GENERALES DEL PRODUCTO</legend>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control" id="txtcod_1" ng-model="objeto_parametros.codigo1_Producto" ng-keydown="ValidationEnterFocus($event,'txtnombre_pro');" maxlength="20"><span class="highlight"></span> <span class="bar"></span>
+                                            <label for="txtcod_1">CODIGO 1</label> <span class="help-block"></span>
                                         </div>
                                         <div class="col-md-4">
-                                            <div class="checkbox checkbox-primary
-                                             " style="position: initial;">
-                                                <input id="chkLote" type="checkbox" ng-model="objeto_parametros.movLote">
-                                                <label for="chkLote" style="cursor:pointer"> Mov. Lote </label>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row  ">
-                                        <div class="col-md-3">
-                                            <div class="checkbox checkbox-success" style="position: initial;">
-                                                <input id="chkAfectoIsc" type="checkbox" ng-model="objeto_parametros.afectoISC">
-                                                <label for="chkAfectoIsc" style="color : {{objEstados.colorText}}"> Afecto ISC</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-5">
-                                            <div class="checkbox checkbox-success" style="position: initial;">
-                                                <input id="chkPercepcion" type="checkbox" ng-model="objeto_parametros.aplicaPercepcion">
-                                                <label for="chkPercepcion" style="cursor:pointer"> Aplica Percepción </label>
-                                            </div>
+                                            <input type="text" class="form-control" id="txtcod_2" ng-model="objeto_parametros.codigo2_Producto" maxlength="20"><span class="highlight"></span> <span class="bar"></span>
+                                            <label for="txtcod_2">CODIGO 2</label> <span class="help-block"></span>
                                         </div>
                                         <div class="col-md-4">
-                                            <div class="checkbox checkbox-success" style="position: initial;">
-                                                <input id="chkVence" type="checkbox" ng-model="objeto_parametros.aplicaFecVence">
-                                                <label for="chkVence" style="cursor:pointer"> Aplica Fecha Vencimiento </label>
-                                            </div>
+                                            <input type="text" class="form-control" id="txtcod_b" ng-model="objeto_parametros.CodigoBarra_Producto" maxlength="30"><span class="highlight"></span> <span class="bar"></span>
+                                            <label for="txtcod_b">CODIGO DE BARRA</label> <span class="help-block"></span>
                                         </div>
                                     </div>
-                                </fieldset>
-                            </div>
-                            <br />
-
-                            <div class="row  ">
-                                <div class="col-md-6">
 
                                     <div class="row">
-                                        <div class="col-md-12">
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control" id="txtnombre_pro" ng-model="objeto_parametros.nombre_Producto" ng-keydown="ValidationEnterFocus($event,'txtDes_pro');" maxlength="250"><span class="highlight"></span> <span class="bar"></span>
+                                            <label for="txtnombre_pro">NOMBRE DEL PRODUCTO</label> <span class="help-block"></span>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <input type="text" class="form-control" id="txtDes_pro" ng-model="objeto_parametros.descripcion_producto" ng-keydown="ValidationEnterFocus($event,'txtAbr_pro');" maxlength="200" @*onkeyup="this.value=this.value.toUpperCase();"*@><span class="highlight"></span> <span class="bar"></span>
+                                            <label for="txtDes_pro">DESCRIPCION DEL PRODUCTO</label> <span class="help-block"></span>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control" id="txtAbr_pro" ng-model="objeto_parametros.abreviatura_Producto" ng-keydown="ValidationEnterFocus($event,'cbo_marcaModal');" maxlength="200" @*onkeyup="this.value=this.value.toUpperCase();"*@><span class="highlight"></span> <span class="bar"></span>
+                                            <label for="txtAbr_pro">ABREVIATURA DEL PRODUCTO</label> <span class="help-block"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <fieldset>
+                                            <legend> Información de Impuestos </legend>
+                                            <div class="row  ">
+                                                <div class="col-md-3">
+                                                    <div class="checkbox checkbox-primary" style="position: initial;">
+                                                        <input id="chkAfecto" type="checkbox" ng-model="objeto_parametros.afectoIGV">
+                                                        <label for="chkAfecto" style="cursor:pointer"> Afecto IGV</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <div class="checkbox checkbox-primary" style="position: initial;">
+                                                        <input id="chkDetraccion" type="checkbox" ng-model="objeto_parametros.aplicaDetraccion">
+                                                        <label for="chkDetraccion" style="cursor:pointer"> Aplica Detracción </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="checkbox checkbox-primary
+                                                 " style="position: initial;">
+                                                        <input id="chkLote" type="checkbox" ng-model="objeto_parametros.movLote">
+                                                        <label for="chkLote" style="cursor:pointer"> Mov. Lote </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row  ">
+                                                <div class="col-md-3">
+                                                    <div class="checkbox checkbox-success" style="position: initial;">
+                                                        <input id="chkAfectoIsc" type="checkbox" ng-model="objeto_parametros.afectoISC">
+                                                        <label for="chkAfectoIsc" style="color : {{objEstados.colorText}}"> Afecto ISC</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <div class="checkbox checkbox-success" style="position: initial;">
+                                                        <input id="chkPercepcion" type="checkbox" ng-model="objeto_parametros.aplicaPercepcion">
+                                                        <label for="chkPercepcion" style="cursor:pointer"> Aplica Percepción </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="checkbox checkbox-success" style="position: initial;">
+                                                        <input id="chkVence" type="checkbox" ng-model="objeto_parametros.aplicaFecVence">
+                                                        <label for="chkVence" style="cursor:pointer"> Aplica Fecha Vencimiento </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                    <br />
+
+                                    <div class="row  ">
+                                        <div class="col-md-6">
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <fieldset>
+                                                        <legend> Unidad Manejo de Almacen y Peso </legend>
+                                                        <div class="row  ">
+                                                            <div class="col-md-6">
+                                                                <label for="cbo_unidadModal" style="top:-5px !important; color: #f71333; font-weight: 600; letter-spacing: 1px;">UNIDAD MEDIDA</label> <span class="help-block"></span>
+
+                                                                <select class="filterUnidadMedida" id="cbo_unidadModal" ng-model="objeto_parametros.id_unidadMedida">
+                                                                    <option value="0">[ ----  Seleccione  --- ]</option>
+                                                                    <option ng-repeat="item in ListaUnidadMedidaModal" value="{{item.id_unidadMedida}}">{{item.nombre_UnidadMedida}}</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <input type="text" class="form-control" id="txtPeso_pro" ng-model="objeto_parametros.peso_Producto" ng-keypress="ValidationNumber($event);" ng-keydown="ValidateEnterTi_vida($event);" maxlength="10" onkeyup="this.value=this.value.toUpperCase();"><span class="highlight"></span> <span class="bar"></span>
+                                                                <label for="txtPeso_pro">PESO NETO PRODUCTO</label> <span class="help-block"></span>
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <fieldset>
+                                                        <legend> Inf. Adicional Específica </legend>
+                                                        <div class="row  ">
+                                                            <div class="col-md-6">
+                                                                <label for="cbo_marcaModal" style="top:-5px !important; color: #f71333; font-weight: 600; letter-spacing: 1px;">MARCA PRODUCTO</label> <span class="help-block"></span>
+                                                                <select class="selectFiltros" id="cbo_marcaModal" ng-model="objeto_parametros.id_marcaProducto" ng-change="changeSelects('marca',objeto_parametros.id_marcaProducto);">
+                                                                    <option value="0">[ ----   Seleccione  --- ]</option>
+                                                                    <option ng-repeat="item in ListaMarcaModal" value="{{item.id_marcaProducto}}">{{item.nombre_marcaproducto}}</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-6">
+
+                                                                <label for="cbo_modeloPro" style="top:-5px !important; color: #f71333; font-weight: 600; letter-spacing: 1px;">MODELO PRODUCTO </label> <span class="help-block"></span>
+                                                                <select class="filterProdSubLinea" id="cbo_modeloPro" style="width:95%;" data-style="btn-default" ng-model="objeto_parametros.id_modeloProducto">
+                                                                    <option value="0">[ ----   Seleccione  --- ]</option>
+                                                                    <option ng-repeat="item in Lista_ModeloMarca" value="{{item.id_modeloProducto}}">{{item.nombre_modeloProducto}}</option>
+                                                                </select>
+
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6">
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <fieldset>
+                                                        <legend> Familia del Producto </legend>
+                                                        <div class="row  ">
+                                                            <div class="col-md-12">
+                                                                <label for="cbo_categoriaModal" style="top:-5px !important; color: #f71333; font-weight: 600; letter-spacing: 1px;">CATEGORIA PRODUCTO</label> <span class="help-block"></span>
+                                                                <select class="filterCategoria" id="cbo_categoriaModal" style="width:95%;" data-style="btn-default" ng-model="objeto_parametros.id_categoriaProducto" ng-change="changeSelect('categorias',objeto_parametros.id_categoriaProducto);">
+                                                                    <option value="0">[ ----   Seleccione  --- ]</option>
+                                                                    <option ng-repeat="item in ListaCategoriaModal" value="{{item.id_categoriaProducto}}">{{item.nombre_Categoria}}</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <br />
+                                                        <div class="row  ">
+                                                            <div class="col-md-12">
+                                                                <label for="cbo_tipo_linea" style="top:-5px !important; color: #f71333; font-weight: 600; letter-spacing: 1px;">PRODUCTO LINEA</label> <span class="help-block"></span>
+                                                                <select class="filterProdLinea" id="cbo_tipo_linea" style="width:95%;" data-style="btn-default" ng-model="objeto_parametros.id_lineaProducto" ng-change="changeSelect('linea',objeto_parametros.id_lineaProducto);">
+                                                                    <option value="0">[ ----   Seleccione  --- ]</option>
+                                                                    <option ng-repeat="item in Lista_LineaProducto" value="{{item.id_lineaProducto}}">{{item.nombre_linea}}</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <br />
+                                                        <div class="row  ">
+                                                            <div class="col-md-12">
+                                                                <label for="cbo_tipo_Sublinea" style="top:-5px !important; color: #f71333; font-weight: 600; letter-spacing: 1px;">PRODUCTO SUBLINEA</label> <span class="help-block"></span>
+                                                                <select class="filterProdSubLinea" id="cbo_tipo_Sublinea" style="width:95%;" data-style="btn-default" ng-model="objeto_parametros.id_subLineaProducto">
+                                                                    <option value="0">[ ----   Seleccione  --- ]</option>
+                                                                    <option ng-repeat="item in Lista_SubLineaProducto" value="{{item.id_subLineaProducto}}">{{item.nombre_SubLinea}}</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <br />
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control" id="txtti_vida" ng-model="objeto_parametros.stockMinimo" ng-keypress="ValidationNumber($event);" maxlength="10"><span class="highlight"></span> <span class="bar"></span>
+                                            <label for="txtti_vida"> STOCK MINIMO </label> <span class="help-block"></span>
+                                        </div>
+                                    </div>
+
+                                    <br />
+
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-12 col-md-6">
+
+                                            <div class="row">
+                                                <fieldset>
+                                                    <legend>Conversión en el Almacen</legend>
+
+                                                    <div class="row Mtop10">
+                                                        <div class="form-group col-sm-6">
+                                                            <input type="text" class="form-control" id="facmul" required ng-model="objeto_parametros.factorMultiplicacion_Alm" ng-keypress="ValidationNumber($event);" ng-keydown="ValidateEnterFacDiv($event);"><span class="highlight"></span> <span class="bar"></span>
+                                                            <label for="facmul">Factor Multiplicacion</label> <span class="help-block"></span>
+                                                        </div>
+                                                        <div class="form-group col-sm-6">
+                                                            <input type="text" class="form-control" id="facdiv" required ng-model="objeto_parametros.factorDivisor_Alm" ng-keypress="ValidationNumber($event);" ng-keydown="ValidateEnterVentas($event);"><span class="highlight"></span> <span class="bar"></span>
+                                                            <label for="facdiv">Factor Divisor</label> <span class="help-block"></span>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+
+
+                                            <br />
+
                                             <fieldset>
-                                                <legend> Unidad Manejo de Almacen y Peso </legend>
+                                                <legend> Unidad de Medida Venta </legend>
                                                 <div class="row  ">
-                                                    <div class="col-md-6">
-                                                        <label for="cbo_unidadModal" style="top:-5px !important; color: #f71333; font-weight: 600; letter-spacing: 1px;">UNIDAD MEDIDA</label> <span class="help-block"></span>
-                                                        @*<select class="filterUnidadMedida" id="cbo_unidadModal" ng-model="objeto_parametros.id_unidadMedida" ng-change="changeSelectsUnidad('unidad',objeto_parametros.id_unidadMedida);">*@
-                                                        <select class="filterUnidadMedida" id="cbo_unidadModal" ng-model="objeto_parametros.id_unidadMedida" >
+                                                    <div class="col-md-12">
+                                                        <label for="cbo_cobertura" style="top:-5px !important; color: #f71333; font-weight: 600; letter-spacing: 1px;">Cobertura</label> <span class="help-block"></span>
+                                                        <select class="selectFiltros" id="cbo_cobertura" ng-model="objeto_parametros.id_unidadMedida_Cobertura">
                                                             <option value="0">[ ----  Seleccione  --- ]</option>
                                                             <option ng-repeat="item in ListaUnidadMedidaModal" value="{{item.id_unidadMedida}}">{{item.nombre_UnidadMedida}}</option>
                                                         </select>
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <input type="text" class="form-control" id="txtPeso_pro" ng-model="objeto_parametros.peso_Producto" ng-keypress="ValidationNumber($event);" ng-keydown="ValidateEnterTi_vida($event);" maxlength="10" onkeyup="this.value=this.value.toUpperCase();"><span class="highlight"></span> <span class="bar"></span>
-                                                        <label for="txtPeso_pro">PESO NETO PRODUCTO</label> <span class="help-block"></span>
-                                                    </div>
-                                                </div>
-                                            </fieldset>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <fieldset>
-                                                <legend> Inf. Adicional Específica </legend>
-                                                <div class="row  ">
-                                                    <div class="col-md-6">
-                                                        <label for="cbo_marcaModal" style="top:-5px !important; color: #f71333; font-weight: 600; letter-spacing: 1px;">MARCA PRODUCTO</label> <span class="help-block"></span>
-                                                        <select class="selectFiltros" id="cbo_marcaModal" ng-model="objeto_parametros.id_marcaProducto" ng-change="changeSelects('marca',objeto_parametros.id_marcaProducto);">
-                                                            <option value="0">[ ----   Seleccione  --- ]</option>
-                                                            <option ng-repeat="item in ListaMarcaModal" value="{{item.id_marcaProducto}}">{{item.nombre_marcaproducto}}</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-6">
-
-                                                        <label for="cbo_modeloPro" style="top:-5px !important; color: #f71333; font-weight: 600; letter-spacing: 1px;">MODELO PRODUCTO </label> <span class="help-block"></span>
-                                                        <select class="filterProdSubLinea" id="cbo_modeloPro" style="width:95%;" data-style="btn-default" ng-model="objeto_parametros.id_modeloProducto">
-                                                            <option value="0">[ ----   Seleccione  --- ]</option>
-                                                            <option ng-repeat="item in Lista_ModeloMarca" value="{{item.id_modeloProducto}}">{{item.nombre_modeloProducto}}</option>
-                                                        </select>
-
-                                                    </div>
-                                                </div>
-                                            </fieldset>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="col-md-6">
-
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <fieldset>
-                                                <legend> Familia del Producto </legend>
-                                                <div class="row  ">
-                                                    <div class="col-md-12">
-                                                        <label for="cbo_categoriaModal" style="top:-5px !important; color: #f71333; font-weight: 600; letter-spacing: 1px;">CATEGORIA PRODUCTO</label> <span class="help-block"></span>
-                                                        <select class="filterCategoria" id="cbo_categoriaModal" style="width:95%;" data-style="btn-default" ng-model="objeto_parametros.id_categoriaProducto" ng-change="changeSelect('categorias',objeto_parametros.id_categoriaProducto);">
-                                                            <option value="0">[ ----   Seleccione  --- ]</option>
-                                                            <option ng-repeat="item in ListaCategoriaModal" value="{{item.id_categoriaProducto}}">{{item.nombre_Categoria}}</option>
-                                                        </select>
-                                                    </div>
                                                 </div>
                                                 <br />
                                                 <div class="row  ">
                                                     <div class="col-md-12">
-                                                        <label for="cbo_tipo_linea" style="top:-5px !important; color: #f71333; font-weight: 600; letter-spacing: 1px;">PRODUCTO LINEA</label> <span class="help-block"></span>
-                                                        <select class="filterProdLinea" id="cbo_tipo_linea" style="width:95%;" data-style="btn-default" ng-model="objeto_parametros.id_lineaProducto" ng-change="changeSelect('linea',objeto_parametros.id_lineaProducto);">
-                                                            <option value="0">[ ----   Seleccione  --- ]</option>
-                                                            <option ng-repeat="item in Lista_LineaProducto" value="{{item.id_lineaProducto}}">{{item.nombre_linea}}</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <br />
-                                                <div class="row  ">
-                                                    <div class="col-md-12">
-                                                        <label for="cbo_tipo_Sublinea" style="top:-5px !important; color: #f71333; font-weight: 600; letter-spacing: 1px;">PRODUCTO SUBLINEA</label> <span class="help-block"></span>
-                                                        <select class="filterProdSubLinea" id="cbo_tipo_Sublinea" style="width:95%;" data-style="btn-default" ng-model="objeto_parametros.id_subLineaProducto">
-                                                            <option value="0">[ ----   Seleccione  --- ]</option>
-                                                            <option ng-repeat="item in Lista_SubLineaProducto" value="{{item.id_subLineaProducto}}">{{item.nombre_SubLinea}}</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </fieldset>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                            <br />
-
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <input type="text" class="form-control" id="txtti_vida" ng-model="objeto_parametros.stockMinimo" ng-keypress="ValidationNumber($event);" maxlength="10"><span class="highlight"></span> <span class="bar"></span>
-                                    <label for="txtti_vida"> STOCK MINIMO </label> <span class="help-block"></span>
-                                </div>
-                            </div>
-
-                            <br />
-
-                            <div class="row">
-                                <div class="col-xs-12 col-sm-12 col-md-6">
-
-                                    <div class="row">
-                                        <fieldset>
-                                            <legend>Conversión en el Almacen</legend>
-                                            @*<div class="row Mtop-40 ">
-                                            <div class="col-sm-12">
-                                                <div class="form-group">
-                                                    <div class="col-md-12">
-                                                        <label for="cbo_unidad1" style="top:-5px !important; color: #f71333; font-weight: 600; letter-spacing: 1px;">UNIDAD MEDIDA</label> <span class="help-block"></span>
-                                                        <select class="selectFiltros" id="cbo_unidad1" ng-model="objeto_parametros.id_unidadMedida" disabled>
+                                                        <label for="cbo_mayorista" style="top:-5px !important; color: #f71333; font-weight: 600; letter-spacing: 1px;">Mayorista</label> <span class="help-block"></span>
+                                                        <select class="selectFiltros" id="cbo_mayorista" ng-model="objeto_parametros.id_unidadMedida_Mayorista">
                                                             <option value="0">[ ----  Seleccione  --- ]</option>
-                                                            <option ng-repeat="item in Lista_UnidadMedida" value="{{item.id_unidadMedida}}">{{item.nombre_UnidadMedida}}</option>
+                                                            <option ng-repeat="item in ListaUnidadMedidaModal" value="{{item.id_unidadMedida}}">{{item.nombre_UnidadMedida}}</option>
                                                         </select>
                                                     </div>
+                                                </div>
+                                                <br />
 
-                                                </div>
+                                            </fieldset>
+
+
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-6">
+                                            <div class="row" style="margin-left: 1px;">
+                                                <fieldset>
+                                                    <legend>Imagen del Producto</legend>
+                                                    <div class="row Mtop-40 ">
+                                                        <div class="col-sm-12">
+                                                            <div ng-click="openFile();" style="text-align: center; cursor:pointer" title=" Click para agregar o reemplazar la imagen">
+                                                                <img src="{{imgProducto}}" title=" Click para agregar o reemplazar la imagen" width="300" height="235">
+                                                            </div>
+                                                            <label class="import-file" style="display:none;">
+                                                                <input type="file" id="inputFileOpen" accept="image/x-png,image/gif,image/jpeg" onchange="angular.element(this).scope().changeImagen(event)">
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
                                             </div>
-                                        </div>*@
-                                            <div class="row Mtop10">
-                                                <div class="form-group col-sm-6">
-                                                    <input type="text" class="form-control" id="facmul" required ng-model="objeto_parametros.factorMultiplicacion_Alm" ng-keypress="ValidationNumber($event);" ng-keydown="ValidateEnterFacDiv($event);"><span class="highlight"></span> <span class="bar"></span>
-                                                    <label for="facmul">Factor Multiplicacion</label> <span class="help-block"></span>
-                                                </div>
-                                                <div class="form-group col-sm-6">
-                                                    <input type="text" class="form-control" id="facdiv" required ng-model="objeto_parametros.factorDivisor_Alm" ng-keypress="ValidationNumber($event);" ng-keydown="ValidateEnterVentas($event);"><span class="highlight"></span> <span class="bar"></span>
-                                                    <label for="facdiv">Factor Divisor</label> <span class="help-block"></span>
-                                                </div>
-                                            </div>
-                                        </fieldset>
+                                        </div>
                                     </div>
-                                    @*<div class="row">
-                                        <fieldset>
-                                            <legend>Conversión en las Ventas</legend> 
-                                               <div class="row Mtop10">
-                                            <div class="form-group col-sm-6">
-                                                <input type="text" class="form-control" id="facmulVe" required ng-model="objeto_parametros.factorMultiplicacion_Vta" ng-keypress="ValidationNumber($event);" ng-keydown="ValidateEnterFacVents($event);"><span class="highlight"></span> <span class="bar"></span>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="envioenLinea" style="top:-5px !important; color: #f71333; font-weight: 600; letter-spacing: 1px;">ESTADO</label> <span class="help-block"></span>
+                                            <br />
+                                            <div class="checkbox checkbox-success">
+                                                <input id="checkbox1" type="checkbox" ng-model="objEstados.activo" ng-change="changeStatus(objEstados.activo);">
+                                                <label for="checkbox1" class="estadoModal" style="color : {{objEstados.colorText}}">{{objEstados.text}}</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" ng-if="idProducto_Global > 0">
+                                            <br />
+                                            <a class="btn btn-primary" ng-click="OpenModal_listaPrecio();" id="btn-save"> <span class="glyphicon glyphicon-list-alt"></span> Lista de Precios </a>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="text-center">
+                                        <a class="btn btn-primary" ng-click="GuardarRegistro();" id="btn-save"> <span class="glyphicon glyphicon-floppy-disk"></span> Guardar</a>
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                            @*---------- UNIDAD MEDIDA VENTA  --------------*@
+                            <div ng-show="isSet(2)">
+                                <fieldset style="margin-top: 5px;">
+                                    <legend>Datos Unidad Medida Venta</legend>
+
+                                    <div ng-show="idProducto_Global > 0">
+                                        <div class="row">
+                                            <div class="col-md-12 col-md-6">
+                                                <label for="cboUM">Cobertura</label> <span class="help-block"></span>
+                                                <select class="selectFiltros" id="cboUM" ng-model="objeto_parametros.idUMVenta">
+                                                    <option value="0">[ ----  Seleccione  --- ]</option>
+                                                    <option ng-repeat="item in ListaUnidadMedidaModal" value="{{item.id_unidadMedida}}">{{item.nombre_UnidadMedida}}</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 col-md-4">
+                                                <input type="text" class="form-control" ng-model="objeto_parametros.factorUMVenta"
+                                                       ng-keypress="ValidationNumber($event);"><span class="highlight"></span> <span class="bar"></span>
                                                 <label for="facmul">Factor Multiplicacion</label> <span class="help-block"></span>
                                             </div>
-                                            <div class="form-group col-sm-6">
-                                                <input type="text" class="form-control" id="facdiven" required ng-model="objeto_parametros.factorDivisor_Vta" ng-keypress="ValidationNumber($event);"><span class="highlight"></span> <span class="bar"></span>
-                                                <label for="facdiv">Factor Divisor</label> <span class="help-block"></span>
-                                            </div>
-                                        </div>
-                                        </fieldset>
-                                    </div>*@
-
-                                    <br />
-
-                                    <fieldset>
-                                        <legend> Unidad de Medida Venta </legend>
-                                        <div class="row  ">
-                                            <div class="col-md-12">
-                                                <label for="cbo_cobertura" style="top:-5px !important; color: #f71333; font-weight: 600; letter-spacing: 1px;">Cobertura</label> <span class="help-block"></span>
-                                                <select class="selectFiltros" id="cbo_cobertura" ng-model="objeto_parametros.id_unidadMedida_Cobertura">
-                                                    <option value="0">[ ----  Seleccione  --- ]</option>
-                                                    <option ng-repeat="item in ListaUnidadMedidaModal" value="{{item.id_unidadMedida}}">{{item.nombre_UnidadMedida}}</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <br />
-                                        <div class="row  ">
-                                            <div class="col-md-12">
-                                                <label for="cbo_mayorista" style="top:-5px !important; color: #f71333; font-weight: 600; letter-spacing: 1px;">Mayorista</label> <span class="help-block"></span>
-                                                <select class="selectFiltros" id="cbo_mayorista" ng-model="objeto_parametros.id_unidadMedida_Mayorista">
-                                                    <option value="0">[ ----  Seleccione  --- ]</option>
-                                                    <option ng-repeat="item in ListaUnidadMedidaModal" value="{{item.id_unidadMedida}}">{{item.nombre_UnidadMedida}}</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <br />
-                        
-                                    </fieldset>
-
-
-                                </div>
-                                <div class="col-xs-12 col-sm-12 col-md-6">
-                                    <div class="row" style="margin-left: 1px;">
-                                        <fieldset>
-                                            <legend>Imagen del Producto</legend>
-                                            <div class="row Mtop-40 ">
-                                                <div class="col-sm-12">
-                                                    <div ng-click="openFile();" style="text-align: center; cursor:pointer" title=" Click para agregar o reemplazar la imagen">
-                                                        <img src="{{imgProducto}}" title=" Click para agregar o reemplazar la imagen" width="300" height="235">
-                                                    </div>
-                                                    <label class="import-file" style="display:none;">
-                                                        <input type="file" id="inputFileOpen" accept="image/x-png,image/gif,image/jpeg" onchange="angular.element(this).scope().changeImagen(event)">
-                                                    </label>
+                                            <div class="col-md-6 col-md-2">
+                                                <div class="text-center">
+                                                    <a class="btn btn-primary" ng-click="guardar_UnidadMedidaVenta();"> <span class="glyphicon glyphicon-floppy-disk"></span> Guardar</a>
                                                 </div>
                                             </div>
-                                        </fieldset>
+                                        </div>
+                                        <hr />
+                                        <div id="form_detalle">
+                                            <table id="tbl_detalle" class="table Cancelacion_tabla_stilos">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="Cancelacion_masiva_stilos">#</th>
+                                                        <th class="Cancelacion_masiva_stilos">UNIDAD MEDIDA</th>
+                                                        <th class="Cancelacion_masiva_stilos">FACTOR VENTA</th>
+                                                        <th class="Cancelacion_masiva_stilos">ELIMINAR</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="item in ListaUnidadMedidaVenta">
+                                                        <td> {{$index+1}} </td>
+                                                        <td> {{item.nombre_UnidadMedida}} </td>
+                                                        <td class="text-right"> {{item.factorVenta}} </td>
+                                                        <td class="text-center">
+                                                            <button type="button" class="btn btn-warning btn-circle" ng-click="eliminar_UnidadMedidaVenta(item);" style="background-color: #ff6849; border-color: #ff6849;" title="Eliminar">
+                                                                <i class="fa fa-trash"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <br />
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="envioenLinea" style="top:-5px !important; color: #f71333; font-weight: 600; letter-spacing: 1px;">ESTADO</label> <span class="help-block"></span>
-                                    <br />
-                                    <div class="checkbox checkbox-success">
-                                        <input id="checkbox1" type="checkbox" ng-model="objEstados.activo" ng-change="changeStatus(objEstados.activo);">
-                                        <label for="checkbox1" class="estadoModal" style="color : {{objEstados.colorText}}">{{objEstados.text}}</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6" ng-if="idProducto_Global > 0">
-                                    <br />
-                                    <a class="btn btn-primary" ng-click="OpenModal_listaPrecio();" id="btn-save"> <span class="glyphicon glyphicon-list-alt"></span> Lista de Precios </a>
-                                </div>
-                            </div>
-                            <br />
 
-                        </fieldset>
+                                </fieldset>
+                            </div>
+
+                        </div>
+
+
+
+
+
+
+
                     </div>
 
                 </div>
                 <div class="modal-footer ">
-                    <a class="btn btn-primary" ng-click="GuardarRegistro();" id="btn-save"> <span class="glyphicon glyphicon-floppy-disk"></span> Guardar</a>
+
                     <a class="btn btn-danger" data-dismiss="modal" id="btn-close"><span class="glyphicon glyphicon-remove-sign"></span> Cerrar</a>
                 </div>
             </div>

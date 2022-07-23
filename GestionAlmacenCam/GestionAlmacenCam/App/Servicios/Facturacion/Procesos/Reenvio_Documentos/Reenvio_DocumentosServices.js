@@ -460,7 +460,7 @@
           return q.promise;
       }
        
-        Result.GenerarDocumentosVentas_II = function (obj_filtro, id_TipoDocumento, usuario) {
+      Result.GenerarDocumentosVentas_II = function (obj_filtro, id_TipoDocumento, usuario) {
 
         let url = urlApi + 'GeneracionMasiva_Documentos'
         var parameters;
@@ -468,13 +468,13 @@
         var parametros = obj_filtro.id_local + '|' + obj_filtro.id_almacen + '|' + obj_filtro.vendedor + '|' + obj_filtro.fecha + '|' + id_TipoDocumento + '|' + usuario + '|' + obj_filtro.fecha_Factura + '|' + obj_filtro.serie + '-' + obj_filtro.num_doc + '|' + obj_filtro.numero_pedido
 
         parameters = {
-        opcion: 18,
-        filtro: parametros
+            opcion: 18,
+            filtro: parametros
         };
         $http({
-        method: 'GET',
-        url: url,
-        params: parameters
+            method: 'GET',
+            url: url,
+            params: parameters
         }).success(function (result) {
         q.resolve(result);
         }).error(function (err) {

@@ -12,6 +12,11 @@ namespace Entidades.Accessos
        public int id_Usuario_Almacen { get; set; }  
        public int id_Usuario { get; set; }  
        public int id_Almacen { get; set; }  
-       public string descripcion_Almacen { get; set; }  
+       public string descripcion_Almacen { get; set; }
+
+        public int id_ZonaVta_Usuario { get; set; }
+        public int id_ZonaVta { get; set; }
+        public string  nombreZonaVta  { get; set; }
+
     }
 }

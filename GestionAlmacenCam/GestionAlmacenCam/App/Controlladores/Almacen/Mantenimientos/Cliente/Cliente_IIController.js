@@ -4,6 +4,8 @@ var app = angular.module('appGestion.Cliente_IIController', [])
 app.controller('CtrlCliente_II', function ($scope, RevisionPedidoServices, Documentos_MasivosServices ,  $location, $timeout, auxiliarServices, Cliente_IIServices, GrupoDetServices, PedidosServices, PersonalServices, AuditarServices) {
 
 
+    $scope.idPerfilGeneral = 0;
+
     $scope.initAll = function () {
         if (!auxiliarServices.validateUserLog()) {
             $location.path('/Login');
@@ -22,7 +24,8 @@ app.controller('CtrlCliente_II', function ($scope, RevisionPedidoServices, Docum
             $scope.estados="0";
             $('#cboestadoFilter').val(String('0')).trigger('change.select2');
         }, 0);
- 
+
+        $scope.idPerfilGeneral = auxiliarServices.getPerfilId(); 
 
         $scope.get_listStatus();
         $scope.Listando_TipoCliente();
@@ -141,11 +144,6 @@ app.controller('CtrlCliente_II', function ($scope, RevisionPedidoServices, Docum
         } else {
             ejecutandoConsultaClientes();
         }
-
-
-
- 
-
     }
         
     $scope.listStatus = [];
@@ -662,7 +660,6 @@ app.controller('CtrlCliente_II', function ($scope, RevisionPedidoServices, Docum
             $('#cbo_departamento').val(parseInt(obj.id_departamento)).trigger('change.select2');
             $('#cbo_provincia').val(obj.id_Provincia).trigger('change.select2');
             $scope.change_departamento_provincia(obj.id_departamento,obj.id_Provincia);
-            //$('#cbo_personalVendedor').val(obj.id_PersonalVendedor).trigger('change.select2');
             $('#cbo_condFacturacion').val(obj.cond_facturacion).trigger('change.select2');
             $('#cbo_tipoDoc').val(parseInt(obj.id_DocumentoIdentidad)).trigger('change.select2');
 
@@ -686,7 +683,7 @@ app.controller('CtrlCliente_II', function ($scope, RevisionPedidoServices, Docum
 
 
         setTimeout(function () {
-             $scope.change_provincia_distrito(obj.id_Provincia, obj.id_distrito);
+            $scope.change_provincia_distrito(obj.id_Provincia, obj.id_distrito);
         }, 1500);
 
     }
@@ -768,12 +765,7 @@ app.controller('CtrlCliente_II', function ($scope, RevisionPedidoServices, Docum
             return;
         }
 
-
         $scope.objeto_parametros_cliente.id_Personal_Supervisor = ($scope.objeto_parametros_cliente.id_Personal_Supervisor == null ) ? 0 : $scope.objeto_parametros_cliente.id_Personal_Supervisor;
-
-
-        console.log($scope.objeto_parametros_cliente)
-
 
         if ($scope.Flag_modoEdicion == false) { // nuevo registroo
 
@@ -864,13 +856,13 @@ app.controller('CtrlCliente_II', function ($scope, RevisionPedidoServices, Docum
             }
 
         } else {  //actualizar
-
-            alert('entrooo')
-
             $scope.objeto_parametros_cliente.estado = $scope.objEstados.activo == true ? 1 : 0;
             $scope.loaderSave = true;
             Cliente_IIServices.update_Cliente($scope.objeto_parametros_cliente)
                 .then(function (data) {
+
+                    console.log('update_Cliente');
+                    console.log(data);
 
                     if (data == "OK") {
                         $scope.get_Listando_Clientes();
@@ -1394,6 +1386,49 @@ app.controller('CtrlCliente_II', function ($scope, RevisionPedidoServices, Docum
 
     }
 
+
+    $scope.descargarGrilla = function () {
+
+        const ejecutandoDescargarClientes = () => {
+            var id_link = document.getElementById('id_link');
+            $scope.loader = true;
+            Cliente_IIServices.getDescargarClientesExcel($scope.Objeto_Parametro_Filtro, auxiliarServices.getUserId())
+                .then(function (res) {
+                    $scope.loader = false;
+                    if (res.ok) {
+                        id_link.href = res.data;
+                        id_link.click();
+                    } else {
+                        auxiliarServices.NotificationMessage('Sistemas', res.data, 'error', '#ff6849', 1500);
+                    }
+                }, function (err) {
+                    $scope.loader = false;
+                    console.log(err);
+                });
+        }
+
+
+        if ($scope.Objeto_Parametro_Filtro.id_TipoCliente == '0' && $scope.Objeto_Parametro_Filtro.doc_identidad == '' && $scope.Objeto_Parametro_Filtro.razon_social == '' && $scope.Objeto_Parametro_Filtro.id_zona == '0' &&
+            $scope.Objeto_Parametro_Filtro.id_vendedor == '0' && $scope.Objeto_Parametro_Filtro.id_condicionPago == '0' && $scope.Objeto_Parametro_Filtro.direccion_entrega == '' &&
+            $scope.Objeto_Parametro_Filtro.id_estado == '0') {
+
+            var params = {
+                title: "Desea continuar ?",
+                text: 'No selecciono ningun filtro,la respuesta va a tardar varios minutos',
+                type: 'confirmationAlert',
+            }
+            auxiliarServices.initSweetAlert(params).then(function (res) {
+                if (res == true) {
+                    ejecutandoDescargarClientes();
+                }
+            });
+
+        } else {
+            ejecutandoDescargarClientes();
+        }
+
+
+    }
     
    
 })

@@ -22,5 +22,33 @@
     }
 
 
+ 
+
+    Result.set_quitarAccesoMenu = function (idParent, idUsuario) {
+
+        let url = urlApi + 'UsuarioAccesos'
+        var parameters;
+        var q = $q.defer();
+
+        var parametros = idParent + '|' + idUsuario;
+        parameters = {
+            option: 7,
+            filters: parametros
+        }
+        $http({
+            method: 'GET',
+            url: url,
+            params: parameters
+        }).success(function (result) {
+            q.resolve(result);
+        }).error(function (err) {
+
+            q.reject(err);
+        })
+        return q.promise;
+    }
+
+
+
     return Result;
 });

@@ -210,6 +210,7 @@
   <ItemGroup>
     <Content Include="App\app.js" />
     <Content Include="App\Controlladores\Administracion\SeguridadDeSistema\accesosController.js" />
+    <Content Include="App\Controlladores\Administracion\UsuarioZonaVenta\UsuarioZonaVentaController.js" />
     <Content Include="App\Controlladores\Administracion\UsuarioAlmacen\UsuarioAlmacenController.js" />
     <Content Include="App\Controlladores\Administracion\UsuarioLocal\UsuarioLocalController.js" />
     <Content Include="App\Controlladores\Administracion\Usuario\UsuarioController.js" />
@@ -238,6 +239,8 @@
     <Content Include="App\Controlladores\Almacen\Mantenimientos\Vendedor\VendedorController.js" />
     <Content Include="App\Controlladores\Almacen\Procesos\AprobacionTransferenciasController.js" />
     <Content Include="App\Controlladores\Almacen\Procesos\importarAjusteInventarioController.js" />
+    <Content Include="App\Controlladores\Almacen\Procesos\PagoProveedoresController.js" />
+    <Content Include="App\Controlladores\Almacen\Procesos\IngresoCompraServicioController.js" />
     <Content Include="App\Controlladores\Almacen\Procesos\IngresoGuiasController.js" />
     <Content Include="App\Controlladores\Almacen\Procesos\IngresoGuiasOrdenCompraController.js" />
     <Content Include="App\Controlladores\Almacen\Procesos\IngresoTransferenciasCompraController.js" />
@@ -246,6 +249,7 @@
     <Content Include="App\Controlladores\Almacen\Procesos\transferenciasNewController.js" />
     <Content Include="App\Controlladores\Almacen\Procesos\transferenciasController.js" />
     <Content Include="App\Controlladores\Almacen\Reportes\Kardex\KardexAlmacenController.js" />
+    <Content Include="App\Controlladores\Almacen\Reportes\reportePagoProveedores\reportePagoProveedoresController.js" />
     <Content Include="App\Controlladores\Almacen\Reportes\Stock\StockController.js" />
     <Content Include="App\Controlladores\Almacen\Reportes\Transacciones\TransaccionesController.js" />
     <Content Include="App\Controlladores\Cobranzas\AnularDocumentosController.js" />
@@ -296,6 +300,7 @@
     <Content Include="App\Controlladores\Reparto\Reportes\ReporteKpiController.js" />
     <Content Include="App\Controlladores\Reparto\Reportes\ReporteCoberturaController.js" />
     <Content Include="App\Servicios\Administracion\SeguridadDeSistema\AccesosServices.js" />
+    <Content Include="App\Servicios\Administracion\UsuarioZonaVenta\UsuarioZonaVentaServices.js" />
     <Content Include="App\Servicios\Administracion\UsuarioAlmacen\UsuarioAlmacenServices.js" />
     <Content Include="App\Servicios\Administracion\UsuarioLocal\UsuarioLocalServices.js" />
     <Content Include="App\Servicios\Administracion\Usuario\UsuarioServices.js" />
@@ -329,6 +334,8 @@
     <Content Include="App\Servicios\Almacen\Mantenimientos\Ubigeo\UbigeoServices.js" />
     <Content Include="App\Servicios\Almacen\Mantenimientos\UnidadMedida\umServices.js" />
     <Content Include="App\Servicios\Almacen\Procesos\importarAjusteInventarioServices.js" />
+    <Content Include="App\Servicios\Almacen\Procesos\PagoProveedoresServices.js" />
+    <Content Include="App\Servicios\Almacen\Procesos\IngresoCompraServicioServices.js" />
     <Content Include="App\Servicios\Almacen\Procesos\transformacionProductosServices.js" />
     <Content Include="App\Servicios\Almacen\Procesos\transferenciasNewServices.js" />
     <Content Include="App\Servicios\Almacen\Reportes\Transacciones\TransaccionesServices.js" />
@@ -956,6 +963,10 @@
     <Content Include="Views\ReportesFacturacion\HistoricoFacturacion_index.cshtml" />
     <Content Include="Views\Procesos\importarAjusteInventario_index.cshtml" />
     <Content Include="Views\ReportesFacturacion\ventaAcumulada_index.cshtml" />
+    <Content Include="Views\Procesos\IngresoCompra_index.cshtml" />
+    <Content Include="Views\Procesos\PagoProveedores_index.cshtml" />
+    <Content Include="Views\ReportesAlmacen\reportePagoProveedores.cshtml" />
+    <Content Include="Views\HomeAdministracion\UsuarioZonaVenta_index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\Controlladores\Almacen\Servicio\Cargo\" />

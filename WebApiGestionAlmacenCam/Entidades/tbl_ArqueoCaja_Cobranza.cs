@@ -16,14 +16,20 @@ namespace Entidades
     {
         public int id_ArqueoCaja_Cobranza { get; set; }
         public Nullable<int> id_ArqueoCaja { get; set; }
-        public Nullable<int> id_Cancelacion_Cab { get; set; }
+        public Nullable<int> id_zona { get; set; }
+        public Nullable<System.DateTime> fecha_cobranza { get; set; }
         public Nullable<int> id_Factura_Cab { get; set; }
-        public Nullable<System.DateTime> fecha_Emision { get; set; }
         public Nullable<int> id_TipoDocumento { get; set; }
+        public string serie_Documento { get; set; }
         public string numero_Documento { get; set; }
-        public Nullable<decimal> importePago { get; set; }
+        public Nullable<decimal> importe_Documento { get; set; }
+        public string cliente_Documento { get; set; }
         public Nullable<int> id_MedidoPago { get; set; }
         public Nullable<int> id_Banco { get; set; }
+        public string nro_operacionBanco { get; set; }
+        public string adjuntarArchivoBanco { get; set; }
+        public string nombreArchivoServidor { get; set; }
+        public Nullable<decimal> importePago { get; set; }
         public string observaciones { get; set; }
         public Nullable<int> estado { get; set; }
         public Nullable<int> usuario_creacion { get; set; }

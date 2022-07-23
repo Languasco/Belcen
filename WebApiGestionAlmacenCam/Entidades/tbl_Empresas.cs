@@ -17,8 +17,8 @@ namespace Entidades
         public tbl_Empresas()
         {
             this.tbl_Alm_Almacen = new HashSet<tbl_Alm_Almacen>();
-            this.tbl_Com_Pedidos_Cab = new HashSet<tbl_Com_Pedidos_Cab>();
             this.tbl_Alm_Guias_Cab = new HashSet<tbl_Alm_Guias_Cab>();
+            this.tbl_Com_Pedidos_Cab = new HashSet<tbl_Com_Pedidos_Cab>();
             this.Tbl_Fac_Facturas_Compras_cab = new HashSet<Tbl_Fac_Facturas_Compras_cab>();
         }
     
@@ -34,8 +34,8 @@ namespace Entidades
         public string RUC_Empresa { get; set; }
     
         public virtual ICollection<tbl_Alm_Almacen> tbl_Alm_Almacen { get; set; }
-        public virtual ICollection<tbl_Com_Pedidos_Cab> tbl_Com_Pedidos_Cab { get; set; }
         public virtual ICollection<tbl_Alm_Guias_Cab> tbl_Alm_Guias_Cab { get; set; }
+        public virtual ICollection<tbl_Com_Pedidos_Cab> tbl_Com_Pedidos_Cab { get; set; }
         public virtual ICollection<Tbl_Fac_Facturas_Compras_cab> Tbl_Fac_Facturas_Compras_cab { get; set; }
     }
 }

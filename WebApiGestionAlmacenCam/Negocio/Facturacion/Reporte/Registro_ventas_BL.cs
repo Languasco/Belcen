@@ -849,6 +849,138 @@ namespace Negocio.Facturacion.Reporte
             }
             return Res;
         }
+
+
+        public object generarReporte_detalleClientes(int id_TipoCliente, string doc_identidad, string razon_social, int id_zona, int id_vendedor, int id_condicionPago, string direccion_entrega, int id_estado, int id_usuario)
+        {
+            Resultado res = new Resultado();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("PROC_S_MANT_CLIENTE_CAB_EXCEL", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add("@id_TipoCliente", SqlDbType.Int).Value = id_TipoCliente;
+                        cmd.Parameters.Add("@doc_identidad", SqlDbType.VarChar).Value = doc_identidad;
+                        cmd.Parameters.Add("@razon_social", SqlDbType.VarChar).Value = razon_social;
+
+                        cmd.Parameters.Add("@id_zona", SqlDbType.Int).Value = id_zona;
+                        cmd.Parameters.Add("@id_vendedor", SqlDbType.Int).Value = id_vendedor;
+                        cmd.Parameters.Add("@id_condicionPago", SqlDbType.Int).Value = id_condicionPago;
+
+                        cmd.Parameters.Add("@direccion_entrega", SqlDbType.VarChar).Value = direccion_entrega;
+                        cmd.Parameters.Add("@id_estado", SqlDbType.Int).Value = id_estado;
+
+                        DataTable dt_detalle = new DataTable();
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt_detalle);
+                            if (dt_detalle.Rows.Count <= 0)
+                            {
+                                res.ok = false;
+                                res.data = "0|No hay informacion disponible";
+                            }
+                            else
+                            {
+                                res.ok = true;
+                                res.data = GenerarArchivoExcel_detalleClientes(dt_detalle, id_usuario);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+            return res;
+        }
+
+        public string GenerarArchivoExcel_detalleClientes(DataTable dt_detalles, int id_usuario)
+        {
+            string Res = "";
+            int _fila = 5;
+            string FileRuta = "";
+            string FileExcel = "";
+
+            try
+            {
+                FileRuta = System.Web.Hosting.HostingEnvironment.MapPath("~/ArchivosExcel/" + id_usuario + "_detalleClientes.xlsx");
+                string rutaServer = ConfigurationManager.AppSettings["servidor_archivos"];
+
+                FileExcel = rutaServer + id_usuario + "_detalleClientes.xlsx";
+                FileInfo _file = new FileInfo(FileRuta);
+                if (_file.Exists)
+                {
+                    _file.Delete();
+                    _file = new FileInfo(FileRuta);
+                }
+
+                using (Excel.ExcelPackage oEx = new Excel.ExcelPackage(_file))
+                {
+                    Excel.ExcelWorksheet oWs = oEx.Workbook.Worksheets.Add("detalleClientes");
+                    oWs.Cells.Style.Font.SetFromFont(new Font("Tahoma", 8));
                      
+                    oWs.Cells[2, 1, 2, 7].Merge = true;  // combinar celdaS dt
+                    oWs.Cells[2, 1].Value = dt_detalles.Rows[0]["tituloReporte"].ToString();
+                    oWs.Cells[2, 1].Style.Font.Size = 15; //letra tamaño  
+                    oWs.Cells[2, 1].Style.HorizontalAlignment = Style.ExcelHorizontalAlignment.Center;
+                    oWs.Cells[2, 1].Style.VerticalAlignment = Style.ExcelVerticalAlignment.Center;
+                    oWs.Cells[2, 1].Style.Font.Bold = true; //Letra negrita 
+
+                    for (int i = 1; i <= 7; i++)
+                    {
+                        oWs.Cells[4, i].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin);
+                    }
+
+                    oWs.Cells[4, 1].Value = "TIPO DOCUMENTO";
+                    oWs.Cells[4, 2].Value = "NRO DOCUMENTO";
+                    oWs.Cells[4, 3].Value = "RAZON SOCIAL";
+                          
+                    oWs.Cells[4, 4].Value = "GIRO DE NEGOCIO";
+                    oWs.Cells[4, 5].Value = "DIRECCION";
+                    oWs.Cells[4, 6].Value = "LATITUD";                       
+                    oWs.Cells[4, 7].Value = "LONGITUD"; 
+
+                    foreach (DataRow oBj in dt_detalles.Rows)
+                    {
+                        oWs.Cells[_fila, 1].Value = oBj["tipoDocumento"].ToString();
+                        oWs.Cells[_fila, 2].Value = oBj["nroDocumento"].ToString();
+                        oWs.Cells[_fila, 3].Value = oBj["RazonSocial"].ToString();
+                        oWs.Cells[_fila, 4].Value = oBj["giroNegocio"].ToString();
+
+                        oWs.Cells[_fila, 5].Value = oBj["direccion"].ToString();
+                        oWs.Cells[_fila, 6].Value = oBj["latitud"].ToString();
+                        oWs.Cells[_fila, 7].Value = oBj["longitud"].ToString();
+
+                        _fila++;
+                    }
+
+                    oWs.Row(4).Style.Font.Bold = true;
+                    oWs.Row(4).Style.HorizontalAlignment = Style.ExcelHorizontalAlignment.Center;
+                    oWs.Row(4).Style.VerticalAlignment = Style.ExcelVerticalAlignment.Center;
+
+                    for (int k = 1; k <= 7; k++)
+                    {
+                        oWs.Column(k).AutoFit();
+                    }
+                    oEx.Save();
+                }
+
+                Res = FileExcel;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return Res;
+        }
+
+
     }
 }

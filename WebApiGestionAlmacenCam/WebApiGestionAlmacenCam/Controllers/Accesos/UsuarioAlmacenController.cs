@@ -56,6 +56,26 @@ namespace WebApiGestionAlmacenCam.Controllers.Accesos
                     UsuarioAlmacen_BL obj_negocio = new UsuarioAlmacen_BL();
                     resul = obj_negocio.set_save_AlmacenesUsuario(obj_user, obj_almacen, id_usuario);
                 }
+                else if (opcion == 4)
+                {
+                    string[] parametros = filtro.Split('|');
+                    int id_usuario = Convert.ToInt32(parametros[0].ToString());
+                    int id_local = Convert.ToInt32(parametros[1].ToString());
+
+                    UsuarioAlmacen_BL obj_negocio = new UsuarioAlmacen_BL();
+                    resul = obj_negocio.Listando_zonasLocalUsuario(id_usuario, id_local);
+                }
+                else if (opcion == 5)
+                {
+                    string[] parametros = filtro.Split('|');
+                    string obj_user = parametros[0].ToString();
+                    string obj_zonas = parametros[1].ToString();
+                    int id_usuario = Convert.ToInt32(parametros[2].ToString());
+                    int id_local = Convert.ToInt32(parametros[3].ToString());                    
+
+                    UsuarioAlmacen_BL obj_negocio = new UsuarioAlmacen_BL();
+                    resul = obj_negocio.set_save_ZonasUsuario(obj_user, obj_zonas, id_usuario, id_local);
+                }
                 else
                 {
                     resul = "Opcion selecciona invalida";

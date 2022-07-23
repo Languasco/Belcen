@@ -16,8 +16,8 @@ namespace Entidades
     {
         public tbl_Com_PuntoVenta()
         {
-            this.Tbl_Fac_Pedidos_Cab = new HashSet<Tbl_Fac_Pedidos_Cab>();
             this.tbl_Alm_Guias_Cab = new HashSet<tbl_Alm_Guias_Cab>();
+            this.Tbl_Fac_Pedidos_Cab = new HashSet<Tbl_Fac_Pedidos_Cab>();
             this.Tbl_Fac_Facturas_Compras_cab = new HashSet<Tbl_Fac_Facturas_Compras_cab>();
         }
     
@@ -31,8 +31,8 @@ namespace Entidades
         public Nullable<int> usuario_Edicion { get; set; }
         public Nullable<System.DateTime> fecha_Edicion { get; set; }
     
-        public virtual ICollection<Tbl_Fac_Pedidos_Cab> Tbl_Fac_Pedidos_Cab { get; set; }
         public virtual ICollection<tbl_Alm_Guias_Cab> tbl_Alm_Guias_Cab { get; set; }
+        public virtual ICollection<Tbl_Fac_Pedidos_Cab> Tbl_Fac_Pedidos_Cab { get; set; }
         public virtual ICollection<Tbl_Fac_Facturas_Compras_cab> Tbl_Fac_Facturas_Compras_cab { get; set; }
     }
 }

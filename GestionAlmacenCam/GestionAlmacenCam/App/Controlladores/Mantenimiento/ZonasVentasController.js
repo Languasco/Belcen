@@ -9,12 +9,10 @@ app.controller('ctrlZonasVentas', function ($scope, loginServices, $location, $t
         }
         auxiliarServices.menuHideShow(2);
 
-        $scope.loader = true;
+ 
         auxiliarServices.changeTitle("Matenimiento Zona de Ventas");
         $scope.titleModal = "Zona de Ventas";
-        $scope.loaderSave = false;
-        $scope.getZonasVentas();
-
+ 
         $scope.getEstados();
         $scope.getLocales();
         $scope.getAnexos();
@@ -29,8 +27,6 @@ app.controller('ctrlZonasVentas', function ($scope, loginServices, $location, $t
     }
 
     $scope.getAuditorias = function (item) {
-
-        console.log(item)
 
         const uCreacion = (!item.usuario_creacion) ? 0 : item.usuario_creacion;
         const uEdicion = (!item.usuario_edicion) ? 0 : item.usuario_edicion;
@@ -87,16 +83,23 @@ app.controller('ctrlZonasVentas', function ($scope, loginServices, $location, $t
         $scope.loader = true;
         ZonasVentasServices.search_zonasVentas($scope.Objeto_ParametroFiltro)
             .then(function (res) {
-                $scope.ListaZonasVentas = [];
-                $scope.ListaZonasVentas = res;
-                $scope.loader = false;
 
-                if (oTable !== 'data') {
-                    oTable = 'data';
-                    auxiliarServices.initFooTable('tbl_zonasVentas', 'inputSearch');
+                if (res.ok) {
+                    $scope.ListaZonasVentas = [];
+                    $scope.ListaZonasVentas = res.data;
+                    $scope.loader = false;
+
+                    if (oTable !== 'data') {
+                        oTable = 'data';
+                        auxiliarServices.initFooTable('tbl_zonasVentas', 'inputSearch');
+                    } else {
+                        $('#tbl_zonasVentas').trigger('footable_initialize');
+                    }
                 } else {
-                    $('#tbl_zonasVentas').trigger('footable_initialize');
+                    alert(JSON.stringify(res.data))
                 }
+
+
             }, function (err) {
                 console.log(err);
             });
@@ -197,8 +200,8 @@ app.controller('ctrlZonasVentas', function ($scope, loginServices, $location, $t
     $scope.Flag_modoEdicion = false;
 
     $scope.Objeto_ParametroFiltro = {
-        id_local: '',
-        id_anexo: '',
+        id_local: '0',
+        id_anexo: '0',
         id_estado: 1,
         buscar_zona: ''
     }

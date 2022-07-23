@@ -1610,50 +1610,35 @@ namespace Negocio.Facturacion.Procesos
                     dynamic leer_respuesta = JsonConvert.DeserializeObject<Respuesta>(json_de_respuesta);
                     if (leer_respuesta.errors == null)
                     {
-                    //Console.WriteLine(json_r_in);
-                    //Console.WriteLine();
-                    //Console.WriteLine();
-                    //Console.WriteLine("TIPO: " + leer_respuesta.tipo);
-                    //Console.WriteLine("SERIE: " + leer_respuesta.serie);
-                    //Console.WriteLine("NUMERO: " + leer_respuesta.numero);
-                    //Console.WriteLine("URL: " + leer_respuesta.url);
-                    //Console.WriteLine("ACEPTADA_POR_SUNAT: " + leer_respuesta.aceptada_por_sunat);
-                    //Console.WriteLine("DESCRIPCION SUNAT: " + leer_respuesta.sunat_description);
-                    //Console.WriteLine("NOTA SUNAT: " + leer_respuesta.sunat_note);
-                    //Console.WriteLine("CODIGO RESPUESTA SUNAT: " + leer_respuesta.sunat_responsecode);
-                    //Console.WriteLine("SUNAT ERROR SOAP: " + leer_respuesta.sunat_soap_error);
-                    //Console.WriteLine("PDF EN BASE64: " + leer_respuesta.pdf_zip_base64);
-                    //Console.WriteLine("XML EN BASE64: " + leer_respuesta.xml_zip_base64);
-                    //Console.WriteLine("CDR EN BASE64: " + leer_respuesta.cdr_zip_base64);
-                    //Console.WriteLine("CODIGO QR: " + leer_respuesta.cadena_para_codigo_qr);
-                    //Console.WriteLine("CODIGO HASH: " + leer_respuesta.codigo_hash);
-                    //Console.WriteLine("CODIGO DE BARRAS: " + leer_respuesta.codigo_de_barras);
-                    //Console.ReadKey();
+                    //if (String.IsNullOrEmpty(leer_respuesta.codigo_de_barras) == true)
+                    //{
+                    //    if (String.IsNullOrEmpty(leer_respuesta.codigo_hash) == false)
+                    //    {
+                    //        byte[] obj_codQR = GeneraCodigoQR(leer_respuesta.codigo_hash);
+                    //        using (FileStream Writer = new System.IO.FileStream(rutaQR + ".gif", FileMode.Create, FileAccess.Write))
+                    //        {
+                    //            Writer.Write(obj_codQR, 0, obj_codQR.Length);
+                    //        }
+                    //        Set_actualizando_Facturacion_Electronica(idFactura, 2, TipoDoc + "_" + nroDocumento + ".xml", idFactura + ".gif");
+                    //    }
+                    //}
+                    //else {
+                    //    byte[] obj_codQR = GeneraCodigoQR(leer_respuesta.codigo_de_barras);
+                    //    using (FileStream Writer = new System.IO.FileStream(rutaQR + ".gif", FileMode.Create, FileAccess.Write))
+                    //    {
+                    //        Writer.Write(obj_codQR, 0, obj_codQR.Length);
+                    //    }
+                    //    Set_actualizando_Facturacion_Electronica(idFactura, 2, TipoDoc + "_" + nroDocumento + ".xml", idFactura + ".gif");
+                    //}
 
-                    ////----creando el Codigo QR
-                    //byte[] obj_codQR = GeneraCodigoQR(leer_respuesta.codigo_de_barras);
-
-                    if (String.IsNullOrEmpty(leer_respuesta.codigo_de_barras) == true)
+                        byte[] obj_codQR = GeneraCodigoQR(leer_respuesta.cadena_para_codigo_qr);
+                        using (FileStream Writer = new System.IO.FileStream(rutaQR + ".gif", FileMode.Create, FileAccess.Write))
                         {
-                            if (String.IsNullOrEmpty(leer_respuesta.codigo_hash) == false)
-                            {
-                                byte[] obj_codQR = GeneraCodigoQR(leer_respuesta.codigo_hash);
-                                using (FileStream Writer = new System.IO.FileStream(rutaQR + ".gif", FileMode.Create, FileAccess.Write))
-                                {
-                                    Writer.Write(obj_codQR, 0, obj_codQR.Length);
-                                }
-                                Set_actualizando_Facturacion_Electronica(idFactura, 2, TipoDoc + "_" + nroDocumento + ".xml", idFactura + ".gif");
-                            }
+                            Writer.Write(obj_codQR, 0, obj_codQR.Length);
                         }
-                        else {
-                            byte[] obj_codQR = GeneraCodigoQR(leer_respuesta.codigo_de_barras);
-                            using (FileStream Writer = new System.IO.FileStream(rutaQR + ".gif", FileMode.Create, FileAccess.Write))
-                            {
-                                Writer.Write(obj_codQR, 0, obj_codQR.Length);
-                            }
-                            Set_actualizando_Facturacion_Electronica(idFactura, 2, TipoDoc + "_" + nroDocumento + ".xml", idFactura + ".gif");
-                        }
-                    }
+                        Set_actualizando_Facturacion_Electronica(idFactura, 2, TipoDoc + "_" + nroDocumento + ".xml", idFactura + ".gif");
+
+                }
                 else
                 {
                     Set_Log_Alertas(idFactura, leer_respuesta.errors.Replace("\n", string.Empty));
@@ -1927,31 +1912,37 @@ namespace Negocio.Facturacion.Procesos
 
                     dynamic leer_respuesta = JsonConvert.DeserializeObject<Respuesta>(json_de_respuesta);
                     if (leer_respuesta.errors == null)
-                    { 
-                        if (String.IsNullOrEmpty(leer_respuesta.codigo_de_barras) == true)
-                        {
-                            if (String.IsNullOrEmpty(leer_respuesta.codigo_hash) == false)
-                            {
-                                byte[] obj_codQR = GeneraCodigoQR(leer_respuesta.codigo_hash);
-                                using (FileStream Writer = new System.IO.FileStream(rutaQR + ".gif", FileMode.Create, FileAccess.Write))
-                                {
-                                    Writer.Write(obj_codQR, 0, obj_codQR.Length);
-                                }
-                                Set_actualizando_Facturacion_Electronica(idNotaCredito, 2, TipoDocNotaCredito + "_" + nroDocumentoNotaCredito + ".xml", idNotaCredito + ".gif");
-                            }
-                        }
-                        else
-                        {
-                            byte[] obj_codQR = GeneraCodigoQR(leer_respuesta.codigo_de_barras);
-                            using (FileStream Writer = new System.IO.FileStream(rutaQR + ".gif", FileMode.Create, FileAccess.Write))
-                            {
-                                Writer.Write(obj_codQR, 0, obj_codQR.Length);
-                            }
-                            Set_actualizando_Facturacion_Electronica(idNotaCredito, 2, TipoDocNotaCredito + "_" + nroDocumentoNotaCredito + ".xml", idNotaCredito + ".gif");
-                        }
+                    {
+                        //if (String.IsNullOrEmpty(leer_respuesta.codigo_de_barras) == true)
+                        //{
+                        //    if (String.IsNullOrEmpty(leer_respuesta.codigo_hash) == false)
+                        //    {
+                        //        byte[] obj_codQR = GeneraCodigoQR(leer_respuesta.cadena_para_codigo_qr);
+                        //        using (FileStream Writer = new System.IO.FileStream(rutaQR + ".gif", FileMode.Create, FileAccess.Write))
+                        //        {
+                        //            Writer.Write(obj_codQR, 0, obj_codQR.Length);
+                        //        }
+                        //        Set_actualizando_Facturacion_Electronica(idNotaCredito, 2, TipoDocNotaCredito + "_" + nroDocumentoNotaCredito + ".xml", idNotaCredito + ".gif");
+                        //    }
+                        //}
+                        //else
+                        //{
+                        //    byte[] obj_codQR = GeneraCodigoQR(leer_respuesta.codigo_de_barras);
+                        //    using (FileStream Writer = new System.IO.FileStream(rutaQR + ".gif", FileMode.Create, FileAccess.Write))
+                        //    {
+                        //        Writer.Write(obj_codQR, 0, obj_codQR.Length);
+                        //    }
+                        //    Set_actualizando_Facturacion_Electronica(idNotaCredito, 2, TipoDocNotaCredito + "_" + nroDocumentoNotaCredito + ".xml", idNotaCredito + ".gif");
+                        //}
 
-                    }
-                    else
+                        byte[] obj_codQR = GeneraCodigoQR(leer_respuesta.cadena_para_codigo_qr);
+                        using (FileStream Writer = new System.IO.FileStream(rutaQR + ".gif", FileMode.Create, FileAccess.Write))
+                        {
+                            Writer.Write(obj_codQR, 0, obj_codQR.Length);
+                        }
+                        Set_actualizando_Facturacion_Electronica(idNotaCredito, 2, TipoDocNotaCredito + "_" + nroDocumentoNotaCredito + ".xml", idNotaCredito + ".gif");
+                }
+                else
                     {
                         Set_Log_Alertas(idNotaCredito, leer_respuesta.errors.Replace("\n", string.Empty));
                     }
@@ -3214,9 +3205,6 @@ namespace Negocio.Facturacion.Procesos
                 throw e;
             }
         }
-
-
-
         public DataTable get_detalle_boletasFacturas(int id_facturaCab)
         {
             try
@@ -3248,6 +3236,53 @@ namespace Negocio.Facturacion.Procesos
                 throw e;
             }
         }
+
+        public void get_generarCodigoQRmanual()
+        {
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("SP_S_NUBE_FACT_JSON_BOLETA_FACTURA", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        DataTable dt_detalle = new DataTable();
+
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt_detalle);
+
+                            int idFactura = 0;
+                            string rutaQR = "";
+
+                            foreach (DataRow row in dt_detalle.Rows)
+                            {
+                                //Entidad.id_Pedido_Cab = Convert.ToInt32(row["id_Pedido_Cab"].ToString());
+
+                                idFactura = Convert.ToInt32(row["id_Factura_Cab"]);
+                                rutaQR = System.Web.Hosting.HostingEnvironment.MapPath("~/FACT_ELECT_QR/" + idFactura);
+                                byte[] obj_codQR = GeneraCodigoQR(row["codigoHash"].ToString());
+
+                                using (FileStream Writer = new System.IO.FileStream(rutaQR + ".gif", FileMode.Create, FileAccess.Write))
+                                {
+                                    Writer.Write(obj_codQR, 0, obj_codQR.Length);
+                                }
+                            }
+
+
+                        }
+                    }
+                } 
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
 
 
     }

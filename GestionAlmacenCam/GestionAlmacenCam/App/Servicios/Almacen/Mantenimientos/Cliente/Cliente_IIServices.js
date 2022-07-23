@@ -297,6 +297,30 @@
         return q.promise;
     }
 
+    Result.getDescargarClientesExcel = function (objCliente, idUsuario) {
+
+        console.log(objCliente)
+
+        let url = urlApi + 'RegistroVentas';
+        var parameters;
+        var q = $q.defer();
+        var parametros = objCliente.id_TipoCliente + '|' + objCliente.doc_identidad + '|' + objCliente.razon_social + '|' + objCliente.id_zona + '|' + objCliente.id_vendedor + '|' + objCliente.id_condicionPago + '|' + objCliente.direccion_entrega + '|' + objCliente.id_estado + '|' + idUsuario;
+        parameters = {
+            opcion: 5,
+            filtro: parametros
+        };
+        $http({
+            method: 'GET',
+            url: url,
+            params: parameters
+        }).success(function (result) {
+            q.resolve(result);
+        }).error(function (err) {
+
+            q.reject(err);
+        });
+        return q.promise;
+    }
 
     return Result;
 });

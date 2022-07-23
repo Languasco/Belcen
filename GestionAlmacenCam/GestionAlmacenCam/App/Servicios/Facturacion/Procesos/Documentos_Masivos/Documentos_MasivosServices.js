@@ -631,7 +631,7 @@
             opcion: 33,
             filtro: parametros
         };
-        console.log(parameters)
+        console.log(parameters) 
    
         $http({
             method: 'GET',

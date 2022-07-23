@@ -1,9 +1,4 @@
-﻿
-
-
-
-
-<style>
+﻿<style>
     #listMenu span, a {
         text-align: left !important;
     }
@@ -24,6 +19,14 @@
         margin-left: 0px;
         margin-top: 2px;
     }
+
+    table#tbl_usuarios {
+        height: 350px !important
+    }
+    table#tbl_almacen {
+        height: 350px !important
+    }
+
 </style>
 
 <div class=" container" ng-init="initAll();">
@@ -46,7 +49,7 @@
                                 <div class="col-sm-12" style=" margin-top: 5px;">
                                     <div class="input-group input-group-sm">
                                         <span class="input-group-addon">Buscar</span>
-                                        <input id="inputSearch_user" type="text" placeholder="Busqueda Usuarios . . " style="width:95%" class="form-control btn-block inputSearch" autocomplete="off">
+                                        <input id="inputSearch_user" type="text" ng-keyup="doSearch('usuario')"  placeholder="Busqueda Usuarios . . " style="width:95%" class="form-control btn-block inputSearch" autocomplete="off">
                                     </div>
                                 </div>
                             </div>
@@ -68,10 +71,9 @@
                                         </tr>
                                     </tbody>
                                 </table>
-
-                                <div class="text-right">
+                                @*<div class="text-right">
                                     <ul class="pagination pagination-split m-t-30"></ul>
-                                </div>
+                                </div>*@
                             </div>
                         </div>
 
@@ -80,7 +82,7 @@
                                 <div class="col-sm-12" style=" margin-top: 5px;">
                                     <div class="input-group input-group-sm">
                                         <span class="input-group-addon">Buscar</span>
-                                        <input id="inputSearch_almacen" type="text" placeholder="Busqueda Almacenes . . " style="width:95%" class="form-control btn-block inputSearch" autocomplete="off">
+                                        <input id="inputSearch_almacen" ng-keyup="doSearch('almacen')" type="text" placeholder="Busqueda Almacenes . . " style="width:95%" class="form-control btn-block inputSearch" autocomplete="off">
                                     </div>
                                 </div>
                             </div>

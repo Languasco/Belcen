@@ -17,14 +17,15 @@ namespace Entidades
         public tbl_Alm_Almacen()
         {
             this.tbl_Usuarios_Almacen = new HashSet<tbl_Usuarios_Almacen>();
+            this.tbl_Alm_Guias_Cab = new HashSet<tbl_Alm_Guias_Cab>();
             this.tbl_Com_Pedidos_Cab = new HashSet<tbl_Com_Pedidos_Cab>();
             this.Tbl_Fac_Pedidos_Cab = new HashSet<Tbl_Fac_Pedidos_Cab>();
-            this.tbl_Alm_Guias_Cab = new HashSet<tbl_Alm_Guias_Cab>();
             this.Tbl_Fac_Facturas_Compras_cab = new HashSet<Tbl_Fac_Facturas_Compras_cab>();
         }
     
         public int id_Almacen { get; set; }
         public Nullable<int> id_Empresa { get; set; }
+        public Nullable<int> id_Anexos { get; set; }
         public Nullable<int> id_Local { get; set; }
         public string codigo_Almacen { get; set; }
         public string descripcion_Almacen { get; set; }
@@ -43,16 +44,16 @@ namespace Entidades
         public string direccion_serie_sunat { get; set; }
         public string cod_establecimiento { get; set; }
         public Nullable<int> id_departamento { get; set; }
-        public Nullable<int> id_Anexos { get; set; }
         public string pedidosMovil_Almacen { get; set; }
         public string ventaMayorista { get; set; }
+        public string matSoloVenta_Almacen { get; set; }
     
         public virtual ICollection<tbl_Usuarios_Almacen> tbl_Usuarios_Almacen { get; set; }
         public virtual tbl_Empresas tbl_Empresas { get; set; }
         public virtual tbl_Locales tbl_Locales { get; set; }
+        public virtual ICollection<tbl_Alm_Guias_Cab> tbl_Alm_Guias_Cab { get; set; }
         public virtual ICollection<tbl_Com_Pedidos_Cab> tbl_Com_Pedidos_Cab { get; set; }
         public virtual ICollection<Tbl_Fac_Pedidos_Cab> Tbl_Fac_Pedidos_Cab { get; set; }
-        public virtual ICollection<tbl_Alm_Guias_Cab> tbl_Alm_Guias_Cab { get; set; }
         public virtual ICollection<Tbl_Fac_Facturas_Compras_cab> Tbl_Fac_Facturas_Compras_cab { get; set; }
     }
 }

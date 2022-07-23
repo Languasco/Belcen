@@ -36,8 +36,6 @@
             filtro: parametros
         }
 
-        console.log(parametros);
-
         $http({
             method: 'GET',
             url: url,

@@ -16,19 +16,19 @@ namespace Entidades
     {
         public int id_listaPrecios { get; set; }
         public Nullable<int> id_empresa { get; set; }
+        public Nullable<int> id_CanalNegocio { get; set; }
         public Nullable<int> id_Producto { get; set; }
         public Nullable<decimal> precioVenta_listaPrecios { get; set; }
         public string aplicaDescuento_listaPrecios { get; set; }
         public Nullable<decimal> porcentajeDescuento_listaPrecios { get; set; }
+        public Nullable<decimal> rango_listaPrecios { get; set; }
+        public Nullable<decimal> precioMenor_listaPrecios { get; set; }
+        public Nullable<decimal> precioMayor_listaPrecios { get; set; }
         public Nullable<int> estado { get; set; }
         public Nullable<int> usuario_creacion { get; set; }
         public Nullable<System.DateTime> fecha_creacion { get; set; }
         public Nullable<int> usuario_edicion { get; set; }
         public Nullable<System.DateTime> fecha_edicion { get; set; }
         public Nullable<int> id_PuntoVenta { get; set; }
-        public Nullable<int> id_CanalNegocio { get; set; }
-        public Nullable<decimal> rango_listaPrecios { get; set; }
-        public Nullable<decimal> precioMenor_listaPrecios { get; set; }
-        public Nullable<decimal> precioMayor_listaPrecios { get; set; }
     }
 }

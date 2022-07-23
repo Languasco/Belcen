@@ -51,6 +51,8 @@ namespace WebApiGestionAlmacenCam.Controllers.Facturacion.Procesos.ArqueoCaja
             objReemplazar = db.tbl_ArqueoCaja_Egresos.Where(u => u.id_ArqueoCaja_Egresos == id).FirstOrDefault<tbl_ArqueoCaja_Egresos>();
 
             objReemplazar.id_TipoEgreso = tbl_ArqueoCaja_Egresos.id_TipoEgreso;
+            objReemplazar.id_ZonaEgreso = tbl_ArqueoCaja_Egresos.id_ZonaEgreso;
+
             objReemplazar.fecha_Registro = tbl_ArqueoCaja_Egresos.fecha_Registro;
             objReemplazar.id_Anexo_Destino = tbl_ArqueoCaja_Egresos.id_Anexo_Destino;
             objReemplazar.id_CC_Destino = tbl_ArqueoCaja_Egresos.id_CC_Destino;

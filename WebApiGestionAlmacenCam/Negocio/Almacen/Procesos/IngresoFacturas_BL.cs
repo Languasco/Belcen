@@ -12,6 +12,7 @@ using System.Drawing;
 using System.Configuration;
 using Negocio.Conexion;
 using System.IO;
+using OfficeOpenXml.Style;
 
 namespace Negocio.Almacen.Procesos
 {
@@ -122,7 +123,6 @@ namespace Negocio.Almacen.Procesos
             
         public object get_agregarGuiasCab(string idGuiasMasivos,int idUsuario, int idGuiaCab)
         {
-            DataTable dt_detalle = new DataTable();
             Resul res = new Resul();
             try
             {
@@ -1237,9 +1237,1074 @@ namespace Negocio.Almacen.Procesos
             return Res;
         }
 
+        public object get_tipoOrden_usuario(int id_usuario)
+        {
+            DataTable dt_detalle = new DataTable();
+            Resul res = new Resul();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(Conexion.bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("SP_S_INGRESO_COMPRAS_SERVICIO_COMBO_TIPO_ORDEN", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@id_usuario", SqlDbType.Int).Value = id_usuario;
+
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt_detalle);
+                        }
+
+                        res.ok = true;
+                        res.data = dt_detalle;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+            return res;
+        }
+
+        public object get_informacionIngresoComprasServicios_cab(int id_tipoOrden , int id_anexo, int id_almacen, int id_estado, string fecha_ini, string fecha_fin, int id_proveedor)
+        {
+            Resul res = new Resul();
+            List<IngresoFacturas_E> obj_List = new List<IngresoFacturas_E>();
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(Conexion.bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("SP_S_INGRESO_COMPRAS_SERVICIO_LISTADO_CAB", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@id_tipoOrden", SqlDbType.Int).Value = id_tipoOrden;
+                        cmd.Parameters.Add("@id_anexo", SqlDbType.Int).Value = id_anexo;
+                        cmd.Parameters.Add("@id_almacen", SqlDbType.Int).Value = id_almacen;
+                        cmd.Parameters.Add("@id_estado", SqlDbType.Int).Value = id_estado;
+
+                        cmd.Parameters.Add("@fecha_ini", SqlDbType.VarChar).Value = fecha_ini;
+                        cmd.Parameters.Add("@fecha_fin", SqlDbType.VarChar).Value = fecha_fin;
+                        cmd.Parameters.Add("@id_proveedor", SqlDbType.Int).Value = id_proveedor;
+
+                        using (SqlDataReader dr = cmd.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+                                IngresoFacturas_E Entidad = new IngresoFacturas_E();
+
+                                Entidad.id_GuiaCab = Convert.ToInt32(dr["id_GuiaCab"]);
+
+                                Entidad.tipoOC = dr["tipoOC"].ToString();
+
+                                Entidad.TipoDoc = dr["TipoDoc"].ToString();
+                                Entidad.nroDoc = dr["nroDoc"].ToString(); 
+                                Entidad.nroCompra = dr["nroCompra"].ToString();
+                                Entidad.fechaEmision = dr["fechaEmision"].ToString();
+
+                                Entidad.almacen = dr["almacen"].ToString();
+                                Entidad.razonSocial = dr["razonSocial"].ToString();
+                                Entidad.tipoGuia = dr["tipoGuia"].ToString();
+                                Entidad.idEstado = dr["idEstado"].ToString();
+                                Entidad.descripcionEstado = dr["descripcionEstado"].ToString();
+            
+
+                                Entidad.subTotal = dr["subTotal"].ToString();
+                                Entidad.igv = dr["igv"].ToString();
+                                Entidad.total = dr["total"].ToString();
+
+                                Entidad.usuario_creacion = dr["usuario_creacion"].ToString();
+                                Entidad.fecha_creacion = dr["fecha_creacion"].ToString();
+                                Entidad.usuario_edicion = dr["usuario_edicion"].ToString();
+                                Entidad.fecha_edicion = dr["fecha_edicion"].ToString();
+
+                                obj_List.Add(Entidad);
+                            }
+
+                            res.ok = true;
+                            res.data = obj_List;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+            return res;
+        }
+
+        public object get_unidadMedidaCompraServicio()
+        {
+            DataTable dt_detalle = new DataTable();
+            Resul res = new Resul();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(Conexion.bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("SP_S_INGRESO_COMPRAS_SERVICIO_COMBO_UM", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt_detalle);
+                        }
+
+                        res.ok = true;
+                        res.data = dt_detalle;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+            return res;
+        }
+
+        public string Set_Actualizar_imagenComprobanteComprasServicio(int idGuiaCab, string nombreFile, string nombreFileServer)
+        {
+            string resultado = "";
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(Conexion.bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("SP_S_INGRESO_COMPRAS_SERVICIO_GRABAR_IMAGEN_DEPOSITOS", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@idGuiaCab", SqlDbType.Int).Value = idGuiaCab;
+                        cmd.Parameters.Add("@nombreFile", SqlDbType.VarChar).Value = nombreFile;
+                        cmd.Parameters.Add("@nombreFileServer", SqlDbType.VarChar).Value = nombreFileServer;
+
+                        cmd.ExecuteNonQuery();
+                        resultado = "OK";
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                resultado = e.Message;
+            }
+            return resultado;
+        }
+
+        public object get_buscarProducto_codigo(int id_TipoOrden, int id_anexos, int id_Almacen, string codigo_Producto,int id_usuario)
+        {
+            DataTable dt_detalle = new DataTable();
+            Resul res = new Resul();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(Conexion.bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("SP_S_INGRESO_COMPRAS_SERVICIO_BUSQUEDA_PRODUCTO", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add("@id_TipoOrden", SqlDbType.Int).Value = id_TipoOrden;
+                        cmd.Parameters.Add("@id_anexos", SqlDbType.Int).Value = id_anexos;
+                        cmd.Parameters.Add("@id_Almacen", SqlDbType.Int).Value = id_Almacen;
+
+                        cmd.Parameters.Add("@codigo_Producto", SqlDbType.VarChar).Value = codigo_Producto;
+                        cmd.Parameters.Add("@id_usuario", SqlDbType.Int).Value = id_usuario;
+
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt_detalle);
+                        }
+
+                        res.ok = true;
+                        res.data = dt_detalle;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+            return res;
+        }
+
+
+        public object get_buscarProducto_modal(int id_TipoOrden, int id_anexos, int id_Almacen, string filtro_Producto, int id_usuario)
+        {
+            DataTable dt_detalle = new DataTable();
+            Resul res = new Resul();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(Conexion.bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("SP_S_INGRESO_COMPRAS_SERVICIO_BUSQUEDA_PRODUCTO_MODAL", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add("@id_TipoOrden", SqlDbType.Int).Value = id_TipoOrden;
+                        cmd.Parameters.Add("@id_anexos", SqlDbType.Int).Value = id_anexos;
+                        cmd.Parameters.Add("@id_Almacen", SqlDbType.Int).Value = id_Almacen;
+
+                        cmd.Parameters.Add("@filtro_Producto", SqlDbType.VarChar).Value = filtro_Producto;
+                        cmd.Parameters.Add("@id_usuario", SqlDbType.Int).Value = id_usuario;
+
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt_detalle);
+                        }
+
+                        res.ok = true;
+                        res.data = dt_detalle;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+            return res;
+        }
+
+        public object get_agregarGuiasDet(int id_GuiaCab, int idProducto, string codigoProducto,string  descripcionProducto, int idUnidadMedida, 
+                                          string cantidad, string precio, string importe, int id_TipoOrden, int id_usuario)
+        {
+            Resul res = new Resul();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(Conexion.bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("SP_S_INGRESO_COMPRAS_SERVICIO_GRABAR_DETALLE", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add("@id_TipoOrden", SqlDbType.Int).Value = id_TipoOrden;
+
+                        cmd.Parameters.Add("@id_GuiaCab", SqlDbType.Int).Value = id_GuiaCab;
+                        cmd.Parameters.Add("@idProducto", SqlDbType.Int).Value = idProducto;
+                        cmd.Parameters.Add("@codigoProducto", SqlDbType.VarChar).Value = codigoProducto;
+                        cmd.Parameters.Add("@descripcionProducto", SqlDbType.VarChar).Value = descripcionProducto;
+
+                        cmd.Parameters.Add("@idUnidadMedida", SqlDbType.Int).Value = idUnidadMedida;
+                        cmd.Parameters.Add("@cantidad", SqlDbType.VarChar).Value = cantidad;
+                        cmd.Parameters.Add("@precio", SqlDbType.VarChar).Value = precio;
+                        cmd.Parameters.Add("@importe", SqlDbType.VarChar).Value = importe;                
+                        cmd.Parameters.Add("@id_usuario", SqlDbType.Int).Value = id_usuario;
+
+                        cmd.ExecuteNonQuery();
+
+                        res.ok = true;
+                        res.data = "OK";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+            return res;
+        }
+
+
+        public object get_listar_detalleComprasServicio(int idGuiaCab)
+        {
+            DataTable dt_detalle = new DataTable();
+            Resul res = new Resul();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(Conexion.bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("SP_S_INGRESO_COMPRAS_SERVICIO_LISTAR_DETALLE", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@idGuiaCab", SqlDbType.Int).Value = idGuiaCab;
+
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt_detalle);
+                        }
+
+                        res.ok = true;
+                        res.data = dt_detalle;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+            return res;
+        }
+
+
+        public object get_actualizarGuiasDet(int id_GuiaDet, int idProducto, string codigoProducto, string descripcionProducto, int idUnidadMedida,
+                                  string cantidad, string precio, string importe, int id_usuario)
+        {
+            Resul res = new Resul();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(Conexion.bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("SP_S_INGRESO_COMPRAS_SERVICIO_ACTUALIZAR_DETALLE", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@id_GuiaDet", SqlDbType.Int).Value = id_GuiaDet;
+                        cmd.Parameters.Add("@idProducto", SqlDbType.Int).Value = idProducto;
+                        cmd.Parameters.Add("@codigoProducto", SqlDbType.VarChar).Value = codigoProducto;
+                        cmd.Parameters.Add("@descripcionProducto", SqlDbType.VarChar).Value = descripcionProducto;
+
+                        cmd.Parameters.Add("@idUnidadMedida", SqlDbType.Int).Value = idUnidadMedida;
+                        cmd.Parameters.Add("@cantidad", SqlDbType.VarChar).Value = cantidad;
+                        cmd.Parameters.Add("@precio", SqlDbType.VarChar).Value = precio;
+                        cmd.Parameters.Add("@importe", SqlDbType.VarChar).Value = importe;
+                        cmd.Parameters.Add("@id_usuario", SqlDbType.Int).Value = id_usuario;
+
+                        cmd.ExecuteNonQuery();
+
+                        res.ok = true;
+                        res.data = "OK";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+            return res;
+        }
+
+
+        public object set_eliminar_GuiasDet_comprasServicios(int id_GuiaDet, int id_usuario)
+        {
+            DataTable dt_detalle = new DataTable();
+            Resul res = new Resul();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(Conexion.bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("SP_S_INGRESO_COMPRAS_SERVICIO_ELIMINAR_DETALLE", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@id_GuiaDet", SqlDbType.Int).Value = id_GuiaDet;
+                        cmd.Parameters.Add("@id_usuario", SqlDbType.Int).Value = id_usuario;
+                        cmd.ExecuteNonQuery();
+
+                        res.ok = true;
+                        res.data = "OK";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+            return res;
+        }
+
+
+        public object get_informacionPago_proveedores(int id_Proveedor, int tipoReporte, int id_tipoDoc, string nro_documento)
+        {
+            Resul res = new Resul();
+            List<PagoProveedor_E> obj_List = new List<PagoProveedor_E>();
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(Conexion.bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("SP_S_PAGO_PROVEEDOR_CAB", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@id_Proveedor", SqlDbType.Int).Value = id_Proveedor;
+                        cmd.Parameters.Add("@tipoReporte", SqlDbType.Int).Value = tipoReporte;
+                        cmd.Parameters.Add("@id_tipoDoc", SqlDbType.Int).Value = id_tipoDoc;
+                        cmd.Parameters.Add("@nro_documento", SqlDbType.VarChar).Value = nro_documento;
+ 
+
+                        using (SqlDataReader dr = cmd.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+                                PagoProveedor_E Entidad = new PagoProveedor_E();
+
+                                Entidad.id_GuiaCab = Convert.ToInt32(dr["id_GuiaCab"]);
+                                Entidad.checkeado = false;
+                                Entidad.tipoOrden = dr["tipoOrden"].ToString();
+                                Entidad.fechaEmision = dr["fechaEmision"].ToString();
+                                Entidad.tipoDoc = dr["tipoDoc"].ToString();
+                                Entidad.numero = dr["numero"].ToString();
+                                Entidad.ordenCompra = dr["ordenCompra"].ToString();
+
+                                Entidad.total = dr["total"].ToString();
+                                Entidad.porcDetraccion = dr["porcDetraccion"].ToString();
+                                Entidad.totalDetraccion = dr["totalDetraccion"].ToString();
+                                Entidad.porcRetencion = dr["porcRetencion"].ToString();
+                                Entidad.totalRetencion = dr["totalRetencion"].ToString();
+
+                                Entidad.totalPagar = dr["totalPagar"].ToString();
+                                Entidad.totalCancelado = dr["totalCancelado"].ToString();
+                                Entidad.saldoPendiente = dr["saldoPendiente"].ToString();
+                                Entidad.saldoPendienteEditado = dr["saldoPendienteEditado"].ToString();
+
+                                obj_List.Add(Entidad);
+                            }
+
+                            res.ok = true;
+                            res.data = obj_List;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+            return res;
+        }
+
+
+        public object get_verificarNroOperacionPagos(int id_banco, string nroOperacion, string fechaOperacion)
+        {
+            DataTable dt_detalle = new DataTable();
+            Resul res = new Resul();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(Conexion.bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("SP_S_PAGO_PROVEEDOR_VALIDAR_NRO_OPERACION", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@idBanco", SqlDbType.Int).Value = id_banco;
+                        cmd.Parameters.Add("@nroOperacion", SqlDbType.VarChar).Value = nroOperacion;
+                        cmd.Parameters.Add("@fechaOperacion", SqlDbType.VarChar).Value = fechaOperacion;
+
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt_detalle);
+                        }
+
+                        res.ok = true;
+                        res.data = dt_detalle;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+            return res;
+        }
+
+
+        public object Set_generarPagosCab(int idGuiaCab, int idFormaPago, int idBanco, string fechaOperacion, string nroOperacion, string montoPago, int idUsuario, int esMasivo)
+        {
+
+            int id_GuiaCab = 0;
+            Resul res = new Resul();
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("SP_I_PAGO_PROVEEDOR_GRABAR_PAGO", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@idGuiaCab", SqlDbType.Int).Value = idGuiaCab;
+                        cmd.Parameters.Add("@idFormaPago", SqlDbType.Int).Value = idFormaPago;
+                        cmd.Parameters.Add("@idBanco", SqlDbType.Int).Value = idBanco;
+                        cmd.Parameters.Add("@fechaOperacion", SqlDbType.VarChar).Value = fechaOperacion;
+                        cmd.Parameters.Add("@nroOperacion", SqlDbType.VarChar).Value = nroOperacion;
+                        cmd.Parameters.Add("@montoPago", SqlDbType.VarChar).Value = montoPago;
+                        cmd.Parameters.Add("@idUsuario", SqlDbType.Int).Value = idUsuario;
+                        cmd.Parameters.Add("@esMasivo", SqlDbType.Int).Value = esMasivo;
+
+                        cmd.Parameters.Add("@id_PagoCab", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                        cmd.ExecuteNonQuery();
+                        id_GuiaCab = Convert.ToInt32(cmd.Parameters["@id_PagoCab"].Value.ToString());
+
+                        res.ok = true;
+                        res.data = id_GuiaCab;                         
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                res.ok = false;
+                res.data = e.Message;
+            }
+            return res;
+        }
+
+        public string Set_Actualizar_imagenComprobantePago(int idPago, string nombreFile, string nombreFileServer)
+        {
+            string resultado = "";
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(Conexion.bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("SP_I_PAGO_PROVEEDOR_GRABAR_VOUCHER", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@idPago", SqlDbType.Int).Value = idPago;
+                        cmd.Parameters.Add("@nombreFile", SqlDbType.VarChar).Value = nombreFile;
+                        cmd.Parameters.Add("@nombreFileServer", SqlDbType.VarChar).Value = nombreFileServer;
+
+                        cmd.ExecuteNonQuery();
+                        resultado = "OK";
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                resultado = e.Message;
+            }
+            return resultado;
+        }
+
+
+        public string Set_Actualizar_imagenComprobantePago_masivo(string listIdPagos , string nombreFile, string nombreFileServer)
+        {
+            string resultado = "";
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(Conexion.bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("SP_I_PAGO_PROVEEDOR_GRABAR_VOUCHER_MASIVO", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@idPagos", SqlDbType.VarChar).Value = listIdPagos;
+                        cmd.Parameters.Add("@nombreFile", SqlDbType.VarChar).Value = nombreFile;
+                        cmd.Parameters.Add("@nombreFileServer", SqlDbType.VarChar).Value = nombreFileServer;
+
+                        cmd.ExecuteNonQuery();
+                        resultado = "OK";
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                resultado = e.Message;
+            }
+            return resultado;
+        }
+
+        public object get_detallePagos(int idPago )
+        {
+            DataTable dt_detalle = new DataTable();
+            Resul res = new Resul();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(Conexion.bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("SP_S_PAGO_PROVEEDOR_DETALLE_PAGOS", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@idPago", SqlDbType.Int).Value = idPago;
+
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt_detalle);
+                        }
+
+                        res.ok = true;
+                        res.data = dt_detalle;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+            return res;
+        }
+
+
+        public object ExportarExcel_reportePagos(int tipoReporte, int  id_Proveedor, int tipoDocumentos, int idUsuario)
+        {
+            Resul res = new Resul();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("SP_S_REPORTE_PAGO_PROVEEDOR_EXCEL", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@tipoReporte", SqlDbType.Int).Value = tipoReporte;
+                        cmd.Parameters.Add("@id_Proveedor", SqlDbType.Int).Value = id_Proveedor;
+                        cmd.Parameters.Add("@tipoDocumentos", SqlDbType.Int).Value = tipoDocumentos;
+                        cmd.Parameters.Add("@idUsuario", SqlDbType.Int).Value = idUsuario;
+
+                        DataTable dt_detalle = new DataTable();
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt_detalle);
+                            if (dt_detalle.Rows.Count <= 0)
+                            {
+                                res.ok = false;
+                                res.data = "0|No hay informacion disponible";
+                            }
+                            else
+                            {
+                                res.ok = true;
+                                res.data = GenerarArchivoExcel_reportePagos(dt_detalle);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+            return res;
+        }
+
+
+        public string GenerarArchivoExcel_reportePagos(DataTable dt_detalles )
+        {
+            string Res = "";
+            string _servidor;
+
+            int _fila = 8;
+            string FileRuta = "";
+            string FileExcel = "";
+
+            try
+            {
+                _servidor = String.Format("{0:ddMMyyyy_hhmmss}.xlsx", DateTime.Now);
+                FileRuta = System.Web.Hosting.HostingEnvironment.MapPath("~/ArchivosExcel/pagosProveedores" + _servidor);
+                string rutaServer = ConfigurationManager.AppSettings["servidor_archivos"];
+
+                FileExcel = rutaServer + "pagosProveedores" + _servidor;
+                FileInfo _file = new FileInfo(FileRuta);
+                if (_file.Exists)
+                {
+                    _file.Delete();
+                    _file = new FileInfo(FileRuta);
+                }
+
+                using (Excel.ExcelPackage oEx = new Excel.ExcelPackage(_file))
+                {
+                    Excel.ExcelWorksheet oWs = oEx.Workbook.Worksheets.Add("PagoProveedor");
+                    oWs.Cells.Style.Font.SetFromFont(new Font("Tahoma", 8));
+
+                    oWs.Cells[1, 1].Style.Font.Bold = true; //Letra negrita
+                    oWs.Cells[1, 1].Value = dt_detalles.Rows[0]["nombreProveedor"].ToString();
+
+                    oWs.Cells[2, 1].Style.Font.Bold = true; //Letra negrita
+                    oWs.Cells[2, 1].Value = dt_detalles.Rows[0]["rucProveedor"].ToString();
+
+                    oWs.Cells[3, 1].Style.Font.Bold = true; //Letra negrita
+                    oWs.Cells[3, 1].Value = dt_detalles.Rows[0]["fechaProveedor"].ToString();
+
+                    oWs.Cells[4, 1].Style.Font.Bold = true; //Letra negrita
+                    oWs.Cells[4, 1].Value = dt_detalles.Rows[0]["cuentaCorriente1"].ToString();
+
+                    oWs.Cells[5, 1].Style.Font.Bold = true; //Letra negrita
+                    oWs.Cells[5, 1].Value = dt_detalles.Rows[0]["cuentaCorriente2"].ToString();
+
+                    for (int i = 1; i <= 19; i++)
+                    {
+                        oWs.Cells[7, i].Style.Border.BorderAround(Excel.Style.ExcelBorderStyle.Thin);
+                        oWs.Cells[7, i].Style.Font.Bold = true; //Letra negrita
+                    }
+
+                    oWs.Cells[7, 1, 7, 10].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    oWs.Cells[7, 1, 7, 10].Style.Fill.BackgroundColor.SetColor(Color.DarkBlue);
+                    oWs.Cells[7, 1, 7, 10].Style.Font.Color.SetColor(Color.White);
+
+                    oWs.Cells[7, 1].Value = "ITEMS";
+                    oWs.Cells[7, 2].Value = "FECHA EMISIÓN";
+                    oWs.Cells[7, 3].Value = "NÚMERO ORDEN DE COMPRA";
+                    oWs.Cells[7, 4].Value = "DOCUMENTO";        
+                    oWs.Cells[7, 5].Value = "SERIE - NÚMERO";
+                    oWs.Cells[7, 6].Value = "DETALLE";
+                    oWs.Cells[7, 7].Value = "IMPORTE EN SOLES";
+                    oWs.Cells[7, 8].Value = "% DE DETRACCIÓN";
+                    oWs.Cells[7, 9].Value = "DETRACCIONES 12% ";             
+                    oWs.Cells[7, 10].Value = "POR PAGAR";
+                     
+                    oWs.Cells[6, 11, 6, 16].Merge = true;  // combinar celdaS dt
+                    oWs.Cells[6, 11].Value = "DETALLE DE MEDIO DE PAGO";
+                    oWs.Cells[6, 11].Style.Font.Size = 10; //letra tamaño  
+                    oWs.Cells[6, 11].Style.HorizontalAlignment = Style.ExcelHorizontalAlignment.Center;
+                    oWs.Cells[6, 11].Style.VerticalAlignment = Style.ExcelVerticalAlignment.Center;
+                    oWs.Cells[6, 11].Style.Font.Bold = true; //Letra negrita
+                    oWs.Cells[6, 11, 6, 16].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    oWs.Cells[6, 11, 6, 16].Style.Fill.BackgroundColor.SetColor(Color.LightYellow);
+
+                    oWs.Cells[7, 11, 7, 16].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    oWs.Cells[7, 11, 7, 16].Style.Fill.BackgroundColor.SetColor(Color.LightYellow);
+                    oWs.Cells[7, 11].Value = "PAGO A CTA";
+                    oWs.Cells[7, 12].Value = "FECHA DE PAGO";
+                    oWs.Cells[7, 13].Value = "MEDIO DE PAGO";
+                    oWs.Cells[7, 14].Value = "N° OPERACIÓN";
+                    oWs.Cells[7, 15].Value = "BANCO";
+                    oWs.Cells[7, 16].Value = "ESTADO";
+
+                    oWs.Cells[6, 17, 6, 19].Merge = true;  // combinar celdaS dt
+                    oWs.Cells[6, 17].Value = "DETALLE DE DETRACCONES";
+                    oWs.Cells[6, 17].Style.Font.Size = 10; //letra tamaño  
+                    oWs.Cells[6, 17].Style.HorizontalAlignment = Style.ExcelHorizontalAlignment.Center;
+                    oWs.Cells[6, 17].Style.VerticalAlignment = Style.ExcelVerticalAlignment.Center;
+                    oWs.Cells[6, 17].Style.Font.Bold = true; //Letra negrita
+                    oWs.Cells[6, 17, 6, 19].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    oWs.Cells[6, 17, 6, 19].Style.Fill.BackgroundColor.SetColor(Color.Orange);
+
+                    oWs.Cells[7, 17, 7, 19].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    oWs.Cells[7, 17, 7, 19].Style.Fill.BackgroundColor.SetColor(Color.Orange);
+                    oWs.Cells[7, 17].Value = "FECHA DE PAGO";
+                    oWs.Cells[7, 18].Value = "N° CONSTANCIA";
+                    oWs.Cells[7, 19].Value = "IMPORTE PAGADO";
+ 
+                    double detracc12 = 0;
+                    double porPagar = 0;
+                    double pagoCuenta = 0;
+                    int ac = 0;
+
+                    foreach (DataRow oBj in dt_detalles.Rows)
+                    {
+                        ac += 1;
+                        oWs.Cells[_fila, 1].Value = ac;
+                        oWs.Cells[_fila, 2].Value = oBj["fechaEmision"].ToString();
+                        oWs.Cells[_fila, 3].Value = oBj["numeroOrdenCompra"].ToString();
+                        oWs.Cells[_fila, 4].Value = oBj["documento"].ToString();
+                        oWs.Cells[_fila, 5].Value = oBj["serieNumero"].ToString();
+                        oWs.Cells[_fila, 6].Value = oBj["detalle"].ToString();
+ 
+                        oWs.Cells[_fila, 7].Style.Numberformat.Format = "#,##0.00";
+                        oWs.Cells[_fila, 7].Value = Convert.ToDouble(oBj["ImporteSoles"].ToString());
+                        oWs.Cells[_fila, 7].Style.HorizontalAlignment = Style.ExcelHorizontalAlignment.Right;
+
+                        oWs.Cells[_fila, 8].Style.Numberformat.Format = "#,##0.00";
+                        oWs.Cells[_fila, 8].Value = Convert.ToDouble(oBj["PorcDetraccion"].ToString());
+                        oWs.Cells[_fila, 8].Style.HorizontalAlignment = Style.ExcelHorizontalAlignment.Right;
+
+                        oWs.Cells[_fila, 9].Style.Numberformat.Format = "#,##0.00";
+                        oWs.Cells[_fila, 9].Value = Convert.ToDouble(oBj["detracciones12"].ToString());
+                        oWs.Cells[_fila, 9].Style.HorizontalAlignment = Style.ExcelHorizontalAlignment.Right;
+
+                        oWs.Cells[_fila, 10].Style.Numberformat.Format = "#,##0.00";
+                        oWs.Cells[_fila, 10].Value = Convert.ToDouble(oBj["porPagar"].ToString());
+                        oWs.Cells[_fila, 10].Style.HorizontalAlignment = Style.ExcelHorizontalAlignment.Right;
+
+                        //--------------DETALLE DE MEDIO DE PAGO
+                        oWs.Cells[_fila, 11].Style.Numberformat.Format = "#,##0.00";
+                        oWs.Cells[_fila, 11].Value = Convert.ToDouble(oBj["pagoCta"].ToString());
+                        oWs.Cells[_fila, 11].Style.HorizontalAlignment = Style.ExcelHorizontalAlignment.Right;
+
+                        oWs.Cells[_fila, 12].Value = oBj["fechaPago"].ToString();
+                        oWs.Cells[_fila, 13].Value = oBj["medioPago"].ToString();
+                        oWs.Cells[_fila, 14].Value = oBj["nroOperacion"].ToString();
+                        oWs.Cells[_fila, 15].Value = oBj["banco"].ToString();
+                        oWs.Cells[_fila, 16].Value = oBj["estadoCanceladoPendiente"].ToString();
+
+                        //-------------- DETALLE DE DETRACCONES
+                        oWs.Cells[_fila, 17].Value = oBj["fechaPagoDetrac"].ToString();
+                        oWs.Cells[_fila, 18].Value = oBj["nroConstanciaDetrac"].ToString();
+
+                        oWs.Cells[_fila, 19].Style.Numberformat.Format = "#,##0.00";
+                        oWs.Cells[_fila, 19].Value = Convert.ToDouble(oBj["importePagadoDetrac"].ToString());
+                        oWs.Cells[_fila, 19].Style.HorizontalAlignment = Style.ExcelHorizontalAlignment.Right;
+
+                        detracc12 += Convert.ToDouble(oBj["detracciones12"].ToString());
+                        porPagar += Convert.ToDouble(oBj["porPagar"].ToString()); ;
+                        pagoCuenta += Convert.ToDouble(oBj["pagoCta"].ToString()); ;
+
+                        _fila++;
+                    }
+
+                    _fila += 1;
+
+                    oWs.Row(_fila).Style.Font.Bold = true;
+                    oWs.Row(_fila).Style.HorizontalAlignment = Style.ExcelHorizontalAlignment.Right;
+                    oWs.Row(_fila).Style.VerticalAlignment = Style.ExcelVerticalAlignment.Center;
+
+                    oWs.Cells[_fila, 8].Value = "TOTALES";
+                    oWs.Cells[_fila, 9].Style.Numberformat.Format = "#,##0.00";
+                    oWs.Cells[_fila, 9].Value = detracc12;
+
+                    oWs.Cells[_fila, 10].Style.Numberformat.Format = "#,##0.00";
+                    oWs.Cells[_fila, 10].Value = porPagar;
+
+                    oWs.Cells[_fila, 11].Style.Numberformat.Format = "#,##0.00";
+                    oWs.Cells[_fila, 11].Value = pagoCuenta;
+
+                    _fila += 2;
+
+                    oWs.Row(_fila).Style.Font.Bold = true;
+                    oWs.Row(_fila).Style.HorizontalAlignment = Style.ExcelHorizontalAlignment.Right;
+                    oWs.Row(_fila).Style.VerticalAlignment = Style.ExcelVerticalAlignment.Center;
+
+                    oWs.Cells[_fila, 10].Value = "TOTAL A PAGAR";
+                    oWs.Cells[_fila, 11].Style.Numberformat.Format = "#,##0.00";
+                    oWs.Cells[_fila, 11].Value = porPagar- pagoCuenta;
+
+                    for (int k = 1; k <= 19; k++)
+                    {
+                        oWs.Column(k).AutoFit();
+                    }
+                    oEx.Save();
+                }
+                Res = FileExcel;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return Res;
+        }
 
 
 
+
+        public object ExportarExcel_IngresoFacturasCompraServicio(int id_tipoOrden, int id_anexo, int id_almacen, int id_estado, string fecha_ini, string fecha_fin, int id_proveedor)
+        {
+            Resul res = new Resul();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("SP_S_INGRESO_COMPRAS_SERVICIO_LISTADO_CAB", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add("@id_tipoOrden", SqlDbType.Int).Value = id_tipoOrden;
+                        cmd.Parameters.Add("@id_anexo", SqlDbType.Int).Value = id_anexo;
+                        cmd.Parameters.Add("@id_almacen", SqlDbType.Int).Value = id_almacen;
+                        cmd.Parameters.Add("@id_estado", SqlDbType.Int).Value = id_estado;
+
+                        cmd.Parameters.Add("@fecha_ini", SqlDbType.VarChar).Value = fecha_ini;
+                        cmd.Parameters.Add("@fecha_fin", SqlDbType.VarChar).Value = fecha_fin;
+                        cmd.Parameters.Add("@id_proveedor", SqlDbType.Int).Value = id_proveedor;
+
+                        DataTable dt_detalle = new DataTable();
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt_detalle);
+                            if (dt_detalle.Rows.Count <= 0)
+                            {
+                                res.ok = false;
+                                res.data = "0|No hay informacion disponible";
+                            }
+                            else
+                            {
+                                res.ok = true;
+                                res.data = GenerarArchivoExcel__IngresoFacturasCompraServicio(dt_detalle);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+            return res;
+        }
+
+
+        public string GenerarArchivoExcel__IngresoFacturasCompraServicio(DataTable dt_detalles)
+        {
+            string Res = "";
+            string _servidor;
+
+            int _fila = 2;
+            string FileRuta = "";
+            string FileExcel = "";
+
+            try
+            {
+                _servidor = String.Format("{0:ddMMyyyy_hhmmss}.xlsx", DateTime.Now);
+                FileRuta = System.Web.Hosting.HostingEnvironment.MapPath("~/ArchivosExcel/ingresoFacturasCyS" + _servidor);
+                string rutaServer = ConfigurationManager.AppSettings["servidor_archivos"];
+
+                FileExcel = rutaServer + "ingresoFacturasCyS" + _servidor;
+                FileInfo _file = new FileInfo(FileRuta);
+                if (_file.Exists)
+                {
+                    _file.Delete();
+                    _file = new FileInfo(FileRuta);
+                }
+
+                using (Excel.ExcelPackage oEx = new Excel.ExcelPackage(_file))
+                {
+                    Excel.ExcelWorksheet oWs = oEx.Workbook.Worksheets.Add("ingresoFacturasCompraServicio");
+                    oWs.Cells.Style.Font.SetFromFont(new Font("Tahoma", 8));
+
+                    for (int i = 1; i <= 11; i++)
+                    {
+                        oWs.Cells[1, i].Style.Border.BorderAround(Excel.Style.ExcelBorderStyle.Thin);
+                    }
+
+                    oWs.Cells[1, 1].Value = "Tipo OC.";
+                    oWs.Cells[1, 2].Value = "Tipo Doc.";
+                    oWs.Cells[1, 3].Value = "Nro Doc.";
+                    oWs.Cells[1, 4].Value = "Nro Compra";
+                    
+                    oWs.Cells[1, 5].Value = "FecEmisión";
+                    oWs.Cells[1, 6].Value = "Almacen";
+                    oWs.Cells[1, 7].Value = "Razon Social del Proveedor ";
+
+                    oWs.Cells[1, 8].Value = "Sub Total";
+                    oWs.Cells[1, 9].Value = "IGV ";                          
+                    oWs.Cells[1, 10].Value = "Total";
+                    oWs.Cells[1, 11].Value = "Estado";
+           
+                    foreach (DataRow oBj in dt_detalles.Rows)
+                    {
+                        oWs.Cells[_fila, 1].Value = oBj["tipoOC"].ToString();
+                        oWs.Cells[_fila, 2].Value = oBj["TipoDoc"].ToString();
+                        oWs.Cells[_fila, 3].Value = oBj["nroDoc"].ToString();
+                        oWs.Cells[_fila, 4].Value = oBj["nroCompra"].ToString();
+
+                        oWs.Cells[_fila, 5].Value = oBj["fechaEmision"].ToString();
+                        oWs.Cells[_fila, 6].Value = oBj["almacen"].ToString();
+                        oWs.Cells[_fila, 7].Value = oBj["razonSocial"].ToString();
+
+                        oWs.Cells[_fila, 8].Style.Numberformat.Format = "#,##0.00";
+                        oWs.Cells[_fila, 8].Value = Convert.ToDouble(oBj["subTotal"].ToString());
+                        oWs.Cells[_fila, 8].Style.HorizontalAlignment = Style.ExcelHorizontalAlignment.Right;
+
+                        oWs.Cells[_fila, 9].Style.Numberformat.Format = "#,##0.00";
+                        oWs.Cells[_fila, 9].Value = Convert.ToDouble(oBj["igv"].ToString());
+                        oWs.Cells[_fila, 9].Style.HorizontalAlignment = Style.ExcelHorizontalAlignment.Right;
+
+                        oWs.Cells[_fila, 10].Style.Numberformat.Format = "#,##0.00";
+                        oWs.Cells[_fila, 10].Value = Convert.ToDouble(oBj["total"].ToString());
+                        oWs.Cells[_fila, 10].Style.HorizontalAlignment = Style.ExcelHorizontalAlignment.Right;
+
+                        oWs.Cells[_fila, 11].Value = oBj["descripcionEstado"].ToString();
+
+                        _fila++;
+                    } 
+
+                    oWs.Row(1).Style.Font.Bold = true;
+                    oWs.Row(1).Style.HorizontalAlignment = Style.ExcelHorizontalAlignment.Center;
+                    oWs.Row(1).Style.VerticalAlignment = Style.ExcelVerticalAlignment.Center;
+
+                    for (int k = 1; k <= 11; k++)
+                    {
+                        oWs.Column(k).AutoFit();
+                    }
+                    oEx.Save();
+                }
+                Res = FileExcel;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return Res;
+        }
+
+        public object set_anularIngresoFacturaCompraServicio(int idGuiaCab, int id_usuario)
+        {
+            DataTable dt_detalle = new DataTable();
+            Resul res = new Resul();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(Conexion.bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("SP_S_INGRESO_COMPRAS_SERVICIO_ANULAR", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@id_GuiaCab", SqlDbType.Int).Value = idGuiaCab;
+                        cmd.Parameters.Add("@id_usuario", SqlDbType.Int).Value = id_usuario;
+                        cmd.ExecuteNonQuery();
+
+                        res.ok = true;
+                        res.data = "OK";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+            return res;
+        }
+
+
+        public object set_cerrarGuiacompraServicio(int idGuiaCab, int id_usuario)
+        {
+            DataTable dt_detalle = new DataTable();
+            Resul res = new Resul();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(Conexion.bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("SP_S_INGRESO_COMPRAS_SERVICIO_CERRAR_DOC", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@id_GuiaCab", SqlDbType.Int).Value = idGuiaCab;
+                        cmd.Parameters.Add("@id_usuario", SqlDbType.Int).Value = id_usuario;
+                        cmd.ExecuteNonQuery();
+
+                        res.ok = true;
+                        res.data = "OK";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+            return res;
+        }
 
     }
 }

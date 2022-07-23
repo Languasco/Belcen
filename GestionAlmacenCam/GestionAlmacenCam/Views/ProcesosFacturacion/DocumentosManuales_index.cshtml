@@ -632,59 +632,73 @@
                                         <fieldset>
                                             <legend>Detalle del Pedido</legend>
 
-                                            <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2  ">
-                                                <div class="row {{disabledProd}} " style=" margin-top: -20px;">
-                                                    <div class="col-sm-12">
-                                                        <label for="txt_cod_producto" class="col-sm-3 control-label">Producto</label>
-                                                        <br />
-                                                        <div class="input-group">
-                                                            <input type="text" id="txt_cod_producto" ng-enter="Buscar_Producto();" ng-model="objeto_parametros_detalle.codigo1_Producto" class="form-control" style="background-color: beige" placeholder="Codigo">
-                                                            <span class="input-group-btn">
-                                                                <button class="btn btn-primary {{disabledProd}}" ng-click="Open_New_Modal_AyudaProducto();"><span class="glyphicon glyphicon-zoom-in" style="color:white"></span></button>
-                                                            </span>
+                                            <div class="row">
+
+                                                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 {{disabledProd}} " style=" margin-top: -20px;">
+
+                                                    <label for="txt_cod_producto" class="control-label">Producto</label>
+                                                    <br />
+                                                    <div class="input-group">
+                                                        <input type="text" id="txt_cod_producto" ng-enter="Buscar_Producto();" ng-model="objeto_parametros_detalle.codigo1_Producto" class="form-control" style="background-color: beige" placeholder="Codigo">
+                                                        <span class="input-group-btn">
+                                                            <button class="btn btn-primary {{disabledProd}}" ng-click="Open_New_Modal_AyudaProducto();"><span class="glyphicon glyphicon-zoom-in" style="color:white"></span></button>
+                                                        </span>
+                                                    </div>
+                                                 </div>
+
+                                                <div class="col-xs-12 col-sm-8 col-md-5 col-lg-5  " style=" margin-bottom: 10px;">
+                                                    <input type="text" id="txt_desc_producto" ng-model="objeto_parametros_detalle.nombre_Producto" class="form-control" placeholder="Descripcion del Producto" readonly>
+                                                </div>
+
+                                                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                                    <div class="row" style=" margin-top: -17px;">
+
+                                                        <div class="col-sm-6 {{disabledProd}} ">
+                                                            <label for="cbo_unidadModal" style="top:-5px !important; color: #f71333; font-weight: 600; letter-spacing: 1px;">UM</label>
+                                                            <select class="selectFiltros" id="cbo_unidadModal" ng-model="objeto_parametros_detalle.id_UnidadMedida_Venta" ng-change="change_unidadStock();">
+                                                                <option value="0">- ELIJA - </option>
+                                                                <option ng-repeat="item in ListaUnidadMedidaModal" value="{{item.id_unidadMedida}}">{{item.nombre_UnidadMedida}}</option>
+                                                            </select>
                                                         </div>
+
+                                                        <div class="col-sm-6" >
+                                                            <label for="txt_nroLote" class="control-label">Lote.</label> <span class="help-block"></span>
+                                                            <input type="text" id="txt_nroLote" ng-model="objeto_parametros_detalle.nroLote" class="form-control" style="margin-top: -12px">
+                                                        </div>
+                          
                                                     </div>
                                                 </div>
+
                                             </div>
 
-                                            <div class="col-xs-12 col-sm-8 col-md-4 col-lg-4  " style=" margin-bottom: 10px;">
-                                                <input type="text" id="txt_desc_producto" ng-model="objeto_parametros_detalle.nombre_Producto" class="form-control" placeholder="Descripcion del Producto" readonly>
-                                            </div>
+                                            <div class="row">
 
-                                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                                <div class="row" style=" margin-top: -17px;">
+                                                <div class="col-sm-3  col-md-3">
+                                                    <label class="control-label"> F. Produccion</label>
+                                                    <input type="text" class="form-control datepicker" ng-model="objeto_parametros_detalle.fechaProduccion" id="fecha_produccion" placeholder="dia/mes/anio">
 
-                                                    <div class="col-sm-3 {{disabledProd}} ">
-                                                        <label for="cbo_unidadModal" style="top:-5px !important; color: #f71333; font-weight: 600; letter-spacing: 1px;">UM</label>
-                                                        <select class="selectFiltros" id="cbo_unidadModal" ng-model="objeto_parametros_detalle.id_UnidadMedida_Venta" ng-change="change_unidadStock();">
-                                                            <option value="0">- ELIJA - </option>
-                                                            <option ng-repeat="item in ListaUnidadMedidaModal" value="{{item.id_unidadMedida}}">{{item.nombre_UnidadMedida}}</option>
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="col-sm-2" ng-if="Flag_movLote == true">
-                                                        <label for="txt_nroLote" class="control-label">Lote.</label> <span class="help-block"></span>
-                                                        <input type="text" id="txt_nroLote" ng-model="objeto_parametros_detalle.nroLote" class="form-control" style="margin-top: -12px">
-                                                    </div>
-
-                                                    @*<div class="col-sm-2">
-                                                        <label for="txt_stock" class="control-label">Stock.</label> <span class="help-block"></span>
-                                                        <input type="text" id="txt_stock" ng-model="objeto_parametros_detalle.stock" disabled class="form-control" style="margin-top: -12px;text-align:right">
-                                                    </div>*@
-                                                    <div class="col-sm-2">
-                                                        <label for="txt_cantidad" class="control-label">Cant.</label> <span class="help-block"></span>
-                                                        <input type="text" id="txt_cantidad" onkeypress="return filterFloat(event,this);" ng-enter="enterFocus(1,'txt_precio')" ng-change="Calculo_Importe();" ng-model="objeto_parametros_detalle.cantidad_Pedido_Det" class="form-control" style="margin-top: -12px;text-align:right">
-                                                    </div>
-                                                    <div class="col-sm-2 ">
-                                                        <label for="txt_precio" class="control-label">Prec.</label> <span class="help-block"></span>
-                                                        <input type="text" id="txt_precio" ng-enter="enterFocus(1,'btnGuardarDet')" ng-change="Calculo_Importe();" ng-model="objeto_parametros_detalle.precioVenta_Pedido_Det" class="form-control" style="margin-top: -12px;text-align:right">
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                        <label for="txt_importe" class="control-label">Importe.</label> <span class="help-block"></span>
-                                                        <input type="text" id="txt_importe" disabled ng-model="objeto_parametros_detalle.total_Pedido_Det" class="form-control" style="margin-top: -12px; text-align:right">
-                                                    </div>
                                                 </div>
+                                                <div class="col-sm-3  col-md-3">
+                                                    <label class="control-label"> F. Vencimiento</label>
+                                                    <input type="text" class="form-control datepicker" ng-model="objeto_parametros_detalle.fechaVencimiento" id="fecha_vencimiento" placeholder="dia/mes/anio">
+                                                </div>
+
+                                                <div class="col-sm-2">
+                                                    <label for="txt_cantidad" class="control-label">Cant.</label> <span class="help-block"></span>
+                                                    <input type="text" id="txt_cantidad" onkeypress="return filterFloat(event,this);" ng-enter="enterFocus(1,'txt_precio')" ng-change="Calculo_Importe();" ng-model="objeto_parametros_detalle.cantidad_Pedido_Det" class="form-control" style="margin-top: -12px;text-align:right">
+                                                </div>
+                                                <div class="col-sm-2 ">
+                                                    <label for="txt_precio" class="control-label">Prec.</label> <span class="help-block"></span>
+                                                    <input type="text" id="txt_precio" ng-enter="enterFocus(1,'btnGuardarDet')" ng-change="Calculo_Importe();" ng-model="objeto_parametros_detalle.precioVenta_Pedido_Det" class="form-control" style="margin-top: -12px;text-align:right">
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <label for="txt_importe" class="control-label">Importe.</label> <span class="help-block"></span>
+                                                    <input type="text" id="txt_importe" disabled ng-model="objeto_parametros_detalle.total_Pedido_Det" class="form-control" style="margin-top: -12px; text-align:right">
+                                                </div>
+
+
                                             </div>
+                                            <br />
 
 
                                             <hr style=" margin-top: -25px; margin-bottom: 10px;" />
@@ -697,9 +711,12 @@
                                                                 <th data-toggle="true" style="width:25px;">#</th>
                                                                 <th data-toggle="true" style="width:60px;">Producto</th>
                                                                 <th data-hide="" style="width:300px;"> Descripción</th>
-                
                                                                 <th data-hide="" style="width:80px;"> UM</th>
-                                                                <th data-hide="" style="width:80px;"> Lote </th>
+
+                                                                <th data-hide="" style="width:80px;"> Nro Lote </th>
+                                                                <th data-hide="" style="width:80px;"> F. Produccion </th>
+                                                                <th data-hide="" style="width:80px;"> F. Vencimiento</th>
+
                                                                 <th data-hide="" style="width:80px;"> Cantidad</th>
                                                                 <th data-hide="" style="width:80px;"> Precio</th>
                                                                 <th data-hide="" style="width:80px;"> Importe</th>
@@ -711,9 +728,13 @@
                                                                 <td style="text-align:center;width:25px;">{{$index+1}}</td>
                                                                 <td style="text-align:center;width:60px;">{{item.codigo1_Producto}}  </td>
                                                                 <td style="text-align:center;width:300px;">{{item.nombre_Producto}}  </td>
- 
+
                                                                 <td style="text-align:center;width:80px;">{{item.nombre_UnidadMedida_Venta}}  </td>
                                                                 <td style="text-align:center;width:80px;">{{item.nroLote}}  </td>
+
+                                                                <td style="text-align:center;width:80px;">{{item.fechaProduccion}}  </td>
+                                                                <td style="text-align:center;width:80px;">{{item.fechaVencimiento}}  </td>
+
                                                                 <td style="text-align:center;width:80px;">{{item.cantidad_Pedido_Det}}  </td>
                                                                 <td style="text-align:center;width:80px;">{{item.precioVenta_Pedido_Det}}  </td>
                                                                 <td style="text-align:center;width:80px;">{{item.total_Pedido_Det}}  </td>

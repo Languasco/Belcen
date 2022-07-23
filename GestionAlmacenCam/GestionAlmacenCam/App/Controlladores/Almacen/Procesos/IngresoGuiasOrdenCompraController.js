@@ -710,7 +710,7 @@ app.controller('CtrlIngresoGuiasOrdenCompraController', function ($scope, $q, Ti
 
                     $scope.ListaUnidadMedidaModal.push({ id_unidadMedida: idUM, nombre_UnidadMedida: descUM });
 
-                    if (parseInt(idUM)  > 1) {                
+                    if (parseInt(idUM) > 1) {                
                         $scope.ListaUnidadMedidaModal.push( { id_unidadMedida: '1', nombre_UnidadMedida: 'UNIDAD' } );
                     }
                 }

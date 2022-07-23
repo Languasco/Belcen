@@ -18,7 +18,6 @@ namespace WebApiGestionAlmacenCam.Controllers.Facturacion.Procesos.ErrorDocument
         public object GetError_Documentos(int opcion, string filtro)
         {
             db.Configuration.ProxyCreationEnabled = false;
-
             object resul = null;
             try
             {
@@ -58,6 +57,5 @@ namespace WebApiGestionAlmacenCam.Controllers.Facturacion.Procesos.ErrorDocument
             }
             return resul;
         }
-
     }
 }

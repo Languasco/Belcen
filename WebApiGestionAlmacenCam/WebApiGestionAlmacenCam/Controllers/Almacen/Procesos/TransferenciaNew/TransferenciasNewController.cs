@@ -133,6 +133,11 @@ namespace WebApiGestionAlmacenCam.Controllers.Almacen.Procesos.TransferenciaNew
                     TransferenciaNew_BL obj_negocio = new TransferenciaNew_BL();
                     resul = obj_negocio.get_buscarProducto_ayudaModal(origen_id_Local, origen_id_Almacen, filtroBusqueda, id_usuario);
                 }
+                else if (opcion == 10)
+                {
+                    TransferenciaNew_BL obj_negocio = new TransferenciaNew_BL();
+                    resul = obj_negocio.get_tipoDocumento_Guia();
+                }
                 else
                 {
                     resul = "Opcion seleccionada invalida";

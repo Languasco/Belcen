@@ -68,6 +68,14 @@ namespace WebApi_Ventas.Controllers.Accesos
                     LogInAccess_bl = new LogInAccess_BL();
                     result = LogInAccess_bl.set_envioCorreo_recuperarContrasenia(email);
                 }
+                else if (option == 7)
+                {
+                    int idParent = Convert.ToInt32(arrayFilters[0]);
+                    int idUsuario = Convert.ToInt32(arrayFilters[1]);
+
+                    LogInAccess_bl = new LogInAccess_BL();
+                    result = LogInAccess_bl.set_quitandoAcceso_menu(idParent, idUsuario);
+                }
             }
             catch (Exception ex)
             {

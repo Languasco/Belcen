@@ -17,10 +17,7 @@ namespace Negocio.Accesos
 
     public class LogInAccess_BL
     {
-        private CAMGestionAlmacenEntities db = new CAMGestionAlmacenEntities();
-
-
- 
+        private CAMGestionAlmacenEntities db = new CAMGestionAlmacenEntities(); 
 
         public object InitSession(string idUsuario, string passUsuario)
         {
@@ -234,7 +231,34 @@ namespace Negocio.Accesos
             return res;
         }
 
+        public object set_quitandoAcceso_menu( int idParent, int idUsuario)
+        {
+            Resul res = new Resul();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("SP_S_ACCESO_USUARIO_QUITAR_ACCESO", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@idParent", SqlDbType.Int).Value = idParent;
+                        cmd.Parameters.Add("@idUsuario", SqlDbType.Int).Value = idUsuario;
+                        cmd.ExecuteNonQuery();
 
+                        res.ok = true;
+                        res.data = "OK";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+            }
+            return res;
+        }
 
 
 

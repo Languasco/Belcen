@@ -306,8 +306,12 @@ app.controller('DocumentosManualesController', function ($scope, $location, $tim
             .then(function (data) {
                 $scope.loaderfiltros = false;
                 $scope.Lista_TipoDoc = [];
+
+                console.log(data)
+
+
                 for (var i = 0; i < data.length; i++) {
-                    if (data[i].id_TipoDocumento == 1 || data[i].id_TipoDocumento == 2 || data[i].id_TipoDocumento == 3 || data[i].id_TipoDocumento == 13 || data[i].id_TipoDocumento == 18) {
+                    if (data[i].id_TipoDocumento == 1 || data[i].id_TipoDocumento == 2 || data[i].id_TipoDocumento == 3 || data[i].id_TipoDocumento == 13 || data[i].id_TipoDocumento == 18 || data[i].id_TipoDocumento == 20 || data[i].id_TipoDocumento == 21 ) {
                         console.log(data[i].id_TipoDocumento);
                         $scope.Lista_TipoDoc.push(data[i]);
                     }
@@ -963,71 +967,8 @@ app.controller('DocumentosManualesController', function ($scope, $location, $tim
 
 
         if ($scope.Flag_modoEdicion == false) { // nuevo registroo
-
-
-            $scope.objeto_parametros.Numero_Pedido = '';
-            //if ($scope.objeto_parametros.id_TipoDocumento == "3") {
-            //    var chk_transporrte = document.getElementById('chk_transporrte');
-
-            //    if (chk_transporrte.checked == true) {
-            //        $scope.objeto_parametros.TipoGuiaRemision = '1';
-
-            //    } else {
-            //        $scope.objeto_parametros.TipoGuiaRemision = '0';
-            //    }
-
-            //    $scope.objeto_parametros.fechaEmision_Pedido_Cab = auxiliarServices.changeFormatDate(2, fechaOrigen);
-            //    $scope.objeto_parametros.fechaEntrega_Pedido_Cab = auxiliarServices.changeFormatDate(2, fechaOrigen);
-            //    $scope.objeto_parametros.fechaFactura_Pedido_Cab = auxiliarServices.changeFormatDate(2, fechaOrigen);
-
-            //    $scope.objeto_parametros.serie = auxiliarServices.Formatear_CerosIzquierda(parseInt($scope.objeto_parametros.serie), 4);
-            //    $scope.objeto_parametros.num_doc = auxiliarServices.Formatear_CerosIzquierda(parseInt($scope.objeto_parametros.num_doc), 7);
-            //    $scope.objeto_parametros.Numero_Documento = $scope.objeto_parametros.serie + '-' + $scope.objeto_parametros.num_doc;
-
-            //    let generandoDocumento = async () => {
-            //        let res = await PedidosServices.validar_NroDocumento_Pedido($scope.objeto_parametros.Numero_Documento, $scope.objeto_parametros.id_TipoDocumento)
-
-            //        if (res !== 0) {
-            //            auxiliarServices.NotificationMessage('Sistemas', 'El nro de Documento ya se encuentra registrado en el sistema, verifique', 'error', '#ff6849', 1500);
-            //            return;
-            //        } else {
-            //            $scope.loader_modal = true;
-            //            $('#btnGuardarCab').attr("disabled", true);
-
-            //            let res_save = await PedidosServices.save_Pedido($scope.objeto_parametros);
-
-            //            $scope.disabledDetalle = "";
-            //            $scope.Lista_DataCabecera.push(res_save);
-            //            $scope.objeto_parametros.id_Pedido_Cab = res_save.id_Pedido_Cab;
-
-            //            $("#cbo_TipoDoc").prop('disabled', true);
-
-            //            $scope.objeto_parametros.fechaEmision_Pedido_Cab = fechaOrigen;
-            //            $scope.Flag_modoEdicion = true;
-            //            objAux = res_save;
-            //            $timeout(function () {
-            //                $('#btnGuardarCab').attr("disabled", false);
-            //                let params = {
-            //                    type: 'alert',
-            //                    title: 'Excelente !',
-            //                    text: 'Proceso de Registro realizado correctamente !'
-            //                };
-            //                auxiliarServices.initSweetAlert(params).then(function (res) {
-
-            //                });
-            //                $scope.loader_modal = false;
-            //            }, 500);
-            //        }
-            //    }
-
-            //    ///----ejecutando proceso---
-            //    generandoDocumento()
-            //        .catch((error) => {
-            //            alert(error);
-            //        })
-            //}
-            //else {                
-                                             
+             
+                $scope.objeto_parametros.Numero_Pedido = '';                                                 
                 ////-----guardando el pedido----
                 $scope.loader_modal = true;
                  DocumentosManualesServices.verificacionNumeroCorrelativo($scope.objeto_parametros.id_Anexos, $scope.objeto_parametros.id_TipoDocumento, $scope.objeto_parametros.Numero_Documento)
@@ -1056,6 +997,9 @@ app.controller('DocumentosManualesController', function ($scope, $location, $tim
                                         $scope.objeto_parametros.fechaEmision_Pedido_Cab = fechaOrigen;
                                         $scope.Flag_modoEdicion = true;
                                         objAux = data;
+
+                                        ///------ limpiando ----
+                                        $scope.nuevaGuia_det();
 
                                         $timeout(function () {
                                             $('#btnGuardarCab').attr("disabled", false);
@@ -1098,8 +1042,6 @@ app.controller('DocumentosManualesController', function ($scope, $location, $tim
                             alert(JSON.stringify(error));
                         }, 500);
                     });
-
-            //}
         } else {  //actualizar
             $scope.loader_modal = true;
             $scope.objeto_parametros.Numero_Documento = $scope.objeto_parametros.serie + '-' + $scope.objeto_parametros.num_doc;
@@ -1336,6 +1278,9 @@ app.controller('DocumentosManualesController', function ($scope, $location, $tim
         nroLote: '',
         id_UnidadMedida_Venta: '0',
         factorMultiplicacion_Venta: '0',
+
+        fechaProduccion: null,
+        fechaVencimiento: null,
     };
 
 
@@ -1358,6 +1303,9 @@ app.controller('DocumentosManualesController', function ($scope, $location, $tim
         $scope.objeto_parametros_detalle.nroLote = '';    
         $scope.objeto_parametros_detalle.id_UnidadMedida_Venta = '0';
         $scope.objeto_parametros_detalle.factorMultiplicacion_Venta = '0';
+
+        $scope.objeto_parametros_detalle.fechaProduccion = null;
+        $scope.objeto_parametros_detalle.fechaVencimiento = null;
         
     };
 
@@ -1372,6 +1320,9 @@ app.controller('DocumentosManualesController', function ($scope, $location, $tim
         $timeout(function () {
             $('#txt_cod_producto').focus().select();
             $('#cbo_unidadModal').val('0').trigger('change.select2');
+            $('#fecha_produccion').datepicker('setDate', null);
+            $('#fecha_vencimiento').datepicker('setDate', null);
+
         });
     };
 
@@ -1514,37 +1465,7 @@ app.controller('DocumentosManualesController', function ($scope, $location, $tim
         if (PedidosServices.validate_detalle($scope.objeto_parametros_detalle) == false) {
             return;
         }
-        //if (parseFloat($scope.objeto_parametros_detalle.stock) <= 0) {
-        //    auxiliarServices.NotificationMessage('Sistemas', 'Este producto no tiene stock', 'error', '#ff6849', 2000);
-        //    return;
-        //}
-        //if (parseFloat($scope.objeto_parametros_detalle.cantidad_Pedido_Det) > parseFloat($scope.objeto_parametros_detalle.stock)) {
-        //    auxiliarServices.NotificationMessage('Sistemas', 'La cantidad supera el Stock disponible, verifique', 'error', '#ff6849', 2000);
-        //    return;
-        //}
-
-        //if ($scope.Flag_movLote == 1) {
-        //    if ($scope.objeto_parametros_detalle.nroLote == '' || $scope.objeto_parametros_detalle.nroLote == undefined  ) {
-        //        auxiliarServices.NotificationMessage('Sistemas', 'Es necesario ingresar un Nro de Lote', 'error', '#ff6849', 2000);
-        //        return;
-        //    }
-        //} 
-        //if ($scope.objeto_parametros_detalle.id_UnidadMedida_Venta == '' || $scope.objeto_parametros_detalle.id_UnidadMedida_Venta == null || $scope.objeto_parametros_detalle.id_UnidadMedida_Venta == '0' ) {
-        //    auxiliarServices.NotificationMessage('Sistemas', 'Es necesario elegir una Unidad de Medida', 'error', '#ff6849', 2000);
-        //    return;
-        //}
- 
-
-
         if ($scope.Flag_modoEdicion_detalle === false) { // nuevo registroo detalle
-
-            ////--Validando
-            //if (Existencia_Producto($scope.objeto_parametros_detalle.id_Producto) == true) {
-            //   $timeout(function () {
-            //        $('#txt_cod_producto').focus().select();
-            //    });
-            //    return;
-            //}
 
             $scope.loader_modal = true;
             $('#btnGuardarDet').attr("disabled", true);
@@ -1705,6 +1626,9 @@ app.controller('DocumentosManualesController', function ($scope, $location, $tim
 
     $scope.Buscar_Producto_Edicion = function (obj_detalle) {
 
+
+        console.log(obj_detalle)
+
         //---limpiando--
         $scope.clean_detail();
         $scope.Flag_modoEdicion_detalle = true;
@@ -1717,6 +1641,11 @@ app.controller('DocumentosManualesController', function ($scope, $location, $tim
         $scope.objeto_parametros_detalle.cantidad_Pedido_Det = obj_detalle.cantidad_Pedido_Det;
         $scope.objeto_parametros_detalle.precioVenta_Pedido_Det = obj_detalle.precioVenta_Pedido_Det;
         $scope.objeto_parametros_detalle.nroLote = obj_detalle.nroLote;
+
+        $scope.objeto_parametros_detalle.fechaProduccion = obj_detalle.fechaProduccion;
+        $scope.objeto_parametros_detalle.fechaVencimiento = obj_detalle.fechaVencimiento;
+
+
         $scope.Flag_movLote = (obj_detalle.movLote == 1) ? true : false;
 
         $scope.objeto_parametros_detalle.id_UnidadMedida_Venta = String(obj_detalle.id_UnidadMedida_Venta);
@@ -1739,63 +1668,62 @@ app.controller('DocumentosManualesController', function ($scope, $location, $tim
         } 
         $timeout(function () {
             $('#cbo_unidadModal').val(String($scope.objeto_parametros_detalle.id_UnidadMedida_Venta)).trigger('change.select2');
+            $('#fecha_produccion').datepicker('setDate', $scope.objeto_parametros_detalle.fechaProduccion);
+            $('#fecha_vencimiento').datepicker('setDate', $scope.objeto_parametros_detalle.fechaVencimiento);
         },0);
 
 
         $scope.Calculo_Importe(); 
 
-        if ($scope.objeto_parametros.id_Almacen === '0' || $scope.objeto_parametros.id_Almacen === '' || $scope.objeto_parametros.id_Almacen === null || $scope.objeto_parametros.id_Almacen === undefined) {
-            auxiliarServices.NotificationMessage('Sistemas', 'Por favor seleccione el Almacen', 'error', '#ff6849', 1500);
-            return;
-        }
+        //if ($scope.objeto_parametros.id_Almacen === '0' || $scope.objeto_parametros.id_Almacen === '' || $scope.objeto_parametros.id_Almacen === null || $scope.objeto_parametros.id_Almacen === undefined) {
+        //    auxiliarServices.NotificationMessage('Sistemas', 'Por favor seleccione el Almacen', 'error', '#ff6849', 1500);
+        //    return;
+        //}
 
-        if (obj_detalle.codigo1_Producto === '' || obj_detalle.codigo1_Producto === null || obj_detalle.codigo1_Producto === undefined) {
-            auxiliarServices.NotificationMessage('Sistemas', 'Lo sentimos no se cargo la informacion del Producto, Actualice la pagina y continue..', 'error', '#ff6849', 1500);
-            return;
-        }
+        //if (obj_detalle.codigo1_Producto === '' || obj_detalle.codigo1_Producto === null || obj_detalle.codigo1_Producto === undefined) {
+        //    auxiliarServices.NotificationMessage('Sistemas', 'Lo sentimos no se cargo la informacion del Producto, Actualice la pagina y continue..', 'error', '#ff6849', 1500);
+        //    return;
+        //}
 
-        $scope.loader_modal = true;
-        PedidosServices.get_Search_Producto_manual($scope.objeto_parametros.id_Almacen, obj_detalle.codigo1_Producto, auxiliarServices.getUserId())
-            .then(function (data) {
+        //$scope.loader_modal = true;
+        //PedidosServices.get_Search_Producto_manual($scope.objeto_parametros.id_Almacen, obj_detalle.codigo1_Producto, auxiliarServices.getUserId())
+        //    .then(function (data) {
 
-                $scope.loader_modal = false;
-                var indicador = false;
-                for (var i = 0; i < data.length; i++) {
-                    indicador = true;
-                    break;
-                }
+        //        $scope.loader_modal = false;
+        //        var indicador = false;
+        //        for (var i = 0; i < data.length; i++) {
+        //            indicador = true;
+        //            break;
+        //        }
 
-                //if (indicador === false) {
-                //    auxiliarServices.NotificationMessage('Sistemas', 'No hay Stock ..', 'error', '#ff6849', 1500);
-                //    $scope.objeto_parametros_detalle.stock = '0';
-                //    return;
-                //}
+        //        let idUnidadOrigen = data[0].Id_Unidad 
+        //        stock_Global = data[0].Stock;
 
-                let idUnidadOrigen = data[0].Id_Unidad 
-                stock_Global = data[0].Stock;
-
-                if (idUM != idUnidadOrigen) {
-                    $scope.objeto_parametros_detalle.stock = (stock_Global * factor_Global)
-                }
-                else {
-                    $scope.objeto_parametros_detalle.stock = stock_Global;
-                }
+        //        if (idUM != idUnidadOrigen) {
+        //            $scope.objeto_parametros_detalle.stock = (stock_Global * factor_Global)
+        //        }
+        //        else {
+        //            $scope.objeto_parametros_detalle.stock = stock_Global;
+        //        }
                                
-                $scope.objeto_parametros_detalle.nroLote = data[0].nroLote;           
-                $scope.Flag_movLote = (data[0].movLote == 1) ? true : false;
-                $scope.Calculo_Importe();
+        //        $scope.objeto_parametros_detalle.nroLote = data[0].nroLote;           
+        //        $scope.Flag_movLote = (data[0].movLote == 1) ? true : false;
+        //        $scope.Calculo_Importe();
 
-                $timeout(function () {
-                    if (data[0].movLote == 1) {
-                        $('#txt_nroLote').focus().select();
-                    } else {
-                        $('#txt_cantidad').focus().select();
-                    }
-                });
-            }, function (err) {
-                $scope.loaderfiltros = false;
-                console.log(err);
-            });
+        //        $timeout(function () {
+        //            if (data[0].movLote == 1) {
+        //                $('#txt_nroLote').focus().select();
+        //            } else {
+        //                $('#txt_cantidad').focus().select();
+        //            }
+        //        });
+        //    }, function (err) {
+        //        $scope.loaderfiltros = false;
+        //        console.log(err);
+        //    });
+
+        $scope.Calculo_Importe();
+
     };
 
     $scope.SubTotal_G = 0;
@@ -2039,6 +1967,14 @@ app.controller('DocumentosManualesController', function ($scope, $location, $tim
                             $scope.disabledCabecera = "disabledContent";
                             $scope.disabledDetalle = "disabledContent";
 
+                            $timeout(function () {
+                                let params = {
+                                    type: 'alert',title: 'Excelente !', text: 'Proceso de Registro realizado correctamente !'
+                                }
+                                auxiliarServices.initSweetAlert(params).then(function (res) {
+                                });
+                            }, 0)
+
                             //let Obj_NumDocumento = res.data.split("-");
                             ////$scope.objeto_parametros.serie = Obj_NumDocumento[0];
                             ////$scope.objeto_parametros.num_doc = Obj_NumDocumento[1];
@@ -2068,6 +2004,9 @@ app.controller('DocumentosManualesController', function ($scope, $location, $tim
                             //}
                             //------actualizando la informacion de los pedidos
                             $scope.Listando_InformacionPedidos();
+
+
+
                         } else {
                             $('#btn_generaCancelacion').attr("disabled", false);
                             auxiliarServices.NotificationMessage('Sistemas', 'Lo sentimos se produjo un error', 'error', '#ff6849', 2000);
@@ -2162,7 +2101,6 @@ app.controller('DocumentosManualesController', function ($scope, $location, $tim
                 console.log(err);
             });
     };
-
 
 
      ////------ NUEVO FORMATO FACTURA  2.1 comprobantes actualizados la version nueva ---------
@@ -7320,10 +7258,11 @@ app.controller('DocumentosManualesController', function ($scope, $location, $tim
         $scope.objeto_parametros.num_doc = '';
 
 
-        if ($scope.objeto_parametros.id_TipoDocumento == 1 || $scope.objeto_parametros.id_TipoDocumento == '1' || $scope.objeto_parametros.id_TipoDocumento == 2 || $scope.objeto_parametros.id_TipoDocumento == '2') {
+        /*  if ($scope.objeto_parametros.id_TipoDocumento == 1 || $scope.objeto_parametros.id_TipoDocumento == '1' || $scope.objeto_parametros.id_TipoDocumento == 2 || $scope.objeto_parametros.id_TipoDocumento == '2') {*/
+        if ($scope.objeto_parametros.id_TipoDocumento == 99999 || $scope.objeto_parametros.id_TipoDocumento == '99999') {
 
             if ($scope.objeto_parametros.id_Anexos == 0 || $scope.objeto_parametros.id_Anexos == '0') {
-                auxiliarServices.NotificationMessage('Sistemas', 'Es necesario que seleccione un Anexo para obtener la numeracion, verifique', 'error', '#ff6849', 2000);
+                auxiliarServices.NotificationMessage('Sistemas', 'Es necesario que seleccione un Anexo para obtener la serie, verifique', 'error', '#ff6849', 2000);
                 return;
             }
             if ($scope.objeto_parametros.id_TipoDocumento == 0 || $scope.objeto_parametros.id_TipoDocumento == '0') {
